@@ -1,0 +1,936 @@
+{
+  "common": {
+    "appName": "Yuboraman",
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "logout": "Chiqish",
+    "theme": "Mavzu",
+    "themeLight": "Yorug'",
+    "themeDark": "Qorong'i",
+    "language": "Til",
+    "balance": "Balans",
+    "plan": "Tarif",
+    "topUp": "To'ldirish",
+    "sum": "so'm",
+    "comingSoon": "Bu bo'lim keyingi bosqichlarda qo'shiladi."
+  },
+  "nav": {
+    "dashboard": "Asosiy",
+    "integrations": "Integratsiyalar",
+    "reports": "Hisobotlar",
+    "products": "Mahsulotlar",
+    "leadPacing": "Lid tempi",
+    "finance": "Moliya",
+    "orders": "Buyurtmalar",
+    "connections": "Ulanishlar",
+    "domains": "Domenlar",
+    "apiKeys": "API kalitlar",
+    "pricing": "Tariflar",
+    "balance": "Balans",
+    "settings": "Sozlamalar"
+  },
+  "auth": {
+    "loginTitle": "Kirish",
+    "loginSubtitle": "Hisobingizga kiring",
+    "registerTitle": "Ro'yxatdan o'tish",
+    "registerSubtitle": "Bepul hisob yarating",
+    "fullName": "To'liq ism",
+    "fullNamePlaceholder": "Ism Familiya",
+    "email": "Email",
+    "phone": "Telefon raqam",
+    "password": "Parol",
+    "loginButton": "Kirish",
+    "registerButton": "Ro'yxatdan o'tish",
+    "noAccount": "Hisobingiz yo'qmi?",
+    "haveAccount": "Hisobingiz bormi?",
+    "loginLink": "Kirish",
+    "registerLink": "Ro'yxatdan o'tish",
+    "submitting": "Yuborilmoqda...",
+    "errors": {
+      "fullNameRequired": "To'liq ismni kiriting",
+      "emailInvalid": "Email noto'g'ri",
+      "phoneInvalid": "Telefon raqam noto'g'ri (masalan: +998901234567)",
+      "passwordMin": "Parol kamida 8 ta belgidan iborat bo'lishi kerak",
+      "loginFailed": "Email yoki parol noto'g'ri",
+      "registerFailed": "Ro'yxatdan o'tib bo'lmadi. Qayta urinib ko'ring.",
+      "confirmMismatch": "Parollar mos kelmadi",
+      "termsRequired": "Shartlarga rozilik bildiring",
+      "oauthFailed": "Ijtimoiy tarmoq orqali kirishda xatolik",
+      "emailTaken": "Bu email allaqachon ro'yxatdan o'tgan"
+    },
+    "emailPlaceholder": "email@example.com",
+    "passwordPlaceholder": "Parolni kiriting",
+    "passwordPlaceholderCreate": "Parol yarating",
+    "confirmPassword": "Parolni tasdiqlang",
+    "confirmPasswordPlaceholder": "Parolni takrorlang",
+    "rememberMe": "Meni eslab qol",
+    "forgotPassword": "Parolni unutdingizmi?",
+    "termsAgree": "Ro'yxatdan o'tish orqali siz <terms>foydalanish shartlari</terms> va <privacy>maxfiylik siyosati</privacy>ga rozilik bildirasiz",
+    "or": "yoki",
+    "socialContinue": "{provider} orqali kirish",
+    "comingSoon": "Tez orada",
+    "showPassword": "Parolni ko'rsatish",
+    "hidePassword": "Parolni yashirish",
+    "oauthConnecting": "Ulanmoqda...",
+    "copyright": "© 2025 Yuboraman. Barcha huquqlar himoyalangan."
+  },
+  "marketing": {
+    "heroTitle": "Facebook lidlarni CRM ga <hl>avtomatik</hl> yuboring",
+    "heroSubtitle": "Facebook Lead Ads formalaridan kelgan lidlar soniyalar ichida Telegram, Google Sheets, Bitrix24 yoki amoCRM ga tushadi. Xato bo'lsa — avtomatik qayta urinish. Birorta lid yo'qolmaydi.",
+    "heroEyebrow": "Lid avtomatlashtirish platformasi",
+    "ctaLogin": "Kirish",
+    "ctaRegister": "Bepul boshlash",
+    "ctaHow": "Qanday ishlaydi",
+    "nav": {
+      "how": "Qanday ishlaydi",
+      "integrations": "Integratsiyalar",
+      "services": "Xizmatlar",
+      "pricing": "Tariflar",
+      "faq": "FAQ"
+    },
+    "heroStats": {
+      "speed": {
+        "value": "< 5 s",
+        "label": "yetkazish tezligi"
+      },
+      "integrations": {
+        "value": "40+",
+        "label": "tayyor integratsiya"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "qo'llab-quvvatlash"
+      }
+    },
+    "relay": {
+      "title": "Jonli lidlar oqimi",
+      "live": "Jonli",
+      "source": "Lead Ads",
+      "router": "Router",
+      "dest": "CRM",
+      "delivered": "Yetkazildi",
+      "retrying": "Qayta urinish",
+      "queued": "Navbatda",
+      "timeNow": "hozir",
+      "timeSec": "{n} s oldin",
+      "timeMin": "{n} daq oldin",
+      "today": "Bugun: 1 284 lid",
+      "rate": "Yetkazilgan: 99,9%"
+    },
+    "trust": {
+      "integrations": {
+        "title": "40+ integratsiya",
+        "desc": "CRM, messenjer va jadvallar bilan tayyor ulanishlar"
+      },
+      "support": {
+        "title": "24/7 qo'llab-quvvatlash",
+        "desc": "Telegram orqali jonli yordam"
+      },
+      "setup": {
+        "title": "Bepul sozlash",
+        "desc": "Mutaxassisimiz birga sozlab beradi"
+      },
+      "security": {
+        "title": "SSL + DDoS himoya",
+        "desc": "Ma'lumotlar shifrlangan kanal orqali o'tadi"
+      }
+    },
+    "how": {
+      "eyebrow": "Jarayon",
+      "title": "Qanday ishlaydi",
+      "subtitle": "Lid Facebook formasidan CRM gacha uch bosqichda yetib boradi — hammasi avtomatik.",
+      "sourceLabel": "Manba",
+      "routerLabel": "Router",
+      "destLabel": "Qabul qiluvchi",
+      "source": {
+        "title": "Facebook Lead Ads",
+        "desc": "Mijoz reklamadagi formani to'ldiradi — lid shu zahoti webhook orqali qabul qilinadi."
+      },
+      "router": {
+        "title": "Yuboraman",
+        "desc": "Lid tekshiriladi, maydonlar moslashtiriladi va kerakli integratsiyaga yo'naltiriladi. Xato bo'lsa — avtomatik qayta urinish.",
+        "chipRetry": "Avto-retry",
+        "chipQueue": "Navbat",
+        "chipMap": "Maydon moslash"
+      },
+      "dest": {
+        "title": "Sizning CRM",
+        "desc": "Telegram, Google Sheets, Bitrix24, amoCRM yoki istalgan webhook — soniyalar ichida."
+      }
+    },
+    "integrationsSec": {
+      "eyebrow": "Ulanishlar",
+      "title": "Sevimli xizmatlaringiz bilan ishlaydi",
+      "subtitle": "Lid manbalari va qabul qiluvchi platformalar — hammasi bir joyda.",
+      "cat": {
+        "source": "Lid manbasi",
+        "bot": "Bot va kanal",
+        "sheets": "Jadval",
+        "crm": "CRM",
+        "site": "Sayt konstruktori",
+        "cpa": "CPA tarmoq"
+      },
+      "moreTitle": "yana 40+ xizmat",
+      "moreDesc": "Universal webhook orqali istalgan tizimga ulang"
+    },
+    "services": {
+      "eyebrow": "Xizmatlar",
+      "title": "Bitta platforma — butun lid oqimingiz",
+      "subtitle": "Lid qabul qilishdan hisobotgacha — hammasi Yuboraman ichida.",
+      "leads": {
+        "title": "Facebook Leads",
+        "desc": "Lead Ads formalaridan lidlarni real vaqtda qabul qilish va kerakli joyga yetkazish."
+      },
+      "crm": {
+        "title": "CRM integratsiya",
+        "desc": "Bitrix24, amoCRM, Google Sheets, Telegram — maydonlarni bir marta moslang, qolganini biz qilamiz."
+      },
+      "reports": {
+        "title": "Reklama hisobotlari",
+        "desc": "Kunlik Facebook Ads hisobotlari — lidlar, xarajat, CTR — har kuni Telegramingizga keladi."
+      },
+      "pixel": {
+        "title": "Facebook Pixel",
+        "desc": "Konversiyalarni Facebookga qaytarib yuboring va reklama algoritmini kuchaytiring."
+      },
+      "domains": {
+        "title": "Domenlar",
+        "desc": "Domen qidiring va balansdan sotib oling — u avtomatik serverlarimizga ulanadi."
+      },
+      "security": {
+        "title": "Xavfsizlik",
+        "desc": "SSL shifrlash, DDoS himoya va tokenlarning xavfsiz saqlanishi."
+      }
+    },
+    "steps": {
+      "eyebrow": "Boshlash",
+      "title": "4 qadamda ishga tushiring",
+      "subtitle": "Sozlash 10 daqiqadan kam vaqt oladi — yordam kerak bo'lsa, birga sozlab beramiz.",
+      "s1": {
+        "title": "Ro'yxatdan o'ting",
+        "desc": "Email va telefon raqam bilan bepul akkaunt oching."
+      },
+      "s2": {
+        "title": "Facebook ulang",
+        "desc": "OAuth orqali reklama akkauntingizni xavfsiz bog'lang."
+      },
+      "s3": {
+        "title": "CRM tanlang",
+        "desc": "Qabul qiluvchi platformani tanlab, maydonlarni moslang."
+      },
+      "s4": {
+        "title": "Lidlar keladi",
+        "desc": "Har bir yangi lid soniyalar ichida CRM ingizga tushadi."
+      }
+    },
+    "videos": {
+      "eyebrow": "O'rganish",
+      "title": "Video darslar",
+      "subtitle": "Platformani bir necha daqiqada o'zlashtiring.",
+      "lesson": "{n}-dars",
+      "v1": "Ro'yxatdan o'tish va ilk sozlash",
+      "v2": "Facebook va Google akkauntlarni ulash",
+      "v3": "Lidlarni CRM ga yuborish"
+    },
+    "pricing": {
+      "eyebrow": "Tariflar",
+      "title": "O'sishingizga mos tarif",
+      "subtitle": "Bepul boshlang — biznes o'sgani sari kengaytirasiz. To'lov so'mda.",
+      "monthly": "Oylik",
+      "yearly": "Yillik",
+      "yearlyBadge": "2 oy bepul",
+      "free": "Bepul",
+      "perMonth": "/oy",
+      "perYear": "/yil",
+      "leads": "{count} lid / oy",
+      "unlimited": "Cheksiz lidlar",
+      "popular": "Mashhur",
+      "cta": "Boshlash",
+      "note": "Barcha tariflarda: 100 tagacha Facebook akkaunt, cheksiz mahsulotlar, to'liq analitika va moslashuvchan CRM integratsiyalar.",
+      "planNames": {
+        "starter": "Boshlang'ich",
+        "pro": "Professional",
+        "business": "Biznes",
+        "corporate": "Korporativ"
+      },
+      "features": {
+        "accounts": "100 tagacha FB akkaunt",
+        "products": "Cheksiz mahsulotlar",
+        "analytics": "To'liq analitika",
+        "crm": "Barcha CRM integratsiyalar",
+        "retry": "Avto-retry va navbat"
+      }
+    },
+    "faq": {
+      "eyebrow": "Savol-javob",
+      "title": "Ko'p so'raladigan savollar",
+      "subtitle": "Javob topolmadingizmi? Telegramda yozing — tez orada javob beramiz.",
+      "q1": {
+        "q": "Yuboraman qanday ishlaydi?",
+        "a": "Facebook reklama akkauntingizni OAuth orqali ulaysiz, Yuboraman Lead Ads formalaringizga webhook o'rnatadi. Mijoz formani to'ldirishi bilan lid bizga keladi va soniyalar ichida siz tanlagan CRM yoki Telegramga yuboriladi."
+      },
+      "q2": {
+        "q": "Xizmat qancha turadi?",
+        "a": "Boshlang'ich tarif bepul — oyiga 1 000 lidgacha. Pullik tariflar oyiga 49 000 so'mdan boshlanadi. Yillik to'lovda 2 oy bepul."
+      },
+      "q3": {
+        "q": "Lid yo'qolib qolsa nima bo'ladi?",
+        "a": "Hech narsa yo'qolmaydi. Yetkazishda xato bo'lsa, tizim avtomatik qayta urinadi. Integratsiya pauzada bo'lsa, lidlar navbatda saqlanadi va keyin yuboriladi. Har bir urinish jurnalda ko'rinadi."
+      },
+      "q4": {
+        "q": "Qaysi CRM tizimlari qo'llab-quvvatlanadi?",
+        "a": "Bitrix24, amoCRM (Kommo), Google Sheets va Telegram bot — tayyor holda. Universal webhook orqali esa istalgan boshqa tizimga ulash mumkin."
+      },
+      "q5": {
+        "q": "Nechta Facebook akkaunt ulash mumkin?",
+        "a": "Barcha tariflarda 100 tagacha Facebook akkaunt ulash mumkin — agentliklar uchun ham qulay."
+      },
+      "q6": {
+        "q": "To'lovni qanday amalga oshiraman?",
+        "a": "To'lov so'mda: bank kartasidan o'tkazma (chekni yuklaysiz, tez tasdiqlanadi) yoki onlayn to'lov orqali. Balansingizdan tarif avtomatik yechiladi."
+      },
+      "q7": {
+        "q": "Bepul tarifda qanday cheklovlar bor?",
+        "a": "Boshlang'ich tarif oyiga 1 000 lidgacha bepul ishlaydi va muddati cheklanmagan. Asosiy integratsiyalar va analitika ochiq."
+      },
+      "q8": {
+        "q": "Texnik yordam qanday ishlaydi?",
+        "a": "Qo'llab-quvvatlash 24/7 Telegram orqali ishlaydi. Ilk sozlashda mutaxassisimiz bepul yordam beradi."
+      },
+      "q9": {
+        "q": "Ma'lumotlarim xavfsizmi?",
+        "a": "Ha. Barcha trafik SSL orqali shifrlanadi, serverlar DDoS himoyasi ostida. Facebook tokenlari shifrlangan holda saqlanadi va uchinchi shaxslarga berilmaydi."
+      }
+    },
+    "footer": {
+      "tagline": "Facebook lidlarini CRM ga avtomatik yetkazuvchi platforma. O'zbek tilida, so'mda, Telegram orqali boshqariladi.",
+      "colSections": "Bo'limlar",
+      "colPlatform": "Platforma",
+      "colContact": "Aloqa",
+      "telegram": "Telegram kanal",
+      "supportChat": "Qo'llab-quvvatlash chati",
+      "email": "info@yuboraman.uz",
+      "rights": "© 2026 Yuboraman. Barcha huquqlar himoyalangan.",
+      "madeIn": "O'zbekistonda ishlab chiqilgan"
+    }
+  },
+  "dashboard": {
+    "greeting": "Xush kelibsiz, {name}!",
+    "todayLeads": "Bugungi lidlar",
+    "weekLeads": "Haftalik lidlar",
+    "monthLeads": "Oylik lidlar",
+    "planUsage": "Tarif limiti",
+    "daysLeft": "{days} kun qoldi",
+    "todayDelivery": "Bugungi yetkazish",
+    "delivered": "Yetkazilgan",
+    "failed": "Xato",
+    "pending": "Kutmoqda",
+    "total": "Jami",
+    "chartTitle": "Kunlik dinamika",
+    "chartSubtitle": "Oxirgi {days} kun: yetkazilgan va xato lidlar",
+    "integrationPerformance": "Integratsiyalar samaradorligi",
+    "integrationPerformanceSubtitle": "Oxirgi hafta ko'rsatkichlari",
+    "deliveredRate": "Yetkazish darajasi",
+    "recentLeads": "Oxirgi lidlar",
+    "noLeads": "Hozircha lidlar yo'q",
+    "colTime": "Vaqt",
+    "colIntegration": "Integratsiya",
+    "colStatus": "Holat",
+    "activityTitle": "Oxirgi faoliyat",
+    "setupTitle": "Ishni boshlash",
+    "setupSubtitle": "Servisdan to'liq foydalanish uchun quyidagi qadamlarni bajaring",
+    "setupChannel": "Yetkazish kanalini ulang",
+    "setupIntegration": "Integratsiya yarating",
+    "setupFacebook": "Facebook akkauntini ulang",
+    "setupFirstLead": "Birinchi lidni qabul qiling",
+    "optional": "ixtiyoriy",
+    "noData": "Hozircha ma'lumot yo'q",
+    "loadError": "Ma'lumotlarni yuklab bo'lmadi",
+    "retry": "Qayta urinish"
+  },
+  "integrations": {
+    "title": "Integratsiyalar",
+    "new": "Yangi integratsiya",
+    "searchPlaceholder": "Integratsiya qidirish...",
+    "loadError": "Ma'lumotlarni yuklab bo'lmadi",
+    "retry": "Qayta urinish",
+    "status": {
+      "active": "Faol",
+      "paused": "Pauza"
+    },
+    "leadStatus": {
+      "pending": "Navbatda",
+      "delivered": "Yetkazildi",
+      "failed": "Xato",
+      "paused_hold": "Pauzada keldi"
+    },
+    "card": {
+      "source": "Manba",
+      "receiver": "Qabul qiluvchi",
+      "todayLeads": "Bugungi lidlar",
+      "pendingLeads": "Kutayotgan lidlar",
+      "lastLead": "Oxirgi lid",
+      "never": "Hali lid kelmagan"
+    },
+    "actions": {
+      "pause": "Pauza",
+      "start": "Start",
+      "send": "Yuborish",
+      "reset": "Avto-rejimni tiklash",
+      "edit": "Tahrirlash",
+      "delete": "O'chirish",
+      "copyWebhook": "Webhook URL nusxalash",
+      "openDetail": "Batafsil"
+    },
+    "toasts": {
+      "copied": "Nusxalandi",
+      "actionDone": "Bajarildi",
+      "saved": "Saqlandi",
+      "deleted": "O'chirildi",
+      "error": "Xatolik yuz berdi. Qayta urinib ko'ring."
+    },
+    "empty": {
+      "title": "Hozircha integratsiya yo'q",
+      "description": "Birinchi integratsiyani yarating — lidlar avtomatik yetkazila boshlaydi.",
+      "cta": "Integratsiya yaratish"
+    },
+    "noResults": "Hech narsa topilmadi",
+    "folders": {
+      "all": "Barchasi",
+      "new": "Yangi papka",
+      "createTitle": "Yangi papka",
+      "renameTitle": "Papka nomini o'zgartirish",
+      "namePlaceholder": "Papka nomi",
+      "nameRequired": "Papka nomini kiriting",
+      "create": "Yaratish",
+      "rename": "Nomini o'zgartirish",
+      "delete": "O'chirish",
+      "deleteTitle": "Papkani o'chirish",
+      "deleteDescription": "\"{name}\" papkasi o'chirilsinmi?",
+      "notEmpty": "Papka bo'sh emas — avval undagi integratsiyalarni boshqa joyga ko'chiring",
+      "noFolder": "Papkasiz"
+    },
+    "selection": {
+      "selected": "{count} ta tanlandi",
+      "clear": "Bekor qilish"
+    },
+    "deleteDialog": {
+      "title": "Integratsiyani o'chirish",
+      "description": "\"{name}\" integratsiyasi o'chiriladi. Bu amalni ortga qaytarib bo'lmaydi.",
+      "confirm": "O'chirish"
+    },
+    "editDialog": {
+      "title": "Integratsiyani tahrirlash",
+      "name": "Nomi",
+      "nameRequired": "Nomini kiriting",
+      "folder": "Papka",
+      "receiver": "Qabul qiluvchi kanal"
+    },
+    "wizard": {
+      "title": "Yangi integratsiya",
+      "back": "Orqaga",
+      "next": "Davom etish",
+      "create": "Yaratish",
+      "creating": "Yaratilmoqda...",
+      "steps": {
+        "source": "Manba",
+        "details": "Nomi",
+        "receiver": "Qabul qiluvchi"
+      },
+      "sourceTitle": "Lidlar qayerdan keladi?",
+      "sourceWebhookDescription": "Istalgan sayt yoki tizimdan JSON so'rov orqali lid qabul qiling",
+      "sourceFacebookDescription": "Facebook Lead Ads formalaridan avtomatik qabul qilish",
+      "facebook": {
+        "connection": "Facebook akkaunt",
+        "selectConnection": "Akkauntni tanlang",
+        "loading": "Yuklanmoqda...",
+        "noConnections": "Hali Facebook akkaunt ulanmagan",
+        "connectCta": "Ulanishlar sahifasida ulash",
+        "page": "Sahifa",
+        "selectPage": "Sahifani tanlang",
+        "noPages": "Sahifalar topilmadi",
+        "form": "Lead forma",
+        "selectForm": "Formani tanlang",
+        "noForms": "Bu sahifada lead formalar topilmadi",
+        "subscribing": "Sahifa webhookga ulanmoqda...",
+        "subscribed": "Sahifa webhookga ulandi",
+        "subscribeError": "Sahifani webhookga ulab bo'lmadi. Keyinroq qayta urinib ko'ring.",
+        "selectionRequired": "Akkaunt, sahifa va formani tanlang"
+      },
+      "detailsTitle": "Integratsiyani nomlang",
+      "namePlaceholder": "Masalan: Landing sayt lidlari",
+      "nameRequired": "Nomini kiriting",
+      "folderOptional": "Papka (ixtiyoriy)",
+      "receiverTitle": "Lidlar qayerga yuborilsin?",
+      "useExisting": "Mavjud kanal",
+      "createNew": "Yangi kanal",
+      "selectConnection": "Kanalni tanlang",
+      "connectionRequired": "Kanalni tanlang yoki yangisini yarating",
+      "noConnections": "Hali kanal yo'q — yangisini yarating",
+      "successTitle": "Integratsiya yaratildi!",
+      "successDescription": "Quyidagi URL ga POST so'rov yuboring — lid avtomatik qabul qilinadi.",
+      "successFacebookDescription": "Endi tanlangan formadan kelgan lidlar avtomatik qabul qilinadi.",
+      "facebookAutoNote": "Lidlar Facebook formadan avtomatik keladi",
+      "webhookUrl": "Webhook URL",
+      "copy": "Nusxalash",
+      "testLead": "Test lid yuborish",
+      "toList": "Integratsiyalar ro'yxati",
+      "toDetail": "Integratsiyani ochish"
+    },
+    "detail": {
+      "back": "Integratsiyalar",
+      "notFound": "Integratsiya topilmadi",
+      "webhookUrl": "Webhook URL",
+      "facebookAutoNote": "Lidlar Facebook formadan avtomatik keladi",
+      "leadsTitle": "Lidlar",
+      "filters": {
+        "all": "Barchasi",
+        "pending": "Navbatda",
+        "delivered": "Yetkazildi",
+        "failed": "Xato",
+        "paused_hold": "Pauzada keldi"
+      },
+      "columns": {
+        "time": "Vaqt",
+        "status": "Status",
+        "retry": "Urinishlar",
+        "error": "Xato",
+        "payload": "Ma'lumot"
+      },
+      "empty": "Lidlar yo'q",
+      "total": "Jami: {count}",
+      "prev": "Oldingi",
+      "next": "Keyingi",
+      "pageInfo": "{page} / {pages}"
+    }
+  },
+  "connections": {
+    "title": "Ulanishlar",
+    "sources": {
+      "title": "Lid manbalari",
+      "description": "Lidlar keladigan tashqi platformalar",
+      "facebookTitle": "Facebook",
+      "facebookDescription": "Facebook Lead Ads akkauntini ulash va formalardan lid qabul qilish"
+    },
+    "facebook": {
+      "connect": "Facebook ulash",
+      "reconnect": "Qayta ulash",
+      "statusActive": "Faol",
+      "statusError": "Xato",
+      "tokenExpires": "Token muddati: {time}",
+      "delete": "O'chirish",
+      "deleteTitle": "Facebook ulanishini o'chirish",
+      "deleteDescription": "\"{name}\" ulanishi o'chirilsinmi? Unga bog'liq integratsiyalar lid qabul qilishni to'xtatadi.",
+      "callbackTitle": "Facebook ulanmoqda...",
+      "callbackDescription": "Iltimos, kuting — akkaunt ma'lumotlari tekshirilmoqda.",
+      "callbackSuccess": "Facebook akkaunt ulandi",
+      "callbackErrorTitle": "Ulanib bo'lmadi",
+      "callbackErrorDescription": "Facebook akkauntni ulashda xatolik yuz berdi.",
+      "callbackRetry": "Qayta urinish",
+      "backToConnections": "Ulanishlar sahifasiga qaytish"
+    },
+    "delivery": {
+      "title": "Yetkazish kanallari",
+      "description": "Lidlar yuboriladigan kanallar",
+      "add": "Kanal qo'shish",
+      "empty": "Hali kanal qo'shilmagan",
+      "addTitle": "Yangi kanal",
+      "editTitle": "Kanalni tahrirlash",
+      "name": "Nomi",
+      "namePlaceholder": "Masalan: Asosiy Telegram guruh",
+      "nameRequired": "Nomini kiriting",
+      "type": "Turi",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda...",
+      "edit": "Tahrirlash",
+      "delete": "O'chirish",
+      "deleteTitle": "Kanalni o'chirish",
+      "deleteDescription": "\"{name}\" kanali o'chirilsinmi?",
+      "inUse": "Kanal integratsiyada ishlatilmoqda — avval integratsiyani o'zgartiring"
+    },
+    "config": {
+      "webhookUrl": "Webhook URL",
+      "webhookHeaders": "HTTP headerlar (ixtiyoriy)",
+      "webhookHeadersHint": "Har bir qatorda: Nomi: qiymati",
+      "botToken": "Bot token",
+      "chatId": "Chat ID",
+      "spreadsheetId": "Spreadsheet ID",
+      "bitrixWebhookUrl": "Bitrix24 webhook URL",
+      "subdomain": "Subdomen",
+      "token": "Token",
+      "apiKey": "API kalit",
+      "required": "Majburiy maydon",
+      "invalidUrl": "URL noto'g'ri"
+    }
+  },
+  "billing": {
+    "pricing": {
+      "title": "Tariflar",
+      "subtitle": "Biznesingizga mos tarifni tanlang",
+      "monthly": "Oylik",
+      "yearly": "Yillik",
+      "perMonth": "/oy",
+      "perYear": "/yil",
+      "free": "Bepul",
+      "unlimitedLeads": "Cheksiz lid",
+      "leadsPerMonth": "{count} lid/oy",
+      "currentPlan": "Joriy tarif",
+      "select": "Tanlash",
+      "features": {
+        "accounts": "100 tagacha Facebook akkaunt",
+        "products": "Cheksiz mahsulot",
+        "analytics": "Analitika",
+        "crm": "Sozlanadigan CRM integratsiyalar"
+      },
+      "confirmTitle": "Tarifni almashtirish",
+      "confirmDescription": "“{plan}” tarifiga o'tmoqchimisiz? Narxi: {price}.",
+      "confirmBalanceNote": "To'lov balansingizdan yechiladi. Joriy balans: {balance}.",
+      "confirmDeductNote": "To'lov balansingizdan yechiladi.",
+      "confirm": "Tasdiqlash",
+      "subscribeSuccess": "“{plan}” tarifi muvaffaqiyatli faollashtirildi",
+      "subscribeError": "Tarifni faollashtirib bo'lmadi. Qayta urinib ko'ring.",
+      "insufficientBalance": "Balansingizda mablag' yetarli emas",
+      "goToBalance": "Balansni to'ldirish"
+    },
+    "balance": {
+      "title": "Balans",
+      "currentBalance": "Joriy balans",
+      "topUpTitle": "Hisobni to'ldirish",
+      "tabReceipt": "Karta o'tkazma",
+      "tabOnline": "Onlayn to'lov",
+      "cardNumber": "Karta raqami",
+      "cardHolder": "Karta egasi",
+      "copy": "Nusxalash",
+      "copied": "Nusxalandi",
+      "copyFailed": "Nusxalab bo'lmadi",
+      "amount": "Summa (so'm)",
+      "amountPlaceholder": "50 000",
+      "receiptFile": "To'lov cheki (rasm yoki PDF)",
+      "receiptHint": "Yuqoridagi kartaga pul o'tkazing va chekni yuklang — administrator tekshirgach balans to'ldiriladi.",
+      "amountRequired": "Summani kiriting",
+      "fileRequired": "Chek faylini tanlang",
+      "invalidFileType": "Faqat rasm yoki PDF fayl yuklash mumkin",
+      "fileTooLarge": "Fayl hajmi 5 MB dan oshmasligi kerak",
+      "submitReceipt": "Yuborish",
+      "submitting": "Yuborilmoqda...",
+      "receiptPending": "Chek tekshirilmoqda",
+      "receiptError": "Chekni yuborib bo'lmadi. Qayta urinib ko'ring.",
+      "onlineHint": "Payme yoki Click orqali onlayn to'lov qiling — balans avtomatik to'ldiriladi.",
+      "pay": "To'lash",
+      "onlineError": "To'lovni boshlab bo'lmadi. Qayta urinib ko'ring.",
+      "historyTitle": "To'lovlar tarixi",
+      "noPayments": "Hozircha to'lovlar yo'q",
+      "colDate": "Sana",
+      "colAmount": "Summa",
+      "colMethod": "Usul",
+      "colStatus": "Holat",
+      "colReceipt": "Chek",
+      "methodReceipt": "Karta o'tkazma",
+      "methodOnline": "Onlayn",
+      "statusPending": "Kutilmoqda",
+      "statusConfirmed": "Tasdiqlangan",
+      "statusRejected": "Rad etilgan"
+    }
+  },
+  "products": {
+    "title": "Mahsulotlar",
+    "create": "Yangi mahsulot",
+    "empty": "Hali mahsulot qo'shilmagan",
+    "colName": "Nomi",
+    "colStream": "Oqim",
+    "colPrice": "Narxi",
+    "colReceiver": "Qabul qiluvchi",
+    "colDomain": "Domen",
+    "colStatus": "Holat",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "toggleStatus": "Holatni o'zgartirish",
+    "status": {
+      "active": "Faol",
+      "inactive": "Nofaol"
+    },
+    "form": {
+      "createTitle": "Yangi mahsulot",
+      "editTitle": "Mahsulotni tahrirlash",
+      "name": "Nomi",
+      "namePlaceholder": "Masalan: Krem Zdorov",
+      "nameRequired": "Nomini kiriting",
+      "stream": "Oqim (ixtiyoriy)",
+      "streamPlaceholder": "Masalan: FB asosiy oqim",
+      "price": "Narxi (so'm)",
+      "pricePlaceholder": "Masalan: 149000",
+      "priceInvalid": "Narxni to'g'ri kiriting",
+      "receiver": "Qabul qiluvchi",
+      "noReceiver": "Tanlanmagan",
+      "domain": "Domen (ixtiyoriy)",
+      "domainPlaceholder": "misol.uz"
+    },
+    "deleteDialog": {
+      "title": "Mahsulotni o'chirish",
+      "description": "\"{name}\" mahsuloti o'chirilsinmi? Bu amalni bekor qilib bo'lmaydi.",
+      "confirm": "O'chirish"
+    },
+    "toasts": {
+      "saved": "Mahsulot saqlandi",
+      "deleted": "Mahsulot o'chirildi",
+      "error": "Xatolik yuz berdi. Qayta urinib ko'ring."
+    }
+  },
+  "apiKeys": {
+    "title": "API kalitlar",
+    "subtitle": "Saytlaringizdan lid yuborish uchun API kalitlar",
+    "create": "Yangi kalit",
+    "empty": "Hali API kalit yaratilmagan",
+    "colName": "Nomi",
+    "colSite": "Sayt",
+    "colKey": "Kalit",
+    "colCreated": "Yaratilgan sana",
+    "delete": "O'chirish",
+    "createDialog": {
+      "title": "Yangi API kalit",
+      "name": "Nomi",
+      "namePlaceholder": "Masalan: Landing sayt",
+      "nameRequired": "Nomini kiriting",
+      "site": "Sayt",
+      "sitePlaceholder": "misol.uz",
+      "siteRequired": "Saytni kiriting",
+      "create": "Yaratish",
+      "creating": "Yaratilmoqda...",
+      "createdTitle": "API kalit yaratildi",
+      "onceWarning": "Bu kalit faqat bir marta ko'rsatiladi. Uni xavfsiz joyga saqlab qo'ying.",
+      "copy": "Nusxalash",
+      "copied": "Nusxalandi",
+      "copyFailed": "Nusxalab bo'lmadi",
+      "done": "Tayyor"
+    },
+    "deleteDialog": {
+      "title": "API kalitni o'chirish",
+      "description": "\"{name}\" kaliti o'chirilsinmi? Undan foydalanayotgan saytlar lid yubora olmaydi.",
+      "confirm": "O'chirish"
+    },
+    "toasts": {
+      "deleted": "API kalit o'chirildi",
+      "error": "Xatolik yuz berdi. Qayta urinib ko'ring."
+    }
+  },
+  "domains": {
+    "title": "Domenlar",
+    "search": {
+      "title": "Domen qidirish",
+      "placeholder": "Masalan: misol yoki misol.uz",
+      "button": "Qidirish",
+      "noResults": "Hech narsa topilmadi",
+      "buy": "Sotib olish",
+      "taken": "Band"
+    },
+    "purchaseDialog": {
+      "title": "{name} sotib olinsinmi?",
+      "description": "Narxi: {price}. Summa balansingizdan yechiladi. Domen 1 yilga ijaraga olinadi va avtomatik Yuboraman serverlariga ulanadi.",
+      "confirm": "Sotib olish",
+      "purchasing": "Sotib olinmoqda...",
+      "success": "{name} domeni sotib olindi",
+      "insufficientBalance": "Balansda mablag' yetarli emas",
+      "topUp": "Balansni to'ldirish",
+      "error": "Xatolik yuz berdi. Qayta urinib ko'ring."
+    },
+    "owned": {
+      "title": "Mening domenlarim",
+      "empty": "Hali domen sotib olinmagan",
+      "colName": "Domen",
+      "colStatus": "Holat",
+      "colPrice": "Narxi",
+      "colExpires": "Muddati"
+    },
+    "status": {
+      "active": "Faol",
+      "pending": "Kutilmoqda",
+      "expired": "Muddati tugagan"
+    },
+    "info": {
+      "title": "Avtomatik ulanish",
+      "body": "Sotib olingan domenlar avtomatik ravishda Yuboraman serverlariga ulanadi — qo'shimcha DNS sozlash talab qilinmaydi. Domen 1 yil muddatga ijaraga olinadi."
+    }
+  },
+  "dateRange": {
+    "today": "Bugun",
+    "last7": "7 kun",
+    "last30": "30 kun",
+    "thisMonth": "Joriy oy"
+  },
+  "reports": {
+    "title": "Hisobotlar",
+    "subtitle": "Facebook Ads kunlik hisobotlari Telegramga yuboriladi",
+    "create": "Yangi hisobot",
+    "empty": "Hozircha hisobot sozlanmagan",
+    "toggleStatus": "Statusni o'zgartirish",
+    "sendNow": "Bir martalik",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "columns": {
+      "adAccount": "Reklama akkaunti",
+      "chatId": "Chat ID",
+      "time": "Vaqt",
+      "period": "Davr",
+      "campaigns": "Kampaniyalar",
+      "format": "Format",
+      "status": "Status",
+      "lastSent": "Oxirgi yuborilgan"
+    },
+    "period": {
+      "week": "Hafta"
+    },
+    "status": {
+      "active": "Faol",
+      "paused": "Pauzada"
+    },
+    "form": {
+      "createTitle": "Yangi hisobot",
+      "editTitle": "Hisobotni tahrirlash",
+      "adAccount": "Reklama akkaunti",
+      "adAccountPlaceholder": "Akkauntni tanlang",
+      "adAccountRequired": "Reklama akkauntini tanlang",
+      "noAccounts": "Reklama akkauntlari topilmadi.",
+      "connectLink": "Facebook akkaunt ulang",
+      "chatId": "Chat ID",
+      "chatIdPlaceholder": "-1001234567890",
+      "chatIdHint": "Telegram chat ID — hisobot shu chatga yuboriladi",
+      "chatIdRequired": "Chat ID kiriting",
+      "time": "Yuborish vaqti",
+      "timeRequired": "Yuborish vaqtini kiriting",
+      "campaignsLimit": "Kampaniyalar soni",
+      "limitInvalid": "Kampaniyalar soni 1 dan katta butun son bo'lishi kerak",
+      "format": "Format",
+      "formatShort": "Qisqa",
+      "formatDetailed": "Batafsil"
+    },
+    "deleteDialog": {
+      "title": "Hisobotni o'chirish",
+      "description": "«{name}» uchun hisobot sozlamasi o'chiriladi. Davom etasizmi?",
+      "confirm": "O'chirish"
+    },
+    "toasts": {
+      "saved": "Hisobot saqlandi",
+      "deleted": "Hisobot o'chirildi",
+      "sent": "Hisobot navbatga qo'yildi",
+      "error": "Xatolik yuz berdi"
+    }
+  },
+  "finance": {
+    "title": "Moliya",
+    "subtitle": "ROI ko'rsatkichlari va kampaniyalar kesimi",
+    "noData": "Hozircha ma'lumot yo'q",
+    "kpi": {
+      "profit": "Foyda",
+      "roas": "ROAS",
+      "cpl": "CPL",
+      "spend": "Xarajat",
+      "revenue": "Daromad",
+      "hold": "Xold",
+      "deliveryRate": "Yetkazilganlik"
+    },
+    "chart": {
+      "title": "Kunlik dinamika",
+      "spend": "Xarajat",
+      "revenue": "Daromad",
+      "profit": "Foyda"
+    },
+    "campaigns": {
+      "title": "Kampaniyalar kesimi",
+      "colCampaign": "Kampaniya",
+      "colLeads": "Lidlar",
+      "colAccepted": "Qabul",
+      "colDelivered": "Yetkazilgan",
+      "colSpend": "Xarajat",
+      "colCpl": "CPL",
+      "colRoas": "ROAS",
+      "colProfit": "Foyda"
+    },
+    "platforms": {
+      "title": "Platformalar kesimi",
+      "colPlatform": "Platforma",
+      "colLeads": "Lidlar",
+      "colDelivered": "Yetkazilgan",
+      "colRevenue": "Daromad"
+    }
+  },
+  "orders": {
+    "title": "Buyurtmalar",
+    "subtitle": "CPA buyurtmalari va payout holati",
+    "empty": "Buyurtmalar topilmadi",
+    "total": "Jami: {count}",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "pageInfo": "{page} / {pages}",
+    "summary": {
+      "total": "Jami",
+      "pending": "Kutilmoqda",
+      "accepted": "Qabul qilingan",
+      "delivered": "Yetkazilgan",
+      "cancelled": "Bekor qilingan",
+      "payout": "Jami payout"
+    },
+    "filters": {
+      "all": "Barchasi",
+      "pending": "Kutilmoqda",
+      "accepted": "Qabul qilingan",
+      "delivered": "Yetkazilgan",
+      "cancelled": "Bekor qilingan",
+      "archived": "Arxiv"
+    },
+    "status": {
+      "pending": "Kutilmoqda",
+      "accepted": "Qabul qilingan",
+      "delivered": "Yetkazilgan",
+      "cancelled": "Bekor qilingan",
+      "archived": "Arxiv"
+    },
+    "columns": {
+      "id": "Buyurtma ID",
+      "campaign": "Kampaniya",
+      "status": "Status",
+      "payout": "Payout",
+      "date": "Sana"
+    }
+  },
+  "pacing": {
+    "title": "Lid tempi",
+    "subtitle": "Oylik lid maqsadlari va kunlik temp",
+    "add": "Maqsad qo'shish",
+    "empty": "Hozircha maqsad qo'yilmagan",
+    "accountScope": "Umumiy hisob",
+    "scopeAccountLabel": "Butun akkaunt bo'yicha",
+    "scopeIntegrationLabel": "Integratsiya bo'yicha",
+    "monthlyProgress": "Oylik maqsad",
+    "today": "Bugun: {today}/{target}",
+    "onTrack": "Grafikda",
+    "behind": "Ortda",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "form": {
+      "createTitle": "Yangi maqsad",
+      "editTitle": "Maqsadni tahrirlash",
+      "scope": "Qamrov",
+      "scopeAccount": "Umumiy hisob",
+      "scopeIntegration": "Integratsiya",
+      "integration": "Integratsiya",
+      "integrationPlaceholder": "Integratsiyani tanlang",
+      "noIntegrations": "Integratsiyalar topilmadi — avval integratsiya yarating",
+      "monthlyGoal": "Oylik maqsad (lidlar soni)",
+      "monthlyGoalPlaceholder": "1000",
+      "goalInvalid": "Maqsad 1 dan katta butun son bo'lishi kerak",
+      "integrationRequired": "Integratsiyani tanlang"
+    },
+    "deleteDialog": {
+      "title": "Maqsadni o'chirish",
+      "description": "«{name}» maqsadi o'chiriladi. Davom etasizmi?",
+      "confirm": "O'chirish"
+    },
+    "toasts": {
+      "saved": "Maqsad saqlandi",
+      "deleted": "Maqsad o'chirildi",
+      "error": "Xatolik yuz berdi"
+    }
+  }
+}

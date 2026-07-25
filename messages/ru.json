@@ -1,0 +1,936 @@
+{
+  "common": {
+    "appName": "Yuboraman",
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "logout": "Выйти",
+    "theme": "Тема",
+    "themeLight": "Светлая",
+    "themeDark": "Тёмная",
+    "language": "Язык",
+    "balance": "Баланс",
+    "plan": "Тариф",
+    "topUp": "Пополнить",
+    "sum": "сум",
+    "comingSoon": "Этот раздел будет добавлен на следующих этапах."
+  },
+  "nav": {
+    "dashboard": "Главная",
+    "integrations": "Интеграции",
+    "reports": "Отчёты",
+    "products": "Продукты",
+    "leadPacing": "Темп лидов",
+    "finance": "Финансы",
+    "orders": "Заказы",
+    "connections": "Подключения",
+    "domains": "Домены",
+    "apiKeys": "API ключи",
+    "pricing": "Тарифы",
+    "balance": "Баланс",
+    "settings": "Настройки"
+  },
+  "auth": {
+    "loginTitle": "Вход",
+    "loginSubtitle": "Войдите в свой аккаунт",
+    "registerTitle": "Регистрация",
+    "registerSubtitle": "Создайте бесплатный аккаунт",
+    "fullName": "Полное имя",
+    "fullNamePlaceholder": "Имя Фамилия",
+    "email": "Email",
+    "phone": "Номер телефона",
+    "password": "Пароль",
+    "loginButton": "Войти",
+    "registerButton": "Зарегистрироваться",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "loginLink": "Войти",
+    "registerLink": "Регистрация",
+    "submitting": "Отправка...",
+    "errors": {
+      "fullNameRequired": "Введите полное имя",
+      "emailInvalid": "Неверный email",
+      "phoneInvalid": "Неверный номер телефона (например: +998901234567)",
+      "passwordMin": "Пароль должен содержать минимум 8 символов",
+      "loginFailed": "Неверный email или пароль",
+      "registerFailed": "Не удалось зарегистрироваться. Попробуйте ещё раз.",
+      "confirmMismatch": "Пароли не совпадают",
+      "termsRequired": "Примите условия",
+      "oauthFailed": "Не удалось войти через соцсеть",
+      "emailTaken": "Этот email уже зарегистрирован"
+    },
+    "emailPlaceholder": "email@example.com",
+    "passwordPlaceholder": "Введите пароль",
+    "passwordPlaceholderCreate": "Создайте пароль",
+    "confirmPassword": "Подтверждение пароля",
+    "confirmPasswordPlaceholder": "Повторите пароль",
+    "rememberMe": "Запомнить меня",
+    "forgotPassword": "Забыли пароль?",
+    "termsAgree": "Регистрируясь, вы соглашаетесь с нашими <terms>условиями использования</terms> и <privacy>политикой конфиденциальности</privacy>",
+    "or": "или",
+    "socialContinue": "Войти через {provider}",
+    "comingSoon": "Скоро",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль",
+    "oauthConnecting": "Подключение...",
+    "copyright": "© 2025 Yuboraman. Все права защищены."
+  },
+  "marketing": {
+    "heroTitle": "Отправляйте лиды из Facebook в CRM <hl>автоматически</hl>",
+    "heroSubtitle": "Лиды из форм Facebook Lead Ads за секунды попадают в Telegram, Google Sheets, Bitrix24 или amoCRM. При ошибке — автоматический повтор. Ни один лид не потеряется.",
+    "heroEyebrow": "Платформа автоматизации лидов",
+    "ctaLogin": "Войти",
+    "ctaRegister": "Начать бесплатно",
+    "ctaHow": "Как это работает",
+    "nav": {
+      "how": "Как это работает",
+      "integrations": "Интеграции",
+      "services": "Услуги",
+      "pricing": "Тарифы",
+      "faq": "FAQ"
+    },
+    "heroStats": {
+      "speed": {
+        "value": "< 5 с",
+        "label": "скорость доставки"
+      },
+      "integrations": {
+        "value": "40+",
+        "label": "готовых интеграций"
+      },
+      "support": {
+        "value": "24/7",
+        "label": "поддержка"
+      }
+    },
+    "relay": {
+      "title": "Живой поток лидов",
+      "live": "Live",
+      "source": "Lead Ads",
+      "router": "Роутер",
+      "dest": "CRM",
+      "delivered": "Доставлен",
+      "retrying": "Повтор",
+      "queued": "В очереди",
+      "timeNow": "сейчас",
+      "timeSec": "{n} с назад",
+      "timeMin": "{n} мин назад",
+      "today": "Сегодня: 1 284 лида",
+      "rate": "Доставлено: 99,9%"
+    },
+    "trust": {
+      "integrations": {
+        "title": "40+ интеграций",
+        "desc": "Готовые подключения к CRM, мессенджерам и таблицам"
+      },
+      "support": {
+        "title": "Поддержка 24/7",
+        "desc": "Живая помощь в Telegram"
+      },
+      "setup": {
+        "title": "Бесплатная настройка",
+        "desc": "Наш специалист настроит вместе с вами"
+      },
+      "security": {
+        "title": "SSL + защита от DDoS",
+        "desc": "Данные передаются по шифрованному каналу"
+      }
+    },
+    "how": {
+      "eyebrow": "Процесс",
+      "title": "Как это работает",
+      "subtitle": "Лид проходит путь от формы Facebook до CRM за три шага — всё автоматически.",
+      "sourceLabel": "Источник",
+      "routerLabel": "Роутер",
+      "destLabel": "Получатель",
+      "source": {
+        "title": "Facebook Lead Ads",
+        "desc": "Клиент заполняет форму в рекламе — лид мгновенно принимается через webhook."
+      },
+      "router": {
+        "title": "Yuboraman",
+        "desc": "Лид проверяется, поля сопоставляются, затем лид направляется в нужную интеграцию. При ошибке — автоматический повтор.",
+        "chipRetry": "Авто-повтор",
+        "chipQueue": "Очередь",
+        "chipMap": "Маппинг полей"
+      },
+      "dest": {
+        "title": "Ваша CRM",
+        "desc": "Telegram, Google Sheets, Bitrix24, amoCRM или любой webhook — за секунды."
+      }
+    },
+    "integrationsSec": {
+      "eyebrow": "Подключения",
+      "title": "Работает с вашими сервисами",
+      "subtitle": "Источники лидов и платформы-получатели — всё в одном месте.",
+      "cat": {
+        "source": "Источник лидов",
+        "bot": "Бот и канал",
+        "sheets": "Таблицы",
+        "crm": "CRM",
+        "site": "Конструктор сайтов",
+        "cpa": "CPA-сеть"
+      },
+      "moreTitle": "ещё 40+ сервисов",
+      "moreDesc": "Подключите любую систему через универсальный webhook"
+    },
+    "services": {
+      "eyebrow": "Услуги",
+      "title": "Одна платформа — весь ваш поток лидов",
+      "subtitle": "От приёма лида до отчётов — всё внутри Yuboraman.",
+      "leads": {
+        "title": "Facebook Leads",
+        "desc": "Приём лидов из форм Lead Ads в реальном времени и доставка в нужное место."
+      },
+      "crm": {
+        "title": "Интеграция с CRM",
+        "desc": "Bitrix24, amoCRM, Google Sheets, Telegram — настройте поля один раз, остальное сделаем мы."
+      },
+      "reports": {
+        "title": "Рекламные отчёты",
+        "desc": "Ежедневные отчёты Facebook Ads — лиды, расходы, CTR — каждый день в вашем Telegram."
+      },
+      "pixel": {
+        "title": "Facebook Pixel",
+        "desc": "Отправляйте конверсии обратно в Facebook и усиливайте алгоритм рекламы."
+      },
+      "domains": {
+        "title": "Домены",
+        "desc": "Найдите домен и купите с баланса — он автоматически подключится к нашим серверам."
+      },
+      "security": {
+        "title": "Безопасность",
+        "desc": "SSL-шифрование, защита от DDoS и безопасное хранение токенов."
+      }
+    },
+    "steps": {
+      "eyebrow": "Старт",
+      "title": "Запустите за 4 шага",
+      "subtitle": "Настройка занимает меньше 10 минут — если нужна помощь, настроим вместе.",
+      "s1": {
+        "title": "Зарегистрируйтесь",
+        "desc": "Создайте бесплатный аккаунт с email и телефоном."
+      },
+      "s2": {
+        "title": "Подключите Facebook",
+        "desc": "Безопасно свяжите рекламный аккаунт через OAuth."
+      },
+      "s3": {
+        "title": "Выберите CRM",
+        "desc": "Выберите платформу-получатель и сопоставьте поля."
+      },
+      "s4": {
+        "title": "Лиды приходят",
+        "desc": "Каждый новый лид попадает в вашу CRM за секунды."
+      }
+    },
+    "videos": {
+      "eyebrow": "Обучение",
+      "title": "Видеоуроки",
+      "subtitle": "Освойте платформу за несколько минут.",
+      "lesson": "Урок {n}",
+      "v1": "Регистрация и первая настройка",
+      "v2": "Подключение аккаунтов Facebook и Google",
+      "v3": "Отправка лидов в CRM"
+    },
+    "pricing": {
+      "eyebrow": "Тарифы",
+      "title": "Тариф под ваш рост",
+      "subtitle": "Начните бесплатно — расширяйтесь по мере роста бизнеса. Оплата в сумах.",
+      "monthly": "Месяц",
+      "yearly": "Год",
+      "yearlyBadge": "2 месяца бесплатно",
+      "free": "Бесплатно",
+      "perMonth": "/мес",
+      "perYear": "/год",
+      "leads": "{count} лидов / мес",
+      "unlimited": "Безлимитные лиды",
+      "popular": "Популярный",
+      "cta": "Начать",
+      "note": "Во всех тарифах: до 100 аккаунтов Facebook, безлимитные продукты, полная аналитика и гибкие интеграции с CRM.",
+      "planNames": {
+        "starter": "Начальный",
+        "pro": "Профессиональный",
+        "business": "Бизнес",
+        "corporate": "Корпоративный"
+      },
+      "features": {
+        "accounts": "До 100 аккаунтов FB",
+        "products": "Безлимитные продукты",
+        "analytics": "Полная аналитика",
+        "crm": "Все интеграции с CRM",
+        "retry": "Авто-повтор и очередь"
+      }
+    },
+    "faq": {
+      "eyebrow": "Вопрос-ответ",
+      "title": "Часто задаваемые вопросы",
+      "subtitle": "Не нашли ответ? Напишите в Telegram — быстро ответим.",
+      "q1": {
+        "q": "Как работает Yuboraman?",
+        "a": "Вы подключаете рекламный аккаунт Facebook через OAuth, Yuboraman устанавливает webhook на ваши формы Lead Ads. Как только клиент заполняет форму, лид приходит к нам и за секунды отправляется в выбранную CRM или Telegram."
+      },
+      "q2": {
+        "q": "Сколько стоит сервис?",
+        "a": "Начальный тариф бесплатный — до 1 000 лидов в месяц. Платные тарифы от 49 000 сум в месяц. При оплате за год — 2 месяца бесплатно."
+      },
+      "q3": {
+        "q": "Что будет, если лид потеряется?",
+        "a": "Ничего не потеряется. При ошибке доставки система автоматически повторяет отправку. Если интеграция на паузе, лиды сохраняются в очереди и отправляются позже. Каждая попытка видна в журнале."
+      },
+      "q4": {
+        "q": "Какие CRM поддерживаются?",
+        "a": "Bitrix24, amoCRM (Kommo), Google Sheets и Telegram-бот — из коробки. Через универсальный webhook можно подключить любую другую систему."
+      },
+      "q5": {
+        "q": "Сколько аккаунтов Facebook можно подключить?",
+        "a": "Во всех тарифах — до 100 аккаунтов Facebook. Удобно и для агентств."
+      },
+      "q6": {
+        "q": "Как оплатить?",
+        "a": "Оплата в сумах: переводом с банковской карты (загружаете чек, быстро подтверждаем) или онлайн-платежом. Тариф списывается с баланса автоматически."
+      },
+      "q7": {
+        "q": "Какие ограничения у бесплатного тарифа?",
+        "a": "Начальный тариф бесплатно обрабатывает до 1 000 лидов в месяц и не ограничен по сроку. Основные интеграции и аналитика доступны."
+      },
+      "q8": {
+        "q": "Как работает поддержка?",
+        "a": "Поддержка работает 24/7 через Telegram. При первой настройке специалист бесплатно поможет."
+      },
+      "q9": {
+        "q": "Мои данные в безопасности?",
+        "a": "Да. Весь трафик шифруется по SSL, серверы под защитой от DDoS. Токены Facebook хранятся в зашифрованном виде и не передаются третьим лицам."
+      }
+    },
+    "footer": {
+      "tagline": "Платформа автоматической доставки лидов из Facebook в CRM. На узбекском языке, оплата в сумах, управление через Telegram.",
+      "colSections": "Разделы",
+      "colPlatform": "Платформа",
+      "colContact": "Контакты",
+      "telegram": "Telegram-канал",
+      "supportChat": "Чат поддержки",
+      "email": "info@yuboraman.uz",
+      "rights": "© 2026 Yuboraman. Все права защищены.",
+      "madeIn": "Сделано в Узбекистане"
+    }
+  },
+  "dashboard": {
+    "greeting": "Добро пожаловать, {name}!",
+    "todayLeads": "Лиды за сегодня",
+    "weekLeads": "Лиды за неделю",
+    "monthLeads": "Лиды за месяц",
+    "planUsage": "Лимит тарифа",
+    "daysLeft": "Осталось {days} дн.",
+    "todayDelivery": "Доставка за сегодня",
+    "delivered": "Доставлено",
+    "failed": "Ошибки",
+    "pending": "В очереди",
+    "total": "Всего",
+    "chartTitle": "Динамика по дням",
+    "chartSubtitle": "Последние {days} дней: доставленные и ошибочные лиды",
+    "integrationPerformance": "Эффективность интеграций",
+    "integrationPerformanceSubtitle": "Показатели за последнюю неделю",
+    "deliveredRate": "Уровень доставки",
+    "recentLeads": "Последние лиды",
+    "noLeads": "Пока нет лидов",
+    "colTime": "Время",
+    "colIntegration": "Интеграция",
+    "colStatus": "Статус",
+    "activityTitle": "Последняя активность",
+    "setupTitle": "Начало работы",
+    "setupSubtitle": "Выполните следующие шаги, чтобы полностью запустить сервис",
+    "setupChannel": "Подключите канал доставки",
+    "setupIntegration": "Создайте интеграцию",
+    "setupFacebook": "Подключите аккаунт Facebook",
+    "setupFirstLead": "Получите первый лид",
+    "optional": "необязательно",
+    "noData": "Пока нет данных",
+    "loadError": "Не удалось загрузить данные",
+    "retry": "Повторить"
+  },
+  "integrations": {
+    "title": "Интеграции",
+    "new": "Новая интеграция",
+    "searchPlaceholder": "Поиск интеграций...",
+    "loadError": "Не удалось загрузить данные",
+    "retry": "Повторить",
+    "status": {
+      "active": "Активна",
+      "paused": "Пауза"
+    },
+    "leadStatus": {
+      "pending": "В очереди",
+      "delivered": "Доставлен",
+      "failed": "Ошибка",
+      "paused_hold": "Пришёл в паузе"
+    },
+    "card": {
+      "source": "Источник",
+      "receiver": "Получатель",
+      "todayLeads": "Лиды за сегодня",
+      "pendingLeads": "Ожидающие лиды",
+      "lastLead": "Последний лид",
+      "never": "Лидов ещё не было"
+    },
+    "actions": {
+      "pause": "Пауза",
+      "start": "Старт",
+      "send": "Отправить",
+      "reset": "Сбросить авто-режим",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "copyWebhook": "Скопировать webhook URL",
+      "openDetail": "Подробнее"
+    },
+    "toasts": {
+      "copied": "Скопировано",
+      "actionDone": "Выполнено",
+      "saved": "Сохранено",
+      "deleted": "Удалено",
+      "error": "Произошла ошибка. Попробуйте ещё раз."
+    },
+    "empty": {
+      "title": "Пока нет интеграций",
+      "description": "Создайте первую интеграцию — лиды начнут доставляться автоматически.",
+      "cta": "Создать интеграцию"
+    },
+    "noResults": "Ничего не найдено",
+    "folders": {
+      "all": "Все",
+      "new": "Новая папка",
+      "createTitle": "Новая папка",
+      "renameTitle": "Переименовать папку",
+      "namePlaceholder": "Название папки",
+      "nameRequired": "Введите название папки",
+      "create": "Создать",
+      "rename": "Переименовать",
+      "delete": "Удалить",
+      "deleteTitle": "Удалить папку",
+      "deleteDescription": "Удалить папку \"{name}\"?",
+      "notEmpty": "Папка не пуста — сначала перенесите интеграции",
+      "noFolder": "Без папки"
+    },
+    "selection": {
+      "selected": "Выбрано: {count}",
+      "clear": "Отменить"
+    },
+    "deleteDialog": {
+      "title": "Удалить интеграцию",
+      "description": "Интеграция \"{name}\" будет удалена. Это действие нельзя отменить.",
+      "confirm": "Удалить"
+    },
+    "editDialog": {
+      "title": "Редактировать интеграцию",
+      "name": "Название",
+      "nameRequired": "Введите название",
+      "folder": "Папка",
+      "receiver": "Канал доставки"
+    },
+    "wizard": {
+      "title": "Новая интеграция",
+      "back": "Назад",
+      "next": "Продолжить",
+      "create": "Создать",
+      "creating": "Создание...",
+      "steps": {
+        "source": "Источник",
+        "details": "Название",
+        "receiver": "Получатель"
+      },
+      "sourceTitle": "Откуда приходят лиды?",
+      "sourceWebhookDescription": "Принимайте лиды JSON-запросом с любого сайта или системы",
+      "sourceFacebookDescription": "Автоматический приём из форм Facebook Lead Ads",
+      "facebook": {
+        "connection": "Аккаунт Facebook",
+        "selectConnection": "Выберите аккаунт",
+        "loading": "Загрузка...",
+        "noConnections": "Аккаунт Facebook ещё не подключён",
+        "connectCta": "Подключить на странице подключений",
+        "page": "Страница",
+        "selectPage": "Выберите страницу",
+        "noPages": "Страницы не найдены",
+        "form": "Lead-форма",
+        "selectForm": "Выберите форму",
+        "noForms": "На этой странице нет lead-форм",
+        "subscribing": "Подключаем страницу к webhook...",
+        "subscribed": "Страница подключена к webhook",
+        "subscribeError": "Не удалось подключить страницу к webhook. Попробуйте позже.",
+        "selectionRequired": "Выберите аккаунт, страницу и форму"
+      },
+      "detailsTitle": "Назовите интеграцию",
+      "namePlaceholder": "Например: Лиды с лендинга",
+      "nameRequired": "Введите название",
+      "folderOptional": "Папка (необязательно)",
+      "receiverTitle": "Куда отправлять лиды?",
+      "useExisting": "Существующий канал",
+      "createNew": "Новый канал",
+      "selectConnection": "Выберите канал",
+      "connectionRequired": "Выберите канал или создайте новый",
+      "noConnections": "Каналов пока нет — создайте новый",
+      "successTitle": "Интеграция создана!",
+      "successDescription": "Отправьте POST-запрос на этот URL — лид будет принят автоматически.",
+      "successFacebookDescription": "Лиды из выбранной формы теперь будут приниматься автоматически.",
+      "facebookAutoNote": "Лиды приходят из формы Facebook автоматически",
+      "webhookUrl": "Webhook URL",
+      "copy": "Скопировать",
+      "testLead": "Отправить тестовый лид",
+      "toList": "Список интеграций",
+      "toDetail": "Открыть интеграцию"
+    },
+    "detail": {
+      "back": "Интеграции",
+      "notFound": "Интеграция не найдена",
+      "webhookUrl": "Webhook URL",
+      "facebookAutoNote": "Лиды приходят из формы Facebook автоматически",
+      "leadsTitle": "Лиды",
+      "filters": {
+        "all": "Все",
+        "pending": "В очереди",
+        "delivered": "Доставлены",
+        "failed": "Ошибка",
+        "paused_hold": "Пришли в паузе"
+      },
+      "columns": {
+        "time": "Время",
+        "status": "Статус",
+        "retry": "Попытки",
+        "error": "Ошибка",
+        "payload": "Данные"
+      },
+      "empty": "Лидов нет",
+      "total": "Всего: {count}",
+      "prev": "Назад",
+      "next": "Далее",
+      "pageInfo": "{page} / {pages}"
+    }
+  },
+  "connections": {
+    "title": "Подключения",
+    "sources": {
+      "title": "Источники лидов",
+      "description": "Внешние платформы, откуда приходят лиды",
+      "facebookTitle": "Facebook",
+      "facebookDescription": "Подключение аккаунта Facebook Lead Ads и приём лидов из форм"
+    },
+    "facebook": {
+      "connect": "Подключить Facebook",
+      "reconnect": "Переподключить",
+      "statusActive": "Активно",
+      "statusError": "Ошибка",
+      "tokenExpires": "Срок токена: {time}",
+      "delete": "Удалить",
+      "deleteTitle": "Удалить подключение Facebook",
+      "deleteDescription": "Удалить подключение \"{name}\"? Связанные интеграции перестанут получать лиды.",
+      "callbackTitle": "Подключаем Facebook...",
+      "callbackDescription": "Пожалуйста, подождите — проверяем данные аккаунта.",
+      "callbackSuccess": "Аккаунт Facebook подключён",
+      "callbackErrorTitle": "Не удалось подключить",
+      "callbackErrorDescription": "Произошла ошибка при подключении аккаунта Facebook.",
+      "callbackRetry": "Повторить",
+      "backToConnections": "Вернуться к подключениям"
+    },
+    "delivery": {
+      "title": "Каналы доставки",
+      "description": "Каналы, куда отправляются лиды",
+      "add": "Добавить канал",
+      "empty": "Каналы ещё не добавлены",
+      "addTitle": "Новый канал",
+      "editTitle": "Редактировать канал",
+      "name": "Название",
+      "namePlaceholder": "Например: Основная Telegram-группа",
+      "nameRequired": "Введите название",
+      "type": "Тип",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "deleteTitle": "Удалить канал",
+      "deleteDescription": "Удалить канал \"{name}\"?",
+      "inUse": "Канал используется в интеграции — сначала измените интеграцию"
+    },
+    "config": {
+      "webhookUrl": "Webhook URL",
+      "webhookHeaders": "HTTP-заголовки (необязательно)",
+      "webhookHeadersHint": "По одному в строке: Имя: значение",
+      "botToken": "Токен бота",
+      "chatId": "Chat ID",
+      "spreadsheetId": "Spreadsheet ID",
+      "bitrixWebhookUrl": "Webhook URL Bitrix24",
+      "subdomain": "Субдомен",
+      "token": "Токен",
+      "apiKey": "API ключ",
+      "required": "Обязательное поле",
+      "invalidUrl": "Неверный URL"
+    }
+  },
+  "billing": {
+    "pricing": {
+      "title": "Тарифы",
+      "subtitle": "Выберите подходящий тариф для вашего бизнеса",
+      "monthly": "Месячный",
+      "yearly": "Годовой",
+      "perMonth": "/мес",
+      "perYear": "/год",
+      "free": "Бесплатно",
+      "unlimitedLeads": "Безлимитные лиды",
+      "leadsPerMonth": "{count} лидов/мес",
+      "currentPlan": "Текущий тариф",
+      "select": "Выбрать",
+      "features": {
+        "accounts": "До 100 Facebook аккаунтов",
+        "products": "Безлимитные продукты",
+        "analytics": "Аналитика",
+        "crm": "Настраиваемые CRM интеграции"
+      },
+      "confirmTitle": "Смена тарифа",
+      "confirmDescription": "Перейти на тариф «{plan}»? Стоимость: {price}.",
+      "confirmBalanceNote": "Оплата будет списана с баланса. Текущий баланс: {balance}.",
+      "confirmDeductNote": "Оплата будет списана с баланса.",
+      "confirm": "Подтвердить",
+      "subscribeSuccess": "Тариф «{plan}» успешно активирован",
+      "subscribeError": "Не удалось активировать тариф. Попробуйте ещё раз.",
+      "insufficientBalance": "Недостаточно средств на балансе",
+      "goToBalance": "Пополнить баланс"
+    },
+    "balance": {
+      "title": "Баланс",
+      "currentBalance": "Текущий баланс",
+      "topUpTitle": "Пополнение счёта",
+      "tabReceipt": "Перевод на карту",
+      "tabOnline": "Онлайн-оплата",
+      "cardNumber": "Номер карты",
+      "cardHolder": "Владелец карты",
+      "copy": "Скопировать",
+      "copied": "Скопировано",
+      "copyFailed": "Не удалось скопировать",
+      "amount": "Сумма (сум)",
+      "amountPlaceholder": "50 000",
+      "receiptFile": "Чек об оплате (изображение или PDF)",
+      "receiptHint": "Переведите деньги на карту выше и загрузите чек — после проверки администратором баланс будет пополнен.",
+      "amountRequired": "Введите сумму",
+      "fileRequired": "Выберите файл чека",
+      "invalidFileType": "Можно загрузить только изображение или PDF",
+      "fileTooLarge": "Размер файла не должен превышать 5 МБ",
+      "submitReceipt": "Отправить",
+      "submitting": "Отправка...",
+      "receiptPending": "Чек на проверке",
+      "receiptError": "Не удалось отправить чек. Попробуйте ещё раз.",
+      "onlineHint": "Оплатите онлайн через Payme или Click — баланс пополнится автоматически.",
+      "pay": "Оплатить",
+      "onlineError": "Не удалось начать оплату. Попробуйте ещё раз.",
+      "historyTitle": "История платежей",
+      "noPayments": "Платежей пока нет",
+      "colDate": "Дата",
+      "colAmount": "Сумма",
+      "colMethod": "Способ",
+      "colStatus": "Статус",
+      "colReceipt": "Чек",
+      "methodReceipt": "Перевод на карту",
+      "methodOnline": "Онлайн",
+      "statusPending": "Ожидается",
+      "statusConfirmed": "Подтверждено",
+      "statusRejected": "Отклонено"
+    }
+  },
+  "products": {
+    "title": "Продукты",
+    "create": "Новый продукт",
+    "empty": "Продукты пока не добавлены",
+    "colName": "Название",
+    "colStream": "Поток",
+    "colPrice": "Цена",
+    "colReceiver": "Получатель",
+    "colDomain": "Домен",
+    "colStatus": "Статус",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "toggleStatus": "Изменить статус",
+    "status": {
+      "active": "Активный",
+      "inactive": "Неактивный"
+    },
+    "form": {
+      "createTitle": "Новый продукт",
+      "editTitle": "Редактировать продукт",
+      "name": "Название",
+      "namePlaceholder": "Например: Крем Здоров",
+      "nameRequired": "Введите название",
+      "stream": "Поток (необязательно)",
+      "streamPlaceholder": "Например: FB основной поток",
+      "price": "Цена (сум)",
+      "pricePlaceholder": "Например: 149000",
+      "priceInvalid": "Введите корректную цену",
+      "receiver": "Получатель",
+      "noReceiver": "Не выбран",
+      "domain": "Домен (необязательно)",
+      "domainPlaceholder": "primer.uz"
+    },
+    "deleteDialog": {
+      "title": "Удалить продукт",
+      "description": "Удалить продукт \"{name}\"? Это действие нельзя отменить.",
+      "confirm": "Удалить"
+    },
+    "toasts": {
+      "saved": "Продукт сохранён",
+      "deleted": "Продукт удалён",
+      "error": "Произошла ошибка. Попробуйте ещё раз."
+    }
+  },
+  "apiKeys": {
+    "title": "API ключи",
+    "subtitle": "API ключи для отправки лидов с ваших сайтов",
+    "create": "Новый ключ",
+    "empty": "API ключи пока не созданы",
+    "colName": "Название",
+    "colSite": "Сайт",
+    "colKey": "Ключ",
+    "colCreated": "Дата создания",
+    "delete": "Удалить",
+    "createDialog": {
+      "title": "Новый API ключ",
+      "name": "Название",
+      "namePlaceholder": "Например: Лендинг",
+      "nameRequired": "Введите название",
+      "site": "Сайт",
+      "sitePlaceholder": "primer.uz",
+      "siteRequired": "Введите сайт",
+      "create": "Создать",
+      "creating": "Создание...",
+      "createdTitle": "API ключ создан",
+      "onceWarning": "Этот ключ показывается только один раз. Сохраните его в надёжном месте.",
+      "copy": "Скопировать",
+      "copied": "Скопировано",
+      "copyFailed": "Не удалось скопировать",
+      "done": "Готово"
+    },
+    "deleteDialog": {
+      "title": "Удалить API ключ",
+      "description": "Удалить ключ \"{name}\"? Сайты, использующие его, не смогут отправлять лиды.",
+      "confirm": "Удалить"
+    },
+    "toasts": {
+      "deleted": "API ключ удалён",
+      "error": "Произошла ошибка. Попробуйте ещё раз."
+    }
+  },
+  "domains": {
+    "title": "Домены",
+    "search": {
+      "title": "Поиск домена",
+      "placeholder": "Например: primer или primer.uz",
+      "button": "Найти",
+      "noResults": "Ничего не найдено",
+      "buy": "Купить",
+      "taken": "Занят"
+    },
+    "purchaseDialog": {
+      "title": "Купить {name}?",
+      "description": "Цена: {price}. Сумма спишется с вашего баланса. Домен арендуется на 1 год и автоматически подключается к серверам Yuboraman.",
+      "confirm": "Купить",
+      "purchasing": "Покупка...",
+      "success": "Домен {name} куплен",
+      "insufficientBalance": "Недостаточно средств на балансе",
+      "topUp": "Пополнить баланс",
+      "error": "Произошла ошибка. Попробуйте ещё раз."
+    },
+    "owned": {
+      "title": "Мои домены",
+      "empty": "Домены пока не куплены",
+      "colName": "Домен",
+      "colStatus": "Статус",
+      "colPrice": "Цена",
+      "colExpires": "Срок"
+    },
+    "status": {
+      "active": "Активный",
+      "pending": "Ожидает",
+      "expired": "Истёк"
+    },
+    "info": {
+      "title": "Автоматическое подключение",
+      "body": "Купленные домены автоматически подключаются к серверам Yuboraman — дополнительная настройка DNS не требуется. Домен арендуется на 1 год."
+    }
+  },
+  "dateRange": {
+    "today": "Сегодня",
+    "last7": "7 дней",
+    "last30": "30 дней",
+    "thisMonth": "Текущий месяц"
+  },
+  "reports": {
+    "title": "Отчёты",
+    "subtitle": "Ежедневные отчёты Facebook Ads отправляются в Telegram",
+    "create": "Новый отчёт",
+    "empty": "Отчёты пока не настроены",
+    "toggleStatus": "Изменить статус",
+    "sendNow": "Разовый",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "columns": {
+      "adAccount": "Рекламный аккаунт",
+      "chatId": "Chat ID",
+      "time": "Время",
+      "period": "Период",
+      "campaigns": "Кампании",
+      "format": "Формат",
+      "status": "Статус",
+      "lastSent": "Последняя отправка"
+    },
+    "period": {
+      "week": "Неделя"
+    },
+    "status": {
+      "active": "Активный",
+      "paused": "Приостановлен"
+    },
+    "form": {
+      "createTitle": "Новый отчёт",
+      "editTitle": "Редактировать отчёт",
+      "adAccount": "Рекламный аккаунт",
+      "adAccountPlaceholder": "Выберите аккаунт",
+      "adAccountRequired": "Выберите рекламный аккаунт",
+      "noAccounts": "Рекламные аккаунты не найдены.",
+      "connectLink": "Подключите аккаунт Facebook",
+      "chatId": "Chat ID",
+      "chatIdPlaceholder": "-1001234567890",
+      "chatIdHint": "Telegram chat ID — отчёт будет отправляться в этот чат",
+      "chatIdRequired": "Введите chat ID",
+      "time": "Время отправки",
+      "timeRequired": "Укажите время отправки",
+      "campaignsLimit": "Количество кампаний",
+      "limitInvalid": "Количество кампаний должно быть целым числом от 1",
+      "format": "Формат",
+      "formatShort": "Краткий",
+      "formatDetailed": "Подробный"
+    },
+    "deleteDialog": {
+      "title": "Удалить отчёт",
+      "description": "Настройка отчёта для «{name}» будет удалена. Продолжить?",
+      "confirm": "Удалить"
+    },
+    "toasts": {
+      "saved": "Отчёт сохранён",
+      "deleted": "Отчёт удалён",
+      "sent": "Отчёт поставлен в очередь",
+      "error": "Произошла ошибка"
+    }
+  },
+  "finance": {
+    "title": "Финансы",
+    "subtitle": "Показатели ROI и разрез по кампаниям",
+    "noData": "Пока нет данных",
+    "kpi": {
+      "profit": "Прибыль",
+      "roas": "ROAS",
+      "cpl": "CPL",
+      "spend": "Расход",
+      "revenue": "Доход",
+      "hold": "Холд",
+      "deliveryRate": "Доставляемость"
+    },
+    "chart": {
+      "title": "Дневная динамика",
+      "spend": "Расход",
+      "revenue": "Доход",
+      "profit": "Прибыль"
+    },
+    "campaigns": {
+      "title": "Разрез по кампаниям",
+      "colCampaign": "Кампания",
+      "colLeads": "Лиды",
+      "colAccepted": "Принято",
+      "colDelivered": "Доставлено",
+      "colSpend": "Расход",
+      "colCpl": "CPL",
+      "colRoas": "ROAS",
+      "colProfit": "Прибыль"
+    },
+    "platforms": {
+      "title": "Разрез по платформам",
+      "colPlatform": "Платформа",
+      "colLeads": "Лиды",
+      "colDelivered": "Доставлено",
+      "colRevenue": "Доход"
+    }
+  },
+  "orders": {
+    "title": "Заказы",
+    "subtitle": "CPA-заказы и статус выплат",
+    "empty": "Заказы не найдены",
+    "total": "Всего: {count}",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "pageInfo": "{page} / {pages}",
+    "summary": {
+      "total": "Всего",
+      "pending": "Ожидает",
+      "accepted": "Принят",
+      "delivered": "Доставлен",
+      "cancelled": "Отменён",
+      "payout": "Всего payout"
+    },
+    "filters": {
+      "all": "Все",
+      "pending": "Ожидает",
+      "accepted": "Принят",
+      "delivered": "Доставлен",
+      "cancelled": "Отменён",
+      "archived": "Архив"
+    },
+    "status": {
+      "pending": "Ожидает",
+      "accepted": "Принят",
+      "delivered": "Доставлен",
+      "cancelled": "Отменён",
+      "archived": "Архив"
+    },
+    "columns": {
+      "id": "ID заказа",
+      "campaign": "Кампания",
+      "status": "Статус",
+      "payout": "Payout",
+      "date": "Дата"
+    }
+  },
+  "pacing": {
+    "title": "Темп лидов",
+    "subtitle": "Месячные цели по лидам и дневной темп",
+    "add": "Добавить цель",
+    "empty": "Цели пока не заданы",
+    "accountScope": "Весь аккаунт",
+    "scopeAccountLabel": "По всему аккаунту",
+    "scopeIntegrationLabel": "По интеграции",
+    "monthlyProgress": "Месячная цель",
+    "today": "Сегодня: {today}/{target}",
+    "onTrack": "В графике",
+    "behind": "Отстаёт",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "form": {
+      "createTitle": "Новая цель",
+      "editTitle": "Редактировать цель",
+      "scope": "Охват",
+      "scopeAccount": "Весь аккаунт",
+      "scopeIntegration": "Интеграция",
+      "integration": "Интеграция",
+      "integrationPlaceholder": "Выберите интеграцию",
+      "noIntegrations": "Интеграции не найдены — сначала создайте интеграцию",
+      "monthlyGoal": "Месячная цель (кол-во лидов)",
+      "monthlyGoalPlaceholder": "1000",
+      "goalInvalid": "Цель должна быть целым числом от 1",
+      "integrationRequired": "Выберите интеграцию"
+    },
+    "deleteDialog": {
+      "title": "Удалить цель",
+      "description": "Цель «{name}» будет удалена. Продолжить?",
+      "confirm": "Удалить"
+    },
+    "toasts": {
+      "saved": "Цель сохранена",
+      "deleted": "Цель удалена",
+      "error": "Произошла ошибка"
+    }
+  }
+}
