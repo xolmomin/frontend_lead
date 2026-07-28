@@ -3,8 +3,17 @@ export const API_URL =
 
 let accessToken: string | null = null;
 
+// Notified on login/logout identity changes (NOT on silent refresh) so the
+// query cache can be wiped — otherwise user B sees user A's cached data.
+let onAuthChange: (() => void) | null = null;
+
+export function registerAuthChangeHandler(handler: () => void) {
+  onAuthChange = handler;
+}
+
 export function setAccessToken(token: string | null) {
   accessToken = token;
+  onAuthChange?.();
 }
 
 export function getAccessToken() {
@@ -98,14 +107,17 @@ export async function apiFetch<T>(
 
   if (res.status === 401 && !skipRefresh) {
     const refreshed = await refreshAccessToken();
-    if (!refreshed) {
+    if (refreshed) {
+      res = await doFetch();
+    }
+    if (!refreshed || res.status === 401) {
+      // Session is gone (refresh failed, or the new token was rejected too).
       accessToken = null;
       if (typeof window !== "undefined" && window.location.pathname !== "/login") {
         window.location.href = "/login";
       }
       throw new ApiError(401, await parseBody(res));
     }
-    res = await doFetch();
   }
 
   if (!res.ok) {

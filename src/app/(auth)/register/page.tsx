@@ -70,14 +70,21 @@ export default function RegisterPage() {
     setSubmitting(true);
     try {
       await register(result.data!);
-      await login({ email: result.data!.email, password: result.data!.password });
-      router.push("/dashboard");
     } catch (err) {
       if (err instanceof ApiError && err.status === 409) {
         setFieldErrors({ email: t("errors.emailTaken") });
       } else {
         setFormError(t("errors.registerFailed"));
       }
+      setSubmitting(false);
+      return;
+    }
+    try {
+      await login({ email: result.data!.email, password: result.data!.password });
+      router.push("/dashboard");
+    } catch {
+      // The account WAS created — don't show "register failed"; let them sign in.
+      router.push("/login");
     } finally {
       setSubmitting(false);
     }

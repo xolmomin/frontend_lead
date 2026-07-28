@@ -108,7 +108,9 @@ function CallbackContent() {
   }, [code, state, fbError, completeOAuth, router, t]);
 
   if (fbError) {
-    return <ErrorView message={fbErrorDescription} />;
+    // Never render the reflected error_description query param — an attacker-
+    // crafted link could put arbitrary text inside our branded error card.
+    return <ErrorView message={null} />;
   }
   if (paramsInvalid) {
     return <ErrorView message={null} />;
