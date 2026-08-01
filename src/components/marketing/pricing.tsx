@@ -1,207 +1,209 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Tick02Icon } from "@hugeicons/core-free-icons";
-import { API_URL } from "@/lib/api";
-import type { BillingPeriod, BillingPlan } from "@/lib/api/billing";
-import { formatSum } from "@/lib/money";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SectionHeader } from "./section-header";
+import { Check, Crown, TrendingUp, Zap, type LucideIcon } from "lucide-react";
+import { usePlans } from "@/hooks/use-billing";
+import type { BillingPlan } from "@/lib/api/billing";
+import { Button } from "./button";
 
-const FEATURE_KEYS = [
-  "accounts",
-  "products",
-  "analytics",
-  "crm",
-  "retry",
-] as const;
+/** "Tarif rejalar" — production `pricing` section (id=pricing). */
 
-/** Static §1.3 fallback used when GET /plans is unavailable. */
-const FALLBACK_PLANS: Array<
-  Omit<BillingPlan, "name"> & { nameKey: "starter" | "pro" | "business" | "corporate" }
-> = [
-  { id: "starter", nameKey: "starter", price_monthly: 0, price_yearly: 0, lead_limit: 1000, is_free: true },
-  { id: "pro", nameKey: "pro", price_monthly: 49000, price_yearly: 490000, lead_limit: 5000, is_free: false },
-  { id: "business", nameKey: "business", price_monthly: 69000, price_yearly: 690000, lead_limit: 10000, is_free: false },
-  { id: "corporate", nameKey: "corporate", price_monthly: 89000, price_yearly: 890000, lead_limit: null, is_free: false },
-];
-
-/**
- * Plain fetch on purpose: `apiFetch` redirects to /login after a failed
- * 401-refresh cycle, which must never happen to anonymous landing visitors.
- * Any error (including 404) resolves to `null` so the static fallback renders.
- */
-async function fetchPublicPlans(): Promise<BillingPlan[] | null> {
-  try {
-    const res = await fetch(`${API_URL}/plans`);
-    if (!res.ok) return null;
-    const data: unknown = await res.json();
-    const list = Array.isArray(data)
-      ? data
-      : (data as { items?: unknown } | null)?.items;
-    return Array.isArray(list) && list.length > 0
-      ? (list as BillingPlan[])
-      : null;
-  } catch {
-    return null;
-  }
+interface DisplayPlan {
+  id: number | string;
+  name: string;
+  price: number;
+  limit: number | null;
+  isFree: boolean;
+  isUnlimited: boolean;
 }
 
-function PlanCardSkeleton() {
-  return (
-    <div className="flex flex-col gap-4 rounded-2xl border bg-card p-6">
-      <Skeleton className="h-5 w-28" />
-      <Skeleton className="h-9 w-36" />
-      <Skeleton className="h-4 w-24" />
-      <Skeleton className="h-4 w-full" />
-      <Skeleton className="h-4 w-full" />
-      <Skeleton className="mt-auto h-9 w-full" />
-    </div>
-  );
+/** Production plan data, used until the billing API responds. */
+const FALLBACK_PLANS: DisplayPlan[] = [
+  { id: 0, name: "Boshlang'ich", price: 0, limit: 1000, isFree: true, isUnlimited: false },
+  { id: 1, name: "Professional", price: 49000, limit: 5000, isFree: false, isUnlimited: false },
+  { id: 2, name: "Biznes", price: 69000, limit: 10000, isFree: false, isUnlimited: false },
+  { id: 3, name: "Korporativ", price: 89000, limit: null, isFree: false, isUnlimited: true },
+];
+
+const REGISTER_LINKS: Record<number, string> = {
+  0: "/register?plan=1k",
+  1: "/register?plan=5k",
+  2: "/register?plan=10k",
+  3: "/register?plan=unlimited",
+};
+
+function formatNumber(value: number) {
+  // Manual grouping (production's own helper) — Intl output differs between
+  // Node and the browser for uz-UZ, which caused hydration mismatches.
+  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
+function planVisual(
+  plan: DisplayPlan,
+  index: number,
+): { Icon: LucideIcon; gradient: string } {
+  if (plan.isUnlimited) {
+    return { Icon: Crown, gradient: "from-accent-500 to-accent-600" };
+  }
+  const icons: LucideIcon[] = [Zap, TrendingUp, TrendingUp];
+  const gradients = [
+    "from-gray-500 to-gray-600",
+    "from-primary-500 to-primary-600",
+    "from-secondary-500 to-secondary-600",
+  ];
+  const i = Math.min(index, icons.length - 1);
+  return { Icon: icons[i], gradient: gradients[i] };
+}
+
+function toDisplayPlan(plan: BillingPlan): DisplayPlan {
+  return {
+    id: plan.id,
+    name: plan.name,
+    price: plan.price_monthly,
+    limit: plan.lead_limit,
+    isFree: plan.is_free,
+    isUnlimited: !plan.is_free && plan.lead_limit === null,
+  };
 }
 
 export function Pricing() {
-  const t = useTranslations("marketing.pricing");
-  const tCommon = useTranslations("common");
-  const [period, setPeriod] = useState<BillingPeriod>("monthly");
+  const t = useTranslations("landing");
+  const { data } = usePlans();
+  const plans: DisplayPlan[] =
+    data && data.length > 0 ? data.map(toDisplayPlan) : FALLBACK_PLANS;
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["landing-plans"],
-    queryFn: fetchPublicPlans,
-    staleTime: 5 * 60_000,
-    retry: false,
-  });
-
-  const plans: Array<BillingPlan & { popular: boolean }> = (
-    data ??
-    FALLBACK_PLANS.map((plan) => ({
-      ...plan,
-      name: t(`planNames.${plan.nameKey}`),
-    }))
-  ).map((plan, index) => ({ ...plan, popular: index === 1 }));
-
-  function priceParts(plan: BillingPlan): { amount: string; suffix?: string } {
-    if (plan.is_free) return { amount: t("free") };
-    const price = period === "monthly" ? plan.price_monthly : plan.price_yearly;
-    return {
-      amount: `${formatSum(price) ?? "—"} ${tCommon("sum")}`,
-      suffix: period === "monthly" ? t("perMonth") : t("perYear"),
-    };
-  }
+  const featuresFor = (plan: DisplayPlan): string[] => {
+    const leads = plan.isUnlimited
+      ? t("pricing.features.unlimited")
+      : `${formatNumber(plan.limit ?? 0)} ${t("pricing.features.leads")}`;
+    return [
+      leads,
+      t("pricing.features.integrations"),
+      t("pricing.features.stats"),
+      t("pricing.features.support"),
+      ...(plan.isFree ? [] : [t("pricing.features.domains")]),
+    ];
+  };
 
   return (
-    <section id="tariflar" className="mk-anchor border-y bg-muted/30">
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeader
-            eyebrow={t("eyebrow")}
-            title={t("title")}
-            subtitle={t("subtitle")}
-          />
-          <div className="flex items-center gap-3">
-            <Tabs
-              value={period}
-              onValueChange={(value) => setPeriod(value as BillingPeriod)}
+    <section id="pricing" className="py-12 sm:py-16 lg:py-20">
+      <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
+            {t("pricing.title")}
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {t("pricing.subtitle")}
+          </p>
+          <div className="mt-8 inline-flex items-center gap-1 p-1 rounded-xl bg-gray-100 dark:bg-slate-800">
+            <button
+              className="px-4 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm"
+              aria-current="true"
             >
-              <TabsList>
-                <TabsTrigger value="monthly">{t("monthly")}</TabsTrigger>
-                <TabsTrigger value="yearly">{t("yearly")}</TabsTrigger>
-              </TabsList>
-            </Tabs>
-            <Badge
-              variant="secondary"
-              className={cn(
-                "font-mono text-[10px] uppercase tracking-wider transition-opacity",
-                period === "yearly"
-                  ? "bg-primary/10 text-primary"
-                  : "opacity-60",
-              )}
+              {t("pricing.monthly")}
+            </button>
+            <button
+              disabled
+              aria-disabled="true"
+              className="px-4 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 text-gray-400 dark:text-gray-500 cursor-not-allowed"
             >
-              {t("yearlyBadge")}
-            </Badge>
+              {t("pricing.yearly")}
+              <span className="text-xs font-semibold text-white bg-gradient-to-r from-primary-500 to-secondary-500 px-2 py-0.5 rounded-full">
+                {t("pricing.comingSoon")}
+              </span>
+            </button>
           </div>
         </div>
-
-        {isLoading ? (
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <PlanCardSkeleton key={index} />
-            ))}
-          </div>
-        ) : (
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {plans.map((plan) => {
-              const { amount, suffix } = priceParts(plan);
-              return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {plans.map((plan, index) => {
+            const { Icon, gradient } = planVisual(plan, index);
+            const href =
+              REGISTER_LINKS[Number(plan.id)] ?? REGISTER_LINKS[index] ?? "/register";
+            const features = featuresFor(plan);
+            return (
+              <div key={plan.id}>
                 <div
-                  key={plan.id}
-                  className={cn(
-                    "relative flex flex-col gap-5 rounded-2xl border bg-card p-6",
-                    plan.popular &&
-                      "border-primary shadow-lg shadow-primary/10",
-                  )}
+                  className={`rounded-xl p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden h-full flex flex-col ${plan.isUnlimited ? "ring-2 ring-primary-500 dark:ring-primary-400" : ""}`}
                 >
-                  {plan.popular && (
-                    <Badge className="absolute -top-3 left-6">
-                      {t("popular")}
-                    </Badge>
+                  {plan.isUnlimited && (
+                    <div className="absolute top-0 right-0">
+                      <div className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-xs font-semibold px-4 py-1.5 rounded-bl-xl">
+                        {t("pricing.popular")}
+                      </div>
+                    </div>
                   )}
-                  <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                    {plan.name}
-                  </h3>
-                  <div>
-                    <p className="text-3xl font-bold tracking-tight">
-                      {amount}
-                      {suffix && (
-                        <span className="ml-1 text-sm font-normal text-muted-foreground">
-                          {suffix}
+                  <div className="flex flex-col h-full">
+                    <div
+                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-4`}
+                    >
+                      <Icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+                        {plan.name}
+                      </h3>
+                    </div>
+                    <div className="mb-6">
+                      {plan.isFree ? (
+                        <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                          {t("pricing.free")}
                         </span>
+                      ) : (
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                            {formatNumber(plan.price)}
+                          </span>
+                          <span className="text-gray-600 dark:text-gray-400">
+                            {t("pricing.perMonth")}
+                          </span>
+                        </div>
                       )}
-                    </p>
-                    <p className="mt-1 text-sm font-medium text-primary">
-                      {plan.lead_limit === null
-                        ? t("unlimited")
-                        : t("leads", {
-                            count: formatSum(plan.lead_limit) ?? "—",
-                          })}
-                    </p>
-                  </div>
-                  <ul className="flex flex-col gap-2">
-                    {FEATURE_KEYS.map((key) => (
-                      <li
-                        key={key}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-2">
+                        {plan.isUnlimited
+                          ? t("pricing.unlimitedLeads")
+                          : t("pricing.leadsPerMonth", {
+                              leads: formatNumber(plan.limit ?? 0),
+                            })}
+                      </p>
+                    </div>
+                    <div className="flex-1 mb-6">
+                      <ul className="space-y-3">
+                        {features.map((feature, featureIndex) => (
+                          <li
+                            key={featureIndex}
+                            className="flex items-start gap-3"
+                          >
+                            <div
+                              className={`w-5 h-5 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 mt-0.5`}
+                            >
+                              <Check
+                                className="w-3 h-3 text-white"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            <span className="text-sm text-gray-700 dark:text-gray-300 break-words min-w-0">
+                              {feature}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Link href={href} className="block">
+                      <Button
+                        variant={plan.isUnlimited ? "primary" : "outline"}
+                        size="md"
+                        className="w-full"
                       >
-                        <HugeiconsIcon
-                          icon={Tick02Icon}
-                          className="mt-0.5 size-4 shrink-0 text-primary"
-                        />
-                        {t(`features.${key}`)}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button
-                    asChild
-                    className="mt-auto w-full"
-                    variant={plan.popular ? "default" : "outline"}
-                  >
-                    <Link href="/register">{t("cta")}</Link>
-                  </Button>
+                        {t("pricing.choose")}
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
-
-        <p className="mt-8 text-sm text-muted-foreground">{t("note")}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

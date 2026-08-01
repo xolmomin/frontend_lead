@@ -1,363 +1,362 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  Alert02Icon,
-  Copy01Icon,
-  Delete02Icon,
-  Key01Icon,
-  PlusSignIcon,
-} from "@hugeicons/core-free-icons";
-import { copyToClipboard } from "@/lib/clipboard";
-import { formatDateTime, formatRelativeTime } from "@/lib/relative-time";
-import type { ApiKey, ApiKeyWithSecret } from "@/lib/api/api-keys";
+import { Copy, Eye, EyeOff, Key, Plus, Save, Trash2 } from "lucide-react";
 import {
   useApiKeys,
   useCreateApiKey,
   useDeleteApiKey,
 } from "@/hooks/use-api-keys";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-function LoadErrorState({ onRetry }: { onRetry: () => void }) {
-  const t = useTranslations("dashboard");
-  return (
-    <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed py-10 text-center">
-      <p className="text-sm text-muted-foreground">{t("loadError")}</p>
-      <Button variant="outline" onClick={onRetry}>
-        {t("retry")}
-      </Button>
-    </div>
-  );
-}
-
-function CreateApiKeyDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const t = useTranslations("apiKeys.createDialog");
-  const tToasts = useTranslations("apiKeys.toasts");
-  const tCommon = useTranslations("common");
-  const mutation = useCreateApiKey();
-
-  const [formError, setFormError] = useState<string | null>(null);
-  // Once set, the dialog switches to the one-time full-key reveal state.
-  const [created, setCreated] = useState<ApiKeyWithSecret | null>(null);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (mutation.isPending) return;
-
-    const form = new FormData(event.currentTarget);
-    const name = String(form.get("name") ?? "").trim();
-    const site = String(form.get("site") ?? "").trim();
-
-    if (!name) {
-      setFormError(t("nameRequired"));
-      return;
-    }
-    if (!site) {
-      setFormError(t("siteRequired"));
-      return;
-    }
-    setFormError(null);
-
-    mutation.mutate(
-      { name, site },
-      {
-        onSuccess: (data) => setCreated(data),
-        onError: () => toast.error(tToasts("error")),
-      },
-    );
-  }
-
-  async function handleCopy() {
-    if (!created) return;
-    const ok = await copyToClipboard(created.key);
-    if (ok) toast.success(t("copied"));
-    else toast.error(t("copyFailed"));
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        {created ? (
-          <>
-            <DialogHeader>
-              <DialogTitle>{t("createdTitle")}</DialogTitle>
-            </DialogHeader>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-start gap-2 rounded-lg border border-amber-600/30 bg-amber-500/10 p-3 text-sm text-amber-700 dark:text-amber-400">
-                <HugeiconsIcon
-                  icon={Alert02Icon}
-                  className="mt-0.5 size-4 shrink-0"
-                />
-                <p>{t("onceWarning")}</p>
-              </div>
-              <div className="flex items-center gap-2 rounded-lg border bg-muted/40 p-3">
-                <code className="min-w-0 flex-1 font-mono text-sm break-all">
-                  {created.key}
-                </code>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  aria-label={t("copy")}
-                  onClick={handleCopy}
-                >
-                  <HugeiconsIcon icon={Copy01Icon} className="size-4" />
-                </Button>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="button" onClick={() => onOpenChange(false)}>
-                {t("done")}
-              </Button>
-            </DialogFooter>
-          </>
-        ) : (
-          <>
-            <DialogHeader>
-              <DialogTitle>{t("title")}</DialogTitle>
-            </DialogHeader>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-4"
-              noValidate
-            >
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="api-key-name">{t("name")}</Label>
-                <Input
-                  id="api-key-name"
-                  name="name"
-                  placeholder={t("namePlaceholder")}
-                  autoComplete="off"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="api-key-site">{t("site")}</Label>
-                <Input
-                  id="api-key-site"
-                  name="site"
-                  placeholder={t("sitePlaceholder")}
-                  autoComplete="off"
-                />
-              </div>
-              {formError && (
-                <p className="text-sm text-destructive">{formError}</p>
-              )}
-              <DialogFooter>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => onOpenChange(false)}
-                >
-                  {tCommon("cancel")}
-                </Button>
-                <Button type="submit" disabled={mutation.isPending}>
-                  {mutation.isPending ? t("creating") : t("create")}
-                </Button>
-              </DialogFooter>
-            </form>
-          </>
-        )}
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function DeleteApiKeyDialog({
-  apiKey,
-  open,
-  onOpenChange,
-}: {
-  apiKey: ApiKey;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const t = useTranslations("apiKeys.deleteDialog");
-  const tToasts = useTranslations("apiKeys.toasts");
-  const tCommon = useTranslations("common");
-  const mutation = useDeleteApiKey();
-
-  function handleDelete() {
-    mutation.mutate(apiKey.id, {
-      onSuccess: () => {
-        onOpenChange(false);
-        toast.success(tToasts("deleted"));
-      },
-      onError: () => {
-        onOpenChange(false);
-        toast.error(tToasts("error"));
-      },
-    });
-  }
-
-  return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {t("description", { name: apiKey.name })}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{tCommon("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} disabled={mutation.isPending}>
-            {t("confirm")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
-}
+import type { ApiKey } from "@/lib/api/api-keys";
+import { copyToClipboard } from "@/lib/clipboard";
+import { formatDateTime } from "@/lib/relative-time";
+import { YbButton } from "@/components/yb/button";
+import { YbCard, YbCardHeader, YbCardTitle } from "@/components/yb/card";
+import { YbDataTable, type YbColumn } from "@/components/yb/data-table";
+import { YbModal } from "@/components/yb/modal";
+import { YbSpinner } from "@/components/yb/spinner";
+import { YbTooltip } from "@/components/yb/tooltip";
+import { ConfirmModal } from "@/components/dashboard/confirm-modal";
 
 export function ApiKeysView() {
   const t = useTranslations("apiKeys");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
+  const addFormId = useId();
+
   const keysQuery = useApiKeys();
+  const createMutation = useCreateApiKey();
+  const deleteMutation = useDeleteApiKey();
 
-  const [createOpen, setCreateOpen] = useState(false);
-  const [deleting, setDeleting] = useState<ApiKey | null>(null);
+  const keys = useMemo(() => keysQuery.data ?? [], [keysQuery.data]);
+  const loading = keysQuery.isLoading;
 
-  const keys = keysQuery.data ?? [];
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deletingKey, setDeletingKey] = useState<ApiKey | null>(null);
+  const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
+  const [form, setForm] = useState({ name: "", website: "" });
+  // The full key is returned exactly once by the create endpoint; keep the
+  // values around for this session so show/copy keep working.
+  const [fullKeys, setFullKeys] = useState<Record<string, string>>({});
+
+  const openAdd = () => {
+    setForm({ name: "", website: "" });
+    setIsAddOpen(true);
+  };
+
+  const openDelete = (key: ApiKey) => {
+    setDeletingKey(key);
+    setIsDeleteOpen(true);
+  };
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.website) {
+      toast.error(t("messages.fillAllFields"));
+      return;
+    }
+    createMutation.mutate(
+      { name: form.name, site: form.website },
+      {
+        onSuccess: (created) => {
+          if (created.key) {
+            setFullKeys((prev) => ({
+              ...prev,
+              [String(created.id)]: created.key,
+            }));
+          }
+          toast.success(t("messages.added"));
+          setIsAddOpen(false);
+        },
+        onError: () => toast.error(tCommon("messages.error")),
+      },
+    );
+  };
+
+  const handleDelete = () => {
+    if (!deletingKey) return;
+    deleteMutation.mutate(deletingKey.id, {
+      onSuccess: () => {
+        toast.success(t("messages.deleted"));
+        setIsDeleteOpen(false);
+        setDeletingKey(null);
+      },
+      onError: () => toast.error(tCommon("messages.error")),
+    });
+  };
+
+  const toggleKeyVisibility = (id: string) => {
+    setVisibleKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleCopy = useCallback(
+    async (value: string) => {
+      const ok = await copyToClipboard(value);
+      if (ok) toast.success(t("messages.copied"));
+      else toast.error(tCommon("errors.copyFailed"));
+    },
+    [t, tCommon],
+  );
+
+  const maskKey = (key: string) =>
+    key.length <= 8 ? key : key.substring(0, 8) + "***";
+
+  const keyValue = useCallback(
+    (row: ApiKey) => fullKeys[String(row.id)] ?? row.key_masked,
+    [fullKeys],
+  );
+
+  const columns = useMemo<YbColumn<ApiKey>[]>(
+    () => [
+      {
+        key: "name",
+        header: t("table.name"),
+        accessor: (row) => (
+          <div>
+            <p className="font-medium text-gray-900 dark:text-gray-100">
+              {row.name}
+            </p>
+          </div>
+        ),
+        searchable: true,
+        sortable: true,
+      },
+      {
+        key: "website",
+        header: t("table.website"),
+        accessor: (row) => (
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {row.site}
+          </span>
+        ),
+        sortable: true,
+      },
+      {
+        key: "key",
+        header: t("table.key"),
+        accessor: (row) => {
+          const isVisible = visibleKeys.has(String(row.id));
+          const value = keyValue(row);
+          return (
+            <div className="flex items-center gap-2">
+              <code className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded border border-gray-300 dark:border-gray-600">
+                {isVisible ? value : maskKey(value)}
+              </code>
+              <div className="flex items-center gap-1">
+                <YbTooltip
+                  content={t(isVisible ? "actions.hide" : "actions.show")}
+                >
+                  <button
+                    onClick={() => toggleKeyVisibility(String(row.id))}
+                    className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                    aria-label={t(isVisible ? "actions.hide" : "actions.show")}
+                  >
+                    {isVisible ? (
+                      <EyeOff className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    ) : (
+                      <Eye className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    )}
+                  </button>
+                </YbTooltip>
+                <YbTooltip content={t("actions.copy")}>
+                  <button
+                    onClick={() => handleCopy(value)}
+                    className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                    aria-label={t("actions.copy")}
+                  >
+                    <Copy className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                  </button>
+                </YbTooltip>
+              </div>
+            </div>
+          );
+        },
+      },
+      {
+        key: "created_at",
+        header: t("table.createdAt"),
+        accessor: (row) => (
+          <span className="text-sm text-gray-600 dark:text-gray-400">
+            {formatDateTime(row.created_at, locale) ?? "—"}
+          </span>
+        ),
+        sortable: true,
+      },
+      {
+        key: "actions",
+        header: t("table.actions"),
+        accessor: (row) => (
+          <div className="flex items-center gap-2">
+            <YbTooltip content={t("actions.delete")}>
+              <YbButton
+                variant="danger"
+                size="sm"
+                onClick={() => openDelete(row)}
+                className="px-2.5"
+              >
+                <Trash2 className="w-4 h-4" />
+              </YbButton>
+            </YbTooltip>
+          </div>
+        ),
+      },
+    ],
+    [t, visibleKeys, handleCopy, keyValue, locale],
+  );
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
+            {t("title")}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
+            {t("subtitle")}
+          </p>
         </div>
-        <Button onClick={() => setCreateOpen(true)}>
-          <HugeiconsIcon icon={PlusSignIcon} className="size-4" />
-          {t("create")}
-        </Button>
+        <YbButton
+          variant="primary"
+          onClick={openAdd}
+          leftIcon={<Plus className="w-4 h-4" />}
+        >
+          {t("addNew")}
+        </YbButton>
       </div>
 
-      <Card>
-        <CardContent>
-          {keysQuery.isLoading ? (
-            <div className="flex flex-col gap-2">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <Skeleton key={index} className="h-12 w-full" />
-              ))}
+      <YbCard>
+        <YbCardHeader>
+          <YbCardTitle className="flex items-center gap-2">
+            <Key className="w-5 h-5" />
+            {t("card.title")} ({keys.length})
+          </YbCardTitle>
+        </YbCardHeader>
+        <div>
+          {loading ? (
+            <div className="py-12 flex flex-col items-center justify-center">
+              <YbSpinner className="w-12 h-12 text-primary-600 dark:text-primary-400 mb-4" />
+              <p className="text-gray-600 dark:text-gray-400">
+                {t("loading.keys")}
+              </p>
             </div>
-          ) : keysQuery.isError ? (
-            <LoadErrorState onRetry={() => keysQuery.refetch()} />
           ) : keys.length === 0 ? (
-            <div className="flex flex-col items-center gap-3 py-12 text-center">
-              <HugeiconsIcon
-                icon={Key01Icon}
-                className="size-10 text-muted-foreground/50"
-              />
-              <p className="text-sm text-muted-foreground">{t("empty")}</p>
-              <Button variant="outline" onClick={() => setCreateOpen(true)}>
-                {t("create")}
-              </Button>
+            <div className="py-16 text-center">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+                <Key className="w-10 h-10 text-gray-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                {t("empty.title")}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                {t("empty.description")}
+              </p>
+              <YbButton
+                variant="primary"
+                onClick={openAdd}
+                leftIcon={<Plus className="w-5 h-5" />}
+                className="mx-auto"
+              >
+                {t("empty.addFirst")}
+              </YbButton>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t("colName")}</TableHead>
-                    <TableHead>{t("colSite")}</TableHead>
-                    <TableHead>{t("colKey")}</TableHead>
-                    <TableHead>{t("colCreated")}</TableHead>
-                    <TableHead />
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {keys.map((apiKey) => (
-                    <TableRow key={apiKey.id}>
-                      <TableCell className="font-medium">
-                        {apiKey.name}
-                      </TableCell>
-                      <TableCell className="whitespace-nowrap">
-                        {apiKey.site}
-                      </TableCell>
-                      <TableCell>
-                        <code className="font-mono text-sm">
-                          {apiKey.key_masked}
-                        </code>
-                      </TableCell>
-                      <TableCell
-                        className="whitespace-nowrap"
-                        title={formatDateTime(apiKey.created_at, locale) ?? ""}
-                      >
-                        {formatRelativeTime(apiKey.created_at, locale) ?? "—"}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex justify-end">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            aria-label={t("delete")}
-                            className="text-destructive hover:text-destructive"
-                            onClick={() => setDeleting(apiKey)}
-                          >
-                            <HugeiconsIcon
-                              icon={Delete02Icon}
-                              className="size-4"
-                            />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+            <YbDataTable
+              data={keys}
+              columns={columns}
+              searchPlaceholder={t("search.placeholder")}
+              defaultPageSize={25}
+              emptyMessage={t("search.emptyResult")}
+            />
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </YbCard>
 
-      {createOpen && (
-        <CreateApiKeyDialog open={createOpen} onOpenChange={setCreateOpen} />
-      )}
-      {deleting && (
-        <DeleteApiKeyDialog
-          apiKey={deleting}
-          open
-          onOpenChange={(open) => {
-            if (!open) setDeleting(null);
+      <YbModal
+        isOpen={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        title={t("modal.addTitle")}
+      >
+        <form onSubmit={handleAdd} className="space-y-4">
+          <div>
+            <label
+              htmlFor={`${addFormId}-name`}
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              {t("modal.name")}
+            </label>
+            <input
+              id={`${addFormId}-name`}
+              type="text"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              placeholder={t("modal.namePlaceholder")}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor={`${addFormId}-website`}
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              {t("modal.website")}
+            </label>
+            <input
+              id={`${addFormId}-website`}
+              type="text"
+              value={form.website}
+              onChange={(e) => setForm({ ...form, website: e.target.value })}
+              placeholder={t("modal.websiteSelect")}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              required
+            />
+          </div>
+          <div className="flex gap-3 pt-4">
+            <YbButton
+              type="button"
+              variant="outline"
+              onClick={() => setIsAddOpen(false)}
+              className="flex-1"
+              disabled={createMutation.isPending}
+            >
+              {t("modal.cancel")}
+            </YbButton>
+            <YbButton
+              type="submit"
+              variant="primary"
+              loading={createMutation.isPending}
+              disabled={createMutation.isPending}
+              className="flex-1"
+              leftIcon={<Save className="w-4 h-4" />}
+            >
+              {t("modal.save")}
+            </YbButton>
+          </div>
+        </form>
+      </YbModal>
+
+      {deletingKey && (
+        <ConfirmModal
+          isOpen={isDeleteOpen}
+          onClose={() => {
+            setIsDeleteOpen(false);
+            setDeletingKey(null);
           }}
+          onConfirm={handleDelete}
+          title={t("deleteDialog.title")}
+          message={t("deleteDialog.message")}
+          confirmText={t("deleteDialog.confirm")}
+          cancelText={t("deleteDialog.cancel")}
+          type="danger"
+          loading={deleteMutation.isPending}
         />
       )}
     </div>

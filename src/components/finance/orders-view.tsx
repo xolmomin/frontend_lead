@@ -1,30 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
-import { formatSum } from "@/lib/money";
-import { formatDateTime, formatRelativeTime } from "@/lib/relative-time";
-import { presetRange, type DateRangePreset } from "@/lib/date-range";
-import type { Order, OrderStatus } from "@/lib/api/orders";
-import { useOrders, useOrdersSummary } from "@/hooks/use-orders";
-import { DateRangeTabs } from "@/components/finance/date-range-tabs";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useMemo, useState, type ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import { ChevronLeft, ChevronRight, Inbox, ShoppingCart } from "lucide-react";
+import type { OrderStatus } from "@/lib/api/orders";
+import { useOrders } from "@/hooks/use-orders";
+import { YbButton } from "@/components/yb/button";
+import { YbCard, YbCardHeader, YbCardTitle } from "@/components/yb/card";
+import { YbSpinner } from "@/components/yb/spinner";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  FINANCE_WINDOWS,
+  financeWindowRange,
+  formatUsd,
+  type FinanceWindow,
+} from "@/components/finance/finance-window";
 
-const STATUS_FILTERS: (OrderStatus | "")[] = [
-  "",
+const STATUSES: OrderStatus[] = [
   "pending",
   "accepted",
   "delivered",
@@ -32,260 +23,249 @@ const STATUS_FILTERS: (OrderStatus | "")[] = [
   "archived",
 ];
 
-const STATUS_BADGE_CLASSES: Record<OrderStatus, string> = {
-  pending:
-    "border-amber-600/30 bg-amber-500/10 text-amber-700 dark:text-amber-400",
-  accepted: "border-sky-600/30 bg-sky-500/10 text-sky-700 dark:text-sky-400",
+/**
+ * The production API accepts page_size; the local /orders endpoint uses a
+ * fixed server-side page size that matches production's 20.
+ */
+const PAGE_SIZE = 20;
+
+const STATUS_CLASSES: Record<OrderStatus, string> = {
+  pending: "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400",
+  accepted:
+    "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
   delivered:
-    "border-emerald-600/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
-  cancelled: "border-red-600/30 bg-red-500/10 text-red-700 dark:text-red-400",
-  archived: "border-border bg-muted text-muted-foreground",
+    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+  cancelled: "bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400",
+  archived: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400",
 };
 
-function LoadErrorState({ onRetry }: { onRetry: () => void }) {
-  const t = useTranslations("dashboard");
-  return (
-    <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed py-10 text-center">
-      <p className="text-sm text-muted-foreground">{t("loadError")}</p>
-      <Button variant="outline" onClick={onRetry}>
-        {t("retry")}
-      </Button>
-    </div>
-  );
-}
-
-function OrderStatusBadge({ status }: { status: OrderStatus }) {
-  const t = useTranslations("orders.status");
-  return (
-    <Badge variant="outline" className={cn(STATUS_BADGE_CLASSES[status])}>
-      {t(status)}
-    </Badge>
-  );
-}
-
-function SummaryChip({
-  label,
-  value,
-  className,
-}: {
-  label: string;
-  value: string;
-  className?: string;
-}) {
-  return (
-    <Card className="py-3">
-      <CardContent className="px-4">
-        <p className="text-xs text-muted-foreground">{label}</p>
-        <p className={cn("text-xl font-bold tabular-nums", className)}>
-          {value}
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function OrderRow({ order, locale }: { order: Order; locale: string }) {
-  const tCommon = useTranslations("common");
-  const payout = formatSum(order.payout);
-
-  return (
-    <TableRow>
-      <TableCell className="font-mono text-xs">
-        {order.external_id || String(order.id)}
-      </TableCell>
-      <TableCell className="max-w-56">
-        <span className="block truncate" title={order.campaign ?? undefined}>
-          {order.campaign || <span className="text-muted-foreground">—</span>}
-        </span>
-      </TableCell>
-      <TableCell>
-        <OrderStatusBadge status={order.status} />
-      </TableCell>
-      <TableCell className="whitespace-nowrap tabular-nums">
-        {payout !== null ? `${payout} ${tCommon("sum")}` : "—"}
-      </TableCell>
-      <TableCell
-        className="whitespace-nowrap text-muted-foreground"
-        title={formatDateTime(order.created_at, locale) ?? undefined}
-      >
-        {formatRelativeTime(order.created_at, locale) ?? "—"}
-      </TableCell>
-    </TableRow>
-  );
-}
-
 export function OrdersView() {
-  const t = useTranslations("orders");
-  const tCommon = useTranslations("common");
-  const locale = useLocale();
-
-  const [preset, setPreset] = useState<DateRangePreset>("last30");
-  const [status, setStatus] = useState<OrderStatus | "">("");
+  const t = useTranslations("finance");
+  const [windowSel, setWindowSel] = useState<FinanceWindow>("30d");
+  const [status, setStatus] = useState<OrderStatus | null>(null);
   const [page, setPage] = useState(1);
-  const [perPageGuess, setPerPageGuess] = useState<number | null>(null);
 
-  const range = useMemo(() => presetRange(preset), [preset]);
+  const range = useMemo(() => financeWindowRange(windowSel), [windowSel]);
+  const ordersQuery = useOrders({ ...range, status: status ?? "", page });
 
-  const summaryQuery = useOrdersSummary(range);
-  const ordersQuery = useOrders({ ...range, status, page });
+  const loading = ordersQuery.isFetching;
+  const result = ordersQuery.data;
+  const orders = result?.items ?? [];
+  const total = result?.total ?? 0;
+  const fromIndex = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const toIndex = Math.min(page * PAGE_SIZE, total);
+  const hasNext = page * PAGE_SIZE < total;
 
-  const summary = summaryQuery.data;
-  const orders = ordersQuery.data?.items ?? [];
-  const total = ordersQuery.data?.total ?? 0;
-
-  // Infer server page size from the first full page.
-  if (
-    ordersQuery.data &&
-    page === 1 &&
-    orders.length > 0 &&
-    perPageGuess !== orders.length &&
-    orders.length < total
-  ) {
-    setPerPageGuess(orders.length);
-  }
-  const perPage = perPageGuess ?? Math.max(orders.length, 1);
-  const totalPages = Math.max(1, Math.ceil(total / perPage));
-
-  function resetPaging() {
+  const withPageReset = (update: () => void) => {
+    update();
     setPage(1);
-    setPerPageGuess(null);
-  }
+  };
 
-  const payoutTotal = formatSum(summary?.payout_total);
+  const statusLabel = (value: OrderStatus): string =>
+    STATUSES.includes(value) ? t(`orders.status.${value}`) : value;
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">{t("subtitle")}</p>
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex-shrink-0">
+            <ShoppingCart className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
+              {t("orders.title")}
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+              {t("orders.subtitle")}
+            </p>
+          </div>
         </div>
-        <DateRangeTabs
-          value={preset}
-          onChange={(next) => {
-            setPreset(next);
-            resetPaging();
-          }}
-        />
-      </div>
-
-      {summaryQuery.isLoading ? (
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <Skeleton key={index} className="h-20" />
+        <div className="inline-flex rounded-lg bg-gray-100 dark:bg-gray-800 p-0.5 gap-0.5 flex-shrink-0 self-start sm:self-auto">
+          {FINANCE_WINDOWS.map((window) => (
+            <button
+              key={window}
+              type="button"
+              onClick={() => withPageReset(() => setWindowSel(window))}
+              className={`text-xs px-3 py-1.5 rounded-md transition-colors ${
+                window === windowSel
+                  ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm font-medium"
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+              }`}
+            >
+              {t(`insights.window.${window}`)}
+            </button>
           ))}
         </div>
-      ) : summary ? (
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-          <SummaryChip label={t("summary.total")} value={String(summary.total)} />
-          <SummaryChip
-            label={t("summary.pending")}
-            value={String(summary.pending)}
-            className="text-amber-700 dark:text-amber-400"
-          />
-          <SummaryChip
-            label={t("summary.accepted")}
-            value={String(summary.accepted)}
-            className="text-sky-700 dark:text-sky-400"
-          />
-          <SummaryChip
-            label={t("summary.delivered")}
-            value={String(summary.delivered)}
-            className="text-emerald-700 dark:text-emerald-400"
-          />
-          <SummaryChip
-            label={t("summary.cancelled")}
-            value={String(summary.cancelled)}
-            className="text-red-700 dark:text-red-400"
-          />
-          <SummaryChip
-            label={t("summary.payout")}
-            value={
-              payoutTotal !== null ? `${payoutTotal} ${tCommon("sum")}` : "—"
-            }
-          />
-        </div>
-      ) : null}
+      </div>
 
-      <div className="flex flex-col gap-3">
-        <Tabs
-          value={status === "" ? "all" : status}
-          onValueChange={(value) => {
-            setStatus(value === "all" ? "" : (value as OrderStatus));
-            resetPaging();
-          }}
+      <div className="flex flex-wrap gap-2">
+        <FilterChip
+          active={status === null}
+          onClick={() => withPageReset(() => setStatus(null))}
         >
-          <TabsList className="max-w-full overflow-x-auto">
-            {STATUS_FILTERS.map((filter) => (
-              <TabsTrigger key={filter || "all"} value={filter || "all"}>
-                {t(`filters.${filter || "all"}`)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+          {t("orders.status_all")}
+        </FilterChip>
+        {STATUSES.map((value) => (
+          <FilterChip
+            key={value}
+            active={status === value}
+            onClick={() => withPageReset(() => setStatus(value))}
+          >
+            {t(`orders.status.${value}`)}
+          </FilterChip>
+        ))}
+      </div>
 
-        {ordersQuery.isLoading ? (
-          <div className="flex flex-col gap-2">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <Skeleton key={index} className="h-10" />
-            ))}
-          </div>
-        ) : ordersQuery.isError ? (
-          <LoadErrorState onRetry={() => ordersQuery.refetch()} />
-        ) : orders.length === 0 ? (
-          <div className="rounded-lg border border-dashed py-10 text-center text-sm text-muted-foreground">
-            {t("empty")}
-          </div>
-        ) : (
-          <div className="overflow-x-auto rounded-lg border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("columns.id")}</TableHead>
-                  <TableHead>{t("columns.campaign")}</TableHead>
-                  <TableHead>{t("columns.status")}</TableHead>
-                  <TableHead>{t("columns.payout")}</TableHead>
-                  <TableHead>{t("columns.date")}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {orders.map((order) => (
-                  <OrderRow key={order.id} order={order} locale={locale} />
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
-
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-xs text-muted-foreground">
-            {t("total", { count: total })}
-          </span>
-          {total > perPage && (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">
-                {t("pageInfo", { page, pages: totalPages })}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page <= 1 || ordersQuery.isFetching}
-                onClick={() => setPage((value) => Math.max(1, value - 1))}
-              >
-                {t("prev")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page >= totalPages || ordersQuery.isFetching}
-                onClick={() => setPage((value) => value + 1)}
-              >
-                {t("next")}
-              </Button>
+      <YbCard variant="elevated">
+        <YbCardHeader className="flex flex-row items-center justify-between">
+          <YbCardTitle className="text-base sm:text-lg">
+            {t("orders.title")}
+          </YbCardTitle>
+          {total > 0 ? (
+            <span className="text-xs text-gray-400 dark:text-gray-500 tabular-nums">
+              {t("orders.page_info", {
+                from: fromIndex,
+                to: toIndex,
+                total,
+              })}
+            </span>
+          ) : null}
+        </YbCardHeader>
+        <div>
+          {loading && !result ? (
+            <div className="py-12 flex items-center justify-center">
+              <YbSpinner size="md" />
             </div>
+          ) : orders.length === 0 ? (
+            <div className="py-12 text-center">
+              <Inbox className="w-10 h-10 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {t("orders.empty")}
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="overflow-x-auto -mx-4 sm:mx-0">
+                <table className="w-full text-sm min-w-[640px]">
+                  <thead>
+                    <tr className="text-left text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                      <th className="py-2.5 px-3 font-medium">
+                        {t("orders.cols.order_id")}
+                      </th>
+                      <th className="py-2.5 px-3 font-medium">
+                        {t("orders.cols.campaign")}
+                      </th>
+                      <th className="py-2.5 px-3 font-medium">
+                        {t("orders.cols.status")}
+                      </th>
+                      <th className="py-2.5 px-3 font-medium text-right">
+                        {t("orders.cols.payout")}
+                      </th>
+                      <th className="py-2.5 px-3 font-medium text-right">
+                        {t("orders.cols.date")}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                    {orders.map((order, index) => (
+                      <tr
+                        key={`${order.id ?? "na"}-${index}`}
+                        className="hover:bg-gray-50/70 dark:hover:bg-gray-800/40 transition-colors"
+                      >
+                        <td className="py-2.5 px-3 font-mono text-xs text-gray-700 dark:text-gray-300">
+                          {order.external_id || "—"}
+                        </td>
+                        <td className="py-2.5 px-3 text-gray-700 dark:text-gray-300 max-w-[200px] truncate">
+                          {order.campaign || "—"}
+                        </td>
+                        <td className="py-2.5 px-3">
+                          <span
+                            className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-medium ${
+                              STATUS_CLASSES[order.status] ||
+                              "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                            }`}
+                          >
+                            {statusLabel(order.status)}
+                          </span>
+                        </td>
+                        <td className="py-2.5 px-3 text-right tabular-nums font-medium">
+                          {order.status === "delivered" ? (
+                            <span className="text-emerald-600 dark:text-emerald-400">
+                              {formatUsd(order.payout)}
+                            </span>
+                          ) : order.status === "accepted" ? (
+                            <span
+                              className="text-amber-600 dark:text-amber-400"
+                              title={t("orders.payout_hold")}
+                            >
+                              {formatUsd(order.payout)}
+                            </span>
+                          ) : (
+                            <span
+                              className="text-gray-400 dark:text-gray-600"
+                              title={t("orders.payout_none")}
+                            >
+                              —
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-500 dark:text-gray-400">
+                          {order.created_at ? order.created_at.slice(0, 10) : "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="flex items-center justify-between pt-4 mt-2 border-t border-gray-100 dark:border-gray-800">
+                <YbButton
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<ChevronLeft className="w-4 h-4" />}
+                  disabled={page <= 1 || loading}
+                  onClick={() => setPage((value) => Math.max(1, value - 1))}
+                >
+                  {t("orders.prev")}
+                </YbButton>
+                <span className="text-xs text-gray-400 tabular-nums">{page}</span>
+                <YbButton
+                  variant="secondary"
+                  size="sm"
+                  rightIcon={<ChevronRight className="w-4 h-4" />}
+                  disabled={!hasNext || loading}
+                  onClick={() => setPage((value) => value + 1)}
+                >
+                  {t("orders.next")}
+                </YbButton>
+              </div>
+            </>
           )}
         </div>
-      </div>
+      </YbCard>
     </div>
+  );
+}
+
+function FilterChip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+        active
+          ? "bg-primary-600 border-primary-600 text-white"
+          : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-primary-400"
+      }`}
+    >
+      {children}
+    </button>
   );
 }

@@ -1,93 +1,131 @@
-import Link from "next/link";
-import { getTranslations } from "next-intl/server";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Mail01Icon, TelegramIcon } from "@hugeicons/core-free-icons";
-import { Button } from "@/components/ui/button";
-import { Logo } from "./logo";
+"use client";
 
-const SECTION_LINKS = [
-  { href: "#qanday-ishlaydi", key: "how" },
-  { href: "#integratsiyalar", key: "integrations" },
-  { href: "#xizmatlar", key: "services" },
-  { href: "#tariflar", key: "pricing" },
-  { href: "#faq", key: "faq" },
+import type { MouseEvent } from "react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Mail, Send } from "lucide-react";
+
+const QUICK_LINKS = [
+  { key: "features", href: "#features", isAnchor: true },
+  { key: "howItWorks", href: "#how", isAnchor: true },
+  { key: "pricing", href: "#pricing", isAnchor: true },
+  { key: "register", href: "/register", isAnchor: false },
+  { key: "login", href: "/login", isAnchor: false },
 ] as const;
 
-export async function MarketingFooter() {
-  const t = await getTranslations("marketing");
+const LEGAL_LINKS = [
+  { key: "privacy", href: "/privacy-policy" },
+  { key: "terms", href: "/terms-of-service" },
+  { key: "dataDeletion", href: "/data-deletion" },
+] as const;
 
-  const linkClass =
-    "text-sm text-muted-foreground transition-colors hover:text-foreground";
-  const headingClass =
-    "font-mono text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground";
+export function MarketingFooter() {
+  const t = useTranslations("landing");
+  const scrollTo = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    event.preventDefault();
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <footer className="border-t bg-muted/30">
-      <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
-          <div className="flex max-w-sm flex-col items-start gap-4">
-            <Logo />
-            <p className="text-sm text-muted-foreground">
+    <footer className="bg-gray-900 dark:bg-slate-950 text-gray-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://cdn.yuboraman.uz/static/logo.png"
+                alt="Yuboraman Logo"
+                className="h-8 w-auto"
+              />
+              <span className="text-lg font-bold text-white">Yuboraman</span>
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed">
               {t("footer.tagline")}
             </p>
-            <Button asChild variant="outline" size="sm">
-              {/* Placeholder Telegram channel link */}
-              <a
-                href="https://t.me/yuboraman"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <HugeiconsIcon icon={TelegramIcon} className="size-4" />
-                {t("footer.telegram")}
-              </a>
-            </Button>
           </div>
-
-          <nav aria-label={t("footer.colSections")} className="flex flex-col gap-3">
-            <h3 className={headingClass}>{t("footer.colSections")}</h3>
-            {SECTION_LINKS.map((link) => (
-              <a key={link.key} href={link.href} className={linkClass}>
-                {t(`nav.${link.key}`)}
-              </a>
-            ))}
-          </nav>
-
-          <nav aria-label={t("footer.colPlatform")} className="flex flex-col gap-3">
-            <h3 className={headingClass}>{t("footer.colPlatform")}</h3>
-            <Link href="/login" className={linkClass}>
-              {t("ctaLogin")}
-            </Link>
-            <Link href="/register" className={linkClass}>
-              {t("ctaRegister")}
-            </Link>
-          </nav>
-
-          <div className="flex flex-col gap-3">
-            <h3 className={headingClass}>{t("footer.colContact")}</h3>
-            <a
-              href="https://t.me/yuboraman"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${linkClass} flex items-center gap-2`}
-            >
-              <HugeiconsIcon icon={TelegramIcon} className="size-4" />
-              {t("footer.supportChat")}
-            </a>
-            <a
-              href={`mailto:${t("footer.email")}`}
-              className={`${linkClass} flex items-center gap-2`}
-            >
-              <HugeiconsIcon icon={Mail01Icon} className="size-4" />
-              {t("footer.email")}
-            </a>
+          <div>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              {t("footer.quickLinks")}
+            </h4>
+            <ul className="space-y-3">
+              {QUICK_LINKS.map((link) =>
+                link.isAnchor ? (
+                  <li key={link.key}>
+                    <a
+                      href={link.href}
+                      onClick={(event) => scrollTo(event, link.href)}
+                      className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] inline-flex items-center"
+                    >
+                      {t(`nav.${link.key}`)}
+                    </a>
+                  </li>
+                ) : (
+                  <li key={link.key}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] inline-flex items-center"
+                    >
+                      {t(`nav.${link.key}`)}
+                    </Link>
+                  </li>
+                ),
+              )}
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              {t("footer.legal")}
+            </h4>
+            <ul className="space-y-3">
+              {LEGAL_LINKS.map((link) => (
+                <li key={link.key}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] inline-flex items-center"
+                  >
+                    {t(`footer.${link.key}`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              {t("footer.contact")}
+            </h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://t.me/ReklamaManagerUz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] inline-flex items-center gap-2"
+                >
+                  <Send className="w-4 h-4" aria-hidden="true" />
+                  {t("footer.adminContact")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:yuboraman.uz@gmail.com"
+                  className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] inline-flex items-center gap-2"
+                >
+                  <Mail className="w-4 h-4" aria-hidden="true" />
+                  yuboraman.uz@gmail.com
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
-
-        <div className="mt-12 flex flex-col gap-2 border-t pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>{t("footer.rights")}</p>
-          <p className="font-mono uppercase tracking-wider">
-            {t("footer.madeIn")}
-          </p>
+        <div className="border-t border-gray-800 mt-10 pt-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+            <p className="text-sm text-gray-500">
+              {t("footer.copyright", { year: new Date().getFullYear() })}
+            </p>
+            <p className="text-xs text-gray-600">{t("footer.operator")}</p>
+          </div>
         </div>
       </div>
     </footer>

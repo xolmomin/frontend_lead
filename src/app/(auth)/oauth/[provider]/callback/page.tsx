@@ -6,10 +6,19 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Loading03Icon, AlertCircleIcon } from "@hugeicons/core-free-icons";
-import { oauthCallback, type RedirectProvider } from "@/lib/api";
+import { ApiError, oauthCallback, type RedirectProvider } from "@/lib/api";
 
 function isRedirectProvider(value: unknown): value is RedirectProvider {
-  return value === "google" || value === "facebook";
+  return value === "google" || value === "facebook" || value === "telegram";
+}
+
+function isPhoneRequiredError(err: unknown): boolean {
+  return (
+    err instanceof ApiError &&
+    typeof err.data === "object" &&
+    err.data !== null &&
+    (err.data as { detail?: unknown }).detail === "telegram_phone_required"
+  );
 }
 
 function OAuthCallback() {
@@ -18,6 +27,7 @@ function OAuthCallback() {
   const params = useParams();
   const search = useSearchParams();
   const [callbackFailed, setCallbackFailed] = useState(false);
+  const [phoneRequired, setPhoneRequired] = useState(false);
   const started = useRef(false);
 
   const provider = params.provider;
@@ -31,7 +41,10 @@ function OAuthCallback() {
     started.current = true;
     oauthCallback(provider as RedirectProvider, code as string, state as string)
       .then(() => router.replace("/dashboard"))
-      .catch(() => setCallbackFailed(true));
+      .catch((err) => {
+        setPhoneRequired(isPhoneRequiredError(err));
+        setCallbackFailed(true);
+      });
   }, [valid, provider, code, state, router]);
 
   const failed = callbackFailed || !valid;
@@ -44,7 +57,9 @@ function OAuthCallback() {
             <HugeiconsIcon icon={AlertCircleIcon} size={26} />
           </div>
           <h1 className="text-lg font-semibold text-foreground">
-            {t("errors.oauthFailed")}
+            {phoneRequired
+              ? t("errors.telegramPhoneRequired")
+              : t("errors.oauthFailed")}
           </h1>
           <Link
             href="/login"

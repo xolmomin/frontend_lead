@@ -1,100 +1,97 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useStatsSummary } from "@/hooks/use-stats";
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { YbCard } from "@/components/yb/card";
+import { YbSpinner } from "@/components/yb/spinner";
 
-function StatCardSkeleton() {
-  return (
-    <Card>
-      <CardHeader>
-        <Skeleton className="h-4 w-24" />
-      </CardHeader>
-      <CardContent>
-        <Skeleton className="h-8 w-16" />
-      </CardContent>
-    </Card>
-  );
-}
-
-export function StatsCards() {
-  const t = useTranslations("dashboard");
-  const locale = useLocale();
-  const summaryQuery = useStatsSummary();
-
-  if (summaryQuery.isLoading) {
-    return (
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <StatCardSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (summaryQuery.isError || !summaryQuery.data) {
-    return (
-      <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed py-10 text-center">
-        <p className="text-sm text-muted-foreground">{t("loadError")}</p>
-        <Button variant="outline" onClick={() => summaryQuery.refetch()}>
-          {t("retry")}
-        </Button>
-      </div>
-    );
-  }
-
-  const summary = summaryQuery.data;
-  const counters = [
-    { key: "todayLeads", value: summary.today },
-    { key: "weekLeads", value: summary.week },
-    { key: "monthLeads", value: summary.month },
-  ] as const;
+export function StatCard({
+  label,
+  value,
+  leadsLabel,
+  icon,
+  iconBgGradient,
+  loading = false,
+  errors,
+  deliveredLabel,
+  failedLabel,
+}: {
+  label: string;
+  value: number;
+  leadsLabel: string;
+  icon: ReactNode;
+  iconBgGradient: string;
+  loading?: boolean;
+  errors?: number;
+  deliveredLabel?: string;
+  failedLabel?: string;
+}) {
+  const showBreakdown = errors !== undefined && value > 0;
+  const delivered = Math.max(0, value - (errors ?? 0));
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {counters.map((stat) => (
-        <Card key={stat.key}>
-          <CardHeader>
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              {t(stat.key)}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-primary">
-              {stat.value.toLocaleString(locale)}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-medium text-muted-foreground">
-            {t("todayDelivery")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex items-end gap-6">
-          <div>
-            <p className="text-3xl font-bold text-primary">
-              {summary.delivered_today.toLocaleString(locale)}
-            </p>
-            <p className="text-xs text-muted-foreground">{t("delivered")}</p>
-          </div>
-          <div>
-            <p className="text-3xl font-bold text-destructive">
-              {summary.failed_today.toLocaleString(locale)}
-            </p>
-            <p className="text-xs text-muted-foreground">{t("failed")}</p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="h-full animate-in fade-in slide-in-from-bottom-4 duration-300">
+      <YbCard
+        variant="elevated"
+        className="h-full flex flex-col justify-center p-3 sm:p-4 hover:shadow-lg transition-shadow duration-300"
+      >
+        <div>
+          {loading ? (
+            <div className="flex items-center justify-center h-10">
+              <YbSpinner size="sm" />
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <div
+                className={cn(
+                  "w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br flex items-center justify-center flex-shrink-0",
+                  iconBgGradient,
+                )}
+                aria-hidden="true"
+              >
+                {icon}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                  {label}
+                </p>
+                <p className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
+                  {value.toLocaleString()}{" "}
+                  <span className="text-xs font-normal text-gray-500 dark:text-gray-400">
+                    {leadsLabel}
+                  </span>
+                </p>
+                {showBreakdown && (
+                  <div className="flex items-center gap-2.5 mt-1 text-[11px] font-medium">
+                    <span
+                      className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 tabular-nums"
+                      title={deliveredLabel}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-emerald-500"
+                        aria-hidden="true"
+                      />
+                      {delivered.toLocaleString()}
+                    </span>
+                    {(errors ?? 0) > 0 && (
+                      <span
+                        className="inline-flex items-center gap-1 text-red-500 tabular-nums"
+                        title={failedLabel}
+                      >
+                        <span
+                          className="w-1.5 h-1.5 rounded-full bg-red-500"
+                          aria-hidden="true"
+                        />
+                        {(errors ?? 0).toLocaleString()}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </YbCard>
     </div>
   );
 }

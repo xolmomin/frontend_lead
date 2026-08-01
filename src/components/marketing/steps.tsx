@@ -1,39 +1,105 @@
-import { getTranslations } from "next-intl/server";
-import { SectionHeader } from "./section-header";
+import { useTranslations } from "next-intl";
+import { Inbox, UserPlus, Workflow, type LucideIcon } from "lucide-react";
+import { facebookLogo } from "./brand-logos";
 
-const STEPS = ["s1", "s2", "s3", "s4"] as const;
+/** "Qanday ishlaydi" — production `howItWorks` 4-step section (id=how). */
 
-export async function Steps() {
-  const t = await getTranslations("marketing.steps");
+type StepIcon = LucideIcon | ((props: { className?: string }) => React.ReactNode);
+
+function FacebookMark({ className }: { className?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={facebookLogo} alt="" className={className} aria-hidden />;
+}
+
+const ICONS: StepIcon[] = [UserPlus, FacebookMark, Workflow, Inbox];
+
+interface StepItem {
+  title: string;
+  description: string;
+}
+
+export function Steps() {
+  const t = useTranslations("landing");
+  const raw = t.raw("howItWorks.steps");
+  const steps: StepItem[] = Array.isArray(raw) ? raw : [];
 
   return (
-    <section className="border-y bg-muted/30">
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-        <SectionHeader
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          subtitle={t("subtitle")}
-        />
-
-        <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step, index) => (
-            <li key={step} className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-primary/40 bg-background font-mono text-sm font-semibold text-primary">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                {index < STEPS.length - 1 && (
-                  <span
-                    aria-hidden
-                    className="hidden flex-1 border-t border-dashed border-primary/40 lg:block"
-                  />
-                )}
-              </div>
-              <h3 className="font-semibold">{t(`${step}.title`)}</h3>
-              <p className="text-sm text-muted-foreground">{t(`${step}.desc`)}</p>
-            </li>
-          ))}
-        </ol>
+    <section id="how" className="py-12 sm:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
+            {t("howItWorks.title")}
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {t("howItWorks.subtitle")}
+          </p>
+        </div>
+        {/* Mobile: vertical timeline */}
+        <div className="md:hidden relative" aria-hidden="true">
+          <div className="absolute left-4 sm:left-5 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700" />
+          <div className="space-y-6 sm:space-y-8">
+            {steps.map((step, index) => {
+              const Icon = ICONS[index];
+              return (
+                <div key={index} className="relative pl-12 sm:pl-14">
+                  <div className="absolute left-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full gradient-primary-diagonal flex items-center justify-center text-white font-bold text-xs sm:text-sm z-10">
+                    {index + 1}
+                  </div>
+                  <div className="glass-card p-4 sm:p-5">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                      {Icon && (
+                        <Icon
+                          className="w-5 h-5 text-primary-500 flex-shrink-0"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <h3 className="text-base font-semibold text-gray-900 dark:text-white break-words">
+                        {step.title}
+                      </h3>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 break-words">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        {/* Desktop: horizontal steps */}
+        <div className="hidden md:block">
+          <div className="relative">
+            <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200 dark:bg-gray-700" />
+            <div className="grid grid-cols-4 gap-6 lg:gap-8 relative items-stretch">
+              {steps.map((step, index) => {
+                const Icon = ICONS[index];
+                return (
+                  <div key={index} className="text-center">
+                    <div className="w-10 h-10 rounded-full gradient-primary-diagonal flex items-center justify-center text-white font-bold text-sm mx-auto mb-4 relative z-10">
+                      {index + 1}
+                    </div>
+                    <div className="glass-card p-5 lg:p-6 h-full">
+                      <div className="w-12 h-12 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center mx-auto mb-3">
+                        {Icon && (
+                          <Icon
+                            className="w-6 h-6 text-primary-500"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </div>
+                      <h3 className="text-base lg:text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
+                        {step.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

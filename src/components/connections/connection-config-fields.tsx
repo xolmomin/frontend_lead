@@ -2,9 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { z } from "zod";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { YbInput } from "@/components/yb/input";
 import type { DeliveryType } from "@/lib/api/integrations";
 
 interface FieldDef {
@@ -20,7 +18,12 @@ interface FieldDef {
 
 const CONFIG_FIELDS: Record<DeliveryType, FieldDef[]> = {
   webhook: [
-    { key: "url", label: "webhookUrl", url: true, placeholder: "https://example.com/leads" },
+    {
+      key: "url",
+      label: "webhookUrl",
+      url: true,
+      placeholder: "https://example.com/leads",
+    },
     {
       key: "headers",
       label: "webhookHeaders",
@@ -35,10 +38,19 @@ const CONFIG_FIELDS: Record<DeliveryType, FieldDef[]> = {
     { key: "chat_id", label: "chatId", placeholder: "-1001234567890" },
   ],
   sheets: [
-    { key: "spreadsheet_id", label: "spreadsheetId", placeholder: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms" },
+    {
+      key: "spreadsheet_id",
+      label: "spreadsheetId",
+      placeholder: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
+    },
   ],
   bitrix24: [
-    { key: "webhook_url", label: "bitrixWebhookUrl", url: true, placeholder: "https://company.bitrix24.ru/rest/1/abc123/" },
+    {
+      key: "webhook_url",
+      label: "bitrixWebhookUrl",
+      url: true,
+      placeholder: "https://company.bitrix24.ru/rest/1/abc123/",
+    },
   ],
   amocrm: [
     { key: "subdomain", label: "subdomain", placeholder: "mycompany" },
@@ -126,33 +138,48 @@ export function ConnectionConfigFields({
           field.key === "headers"
             ? headersToLines(defaults?.headers)
             : String(defaults?.[field.key] ?? "");
-        return (
-          <div key={`${type}-${field.key}`} className="flex flex-col gap-2">
-            <Label htmlFor={id}>{t(field.label)}</Label>
-            {field.textarea ? (
-              <Textarea
+        if (field.textarea) {
+          return (
+            <div key={`${type}-${field.key}`}>
+              <label
+                htmlFor={id}
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                {t(field.label)}
+              </label>
+              <textarea
                 id={id}
                 name={id}
                 rows={3}
                 placeholder={field.placeholder}
                 defaultValue={defaultValue}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 resize-none"
               />
-            ) : (
-              <Input
-                id={id}
-                name={id}
-                placeholder={field.placeholder}
-                defaultValue={defaultValue}
-                autoComplete="off"
-              />
-            )}
-            {field.hint && (
-              <p className="text-xs text-muted-foreground">{t(field.hint)}</p>
-            )}
-            {errors[field.key] && (
-              <p className="text-sm text-destructive">{errors[field.key]}</p>
-            )}
-          </div>
+              {field.hint && (
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  {t(field.hint)}
+                </p>
+              )}
+              {errors[field.key] && (
+                <p className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+                  {errors[field.key]}
+                </p>
+              )}
+            </div>
+          );
+        }
+        return (
+          <YbInput
+            key={`${type}-${field.key}`}
+            id={id}
+            name={id}
+            label={t(field.label)}
+            placeholder={field.placeholder}
+            defaultValue={defaultValue}
+            autoComplete="off"
+            helperText={field.hint ? t(field.hint) : undefined}
+            error={errors[field.key]}
+          />
         );
       })}
     </>

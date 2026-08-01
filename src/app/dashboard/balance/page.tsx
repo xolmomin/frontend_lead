@@ -1,5 +1,5 @@
-import { BalanceView } from "@/components/billing/balance-view";
+import { BillingView } from "@/components/billing/billing-view";
 
 export default function BalancePage() {
-  return <BalanceView />;
+  return <BillingView section="billing" />;
 }

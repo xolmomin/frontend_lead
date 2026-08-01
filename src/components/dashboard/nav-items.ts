@@ -1,51 +1,101 @@
 import {
-  Analytics01Icon,
-  Coins01Icon,
-  CreditCardIcon,
-  DashboardSpeed01Icon,
-  Globe02Icon,
-  Home01Icon,
-  Key01Icon,
-  Link01Icon,
-  Package01Icon,
-  PlugSocketIcon,
-  Settings01Icon,
-  ShoppingCart01Icon,
-  Wallet01Icon,
-} from "@hugeicons/core-free-icons";
+  BarChart3,
+  CreditCard,
+  Globe,
+  Home,
+  Key,
+  Link2,
+  Package,
+  PieChart,
+  Settings,
+  ShoppingCart,
+  Tag,
+  TrendingUp,
+  Wallet,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 
 export interface NavItem {
-  /** Translation key under the `nav` namespace. */
-  key:
-    | "dashboard"
-    | "integrations"
-    | "reports"
-    | "products"
-    | "leadPacing"
-    | "finance"
-    | "orders"
-    | "connections"
-    | "domains"
-    | "apiKeys"
-    | "pricing"
-    | "balance"
-    | "settings";
-  href: string;
-  icon: typeof Home01Icon;
+  /** Translation key under `navigation.menu`. */
+  id: string;
+  path?: string;
+  icon: LucideIcon;
+  /** Translation key under `navigation.group` — set on the first item of a group. */
+  group?: "overview" | "finance" | "workspace" | "system";
+  children?: NavItem[];
 }
 
+/** Mirrors the production sidebar config (admin-only and CAPI entries omitted). */
 export const navItems: NavItem[] = [
-  { key: "dashboard", href: "/dashboard", icon: Home01Icon },
-  { key: "integrations", href: "/dashboard/integrations", icon: PlugSocketIcon },
-  { key: "reports", href: "/dashboard/reports", icon: Analytics01Icon },
-  { key: "products", href: "/dashboard/products", icon: Package01Icon },
-  { key: "leadPacing", href: "/dashboard/lead-pacing", icon: DashboardSpeed01Icon },
-  { key: "finance", href: "/dashboard/finance/insights", icon: Coins01Icon },
-  { key: "orders", href: "/dashboard/finance/orders", icon: ShoppingCart01Icon },
-  { key: "connections", href: "/dashboard/connections", icon: Link01Icon },
-  { key: "domains", href: "/dashboard/domains", icon: Globe02Icon },
-  { key: "apiKeys", href: "/dashboard/api-keys", icon: Key01Icon },
-  { key: "pricing", href: "/dashboard/pricing", icon: CreditCardIcon },
-  { key: "balance", href: "/dashboard/balance", icon: Wallet01Icon },
-  { key: "settings", href: "/dashboard/settings", icon: Settings01Icon },
+  { id: "dashboard", path: "/dashboard", icon: Home, group: "overview" },
+  {
+    id: "integrations",
+    path: "/dashboard/integrations",
+    icon: Zap,
+    group: "overview",
+  },
+  {
+    id: "reports",
+    path: "/dashboard/reports",
+    icon: BarChart3,
+    group: "overview",
+  },
+  {
+    id: "products",
+    path: "/dashboard/products",
+    icon: Package,
+    group: "overview",
+  },
+  {
+    id: "lead-pacing",
+    path: "/dashboard/lead-pacing",
+    icon: TrendingUp,
+    group: "overview",
+  },
+  {
+    id: "finance-insights",
+    path: "/dashboard/finance/insights",
+    icon: PieChart,
+    group: "finance",
+  },
+  {
+    id: "finance-orders",
+    path: "/dashboard/finance/orders",
+    icon: ShoppingCart,
+    group: "finance",
+  },
+  {
+    id: "connections",
+    path: "/dashboard/connections",
+    icon: Link2,
+    group: "workspace",
+  },
+  {
+    id: "domains",
+    path: "/dashboard/domains",
+    icon: Globe,
+    group: "workspace",
+  },
+  {
+    id: "api-keys",
+    path: "/dashboard/api-keys",
+    icon: Key,
+    group: "workspace",
+  },
+  {
+    id: "payments",
+    icon: CreditCard,
+    group: "system",
+    children: [
+      { id: "pricing", path: "/dashboard/pricing", icon: Tag },
+      { id: "balance", path: "/dashboard/balance", icon: Wallet },
+    ],
+  },
+  {
+    id: "settings",
+    path: "/dashboard/settings",
+    icon: Settings,
+    group: "system",
+  },
 ];

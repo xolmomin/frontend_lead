@@ -4,30 +4,28 @@ import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { z } from "zod";
-import {
-  Mail01Icon,
-  SquareLock01Icon,
-  Loading03Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { Phone, Lock } from "lucide-react";
 import { login } from "@/lib/api";
-import { AuthField } from "@/components/auth/auth-field";
+import { formatPhoneInput, normalizePhone } from "@/lib/phone";
+import { YbCard } from "@/components/yb/card";
+import { YbInput } from "@/components/yb/input";
+import { YbButton } from "@/components/yb/button";
 import { SocialAuth } from "@/components/auth/social-auth";
 import { LanguageSwitcher } from "@/components/auth/language-switcher";
-import { Checkbox } from "@/components/ui/checkbox";
+
+/** True when the value is being typed as a phone number (not an email). */
+function looksLikePhone(value: string) {
+  return /^[+\d\s]*$/.test(value);
+}
 
 export default function LoginPage() {
   const t = useTranslations("auth");
   const router = useRouter();
+  const [identifier, setIdentifier] = useState("+998");
   const [submitting, setSubmitting] = useState(false);
+  const [socialBusy, setSocialBusy] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
-
-  const schema = z.object({
-    email: z.email(t("errors.emailInvalid")),
-    password: z.string().min(8, t("errors.passwordMin")),
-  });
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,115 +33,148 @@ export default function LoginPage() {
     setFieldErrors({});
 
     const formData = new FormData(event.currentTarget);
-    const values = {
-      email: String(formData.get("email") ?? ""),
-      password: String(formData.get("password") ?? ""),
-    };
+    const password = String(formData.get("password") ?? "");
+    const rawId = identifier.trim();
+    const isPhone = looksLikePhone(rawId);
+    const normalized = isPhone ? normalizePhone(rawId) : rawId;
 
-    const result = schema.safeParse(values);
-    if (!result.success) {
-      const errors: Record<string, string> = {};
-      for (const issue of result.error.issues) {
-        const key = String(issue.path[0]);
-        errors[key] ??= issue.message;
-      }
+    const errors: Record<string, string> = {};
+    if (!rawId || rawId === "+998") {
+      errors.phone = t("login.validation.phoneRequired");
+    } else if (isPhone && !/^\+998\d{9}$/.test(normalized)) {
+      errors.phone = t("login.validation.phoneInvalid");
+    }
+    if (!password) errors.password = t("login.validation.passwordRequired");
+    if (Object.keys(errors).length) {
       setFieldErrors(errors);
       return;
     }
 
     setSubmitting(true);
     try {
-      await login(result.data);
+      await login({ email: normalized, password });
       router.push("/dashboard");
     } catch {
-      setFormError(t("errors.loginFailed"));
+      setFormError(t("login.errors.invalidCredentials"));
     } finally {
       setSubmitting(false);
     }
   }
 
   return (
-    <div className="glass w-full max-w-md rounded-xl border border-border p-8 shadow-lg">
-      <div className="mb-4 flex justify-end">
-        <LanguageSwitcher />
-      </div>
-
-      <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold text-foreground">
-          {t("loginTitle")}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {t("loginSubtitle")}
-        </p>
-      </div>
-
-      <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-        <AuthField
-          id="email"
-          name="email"
-          type="email"
-          label={t("email")}
-          icon={Mail01Icon}
-          autoComplete="email"
-          placeholder={t("emailPlaceholder")}
-          error={fieldErrors.email}
-        />
-        <AuthField
-          id="password"
-          name="password"
-          label={t("password")}
-          icon={SquareLock01Icon}
-          autoComplete="current-password"
-          placeholder={t("passwordPlaceholder")}
-          toggleable
-          showLabel={t("showPassword")}
-          hideLabel={t("hidePassword")}
-          error={fieldErrors.password}
-        />
-
-        <div className="flex items-center justify-between text-sm">
-          <label className="flex cursor-pointer items-center gap-2 text-muted-foreground">
-            <Checkbox name="remember" />
-            <span>{t("rememberMe")}</span>
-          </label>
-          <Link href="#" className="font-medium text-primary hover:underline">
-            {t("forgotPassword")}
-          </Link>
+    <div className="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-5 duration-500">
+      <YbCard variant="glass" className="p-8">
+        <div className="absolute top-4 right-4">
+          <LanguageSwitcher />
+        </div>
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-4 animate-in zoom-in duration-300 delay-200 fill-mode-both">
+            <img
+              src="https://cdn.yuboraman.uz/static/logo.png"
+              alt="Yuboraman Logo"
+              className="w-full h-full object-contain"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {t("login.title")}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            {t("login.subtitle")}
+          </p>
         </div>
 
-        {formError && <p className="text-sm text-destructive">{formError}</p>}
+        <form onSubmit={onSubmit} className="space-y-5" noValidate>
+          <YbInput
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            label={t("login.phoneLabel")}
+            placeholder={t("login.phonePlaceholder")}
+            leftIcon={<Phone className="w-5 h-5" />}
+            error={fieldErrors.phone}
+            disabled={submitting}
+            value={identifier}
+            onChange={(e) => {
+              const next = e.target.value;
+              setIdentifier(looksLikePhone(next) ? formatPhoneInput(next) : next);
+            }}
+          />
+          <YbInput
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            label={t("login.passwordLabel")}
+            placeholder={t("login.passwordPlaceholder")}
+            leftIcon={<Lock className="w-5 h-5" />}
+            error={fieldErrors.password}
+            disabled={submitting}
+          />
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="btn-teal-gradient flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl font-medium text-white shadow-sm transition-opacity hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {submitting && (
-            <HugeiconsIcon
-              icon={Loading03Icon}
-              size={18}
-              className="animate-spin"
-            />
+          <div className="flex items-center justify-between">
+            <label className="flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                name="remember"
+                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+                disabled={submitting}
+              />
+              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                {t("login.rememberMe")}
+              </span>
+            </label>
+            <Link
+              href="/forgot-password"
+              className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+            >
+              {t("login.forgotPassword")}
+            </Link>
+          </div>
+
+          {formError && (
+            <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+              {formError}
+            </p>
           )}
-          {submitting ? t("submitting") : t("loginButton")}
-        </button>
-      </form>
 
-      <SocialAuth onError={setFormError} />
+          <YbButton
+            type="submit"
+            variant="primary"
+            size="lg"
+            className="w-full"
+            loading={submitting}
+            disabled={submitting || socialBusy}
+          >
+            {submitting ? t("login.loggingIn") : t("login.loginButton")}
+          </YbButton>
+        </form>
 
-      <p className="mt-6 text-center text-sm text-muted-foreground">
-        {t("noAccount")}{" "}
-        <Link
-          href="/register"
-          className="font-medium text-primary hover:underline"
-        >
-          {t("registerLink")}
-        </Link>
-      </p>
+        <SocialAuth
+          disabled={submitting}
+          onBusyChange={setSocialBusy}
+          onError={setFormError}
+        />
 
-      <p className="mt-6 text-center text-xs text-muted-foreground/70">
-        {t("copyright")}
-      </p>
+        <div className="text-center pt-6">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {t("login.noAccount")}{" "}
+            <Link
+              href="/register"
+              className="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+            >
+              {t("login.signUp")}
+            </Link>
+          </p>
+        </div>
+      </YbCard>
+
+      <div className="text-center mt-8 animate-in fade-in duration-500 delay-500 fill-mode-both">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {t("login.footer")}
+        </p>
+      </div>
     </div>
   );
 }

@@ -8,9 +8,11 @@ export function formatSum(
   if (value === null || value === undefined || value === "") return null;
   const n = typeof value === "string" ? Number(value) : value;
   if (!Number.isFinite(n)) return null;
-  return new Intl.NumberFormat("uz-UZ", { maximumFractionDigits: 2 })
-    .format(n)
-    .replace(/[\u00A0\u202F]/g, " ");
+  // Manual grouping \u2014 Intl's uz-UZ output differs between Node and browsers
+  // (comma vs space), which breaks SSR hydration.
+  const [int, frac] = String(Math.round(n * 100) / 100).split(".");
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return frac ? `${grouped}.${frac}` : grouped;
 }
 
 /** "8600123456789012" -> "8600 1234 5678 9012" */

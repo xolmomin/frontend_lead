@@ -1,42 +1,119 @@
-import { getTranslations } from "next-intl/server";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowDown01Icon } from "@hugeicons/core-free-icons";
-import { SectionHeader } from "./section-header";
+"use client";
 
-const QUESTIONS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"] as const;
+import { memo, useCallback, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
+import { ChevronDown } from "lucide-react";
 
-export async function Faq() {
-  const t = await getTranslations("marketing.faq");
+/** "Ko'p beriladigan savollar" — production `faq` section (id=faq). */
+
+interface FaqEntry {
+  question: string;
+  answer: string;
+}
+
+const FaqItem = memo(function FaqItem({
+  item,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  item: FaqEntry;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const buttonId = `faq-button-${index}`;
+  const panelId = `faq-panel-${index}`;
+  return (
+    <div className="glass-card overflow-hidden">
+      <button
+        id={buttonId}
+        onClick={onToggle}
+        className="flex w-full items-center justify-between gap-3 sm:gap-4 p-4 sm:p-6 text-left min-h-[44px] cursor-pointer"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+      >
+        <span className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words min-w-0">
+          {item.question}
+        </span>
+        <span
+          className={`flex-shrink-0 transition-transform duration-250 ${isOpen ? "rotate-180" : ""}`}
+        >
+          <ChevronDown
+            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+          />
+        </span>
+      </button>
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
+        className={`grid transition-all duration-250 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0">
+            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              {item.answer}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+export function Faq() {
+  const t = useTranslations("landing");
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const raw = t.raw("faq.items");
+  const items: FaqEntry[] = useMemo(
+    () => (Array.isArray(raw) ? raw : []),
+    [raw],
+  );
+  const toggle = useCallback((index: number) => {
+    setOpenIndex((current) => (current === index ? null : index));
+  }, []);
+
+  const jsonLd = useMemo(
+    () =>
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: items.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      }),
+    [items],
+  );
 
   return (
-    <section id="faq" className="mk-anchor">
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-          <SectionHeader
-            eyebrow={t("eyebrow")}
-            title={t("title")}
-            subtitle={t("subtitle")}
-          />
-
-          <div className="flex flex-col gap-3">
-            {QUESTIONS.map((q) => (
-              <details
-                key={q}
-                className="group rounded-xl border bg-card px-5 transition-colors open:border-primary/40"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
-                  {t(`${q}.q`)}
-                  <HugeiconsIcon
-                    icon={ArrowDown01Icon}
-                    className="size-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180"
-                  />
-                </summary>
-                <p className="pb-4 text-sm text-muted-foreground">
-                  {t(`${q}.a`)}
-                </p>
-              </details>
-            ))}
-          </div>
+    <section id="faq" className="py-12 sm:py-16 lg:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd }}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
+            {t("faq.title")}
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {t("faq.subtitle")}
+          </p>
+        </div>
+        <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4">
+          {items.map((item, index) => (
+            <FaqItem
+              key={index}
+              item={item}
+              index={index}
+              isOpen={openIndex === index}
+              onToggle={() => toggle(index)}
+            />
+          ))}
         </div>
       </div>
     </section>

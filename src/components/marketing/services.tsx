@@ -1,54 +1,69 @@
-import { getTranslations } from "next-intl/server";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import {
-  Analytics01Icon,
-  CursorMagicSelection02Icon,
-  GlobeIcon,
-  Plug01Icon,
-  Shield01Icon,
-  Target02Icon,
-} from "@hugeicons/core-free-icons";
-import { SectionHeader } from "./section-header";
+  ChartColumn,
+  Globe,
+  Link as LinkIcon,
+  Shield,
+  TrendingUp,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 
-const ITEMS = [
-  { key: "leads", icon: Target02Icon },
-  { key: "crm", icon: Plug01Icon },
-  { key: "reports", icon: Analytics01Icon },
-  { key: "pixel", icon: CursorMagicSelection02Icon },
-  { key: "domains", icon: GlobeIcon },
-  { key: "security", icon: Shield01Icon },
-] as const;
+/** "Bizning xizmatlar" — production `features` section (id=features). */
 
-export async function Services() {
-  const t = await getTranslations("marketing.services");
+const ICONS: LucideIcon[] = [
+  Users,
+  LinkIcon,
+  ChartColumn,
+  TrendingUp,
+  Globe,
+  Shield,
+];
+
+interface FeatureItem {
+  title: string;
+  description: string;
+}
+
+export function Services() {
+  const t = useTranslations("landing");
+  const raw = t.raw("features.items");
+  const items: FeatureItem[] = Array.isArray(raw) ? raw : [];
 
   return (
-    <section id="xizmatlar" className="mk-anchor">
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-        <SectionHeader
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          subtitle={t("subtitle")}
-        />
-
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {ITEMS.map((item) => (
-            <li
-              key={item.key}
-              className="group flex flex-col gap-4 rounded-2xl border bg-card p-6 transition-colors hover:border-primary/40"
-            >
-              <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <HugeiconsIcon icon={item.icon} className="size-5" />
-              </span>
-              <div className="flex flex-col gap-1.5">
-                <h3 className="font-semibold">{t(`${item.key}.title`)}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {t(`${item.key}.desc`)}
+    <section id="features" className="py-12 sm:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
+            {t("features.title")}
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {t("features.subtitle")}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {items.map((item, index) => {
+            const Icon = ICONS[index];
+            return (
+              <div
+                key={index}
+                className="card-elevated p-6 sm:p-8 hover:-translate-y-2 hover:shadow-glow-sm transition-all duration-300"
+              >
+                <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center mb-4 sm:mb-5">
+                  {Icon && (
+                    <Icon className="w-6 h-6 text-white" aria-hidden="true" />
+                  )}
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 break-words">
+                  {item.title}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed break-words">
+                  {item.description}
                 </p>
               </div>
-            </li>
-          ))}
-        </ul>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

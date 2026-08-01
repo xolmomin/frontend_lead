@@ -11,8 +11,19 @@ export function registerAuthChangeHandler(handler: () => void) {
   onAuthChange = handler;
 }
 
+// The backend sets this cookie too, but on its own domain — when the API runs
+// on a different site (e.g. cloudflared tunnels) the Next middleware would
+// never see it, so we mirror it on the frontend domain as well.
+function setSessionMarker(present: boolean) {
+  if (typeof document === "undefined") return;
+  document.cookie = present
+    ? "logged_in=1; path=/; max-age=2592000; samesite=lax"
+    : "logged_in=; path=/; max-age=0; samesite=lax";
+}
+
 export function setAccessToken(token: string | null) {
   accessToken = token;
+  setSessionMarker(token !== null);
   onAuthChange?.();
 }
 
@@ -113,6 +124,7 @@ export async function apiFetch<T>(
     if (!refreshed || res.status === 401) {
       // Session is gone (refresh failed, or the new token was rejected too).
       accessToken = null;
+      setSessionMarker(false);
       if (typeof window !== "undefined" && window.location.pathname !== "/login") {
         window.location.href = "/login";
       }
@@ -181,16 +193,12 @@ export function getMe(): Promise<User> {
 
 // --- Social login (OAuth2) ---
 
-export type RedirectProvider = "google" | "facebook";
+export type RedirectProvider = "google" | "facebook" | "telegram";
 
 export interface OAuthProviders {
   google: boolean;
   facebook: boolean;
-  telegram: {
-    enabled: boolean;
-    bot_username: string | null;
-    bot_id: number | null;
-  };
+  telegram: boolean;
 }
 
 /** Which social providers the backend has credentials configured for. */
@@ -215,27 +223,6 @@ export async function oauthCallback(
   const data = await apiFetch<{ access_token: string }>(
     `/oauth/${provider}/callback`,
     { method: "POST", body: { code, state }, skipRefresh: true },
-  );
-  setAccessToken(data.access_token);
-}
-
-export interface TelegramAuthPayload {
-  id: number;
-  first_name?: string;
-  last_name?: string;
-  username?: string;
-  photo_url?: string;
-  auth_date: number;
-  hash: string;
-}
-
-/** Verify a Telegram Login Widget payload and start a session. */
-export async function telegramCallback(
-  payload: TelegramAuthPayload,
-): Promise<void> {
-  const data = await apiFetch<{ access_token: string }>(
-    "/oauth/telegram/callback",
-    { method: "POST", body: payload, skipRefresh: true },
   );
   setAccessToken(data.access_token);
 }

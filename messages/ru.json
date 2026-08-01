@@ -1,20 +1,189 @@
 {
   "common": {
-    "appName": "Yuboraman",
-    "loading": "Загрузка...",
-    "error": "Произошла ошибка",
-    "save": "Сохранить",
-    "cancel": "Отмена",
-    "logout": "Выйти",
-    "theme": "Тема",
-    "themeLight": "Светлая",
-    "themeDark": "Тёмная",
-    "language": "Язык",
+    "app": {
+      "name": "Yuboraman",
+      "description": "Панель управления"
+    },
+    "actions": {
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "delete": "Удалить",
+      "edit": "Редактировать",
+      "add": "Добавить",
+      "search": "Поиск",
+      "filter": "Фильтр",
+      "export": "Экспорт",
+      "import": "Импорт",
+      "close": "Закрыть",
+      "confirm": "Подтвердить",
+      "back": "Назад",
+      "next": "Далее",
+      "previous": "Предыдущий",
+      "submit": "Отправить",
+      "reset": "Очистить",
+      "refresh": "Обновить",
+      "copy": "Копировать",
+      "download": "Скачать",
+      "upload": "Загрузить",
+      "view": "Просмотр",
+      "send": "Отправить",
+      "togglePassword": "Показать или скрыть пароль"
+    },
+    "status": {
+      "active": "Активный",
+      "inactive": "Неактивный",
+      "pending": "Ожидание",
+      "completed": "Выполнено",
+      "failed": "Ошибка",
+      "paused": "Приостановлен",
+      "loading": "Загрузка...",
+      "success": "Успешно",
+      "error": "Ошибка",
+      "warning": "Предупреждение",
+      "info": "Информация"
+    },
+    "time": {
+      "today": "Сегодня",
+      "yesterday": "Вчера",
+      "week": "Неделя",
+      "month": "Месяц",
+      "year": "Год",
+      "day": "День",
+      "days": "Дни",
+      "hour": "Час",
+      "hours": "Часы",
+      "minute": "Минута",
+      "minutes": "Минуты",
+      "second": "Секунда",
+      "seconds": "Секунды",
+      "ago": "назад",
+      "just_now": "только что",
+      "minutes_ago_one": "{count} минуту назад",
+      "minutes_ago_few": "{count} минуты назад",
+      "minutes_ago_many": "{count} минут назад",
+      "minutes_ago_other": "{count} минут назад",
+      "hours_ago_one": "{count} час назад",
+      "hours_ago_few": "{count} часа назад",
+      "hours_ago_many": "{count} часов назад",
+      "hours_ago_other": "{count} часов назад",
+      "days_ago_one": "{count} день назад",
+      "days_ago_few": "{count} дня назад",
+      "days_ago_many": "{count} дней назад",
+      "days_ago_other": "{count} дней назад"
+    },
+    "messages": {
+      "success": "Успешно выполнено!",
+      "error": "Произошла ошибка!",
+      "loading": "Загрузка...",
+      "noData": "Данные не найдены",
+      "confirmDelete": "Подтвердите удаление?",
+      "unsavedChanges": "Есть несохраненные изменения"
+    },
+    "errors": {
+      "copyFailed": "Ошибка при копировании",
+      "loadFailed": "Ошибка загрузки данных"
+    },
+    "accountInactive": "Аккаунт неактивен",
+    "empty": {
+      "noItems": "Пока нет данных",
+      "addFirst": "Добавьте первый элемент"
+    },
+    "search": "Поиск...",
+    "notifications": "Уведомления",
+    "noNotifications": "Нет новых уведомлений",
+    "settings": "Настройки",
+    "user": "Пользователь",
     "balance": "Баланс",
-    "plan": "Тариф",
-    "topUp": "Пополнить",
-    "sum": "сум",
-    "comingSoon": "Этот раздел будет добавлен на следующих этапах."
+    "plan": "Тарифный план",
+    "logoutTitle": "Выход из системы",
+    "logoutMessage": "Вы действительно хотите выйти?",
+    "logoutConfirm": "Да, выйти",
+    "logoutCancel": "Нет, остаться",
+    "table": {
+      "perPage": "На странице:",
+      "loading": "Загрузка...",
+      "noData": "Данные не найдены",
+      "clearSearch": "Очистить поиск",
+      "showing": "Показано",
+      "to": "до",
+      "of": "из",
+      "results": "результатов"
+    },
+    "notFound": {
+      "title": "Страница не найдена",
+      "description": "Извините, запрашиваемая страница не существует или была перемещена.",
+      "hint": "Проверьте URL-адрес или вернитесь на главную страницу.",
+      "goBack": "Вернуться назад",
+      "home": "Главная страница",
+      "dashboard": "Панель управления",
+      "needHelp": "Нужна помощь?",
+      "pricing": "Тарифные планы",
+      "support": "Поддержка",
+      "login": "Войти"
+    },
+    "select": {
+      "placeholder": "Выберите",
+      "searchPlaceholder": "Поиск...",
+      "noResults": "Ничего не найдено"
+    },
+    "pagination": {
+      "previous": "Предыдущая страница",
+      "next": "Следующая страница",
+      "goToPage": "Перейти на страницу {page}"
+    },
+    "httpErrors": {
+      "tooManyRequests": "Слишком много запросов",
+      "tooManyRequestsDesc": "Пожалуйста, подождите немного и попробуйте снова",
+      "rateLimitWait": "Пожалуйста, попробуйте через {seconds} секунд",
+      "security": "Ошибка безопасности",
+      "securityDesc": "В запросе обнаружены подозрительные символы",
+      "network": "Сетевая ошибка",
+      "auth": "Ошибка авторизации",
+      "permission": "Нет доступа",
+      "permissionDesc": "У вас нет разрешения на это действие",
+      "notFound": "Не найдено",
+      "notFoundDesc": "Запрошенные данные не найдены",
+      "validation": "Ошибка валидации",
+      "validationDesc": "Проверьте введённые данные",
+      "conflict": "Это действие уже выполняется",
+      "conflictDesc": "Другой админ запустил это действие — подождите немного и попробуйте снова",
+      "server": "Ошибка сервера",
+      "serverDesc": "Пожалуйста, попробуйте позже",
+      "backend": "Системная ошибка",
+      "unknown": "Произошла ошибка",
+      "unknownCause": "Неизвестная ошибка"
+    },
+    "session": {
+      "expired": "Сессия завершена",
+      "expiredDesc": "Сессия завершена из-за неактивности. Пожалуйста, войдите снова.",
+      "expiringSoon": "Сессия скоро завершится",
+      "expiringSoonDesc": "Из-за неактивности сессия завершится через {minutes} минут. Взаимодействуйте со страницей, чтобы остаться в системе."
+    },
+    "language": {
+      "switch": "Изменить язык"
+    },
+    "theme": {
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "system": "Системная",
+      "current": "Текущая тема: {name}",
+      "switchToLight": "Переключить на светлую тему",
+      "switchToDark": "Переключить на тёмную тему",
+      "switchToSystem": "Использовать системную тему"
+    },
+    "errorBoundary": {
+      "title": "Произошла ошибка",
+      "description": "Произошла непредвиденная ошибка. Пожалуйста, обновите страницу или попробуйте позже.",
+      "errorIdLabel": "Код ошибки (для службы поддержки):",
+      "copyErrorId": "Скопировать код",
+      "errorIdCopied": "Код ошибки скопирован",
+      "reload": "Обновить страницу",
+      "goHome": "На главную",
+      "tryAgain": "Попробовать снова",
+      "supportPrefix": "Если проблема не исчезает,",
+      "supportSuffix": "напишите нам",
+      "devInfo": "Developer Info"
+    }
   },
   "nav": {
     "dashboard": "Главная",
@@ -32,49 +201,190 @@
     "settings": "Настройки"
   },
   "auth": {
-    "loginTitle": "Вход",
-    "loginSubtitle": "Войдите в свой аккаунт",
-    "registerTitle": "Регистрация",
-    "registerSubtitle": "Создайте бесплатный аккаунт",
-    "fullName": "Полное имя",
-    "fullNamePlaceholder": "Имя Фамилия",
-    "email": "Email",
-    "phone": "Номер телефона",
-    "password": "Пароль",
-    "loginButton": "Войти",
-    "registerButton": "Зарегистрироваться",
-    "noAccount": "Нет аккаунта?",
-    "haveAccount": "Уже есть аккаунт?",
-    "loginLink": "Войти",
-    "registerLink": "Регистрация",
-    "submitting": "Отправка...",
-    "errors": {
-      "fullNameRequired": "Введите полное имя",
-      "emailInvalid": "Неверный email",
-      "phoneInvalid": "Неверный номер телефона (например: +998901234567)",
-      "passwordMin": "Пароль должен содержать минимум 8 символов",
-      "loginFailed": "Неверный email или пароль",
-      "registerFailed": "Не удалось зарегистрироваться. Попробуйте ещё раз.",
-      "confirmMismatch": "Пароли не совпадают",
-      "termsRequired": "Примите условия",
-      "oauthFailed": "Не удалось войти через соцсеть",
-      "emailTaken": "Этот email уже зарегистрирован"
+    "login": {
+      "title": "Добро пожаловать",
+      "subtitle": "Войдите в систему для продолжения",
+      "phoneLabel": "Номер телефона",
+      "phonePlaceholder": "+998 90 123 45 67",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Введите пароль",
+      "rememberMe": "Запомнить меня",
+      "forgotPassword": "Забыли пароль?",
+      "loginButton": "Войти",
+      "loggingIn": "Вход в систему...",
+      "noAccount": "Нет аккаунта?",
+      "signUp": "Регистрация",
+      "footer": "© 2025 Yuboraman. Все права защищены.",
+      "validation": {
+        "phoneRequired": "Номер телефона обязателен",
+        "phoneInvalid": "Неверный формат номера телефона",
+        "passwordRequired": "Пароль обязателен",
+        "passwordMin": "Пароль должен содержать минимум 10 символов"
+      },
+      "errors": {
+        "invalidCredentials": "Неверный номер телефона или пароль",
+        "generic": "Ошибка входа в систему"
+      },
+      "socialLogin": {
+        "divider": "или",
+        "google": "Войти через Google",
+        "facebook": "Войти через Facebook",
+        "telegram": "Войти через Telegram"
+      }
     },
-    "emailPlaceholder": "email@example.com",
-    "passwordPlaceholder": "Введите пароль",
-    "passwordPlaceholderCreate": "Создайте пароль",
-    "confirmPassword": "Подтверждение пароля",
-    "confirmPasswordPlaceholder": "Повторите пароль",
-    "rememberMe": "Запомнить меня",
-    "forgotPassword": "Забыли пароль?",
-    "termsAgree": "Регистрируясь, вы соглашаетесь с нашими <terms>условиями использования</terms> и <privacy>политикой конфиденциальности</privacy>",
-    "or": "или",
-    "socialContinue": "Войти через {provider}",
-    "comingSoon": "Скоро",
-    "showPassword": "Показать пароль",
-    "hidePassword": "Скрыть пароль",
-    "oauthConnecting": "Подключение...",
-    "copyright": "© 2025 Yuboraman. Все права защищены."
+    "register": {
+      "title": "Регистрация",
+      "subtitle": "Создайте новый аккаунт и начните",
+      "fullNameLabel": "Полное имя",
+      "fullNamePlaceholder": "Введите ваше имя",
+      "emailLabel": "Email адрес",
+      "emailPlaceholder": "email@example.com",
+      "phoneLabel": "Номер телефона",
+      "phonePlaceholder": "+998 90 123 45 67",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Создайте пароль",
+      "passwordStrength": "Сила пароля:",
+      "passwordWeak": "Слабый",
+      "passwordMedium": "Средний",
+      "passwordStrong": "Сильный",
+      "confirmPasswordLabel": "Подтверждение пароля",
+      "confirmPasswordPlaceholder": "Повторите пароль",
+      "registerButton": "Зарегистрироваться",
+      "registering": "Регистрация...",
+      "termsAgreement": "Регистрируясь, вы соглашаетесь с нашими",
+      "termsLink": "условиями использования",
+      "and": "и",
+      "privacyLink": "политикой конфиденциальности",
+      "termsEnd": "",
+      "haveAccount": "Есть аккаунт?",
+      "signIn": "Войти",
+      "footer": "© 2025 Yuboraman. Все права защищены.",
+      "validation": {
+        "nameRequired": "Полное имя обязательно",
+        "nameMin": "Имя должно содержать минимум 2 символа",
+        "emailRequired": "Email адрес обязателен",
+        "emailInvalid": "Неверный формат email адреса",
+        "phoneRequired": "Номер телефона обязателен",
+        "phoneInvalid": "Неверный формат номера телефона",
+        "passwordRequired": "Пароль обязателен",
+        "passwordMin": "Пароль должен содержать минимум 10 символов",
+        "passwordStrength": "Пароль должен содержать минимум одну заглавную букву, одну цифру и один специальный символ",
+        "confirmPasswordRequired": "Подтверждение пароля обязательно",
+        "passwordsMatch": "Пароли не совпадают",
+        "termsRequired": "Вы должны принять условия"
+      },
+      "errors": {
+        "emailExists": "Этот email адрес уже зарегистрирован",
+        "phoneExists": "Этот номер телефона уже зарегистрирован",
+        "generic": "Ошибка регистрации"
+      },
+      "success": {
+        "title": "Успешно!",
+        "message": "Ваш аккаунт успешно создан"
+      }
+    },
+    "forgotPassword": {
+      "title": "Восстановление пароля",
+      "subtitle": "Введите ваш номер телефона и мы отправим вам код",
+      "phoneLabel": "Номер телефона",
+      "phonePlaceholder": "+998 90 123 45 67",
+      "sendCodeButton": "Отправить код",
+      "sendingCode": "Отправка кода...",
+      "codeLabel": "Код подтверждения",
+      "codePlaceholder": "Введите 6-значный код",
+      "newPasswordLabel": "Новый пароль",
+      "newPasswordPlaceholder": "Введите новый пароль",
+      "confirmPasswordLabel": "Подтверждение пароля",
+      "confirmPasswordPlaceholder": "Повторите пароль",
+      "resetButton": "Восстановить пароль",
+      "resetting": "Восстановление...",
+      "backToLogin": "Назад",
+      "rememberPassword": "Вспомнили пароль?",
+      "resendCode": "Отправить код повторно",
+      "codeResent": "Код отправлен повторно!",
+      "validation": {
+        "phoneRequired": "Номер телефона обязателен",
+        "phoneInvalid": "Неверный формат номера телефона",
+        "codeRequired": "Код подтверждения обязателен",
+        "codeLength": "Код должен состоять из 6 цифр",
+        "passwordRequired": "Новый пароль обязателен",
+        "passwordMin": "Пароль должен содержать минимум 10 символов",
+        "confirmPasswordRequired": "Подтверждение пароля обязательно",
+        "passwordsMatch": "Пароли не совпадают"
+      },
+      "errors": {
+        "phoneNotFound": "Этот номер телефона не найден в системе",
+        "invalidCode": "Неверный код подтверждения",
+        "codeExpired": "Срок действия кода подтверждения истек",
+        "generic": "Ошибка восстановления пароля"
+      },
+      "success": {
+        "codeSent": "Код отправлен!",
+        "codeMessage": "Код подтверждения отправлен на ваш номер телефона",
+        "passwordReset": "Пароль восстановлен!",
+        "passwordMessage": "Ваш пароль успешно восстановлен"
+      }
+    },
+    "resetPassword": {
+      "title": "Установка нового пароля",
+      "subtitle": "Создайте новый пароль для вашего аккаунта",
+      "passwordLabel": "Новый пароль",
+      "passwordPlaceholder": "Введите новый пароль",
+      "confirmPasswordLabel": "Подтверждение пароля",
+      "confirmPasswordPlaceholder": "Повторите пароль",
+      "submitButton": "Изменить пароль",
+      "submitting": "Изменение...",
+      "backToLogin": "Вернуться к входу",
+      "rememberPassword": "Вспомнили пароль?",
+      "requirements": {
+        "minLength": "Минимум 10 символов",
+        "uppercase": "Минимум 1 заглавная буква",
+        "lowercase": "Минимум 1 строчная буква",
+        "number": "Минимум 1 цифра",
+        "special": "Минимум 1 специальный символ (!@#$%^&*)"
+      },
+      "errors": {
+        "invalidCode": "Неверный или просроченный код",
+        "failed": "Ошибка при изменении пароля"
+      },
+      "success": {
+        "title": "Пароль изменен!",
+        "message": "Ваш пароль успешно изменен. Теперь вы можете войти в систему."
+      }
+    },
+    "toast": {
+      "welcome": "Добро пожаловать!",
+      "welcomeBack": "{name}, вы успешно вошли в систему",
+      "registered": "Регистрация успешна!",
+      "registeredHint": "Пожалуйста, войдите с помощью номера телефона и пароля",
+      "loggedOut": "Вы вышли из системы",
+      "loggedOutBye": "До свидания!"
+    },
+    "oauth": {
+      "checking": "Проверка...",
+      "signingIn": "Выполняется вход...",
+      "success": "Успешно!",
+      "authFailed": "Аутентификация не удалась!",
+      "profileLinked": "Профиль успешно подключён!",
+      "signInFailed": "Вход не удался",
+      "invalidRequest": "Неверный запрос",
+      "waiting": "Пожалуйста, подождите...",
+      "redirectingLogin": "Возврат на страницу входа...",
+      "redirecting": "Перенаправление...",
+      "errors": {
+        "google_denied": "Вы отменили вход через Google",
+        "facebook_denied": "Вы отменили вход через Facebook",
+        "invalid_request": "Неверный запрос",
+        "invalid_state": "Сессия истекла, попробуйте снова",
+        "token_exchange_failed": "Ошибка аутентификации",
+        "userinfo_failed": "Не удалось получить данные пользователя",
+        "server_error": "Ошибка сервера, попробуйте снова",
+        "no_google_id": "Не удалось получить данные из Google аккаунта",
+        "no_facebook_id": "Не удалось получить данные из Facebook аккаунта",
+        "no_access_token": "Токен не получен",
+        "unknown": "Произошла неизвестная ошибка"
+      }
+    }
   },
   "marketing": {
     "heroTitle": "Отправляйте лиды из Facebook в CRM <hl>автоматически</hl>",
@@ -317,250 +627,1339 @@
     }
   },
   "dashboard": {
-    "greeting": "Добро пожаловать, {name}!",
-    "todayLeads": "Лиды за сегодня",
-    "weekLeads": "Лиды за неделю",
-    "monthLeads": "Лиды за месяц",
-    "planUsage": "Лимит тарифа",
-    "daysLeft": "Осталось {days} дн.",
-    "todayDelivery": "Доставка за сегодня",
-    "delivered": "Доставлено",
-    "failed": "Ошибки",
-    "pending": "В очереди",
-    "total": "Всего",
-    "chartTitle": "Динамика по дням",
-    "chartSubtitle": "Последние {days} дней: доставленные и ошибочные лиды",
-    "integrationPerformance": "Эффективность интеграций",
-    "integrationPerformanceSubtitle": "Показатели за последнюю неделю",
-    "deliveredRate": "Уровень доставки",
-    "recentLeads": "Последние лиды",
-    "noLeads": "Пока нет лидов",
-    "colTime": "Время",
-    "colIntegration": "Интеграция",
-    "colStatus": "Статус",
-    "activityTitle": "Последняя активность",
-    "setupTitle": "Начало работы",
-    "setupSubtitle": "Выполните следующие шаги, чтобы полностью запустить сервис",
-    "setupChannel": "Подключите канал доставки",
-    "setupIntegration": "Создайте интеграцию",
-    "setupFacebook": "Подключите аккаунт Facebook",
-    "setupFirstLead": "Получите первый лид",
-    "optional": "необязательно",
-    "noData": "Пока нет данных",
-    "loadError": "Не удалось загрузить данные",
-    "retry": "Повторить"
+    "title": "Главная",
+    "subtitle": "Статистика вашего бизнеса",
+    "plan": {
+      "title": "Остаток тарифа",
+      "subtitle": "Тариф {planName}",
+      "leadsRemaining": "лидов",
+      "used": "исп.",
+      "warning": "Ваш лимит лидов заканчивается! Обновите тариф.",
+      "unlimited": "У вас безлимитный тариф!",
+      "renewCta": "Обновить тариф",
+      "activateCta": "Активировать тариф"
+    },
+    "expiry": {
+      "title": "Срок действия тарифа",
+      "subtitle": "Дата окончания",
+      "time": "Время",
+      "warning": "Ваш тариф скоро истекает! Продлите его.",
+      "renewCta": "Продлить тариф",
+      "payCta": "Оплатить",
+      "daysLeft": "Осталось {count} дн.",
+      "hoursLeft": "Осталось {count} ч.",
+      "expired": "Срок истёк"
+    },
+    "stats": {
+      "today": "Сегодня",
+      "week": "За неделю",
+      "month": "За месяц",
+      "leadsCount": "лидов получено",
+      "delivered": "доставлено",
+      "failed": "не доставлено (ошибка)"
+    },
+    "activity": {
+      "title": "Последние события",
+      "subtitle": "Последние 10 лидов",
+      "empty": "Событий пока нет. Появятся, как только поступит первый лид.",
+      "viewAll": "Смотреть все",
+      "leadFrom": "Лид: {integration}",
+      "leadNoIntegration": "Лид (интеграция удалена)",
+      "statusSuccess": "Успешно отправлен",
+      "statusError": "Завершился ошибкой",
+      "statusErrorDelivery": "Не доставлено",
+      "statusErrorTemporary": "Временная ошибка",
+      "statusPaused": "Получен во время паузы",
+      "viewIntegration": "Перейти к интеграции",
+      "viewDetail": "Подробнее о лиде",
+      "timeJustNow": "только что",
+      "timeMinutesAgo": "{count} мин назад",
+      "timeHoursAgo": "{count} ч назад",
+      "timeDaysAgo": "{count} дн назад"
+    },
+    "onboarding": {
+      "title": "Готовы начать?",
+      "subtitle": "До получения первых лидов осталось 2 шага",
+      "step1": "Подключить Facebook или Google аккаунт",
+      "step2": "Создать первую интеграцию",
+      "completedTitle": "Поздравляем!",
+      "completedDescription": "Всё готово — лиды теперь будут поступать автоматически.",
+      "step1Cta": "Подключить",
+      "step2Cta": "Создать"
+    },
+    "pricing": {
+      "title": "Нужны расширенные возможности?",
+      "description": "Выберите подходящий тариф для развития бизнеса и получите безграничные возможности",
+      "button": "Смотреть тарифы"
+    },
+    "integrationPerf": {
+      "title": "Эффективность интеграций",
+      "subtitle": "Доставка по интеграциям",
+      "window": {
+        "today": "Сегодня",
+        "week": "Неделя",
+        "month": "Месяц"
+      },
+      "attention": "Внимание",
+      "leads": "лидов",
+      "unknown": "Неизвестная интеграция",
+      "viewHistory": "История лидов",
+      "openIntegration": "Открыть интеграцию",
+      "empty": "За этот период лидов пока нет."
+    },
+    "charts": {
+      "tabs": {
+        "label": "Период статистики",
+        "hourly": "Сегодня",
+        "weekly": "Неделя",
+        "daily": "Месяц",
+        "monthly": "Год",
+        "yearly": "Годы",
+        "hasErrors": "Есть ошибки"
+      },
+      "monthly": {
+        "title": "{year} год"
+      },
+      "yearly": {
+        "title": "По годам"
+      },
+      "weekly": {
+        "title": "Эта неделя"
+      },
+      "daily": {
+        "title": "По дням"
+      },
+      "hourly": {
+        "title": "По часам",
+        "empty": "Сегодня лидов ещё не было. Распределение по часам появится после первого лида.",
+        "peakLabel": "Пиковый час",
+        "peakUnit": "лидов",
+        "now": "Сейчас"
+      },
+      "summary": {
+        "total": "Всего",
+        "errors": "Ошибок",
+        "errorsViewAria": "Посмотреть ошибочные лиды ({count})"
+      },
+      "legend": {
+        "success": "Доставлено",
+        "errors": "Ошибки"
+      },
+      "tooltip": {
+        "total": "Всего"
+      },
+      "today": "Сегодня",
+      "empty": "Пока нет лидов. График начнёт заполняться, как только поступит первый лид."
+    },
+    "errorLeads": {
+      "day": {
+        "title": "Сегодняшние ошибки",
+        "subtitle": "{count} лидов завершились ошибкой",
+        "windowHint": "С 00:00 до настоящего момента (время Ташкента)",
+        "refresh": "Обновить",
+        "viewDetail": "Подробно",
+        "unknownForm": "Неизвестная форма",
+        "detailError": "Не удалось загрузить детали лида",
+        "empty": {
+          "title": "Сегодня ошибок нет",
+          "description": "Все сегодняшние лиды прошли успешно"
+        },
+        "col": {
+          "time": "Время",
+          "form": "Форма",
+          "status": "Статус",
+          "log": "Текст ошибки",
+          "actions": "Действие"
+        }
+      },
+      "week": {
+        "title": "Ошибки за неделю",
+        "subtitle": "{count} лидов завершились ошибкой",
+        "windowHint": "С начала недели до настоящего момента (время Ташкента)",
+        "refresh": "Обновить",
+        "viewDetail": "Подробно",
+        "unknownForm": "Неизвестная форма",
+        "detailError": "Не удалось загрузить детали лида",
+        "empty": {
+          "title": "На этой неделе ошибок нет",
+          "description": "Все лиды текущей недели прошли успешно"
+        },
+        "col": {
+          "time": "Дата / время",
+          "form": "Форма",
+          "status": "Статус",
+          "log": "Текст ошибки",
+          "actions": "Действие"
+        }
+      },
+      "month": {
+        "title": "Ошибки за месяц",
+        "subtitle": "{count} лидов завершились ошибкой",
+        "windowHint": "С начала месяца до настоящего момента (время Ташкента)",
+        "refresh": "Обновить",
+        "viewDetail": "Подробно",
+        "unknownForm": "Неизвестная форма",
+        "detailError": "Не удалось загрузить детали лида",
+        "empty": {
+          "title": "В этом месяце ошибок нет",
+          "description": "Все лиды текущего месяца прошли успешно"
+        },
+        "col": {
+          "time": "Дата / время",
+          "form": "Форма",
+          "status": "Статус",
+          "log": "Текст ошибки",
+          "actions": "Действие"
+        }
+      }
+    }
   },
   "integrations": {
+    "self_comment_test": {
+      "button": "Режим самотеста (24 часа)",
+      "tooltip": "Оставьте комментарий со своего подключённого аккаунта Instagram и протестируйте без второго аккаунта. После включения в течение 24 часов ваш собственный комментарий на этой странице тоже станет реальным лидом.",
+      "success": "Тестовый режим включён на 24 часа",
+      "error": "Не удалось включить тестовый режим. Попробуйте ещё раз."
+    },
     "title": "Интеграции",
-    "new": "Новая интеграция",
+    "subtitle": "Управляйте интеграциями для сбора лидов и отправки на CPA платформы",
+    "addNew": "Новая интеграция",
+    "loading": "Загрузка интеграций...",
     "searchPlaceholder": "Поиск интеграций...",
-    "loadError": "Не удалось загрузить данные",
-    "retry": "Повторить",
-    "status": {
-      "active": "Активна",
-      "paused": "Пауза"
-    },
-    "leadStatus": {
-      "pending": "В очереди",
-      "delivered": "Доставлен",
-      "failed": "Ошибка",
-      "paused_hold": "Пришёл в паузе"
-    },
-    "card": {
-      "source": "Источник",
-      "receiver": "Получатель",
-      "todayLeads": "Лиды за сегодня",
-      "pendingLeads": "Ожидающие лиды",
-      "lastLead": "Последний лид",
-      "never": "Лидов ещё не было"
+    "emptyTitle": "Интеграции еще не добавлены",
+    "emptyDescription": "Собирайте лиды через Facebook, Webhook и автоматически отправляйте на CPA платформы",
+    "addFirstIntegration": "Добавить первую интеграцию",
+    "emptyMessage": "Интеграции не найдены",
+    "table": {
+      "name": "Название",
+      "date": "Дата",
+      "platform": "Платформа",
+      "status": "Статус",
+      "leads": "Лиды",
+      "lastActivity": "Последняя активность",
+      "actions": "Действия"
     },
     "actions": {
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "pause": "Приостановить",
+      "resume": "Продолжить",
+      "stop": "Остановить интеграцию",
+      "start": "Запустить интеграцию",
+      "sendPaused": "Отправить приостановленные лиды",
+      "editAction": "Редактировать интеграцию",
+      "duplicate": "Дублировать интеграцию",
+      "deleteAction": "Удалить интеграцию",
+      "history": "История лидов",
+      "test": "Тестировать",
+      "configure": "Настроить",
+      "facebookLeads": "Лиды Facebook",
+      "resendErrors": "Повторить отправку ({count})",
+      "resendErrorsCooldown": "Отправляется… {time}",
+      "resendErrorsHint": "{count} ошибочных лидов за последние 24 часа будут отправлены повторно"
+    },
+    "bulkActions": {
+      "label": "Массовые действия",
       "pause": "Пауза",
       "start": "Старт",
       "send": "Отправить",
+      "pauseAll": "Остановить все",
+      "pauseAllTooltip": "Остановить все интеграции",
+      "startAll": "Запустить все",
+      "startAllTooltip": "Запустить все интеграции",
+      "sendAll": "Отправить все",
+      "sendAllTooltip": "Отправить все приостановленные лиды",
       "reset": "Сбросить авто-режим",
+      "resetTooltip": "Очистить авто пауза/старт/отправка для всех интеграций",
+      "scopeAllNote": "Применится ко всем {count} интеграциям",
+      "scopeFolderNote": "Применится к {count} интеграциям в папке «{folder}»",
+      "searchIgnoredNote": "⚠️ Фильтр поиска игнорируется",
+      "pausedTotal_one": "{count} лид ожидает",
+      "pausedTotal_few": "{count} лида ожидают",
+      "pausedTotal_many": "{count} лидов ожидают",
+      "pausedTotal_other": "{count} лидов ожидают"
+    },
+    "card": {
+      "sourceFacebook": "Facebook",
+      "sourceWebhook": "Веб-сайт",
+      "destWebhook": "Webhook",
+      "more": "Ещё",
+      "statToday": "Сегодня {count}",
+      "statNoLeads": "Пока нет лидов",
+      "statErrorRate": "{pct}% ошибок",
+      "statErrorCount_one": "{count} ошибка",
+      "statErrorCount_few": "{count} ошибки",
+      "statErrorCount_many": "{count} ошибок",
+      "statErrorCount_other": "{count} ошибок",
+      "statPaused_one": "{count} ожидает",
+      "statPaused_few": "{count} ожидают",
+      "statPaused_many": "{count} ожидают",
+      "statPaused_other": "{count} ожидают"
+    },
+    "status": {
+      "active": "Активный",
+      "paused": "Приостановлен",
+      "error": "Ошибка",
+      "pending": "Ожидание"
+    },
+    "platforms": {
+      "telegram": "Telegram",
+      "instagram": "Instagram",
+      "whatsapp": "WhatsApp",
+      "facebook": "Facebook",
+      "website": "Веб-сайт",
+      "favorites": {
+        "title": "Выбор платформ",
+        "subtitle": "Будут отображаться только используемые вами платформы",
+        "search": "Поиск...",
+        "selectAll": "Выбрать все",
+        "selected": "{count} выбрано",
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "button": "Платформы",
+        "saved": "Платформы сохранены!",
+        "alwaysVisible": "Всегда видны"
+      }
+    },
+    "folders": {
+      "title": "Папки",
+      "sidebarTitle": "Папки",
+      "all": "Все",
+      "add": "Добавить папку",
+      "edit": "Редактировать папку",
+      "delete": "Удалить папку",
+      "select": "Папка",
+      "selectPlaceholder": "Выберите папку",
+      "selectSearch": "Поиск папки...",
+      "namePlaceholder": "Введите название папки",
+      "collapse": "Свернуть",
+      "expand": "Развернуть",
+      "nameLabel": "Название папки",
+      "emptyTitle": "Папок пока нет",
+      "emptyDescription": "Сгруппируйте интеграции по папкам, чтобы держать порядок — особенно при нескольких проектах.",
+      "emptyCTA": "Создать первую папку",
+      "sidebarSearchPlaceholder": "Поиск папки...",
+      "searchNoResults": "Ничего не найдено",
+      "errorRequired": "Введите название папки",
+      "errorTooLong": "Максимум 50 символов",
+      "sortLabel": "Сортировка",
+      "sortAlpha": "А-Я",
+      "sortCreated": "По дате",
+      "addHotkey": "Новая папка (N)",
+      "scenarioCount_one": "{count} интеграция",
+      "scenarioCount_few": "{count} интеграции",
+      "scenarioCount_many": "{count} интеграций",
+      "scenarioCount_other": "{count} интеграций"
+    },
+    "modal": {
+      "addTitle": "Добавить интеграцию",
+      "editTitle": "Редактирование",
+      "addFolderTitle": "Добавить папку",
+      "editFolderTitle": "Редактировать папку",
+      "addFieldTitle": "Добавить поле",
+      "deleteFolderTitle": "Удалить папку",
+      "deleteTitle": "Удалить интеграцию",
+      "deleteFolderMessage": "Папка «{name}» будет удалена.\n\nВсе её интеграции переместятся в раздел «Все».",
+      "deleteMessage": "Вы действительно хотите удалить интеграцию \"{name}\"?",
+      "confirmDelete": "Да, удалить",
+      "cancel": "Отмена",
+      "close": "Закрыть",
+      "save": "Сохранить",
+      "add": "Добавить",
+      "detailsTitle": "Открытие подробного модального окна...",
+      "unsavedTitle": "Несохранённые изменения",
+      "unsavedMessage": "Введённые изменения будут потеряны. Закрыть?",
+      "unsavedConfirm": "Да, закрыть",
+      "unsavedKeepEditing": "Продолжить редактирование"
+    },
+    "form": {
+      "step1": "Источник",
+      "step3": "Цель",
+      "step3Title": "Целевой сайт",
+      "stepSourceTitle": "Выбор источника",
+      "stepDestinationTitle": "Целевой сайт",
+      "basicInfo": "Основная информация",
+      "additionalInfo": "Дополнительная информация",
+      "source": "Источник лидов",
+      "sourcePlaceholder": "Выберите источник",
+      "sourceSearch": "Поиск источника...",
+      "page": "Страница",
+      "pagePlaceholder": "Выберите страницу",
+      "pageSearch": "Поиск страницы...",
+      "formSelect": "Форма",
+      "formPlaceholder": "Выберите форму",
+      "formSearch": "Поиск формы...",
+      "name": "Название формы",
+      "namePlaceholder": "Например: Форма продаж",
+      "chatId": "Telegram чат",
+      "chatIdPlaceholder": "-100...",
+      "threadId": "Тема форума",
+      "hasTopic": "В группе есть темы форума",
+      "sendToTelegram": "Отправлять в Telegram",
+      "sendToTelegramHint": "Если выключено — лиды идут только в CRM/Sheets/webhook, без уведомления в Telegram",
+      "sendToTelegramLocked": "Telegram выбран как назначение — обязательно",
+      "threadIdPlaceholder": "Например: 7",
+      "chatTopicHint": "Добавьте бота в группу и отправьте /start — получите Chat ID (и Topic ID, если находитесь в теме форума). Для личных чатов (положительный Chat ID) Topic ID не нужен.",
+      "advancedSectionTitle": "Дополнительные возможности (beta)",
+      "collect_comment_leads_title": "Собирать лиды из комментариев к рекламе (beta)",
+      "collect_comment_leads_description": "Если кто-то оставит телефон в комментарии под рекламным постом, привязанным к этой форме, он будет доставлен как обычный лид формы. Учитываются только рекламные посты.",
+      "comment_auto_reply_title": "Автоответ на комментарий (бета)",
+      "comment_auto_reply_description": "На комментарий с номером телефона автоматически отправляется ответ. Если оставить пустым — используется стандартный текст.",
+      "comment_reply_text_label": "Текст ответа",
+      "comment_reply_text_placeholder": "Спасибо! 🙌 Ваш номер принят, скоро свяжемся с вами.",
+      "ai_reply_title": "AI-продавец (beta)",
+      "ai_reply_description": "Отвечает на комментарии как живой оператор: даёт ответ на вопрос и вежливо просит номер телефона. На комментарии без номера тоже приходит ответ.",
+      "ai_shop_name_label": "Название магазина",
+      "ai_shop_name_placeholder": "Например: Bola & Bola",
+      "ai_shop_name_hint": "Агент представляется этим названием.",
+      "ai_product_info_label": "Информация о товаре",
+      "ai_product_info_hint": "Агент отвечает ТОЛЬКО по этому тексту — цена, цвета, размеры, преимущества. Если спросят о том, чего здесь нет (доставка, оплата), он не станет выдумывать: попросит номер и передаст вашему оператору.",
+      "ai_product_info_required": "Без информации о товаре агент не включится — он должен знать, что продаёт.",
+      "ai_extra_rules_label": "Дополнительные правила (необязательно)",
+      "ai_extra_rules_placeholder": "Например: По воскресеньям не работаем. Доставка по Ташкенту бесплатная.",
+      "ai_extra_rules_hint": "Особые указания для агента — они имеют приоритет над общими правилами.",
+      "ai_hide_title": "Скрывать негативные комментарии",
+      "ai_hide_description": "Жалобы, недовольство, оскорбления и спам скрываются из-под рекламы. Скрытие — не удаление: комментарий по-прежнему виден автору и владельцу страницы, остальным — нет. На жалобу всё равно приходит тёплый ответ с просьбой оставить номер — клиент не теряется.",
+      "folder": "Папка",
+      "folderPlaceholder": "Выберите папку",
+      "folderSearch": "Поиск папки...",
+      "folderLabel": "Выбор папки",
+      "destination": "Куда отправлять лиды?",
+      "destinationPlaceholder": "Выберите сайт",
+      "destinationSearch": "Поиск сайта...",
+      "groupSpecial": "Специальные интеграции",
+      "groupCpaWithKey": "CPA сети (требуется API Key)",
+      "groupCpaWithoutKey": "CPA сети (API Key не требуется)",
+      "apiKey": "API Key",
+      "apiKeyPlaceholder": "Выберите API Key",
+      "apiKeySearch": "Поиск API Key...",
+      "apiUrlLabel": "API URL адрес",
+      "googleAccount": "Google аккаунт",
+      "googlePlaceholder": "Выберите Google аккаунт",
+      "googleSearch": "Поиск аккаунта...",
+      "bitrixTitle": "🔷 Настройки Bitrix24",
+      "bitrixUrl": "Bitrix24 Webhook URL",
+      "bitrixPlaceholder": "https://subdomain.bitrix24.com/rest/1/webhook_code/",
+      "bitrixExample": "Например:",
+      "bitrixHowToTitle": "Как найти Webhook URL?",
+      "bitrixStep0": "Войдите в Bitrix24",
+      "bitrixStep1": "Настройки → Для разработчиков → Webhook",
+      "bitrixStep2": "Выберите \"Входящий webhook\"",
+      "bitrixStep3": "Скопируйте данные из URL",
+      "bitrixPath": "Bitrix24 → CRM → Настройки → Интеграция → Webhook",
+      "fieldsLoaded": "{count} загружено",
+      "customUrl": "Custom URL",
+      "customPlaceholder": "https://example.uz/api/new-order/",
+      "webhookUrl": "Webhook URL",
+      "webhookCopy": "Копировать URL",
+      "webhookInfo": "Отправляйте POST запросы на указанный webhook URL. Данные должны быть в формате JSON.",
+      "loadFields": "Загрузить поля",
+      "fieldMapping": "Сопоставление полей",
+      "fieldMappingDesc": "Сопоставьте поля лидов с полями API сайта",
+      "selectField": "Выберите поле",
+      "fieldSearch": "Поиск поля...",
+      "addField": "Добавить поле"
+    },
+    "webhook": {
+      "sendDataHint": "Отправьте данные через webhook один раз, затем загрузите поля.",
+      "loading": "Загрузка..."
+    },
+    "fieldModal": {
+      "addNewField": "Добавить новое поле",
+      "orSelectFromForm": "Или выберите из полей формы:",
+      "addSelectedField": "Добавить выбранное поле"
+    },
+    "commentLead": {
+      "fieldMappingTitle": "💬 Данные из комментария",
+      "fieldMappingHint": "В какие поля вашей формы записать имя и телефон того, кто оставил телефон в комментарии? Нужно выбрать оба поля.",
+      "nameFieldLabel": "Имя",
+      "phoneFieldLabel": "Телефон",
+      "fieldPlaceholder": "Куда записать?",
+      "fieldRequired": "Если поле не выбрано, лиды из комментариев приниматься не будут",
+      "sameFieldError": "Для имени и телефона выберите разные поля",
+      "noFormFields": "Сначала выберите Facebook форму — затем укажите, куда записать имя и телефон из комментария."
+    },
+    "adLinks": {
+      "sectionTitle": "Связанные рекламы",
+      "sectionHint": "Телефон из комментария к рекламе будет отправлен в эту интеграцию. Точная привязка по ID рекламы.",
+      "manage": "Управление",
+      "modalTitle": "Привязать рекламы",
+      "searchPlaceholder": "Название рекламы или кампании...",
+      "statusAll": "Все",
+      "statusActive": "Активные",
+      "statusPaused": "Остановленные",
+      "refresh": "Обновить",
+      "refreshSuccess": "Рекламы обновлены",
+      "empty": "Для этой страницы рекламы не найдены. Нажмите «Обновить».",
+      "noFilterResults": "Нет рекламы, подходящей под фильтр",
+      "noCampaign": "Без кампании",
+      "selectedCount": "Выбрано: {count}",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "saveSuccess": "Сохранено",
+      "leadForm": "Lead Form",
+      "linkedElsewhere": "Привязано к другой интеграции: {name}"
+    },
+    "toast": {
+      "resendErrorsQueued": "{count} ошибочных лидов поставлено в очередь",
+      "pausedSuccess": "Интеграция остановлена!",
+      "resumedSuccess": "Интеграция запущена!",
+      "sendPausedSuccess": "Лиды на паузе отправлены!",
+      "bulk": {
+        "pauseSuccess": "Все интеграции остановлены!",
+        "startSuccess": "Все интеграции запущены!",
+        "sendSuccess": "Все приостановленные лиды отправлены!",
+        "startConfirm": "Запустить все интеграции?",
+        "sendConfirm": "Отправить все приостановленные лиды? Это может занять некоторое время.",
+        "resetSuccess": "Настройки авто-режима очищены!",
+        "resetConfirm": "Сбросить авто пауза, авто старт и авто отправка для всех интеграций?"
+      },
+      "deleteSuccess": "Интеграция успешно удалена!",
+      "duplicateSuccess": "Интеграция успешно дублирована!",
+      "duplicateError": "Ошибка при дублировании интеграции!",
+      "createSuccess": "Интеграция успешно добавлена!",
+      "igNotLinkedWarning": "Бизнес-аккаунт Instagram не привязан — лиды из комментариев IG не работают",
+      "updateSuccess": "Интеграция успешно обновлена!",
+      "folderCreateSuccess": "Папка успешно добавлена!",
+      "folderUpdateSuccess": "Папка успешно обновлена!",
+      "folderDeleteSuccess": "Папка успешно удалена!",
+      "fieldsLoaded": "Поля формы загружены!",
+      "webhookFieldsLoaded": "Поля webhook загружены!",
+      "webhookFieldsError": "Ошибка загрузки полей webhook",
+      "webhookFieldsEmpty": "Сначала отправьте данные через webhook",
+      "googleAccountsError": "Ошибка загрузки аккаунтов Google",
+      "webhookCopied": "Webhook URL скопирован!",
+      "formFieldsLoaded": "Поля формы автоматически загружены!",
+      "fieldAdded": "Поле добавлено!",
+      "newFieldAdded": "Новое поле добавлено!",
+      "selectSource": "Выберите источник лидов",
+      "webhookUrlMissing": "Webhook URL отсутствует. Сначала создайте webhook.",
+      "loadFieldsFirst": "Загрузите поля. Отправьте данные через webhook и нажмите кнопку \"Загрузить поля\".",
+      "selectPage": "Выберите страницу Facebook",
+      "selectForm": "Выберите форму",
+      "selectDestination": "Выберите целевой сайт",
+      "enterName": "Введите название интеграции",
+      "enterChatId": "Введите Telegram Chat ID",
+      "enterCustomUrl": "Введите Custom URL",
+      "enterBitrixUrl": "Введите Bitrix24 Webhook URL",
+      "selectGoogleAccount": "Выберите Google аккаунт",
+      "enterFolderName": "Введите название папки",
+      "bitrixLoadFields": "Загрузите поля Bitrix24!"
+    },
+    "apiKeyNotFound": {
+      "title": "API Key не найден!",
+      "message": "Перед добавлением интеграции для этого сайта необходимо создать API Key.",
+      "required": "Для этого сайта необходимо выбрать API Key!",
+      "hint": "Если нужного API Key нет, добавьте новый здесь."
+    },
+    "fields": {
+      "empty": "Пока нет полей",
+      "emptyHint": "Нажмите кнопку выше, чтобы добавить поле",
+      "noMapping": "Пока нет сопоставлений полей"
+    },
+    "additionalSettings": "Дополнительные настройки",
+    "basicSettings": "Основные настройки",
+    "googleSheets": {
+      "title": "Google Sheets",
+      "description": "Автоматическая запись лидов в таблицу",
+      "columns": "колонок",
+      "autoFormat": "Автоформатирование",
+      "account": "Google Аккаунт",
+      "accountPlaceholder": "Выберите Google аккаунт",
+      "accountNotFound": "Google аккаунт не найден",
+      "accountNotFoundHint": "Сначала подключите Google аккаунт",
+      "connectAccount": "Подключить Google аккаунт",
+      "tableType": "Тип таблицы",
+      "newTable": "Новая таблица",
+      "newTableHint": "Создается автоматически",
+      "existingTable": "Существующая таблица",
+      "existingTableHint": "Ввести URL",
+      "tableUrlLabel": "URL или ID таблицы",
+      "tableUrlPlaceholder": "https://docs.google.com/spreadsheets/d/xxx",
+      "openTable": "Открыть таблицу",
+      "columnsSettings": "Настройки колонок",
+      "columnsOrder": "Порядок колонок",
+      "addColumn": "Добавить колонку",
+      "edit": "Редактировать",
+      "hide": "Скрыть",
+      "dragHint": "Перетащите колонки для изменения порядка. Нажмите кнопку для ручного ввода.",
+      "manual": "Вручную",
+      "empty": "(пусто)",
+      "formField": "Форма",
+      "removedColumns": "Удаленные колонки (нажмите для восстановления)",
+      "quickAdd": "Быстрое добавление (нажмите)",
+      "columnName": "Название колонки",
+      "addEmptyColumn": "Добавить колонку",
+      "newColumn": "Новая колонка",
+      "features": {
+        "dashboard": "Главная страница",
+        "statusDropdown": "Выпадающий статус",
+        "colorFormat": "Цветовое форматирование",
+        "analytics": "Страница аналитики"
+      },
+      "picker": {
+        "label": "Выберите таблицу",
+        "selectSpreadsheet": "Выберите Google Sheets",
+        "openInSheets": "Открыть таблицу",
+        "clear": "Очистить",
+        "tokenError": "Ошибка получения токена. Переподключите аккаунт.",
+        "loadingSheets": "Загрузка листов...",
+        "selectSheet": "Выберите лист",
+        "or": "или",
+        "urlPlaceholder": "Вставьте ссылку на Google Sheets...",
+        "urlHint": "Например: https://docs.google.com/spreadsheets/d/abc123/edit",
+        "connect": "Подключить",
+        "invalidUrl": "Неверная ссылка на Google Sheets",
+        "sheetLoadError": "Таблица не найдена или нет доступа"
+      },
+      "newTableInfo": "Новая таблица создается автоматически",
+      "newTableInfoHint": "Ссылка на таблицу будет отправлена в Telegram после сохранения",
+      "addColumnModal": {
+        "title": "Добавить новую колонку",
+        "columnName": "Название колонки",
+        "columnNamePlaceholder": "Например: Комментарий, Адрес...",
+        "valueType": "Тип значения",
+        "formFieldOption": "Поле формы",
+        "manualOption": "Ручной ввод",
+        "selectFormField": "Поле формы",
+        "selectPlaceholder": "Выберите поле",
+        "allFieldsUsed": "Все поля формы уже добавлены",
+        "defaultValue": "Значение по умолчанию (необязательно)",
+        "defaultValuePlaceholder": "Значение для каждой строки...",
+        "defaultValueHint": "Оставьте пустым, если колонка должна быть пустой",
+        "cancel": "Отмена",
+        "add": "Добавить"
+      },
+      "predefined": {
+        "source": "Источник",
+        "date": "Дата",
+        "status": "Статус"
+      }
+    },
+    "dynamicFields": {
+      "keyLabel": "Название ключа",
+      "keyPlaceholder": "Название ключа",
+      "form": "Форма",
+      "manual": "Вручную",
+      "formField": "Поле формы",
+      "value": "Значение",
+      "selectFormField": "Выберите поле формы",
+      "switchToForm": "Переключить на поле формы",
+      "switchToManual": "Ручной ввод",
+      "fieldKey": "Ключ поля",
+      "enterValue": "Введите значение",
+      "dragHint": "Перетащите поля для изменения порядка"
+    },
+    "account_picker": {
+      "bitrix24_label": "Портал Bitrix24",
+      "amocrm_label": "Аккаунт amoCRM",
+      "placeholder": "Выберите или добавьте новый",
+      "loading": "Загрузка...",
+      "add_new": "Добавить новый",
+      "empty_hint": "Аккаунты ещё не добавлены. Добавьте первый:",
+      "reconnect_hint": "Ошибка соединения — проверьте на странице Connections или обновите токен.",
+      "open_connections": "Connections",
+      "open_connections_full": "Страница Connections",
+      "status_ok": "Соединение OK:",
+      "status_failed": "Ошибка:",
+      "status_untested": "Не проверено:"
+    },
+    "telegram_picker": {
+      "label": "Бот доставки",
+      "default_bot": "Основной бот (Yuboraman.uz) — по умолчанию",
+      "loading": "Загрузка...",
+      "add_new": "Подключить новый бот",
+      "default_hint": "Если бот не выбран, лиды доставляются через основной бот Yuboraman.uz.",
+      "no_username": "Нет username",
+      "status_ok": "Бот OK:",
+      "status_failed": "Ошибка:",
+      "status_untested": "Не проверено:",
+      "locked_title": "Доставка через собственный Telegram-бот",
+      "locked_hint": "Лиды этой интеграции доставляются через основной бот Yuboraman.uz. Чтобы подключить свой бот, перейдите на платный тариф."
+    },
+    "form_missing": {
+      "heading_one": "Ещё 1 шаг до сохранения:",
+      "heading_other": "Ещё {count} шагов до сохранения:",
+      "heading": "Ещё {count} шагов до сохранения:",
+      "sourceType": "Выберите источник лидов (Webhook / Facebook)",
+      "name": "Введите название формы",
+      "chatId": "Введите Telegram chat ID",
+      "website": "Выберите платформу-получатель",
+      "bitrixWebhook": "Введите Bitrix24 webhook URL или выберите сохранённый портал",
+      "bitrixLoad": "Загрузите поля Bitrix24 (Load fields)",
+      "amocrmCreds": "Введите amoCRM account URL и JWT token, или выберите сохранённый аккаунт",
+      "amocrmDiscovery": "Загрузите настройки amoCRM (Discovery)",
+      "amocrmPipeline": "Выберите воронку amoCRM",
+      "customUrl": "Введите webhook URL",
+      "googleAccount": "Выберите Google аккаунт",
+      "apiKey": "API ключ не добавлен — используйте ссылку выше"
+    },
+    "bitrix24_account_modal": {
+      "create_title": "Новый портал Bitrix24",
+      "edit_title": "Изменить портал Bitrix24",
+      "name_label": "Название портала",
+      "name_placeholder": "Напр. Основной портал",
+      "url_label": "Webhook URL",
+      "url_helper_new": "Создайте входящий вебхук в портале Bitrix24 и вставьте URL сюда.",
+      "url_helper_edit": "Оставьте пустым, если обновление не требуется.",
+      "errors": {
+        "name_required": "Название обязательно",
+        "url_required": "Webhook URL обязателен"
+      }
+    },
+    "amocrm_account_modal": {
+      "create_title": "Новый аккаунт amoCRM",
+      "edit_title": "Изменить аккаунт amoCRM",
+      "name_label": "Название аккаунта",
+      "name_placeholder": "Напр. Основной CRM",
+      "url_label": "URL аккаунта",
+      "url_helper": "Напр.: https://mycompany.kommo.com или https://mycompany.amocrm.ru",
+      "token_label": "JWT токен",
+      "token_helper_new": "Kommo: Настройки → Интеграции → Создать.",
+      "token_helper_edit": "Оставьте пустым, если обновление не требуется.",
+      "token_trust": "Токен хранится на сервере в зашифрованном виде и никогда не сохраняется в открытом виде.",
+      "errors": {
+        "name_required": "Название обязательно",
+        "url_required": "URL обязателен",
+        "token_required": "Токен обязателен"
+      }
+    },
+    "cpa_account_modal": {
+      "connect_title": "Подключить аккаунт {platform}",
+      "name_label": "Название",
+      "name_placeholder": "Напр. Основной аккаунт",
+      "phone_label": "Телефон",
+      "login_label": "Email или телефон",
+      "phone_helper": "Номер телефона аккаунта CPA-сайта",
+      "login_helper": "Email или телефон CPA-аккаунта",
+      "password_label": "Пароль",
+      "password_helper": "Пароль аккаунта CPA-сайта",
+      "password_trust": "Пароль хранится на сервере в зашифрованном виде и никогда не сохраняется в открытом виде.",
+      "errors": {
+        "name_required": "Название не указано",
+        "phone_required": "Телефон не указан",
+        "login_required": "Email или телефон не введён",
+        "password_required": "Пароль не указан"
+      }
+    },
+    "bitrix24": {
+      "title": "Настройки Bitrix24 CRM",
+      "load": "Загрузить",
+      "loadFields": "Загрузить поля",
+      "loadFieldsHint": "Нажмите кнопку для загрузки полей Bitrix24",
+      "fieldsLoaded": "полей загружено",
+      "webhookHint": "Формат: https://domain.bitrix24.uz/rest/USER_ID/WEBHOOK_CODE/",
+      "webhookHelp": "Как получить Webhook URL: Bitrix24 → CRM → Настройки → Интеграция → REST API → Создать вебхук",
+      "fieldMappings": "Сопоставление полей",
+      "addField": "Добавить поле",
+      "noMappings": "Пока нет сопоставлений полей",
+      "loadFieldsFirst": "Сначала загрузите поля Bitrix24 выше",
+      "standardFields": "Стандартные поля",
+      "customFields": "Дополнительные поля",
+      "selectField": "-- Выберите поле --",
+      "searchField": "Поиск поля...",
+      "bitrixField": "Поле Bitrix24",
+      "valueType": "Тип значения",
+      "urlRequired": "Сначала введите webhook URL Bitrix24",
+      "loadingDiscovery": "Загрузка данных портала Bitrix24...",
+      "discoveryHint": "Загружается автоматически после ввода webhook URL. Или загрузите вручную:",
+      "loadDiscovery": "Загрузить настройки Bitrix24",
+      "refresh": "Обновить",
+      "crmMode": {
+        "simple": "Simple CRM (без Lead, только сделки)",
+        "classic": "Classic CRM (Lead + Deal)",
+        "unknown": "Режим CRM не определён"
+      },
+      "simpleModeWarning": "Этот портал использует режим Simple CRM — сущности Lead нет. Сделки создаются автоматически.",
+      "entityType": "Что создаём?",
+      "entityLead": "Lead (обычный)",
+      "entityDeal": "Deal (сделка)",
+      "pipeline": "Воронка (pipeline)",
+      "leadStatus": "Начальный статус Lead",
+      "dealStage": "Начальная стадия Deal",
+      "stageDefault": "По умолчанию (NEW)",
+      "assignedBy": "Ответственный",
+      "assigneeDefault": "По умолчанию (владелец webhook)",
+      "source": "Источник лида (SOURCE)",
+      "noFacebookSource": "В вашем портале Bitrix24 нет источника FACEBOOK",
+      "autoCreateFacebook": "Создать автоматически",
+      "duplicateCheck": "Проверка дубликатов",
+      "duplicateCheckHint": "Перед отправкой лида в Bitrix24 проверяется наличие дубликата по телефону/email (+1 RTT, но защищает от повторов).",
+      "head": {
+        "titleLabel": "Название лида/сделки (шаблон)",
+        "titleHint": "Соберите название лида или сделки Bitrix24 из полей FB, например: {campaign_name} | {full_name}. Если пусто — используется название по умолчанию.",
+        "preview": "Результат",
+        "presetCampaignName": "Кампания | Имя",
+        "presetCampaignAd": "Кампания — Объявление"
+      },
+      "sendTest": "🧪 Отправить тест",
+      "testing": "Отправка...",
+      "toast": {
+        "discoverError": "Не удалось загрузить данные Bitrix24",
+        "testSuccess": "Тест отправлен! ID: {id} (проверьте в Bitrix24)",
+        "testError": "Ошибка отправки теста",
+        "sourceCreated": "Источник FACEBOOK создан в Bitrix24!"
+      }
+    },
+    "amocrm": {
+      "credentialsRequired": "Сначала введите URL аккаунта amoCRM и токен",
+      "accountUrl": "URL аккаунта",
+      "accountUrlPlaceholder": "https://mycompany.kommo.com",
+      "accountUrlHint": "Пример: https://mycompany.amocrm.ru или https://mycompany.kommo.com",
+      "token": "Long-lived JWT токен",
+      "tokenPlaceholder": "eyJhbGciOiJSUzI1NiIs...",
+      "tokenHint": "В amoCRM: Настройки → Интеграции → Создать новую → Ключи и доступы → Сгенерировать long-lived токен (до 5 лет).",
+      "showToken": "Показать токен",
+      "hideToken": "Скрыть токен",
+      "testConnection": "Проверить подключение",
+      "loadDiscovery": "Загрузить настройки",
+      "refresh": "Обновить",
+      "pipeline": "Воронка",
+      "status": "Начальный статус",
+      "statusDefault": "По умолчанию (первая стадия)",
+      "responsibleUser": "Ответственный",
+      "responsibleDefault": "По умолчанию (владелец токена)",
+      "duplicateCheck": "Проверка дубликатов",
+      "duplicateCheckHint": "Перед отправкой проверяется наличие контакта с таким же телефоном в amoCRM (+1 RTT, защищает от повторов).",
+      "head": {
+        "leadNameLabel": "Название сделки (шаблон)",
+        "leadNameHint": "Соберите из FB-полей, например: {campaign_name} | {full_name}. Пусто — используется название формы.",
+        "contactNameLabel": "Имя контакта (шаблон)",
+        "contactNameHint": "Например: {full_name} или {full_name} · {phone}. Пусто — текущее поведение.",
+        "tagsLabel": "Теги (шаблон, через запятую)",
+        "tagsHint": "В amoCRM тег = фильтр. Например: {campaign_name}, {ad_name} — группируйте лиды по кампании.",
+        "tagsWarning": "⚠️ Разделяйте теги запятой (,). Уберёте запятую — несколько полей объединятся в один тег.",
+        "preview": "Результат",
+        "presetCampaignName": "Кампания | Имя",
+        "presetCampaignAd": "Кампания — Объявление"
+      },
+      "sendTest": "🧪 Отправить тест",
+      "testing": "Отправка...",
+      "nativeFbWarning": "⚠️ Если в amoCRM включена встроенная интеграция «Facebook Lead Forms», лиды могут дублироваться. Отключите её для форм, переданных через Yuboraman.",
+      "toast": {
+        "connectionOk": "Подключение успешно!",
+        "connectionFailed": "Не удалось подключиться — проверьте токен и URL",
+        "discoverError": "Не удалось загрузить данные amoCRM",
+        "testSuccess": "Тест отправлен! Lead ID: {id}",
+        "testError": "Ошибка отправки теста"
+      },
+      "fields": {
+        "title": "Сопоставление полей",
+        "hint": "Сопоставьте поля формы с пользовательскими полями Lead и Contact в amoCRM. PHONE/EMAIL определяются автоматически.",
+        "addField": "Добавить поле",
+        "empty": "Сопоставлений ещё нет",
+        "emptyHint": "Нажмите «Добавить поле» — выберите поле Lead или Contact.",
+        "leadEntity": "Lead",
+        "contactEntity": "Contact",
+        "leadFields": "Поля Lead",
+        "contactFields": "Поля Contact",
+        "standard": "Стандартные",
+        "custom": "Кастомные",
+        "fieldLabel": "Поле amoCRM",
+        "selectField": "Выберите поле",
+        "searchField": "Поиск по названию...",
+        "valueType": "Источник значения",
+        "enumLabel": "Тип (enum)"
+      }
+    },
+    "crm": {
+      "bitrix24": {
+        "title": "Порталы Bitrix24",
+        "empty": "Пока нет добавленных порталов",
+        "add": "Новый портал"
+      },
+      "amocrm": {
+        "title": "Аккаунты amoCRM",
+        "empty": "Пока нет добавленных аккаунтов",
+        "add": "Новый аккаунт"
+      }
+    },
+    "crm_accounts": {
+      "added_at": "Добавлен",
+      "last_test_ok": "Последняя проверка OK",
+      "last_test_failed": "Последняя проверка не удалась",
+      "test": "Проверить соединение",
       "edit": "Редактировать",
       "delete": "Удалить",
-      "copyWebhook": "Скопировать webhook URL",
-      "openDetail": "Подробнее"
+      "delete_title": "Подтвердите удаление",
+      "delete_message": "Удалить {name}?",
+      "delete_confirm": "Удалить"
     },
-    "toasts": {
-      "copied": "Скопировано",
-      "actionDone": "Выполнено",
-      "saved": "Сохранено",
-      "deleted": "Удалено",
-      "error": "Произошла ошибка. Попробуйте ещё раз."
+    "common": {
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "add": "Добавить"
     },
-    "empty": {
-      "title": "Пока нет интеграций",
-      "description": "Создайте первую интеграцию — лиды начнут доставляться автоматически.",
-      "cta": "Создать интеграцию"
+    "universal": {
+      "fieldSettings": "Настройки полей",
+      "addField": "Добавить поле",
+      "noFields": "Пока нет добавленных полей",
+      "addFieldHint": "Нажмите кнопку выше, чтобы добавить поле",
+      "field": "Поле",
+      "availableFields": "Доступные поля",
+      "selectField": "Выберите поле",
+      "searchField": "Поиск поля...",
+      "or": "или",
+      "fieldKey": "Ключ поля",
+      "fieldKeyPlaceholder": "например: custom_field",
+      "fieldName": "Название поля (необязательно)",
+      "fieldNamePlaceholder": "например: Особое поле",
+      "cancel": "Отмена",
+      "add": "Добавить"
     },
-    "noResults": "Ничего не найдено",
-    "folders": {
-      "all": "Все",
-      "new": "Новая папка",
-      "createTitle": "Новая папка",
-      "renameTitle": "Переименовать папку",
-      "namePlaceholder": "Название папки",
-      "nameRequired": "Введите название папки",
-      "create": "Создать",
-      "rename": "Переименовать",
-      "delete": "Удалить",
-      "deleteTitle": "Удалить папку",
-      "deleteDescription": "Удалить папку \"{name}\"?",
-      "notEmpty": "Папка не пуста — сначала перенесите интеграции",
-      "noFolder": "Без папки"
+    "groups": {
+      "special": "Специальные интеграции",
+      "crm": "CRM Системы",
+      "cpaWithKey": "CPA сети (требуется API Key)",
+      "cpaWithoutKey": "CPA сети (API Key не требуется)"
     },
-    "selection": {
-      "selected": "Выбрано: {count}",
-      "clear": "Отменить"
+    "telegram": {
+      "messageFields": "Поля сообщения",
+      "description": "Поля, отображаемые в сообщении Telegram",
+      "noFields": "Поля формы не найдены",
+      "fieldsCount": "полей",
+      "preview": "Предпросмотр сообщения:",
+      "dragHint": "Перетащите поля для изменения порядка",
+      "manual": "Вручную",
+      "formField": "Поле формы",
+      "empty": "пусто",
+      "switchToForm": "Переключить на поле формы",
+      "switchToManual": "Переключить на ручной ввод",
+      "enterValue": "Введите значение...",
+      "selectField": "Выберите поле",
+      "selectFormField": "Выберите поле формы",
+      "removedFields": "Удалённые поля:",
+      "fieldName": "Название поля",
+      "addField": "Добавить поле",
+      "newField": "Новое поле",
+      "valueSource": "Источник значения"
     },
-    "deleteDialog": {
-      "title": "Удалить интеграцию",
-      "description": "Интеграция \"{name}\" будет удалена. Это действие нельзя отменить.",
-      "confirm": "Удалить"
+    "validation": {
+      "nameRequired": "Название формы обязательно",
+      "nameMinLength": "Минимум 3 символа",
+      "chatIdRequired": "Chat ID обязателен",
+      "chatIdOnlyNumbers": "Только цифры",
+      "threadIdInvalid": "Topic ID должен быть положительным числом (или оставьте пустым)",
+      "bitrixUrlRequired": "Bitrix24 URL обязателен",
+      "bitrixUrlInvalid": "Введите корректный Bitrix24 URL",
+      "customUrlRequired": "Custom URL обязателен",
+      "customUrlInvalid": "Введите корректный URL"
     },
-    "editDialog": {
-      "title": "Редактировать интеграцию",
-      "name": "Название",
-      "nameRequired": "Введите название",
-      "folder": "Папка",
-      "receiver": "Канал доставки"
-    },
-    "wizard": {
-      "title": "Новая интеграция",
-      "back": "Назад",
-      "next": "Продолжить",
-      "create": "Создать",
-      "creating": "Создание...",
-      "steps": {
-        "source": "Источник",
-        "details": "Название",
-        "receiver": "Получатель"
+    "history": {
+      "title": "История формы",
+      "subtitle": "Статистика лидов",
+      "loading": "Загрузка...",
+      "refresh": "Обновить",
+      "refreshTooltip": "Автоматическое обновление каждую минуту",
+      "errorsOnly": "Только ошибки",
+      "detailTooltip": "Подробнее",
+      "recentLeads": "Последние лиды",
+      "noLeads": "Пока нет лидов",
+      "search": "Поиск...",
+      "dataUpdated": "Данные обновлены",
+      "loadError": "Ошибка загрузки данных",
+      "stats": {
+        "today": "Сегодня",
+        "week": "Неделя",
+        "month": "Месяц"
       },
-      "sourceTitle": "Откуда приходят лиды?",
-      "sourceWebhookDescription": "Принимайте лиды JSON-запросом с любого сайта или системы",
-      "sourceFacebookDescription": "Автоматический приём из форм Facebook Lead Ads",
-      "facebook": {
-        "connection": "Аккаунт Facebook",
-        "selectConnection": "Выберите аккаунт",
-        "loading": "Загрузка...",
-        "noConnections": "Аккаунт Facebook ещё не подключён",
-        "connectCta": "Подключить на странице подключений",
-        "page": "Страница",
-        "selectPage": "Выберите страницу",
-        "noPages": "Страницы не найдены",
-        "form": "Lead-форма",
-        "selectForm": "Выберите форму",
-        "noForms": "На этой странице нет lead-форм",
-        "subscribing": "Подключаем страницу к webhook...",
-        "subscribed": "Страница подключена к webhook",
-        "subscribeError": "Не удалось подключить страницу к webhook. Попробуйте позже.",
-        "selectionRequired": "Выберите аккаунт, страницу и форму"
-      },
-      "detailsTitle": "Назовите интеграцию",
-      "namePlaceholder": "Например: Лиды с лендинга",
-      "nameRequired": "Введите название",
-      "folderOptional": "Папка (необязательно)",
-      "receiverTitle": "Куда отправлять лиды?",
-      "useExisting": "Существующий канал",
-      "createNew": "Новый канал",
-      "selectConnection": "Выберите канал",
-      "connectionRequired": "Выберите канал или создайте новый",
-      "noConnections": "Каналов пока нет — создайте новый",
-      "successTitle": "Интеграция создана!",
-      "successDescription": "Отправьте POST-запрос на этот URL — лид будет принят автоматически.",
-      "successFacebookDescription": "Лиды из выбранной формы теперь будут приниматься автоматически.",
-      "facebookAutoNote": "Лиды приходят из формы Facebook автоматически",
-      "webhookUrl": "Webhook URL",
-      "copy": "Скопировать",
-      "testLead": "Отправить тестовый лид",
-      "toList": "Список интеграций",
-      "toDetail": "Открыть интеграцию"
-    },
-    "detail": {
-      "back": "Интеграции",
-      "notFound": "Интеграция не найдена",
-      "webhookUrl": "Webhook URL",
-      "facebookAutoNote": "Лиды приходят из формы Facebook автоматически",
-      "leadsTitle": "Лиды",
-      "filters": {
-        "all": "Все",
-        "pending": "В очереди",
-        "delivered": "Доставлены",
-        "failed": "Ошибка",
-        "paused_hold": "Пришли в паузе"
-      },
-      "columns": {
-        "time": "Время",
+      "table": {
+        "index": "#",
         "status": "Статус",
-        "retry": "Попытки",
-        "error": "Ошибка",
-        "payload": "Данные"
+        "time": "Время",
+        "details": "Подробнее"
       },
-      "empty": "Лидов нет",
-      "total": "Всего: {count}",
-      "prev": "Назад",
-      "next": "Далее",
-      "pageInfo": "{page} / {pages}"
+      "dateRange": {
+        "today": "Сегодня",
+        "yesterday": "Вчера",
+        "thisWeek": "Эта неделя",
+        "thisMonth": "Этот месяц",
+        "from": "От",
+        "to": "До"
+      },
+      "status": {
+        "new": "Новый",
+        "success": "OK",
+        "processing": "В процессе",
+        "error": "Ошибка",
+        "unknown": "Неизвестно"
+      },
+      "detail": {
+        "title": "Данные лида",
+        "leadData": "Данные лида",
+        "userData": "Данные пользователя",
+        "logMessage": "Сообщение лога",
+        "additionalInfo": "Дополнительная информация",
+        "status": "Статус",
+        "state": "Состояние",
+        "createdAt": "Дата создания",
+        "paused": "На паузе",
+        "active": "Активный",
+        "noData": "Нет данных",
+        "noLog": "Нет лога"
+      }
+    },
+    "facebookLeads": {
+      "title": "Лиды Facebook",
+      "downloadTitle": "Скачать лиды",
+      "resendTitle": "Переотправить лиды",
+      "downloadOption": "Скачать",
+      "downloadDesc": "Скачать в CSV файл (90 дней)",
+      "resendOption": "Переотправить",
+      "resendDesc": "Отправить в CRM повторно (7 дней)",
+      "startDate": "Дата начала",
+      "endDate": "Дата окончания",
+      "quickSelect": "Быстрый выбор:",
+      "today": "Сегодня",
+      "day1": "1 день",
+      "day2": "2 дня",
+      "day5": "5 дней",
+      "week": "7 дней",
+      "month": "30 дней",
+      "max": "90 дней",
+      "maxResend": "7 дней",
+      "downloadInfo": "Все лиды за выбранный период будут скачаны в CSV формате.",
+      "resendInfo": "Лиды за выбранный период будут отправлены в CRM (макс. 7 дней).",
+      "downloadBtn": "Скачать",
+      "resendBtn": "Переотправить",
+      "cancel": "Отмена",
+      "downloadSuccess": "Лиды успешно скачаны",
+      "downloadError": "Ошибка при скачивании лидов",
+      "resendSuccess": "{count} лидов переотправлено",
+      "resendSuccessGeneric": "Лиды переотправлены",
+      "resendError": "Ошибка при переотправке лидов",
+      "errors": {
+        "startAfterEnd": "Дата начала должна быть раньше даты окончания",
+        "maxDays": "Можно выбрать период до 90 дней",
+        "maxDaysResend": "Можно выбрать период до 7 дней"
+      },
+      "forceDup": {
+        "title": "Отправить также с дубликатами",
+        "warn": "Внимание: ранее доставленные лиды снова уйдут в CRM/Telegram — появятся дубликаты. Включайте только при необходимости."
+      },
+      "uploadOption": "Загрузить CSV",
+      "uploadDesc": "Загрузить CSV-файл из Facebook",
+      "back": "Назад",
+      "close": "Закрыть",
+      "upload": {
+        "title": "Загрузка CSV",
+        "infoBanner": "💡 Обходной путь для проблемы API Facebook — вернуть пропущенные лиды. В Facebook → Forms Library → Download выберите опцию CSV и загрузите файл сюда. Дубликаты пропускаются автоматически.",
+        "fileLabel": "Выберите файл (только .csv, максимум 2 МБ)",
+        "submit": "Загрузить",
+        "successToast": "{n} лидов в очереди",
+        "invalidExt": "Принимаются только .csv файлы. Выберите опцию CSV в Facebook.",
+        "tooLarge": "Размер файла не должен превышать 2 МБ. Сократите период в Facebook экспорте.",
+        "failed": "Ошибка загрузки",
+        "resultTitle": "Загрузка завершена",
+        "queued": "В очереди",
+        "totalRows": "Всего строк",
+        "skippedTest": "Тестовые лиды",
+        "skippedInvalid": "Некорректные",
+        "dedupNote": "Дубликаты (лиды, отправленные за последние 30 дней) пропускаются автоматически."
+      }
+    },
+    "pauseSchedule": {
+      "title": "Остановить интеграцию",
+      "titleBulk": "Остановить все интеграции",
+      "subtitle": "Ежедневное расписание",
+      "autoPauseLabel": "Ежедневная остановка",
+      "autoStartLabel": "Ежедневный запуск",
+      "autoSendLabel": "Отправка лидов",
+      "noSchedule": "Не установлено",
+      "infoPause": "Каждый день в {hour}:00 останавливается",
+      "infoStart": "Каждый день в {hour}:00 запускается",
+      "infoSend": "Каждый день в {hour}:00 отправляются лиды",
+      "helpToggle": "Что делают эти настройки?",
+      "helpPauseShort": "в этот час интеграция автоматически останавливается. Новые лиды сохраняются в базе, но не отправляются в CRM (напр. 18:00 — после рабочего дня).",
+      "helpStartShort": "в этот час интеграция автоматически запускается. Новые лиды отправляются в CRM в реальном времени (напр. 09:00 — начало рабочего дня).",
+      "helpSendShort": "лиды, накопившиеся во время паузы, в этот час отправляются в CRM. Работает даже если интеграция сейчас на паузе — используется для отправки ночных лидов одной утренней пачкой (напр. 09:00). Очистите поле кнопкой X, чтобы полностью отключить.",
+      "errorStartRequiredWithPause": "Установлено время остановки — также укажите время запуска",
+      "errorSendRequiredWithPause": "Установлено время остановки — также укажите время отправки лидов",
+      "errorPauseEqualsStart": "Время остановки и запуска не должны совпадать",
+      "errorStartAfterSend": "Время запуска не должно быть позже времени отправки",
+      "cancel": "Отмена",
+      "confirm": "Остановить"
     }
   },
   "connections": {
-    "title": "Подключения",
+    "title": "Подключенные профили",
+    "subtitle": "Управляйте источниками лидов и каналами доставки (Facebook, Google, CRM, Telegram-бот)",
+    "addButton": "Подключить профиль",
+    "allProfiles": "Все профили",
+    "searchPlaceholder": "Поиск профилей...",
+    "emptyMessage": "Профили не найдены",
+    "noProfiles": "Профили еще не подключены",
+    "noProfilesDescription": "Нажмите \"Подключить профиль\", чтобы подключить Facebook, Google, CRM (Bitrix24/amoCRM) или Telegram-бот",
+    "addFirstProfile": "Подключить первый профиль",
+    "loadingProfiles": "Загрузка профилей...",
+    "limit": {
+      "reached": "Достигнут максимальный лимит профилей (100/100). Чтобы добавить новый профиль, сначала удалите существующий."
+    },
+    "table": {
+      "source": "Источник",
+      "name": "Имя",
+      "lastActivity": "Последняя активность",
+      "connectedAt": "Время подключения",
+      "status": "Статус",
+      "connectedShort": "Подключён",
+      "actions": "Действия"
+    },
     "sources": {
-      "title": "Источники лидов",
-      "description": "Внешние платформы, откуда приходят лиды",
-      "facebookTitle": "Facebook",
-      "facebookDescription": "Подключение аккаунта Facebook Lead Ads и приём лидов из форм"
+      "facebook": "Facebook",
+      "google": "Google",
+      "bitrix24": "Bitrix24",
+      "amocrm": "amoCRM",
+      "telegram": "Telegram бот",
+      "telegram_chat": "Telegram чат"
     },
-    "facebook": {
-      "connect": "Подключить Facebook",
-      "reconnect": "Переподключить",
-      "statusActive": "Активно",
-      "statusError": "Ошибка",
-      "tokenExpires": "Срок токена: {time}",
+    "modal": {
+      "title": "Подключить профиль",
+      "description": "Выберите платформу для подключения:",
+      "facebookButton": "Facebook (Лиды)",
+      "googleButton": "Google (Sheets)",
+      "note": "Примечание:",
+      "noteText": "Во время входа откроется всплывающее окно. Если браузер заблокировал всплывающее окно, разрешите его и попробуйте снова."
+    },
+    "delete": {
+      "title": "Удалить профиль",
+      "message": "Вы действительно хотите удалить профиль \"{name}\"? После этого действия все данные этого профиля будут удалены!",
+      "confirm": "Да, удалить",
+      "cancel": "Отмена"
+    },
+    "oauth": {
+      "facebookTitle": "Вход в Facebook",
+      "googleTitle": "Вход в Google",
+      "popupClosed": "Всплывающее окно закрыто"
+    },
+    "toast": {
+      "connected": "Профиль успешно подключен!",
+      "deleted": "Профиль успешно удален!",
+      "sessionUpdated": "Сессия успешно обновлена!",
+      "oauthOpening": "Переход на страницу входа...",
+      "redirecting": "Вы перенаправляетесь на страницу входа...",
+      "oauthBlocked": "Если браузер заблокировал всплывающее окно, разрешите его.",
+      "oauthError": "Не удалось начать подключение. Попробуйте ещё раз.",
+      "sessionRefreshing": "Войдите снова, чтобы обновить сессию.",
+      "loginCancelled": "Вход отменен",
+      "sessionCancelledTitle": "Обновление сессии отменено",
+      "timeout": "Время истекло",
+      "timeoutDescription": "Процесс входа занял слишком много времени. Попробуйте снова.",
+      "telegramTestSent": "Тестовое сообщение отправлено — проверьте Telegram",
+      "chatTestSent": "Тестовое сообщение отправлено в чат — проверьте Telegram",
+      "webhookRefreshed": "Webhook бота обновлён"
+    },
+    "tooltips": {
+      "refresh": "Обновить сессию",
+      "refreshing": "Обновление...",
       "delete": "Удалить",
-      "deleteTitle": "Удалить подключение Facebook",
-      "deleteDescription": "Удалить подключение \"{name}\"? Связанные интеграции перестанут получать лиды.",
-      "callbackTitle": "Подключаем Facebook...",
-      "callbackDescription": "Пожалуйста, подождите — проверяем данные аккаунта.",
-      "callbackSuccess": "Аккаунт Facebook подключён",
-      "callbackErrorTitle": "Не удалось подключить",
-      "callbackErrorDescription": "Произошла ошибка при подключении аккаунта Facebook.",
-      "callbackRetry": "Повторить",
-      "backToConnections": "Вернуться к подключениям"
+      "updateToken": "Обновить токен",
+      "refreshWebhook": "Обновить webhook"
     },
-    "delivery": {
-      "title": "Каналы доставки",
-      "description": "Каналы, куда отправляются лиды",
-      "add": "Добавить канал",
-      "empty": "Каналы ещё не добавлены",
-      "addTitle": "Новый канал",
-      "editTitle": "Редактировать канал",
-      "name": "Название",
-      "namePlaceholder": "Например: Основная Telegram-группа",
-      "nameRequired": "Введите название",
-      "type": "Тип",
+    "status": {
+      "ok": "Активен",
+      "failed": "Ошибка",
+      "untested": "Не проверено"
+    },
+    "groups": {
+      "sources_title": "Источники лидов",
+      "sources_subtitle": "Лиды поступают из этих источников (Facebook Lead Ads)",
+      "sources_empty_title": "Источник лидов не подключен",
+      "sources_empty_desc": "Подключите Facebook — через Lead Ads лиды будут автоматически поступать и направляться в каналы доставки.",
+      "destinations_title": "Доставка лидов",
+      "destinations_subtitle": "Лиды направляются в эти интеграции (CRM, Sheets, Telegram-бот)",
+      "destinations_empty_title": "Каналы доставки не настроены",
+      "destinations_empty_desc": "Подключите Bitrix24, amoCRM, Google Sheets или Telegram-бот — поступающие лиды будут доставляться автоматически.",
+      "family_crm_title": "CRM",
+      "family_crm_subtitle": "Bitrix24, amoCRM — отправка лидов через backend",
+      "family_sheets_title": "Sheets",
+      "family_sheets_subtitle": "Google Sheets — запись в строки таблицы",
+      "family_telegram_title": "Telegram",
+      "family_telegram_subtitle": "Бот отправляет сообщение, чат (группа/канал) принимает",
+      "family_telegram_orphan_title": "Остальные чаты (через платформенного бота)"
+    },
+    "test_confirm": {
+      "title": "Отправить тестовое сообщение?",
+      "message_bot": "Владельцу бота (вам) будет отправлено тестовое сообщение Yuboraman.uz. Продолжить?",
+      "message_chat": "В чат \"{name}\" будет отправлено тестовое сообщение Yuboraman.uz. Продолжить?",
+      "confirm": "Да, отправить",
+      "cancel": "Отмена"
+    },
+    "destinations_search": {
+      "placeholder": "Поиск интеграции (имя, chat ID, бот, источник...)",
+      "clear": "Очистить",
+      "no_results": "Ничего не найдено",
+      "no_results_hint": "Попробуйте другое ключевое слово"
+    },
+    "add_modal": {
+      "title": "Подключить профиль",
+      "subtitle": "Какую платформу подключить?",
+      "search_placeholder": "Поиск платформы (Facebook, OAuth, CRM...)",
+      "search_clear": "Очистить",
+      "no_results": "Ничего не найдено",
+      "no_results_hint": "Попробуйте другое ключевое слово",
+      "section_accounts": "Подключить профиль",
+      "section_cpa": "CPA сайты",
+      "section_chats": "Добавить Telegram чат",
+      "security_note": "🔒 Все токены и webhook URL шифруются на сервере. Конфиденциальные данные никогда не хранятся в открытом виде.",
+      "facebook": {
+        "title": "Facebook",
+        "description": "Принимайте лиды через Facebook Lead Ads"
+      },
+      "google": {
+        "title": "Google",
+        "description": "Отправляйте лиды в Google Sheets"
+      },
+      "bitrix24": {
+        "title": "Bitrix24",
+        "description": "Подключите CRM портал через webhook URL"
+      },
+      "amocrm": {
+        "title": "amoCRM / Kommo",
+        "description": "Подключите amoCRM или Kommo аккаунт через JWT токен"
+      },
+      "telegram": {
+        "title": "Telegram бот",
+        "description": "Доставляйте лиды в группу или канал через собственный Telegram-бот",
+        "lock_hint": "Подключение Telegram-бота доступно только на платных тарифах"
+      },
+      "telegram_group": {
+        "title": "Telegram группа",
+        "description": "Автоматически добавить бота в группу для приёма лидов"
+      },
+      "telegram_channel": {
+        "title": "Telegram канал",
+        "description": "Публиковать лиды как посты в канале (бот должен быть админом)"
+      },
+      "auth": {
+        "oauth": "OAuth",
+        "webhook": "Webhook URL",
+        "token": "JWT Token",
+        "bot_token": "Bot token",
+        "deep_link": "Deep-link",
+        "deep_link_admin": "Deep-link · Админ",
+        "phone_password": "Телефон + пароль"
+      }
+    },
+    "cpa": {
+      "title": "CPA сайты",
+      "subtitle": "Подключения отчётов CPA-сайтов",
+      "profile_id": "ID профиля",
+      "add": "Подключить сайт",
+      "connected": "CPA-сайт подключён",
+      "empty": "Пока нет подключений CPA-сайтов",
+      "healthy": "Активно",
+      "unhealthy": "Требует проверки",
+      "test": "Проверить",
+      "delete": "Удалить",
+      "delete_title": "Удалить подключение",
+      "delete_message": "Удалить CPA-подключение \"{name}\"? Данные CPA-отчёта перестанут обновляться.",
+      "delete_confirm": "Да, удалить"
+    },
+    "chat_modal": {
+      "group_title": "👥 Добавить группу",
+      "channel_title": "📢 Добавить канал",
+      "group_card_title": "Подключение группы",
+      "channel_card_title": "Подключение канала",
+      "bot_label": "Через какого бота?",
+      "bot_platform": "@YuboramanBot (по умолчанию)",
+      "tab_auto": "⚡ Автоматически",
+      "tab_manual": "⌨ Вручную",
+      "group_button": "Выбрать группу в Telegram",
+      "channel_button": "Выбрать канал в Telegram",
+      "group_step_1": "Выберите бота (выше)",
+      "group_step_2": "Нажмите кнопку — в Telegram откроется выбор группы",
+      "group_step_3": "Выберите группу — бот автоматически добавится, чат появится здесь",
+      "channel_step_1": "Выберите бота (выше)",
+      "channel_step_2": "Нажмите кнопку — в Telegram откроется выбор канала",
+      "channel_step_3": "Выберите канал — бот должен быть добавлен как АДМИН (для постов)",
+      "channel_admin_warning_title": "Бот должен быть добавлен в канал как АДМИН",
+      "channel_admin_warning_body": "Запрашиваемые права: отправка сообщений, редактирование. Иначе лиды не будут доставляться в канал.",
+      "manual_hint": "Если вы сами добавили бота в группу, введите Chat ID здесь. Рекомендуется автоматический режим.",
+      "channel_manual_hint": "Если вы сами добавили бота как админа канала, введите Chat ID здесь.",
+      "manual_name": "Название чата",
+      "manual_name_ph": "Напр. Группа лидов",
+      "channel_name_ph": "Напр. Канал лидов",
+      "manual_chat_id": "Chat ID",
+      "manual_chat_id_hint": "ID группы начинается со знака минус (-) (напр.: -123456789 или -1001234567890). Добавьте бота в группу и отправьте /start — бот вернёт Chat ID.",
+      "channel_chat_id_hint": "ID канала начинается с -100 (напр.: -1001234567890). Перешлите сообщение из канала боту, отправьте /start.",
+      "manual_type": "Тип чата",
+      "type_group": "Обычная группа",
+      "type_supergroup": "Супергруппа / Форум",
       "save": "Сохранить",
-      "saving": "Сохранение...",
-      "edit": "Редактировать",
-      "delete": "Удалить",
-      "deleteTitle": "Удалить канал",
-      "deleteDescription": "Удалить канал \"{name}\"?",
-      "inUse": "Канал используется в интеграции — сначала измените интеграцию"
+      "cancel": "Отмена",
+      "refresh_webhook": "Обновить webhook",
+      "refresh_webhook_hint": "Если канал не подключается автоматически, обновите webhook бота. Это одноразовое действие для старых ботов.",
+      "webhook_refreshed": "Webhook бота обновлён — теперь канал подключится автоматически",
+      "added_success": "✅ '{title}' добавлен!",
+      "added_success_channel": "✅ Канал '{title}' добавлен!",
+      "added_success_simple": "Чат добавлен",
+      "error_chat_id": "Неверный Chat ID",
+      "error_name": "Название не указано"
+    },
+    "chat_picker": {
+      "label": "Чат",
+      "loading": "Загрузка...",
+      "placeholder": "Выберите чат или введите вручную",
+      "search": "Поиск чата...",
+      "add_new": "+ Добавить новый чат",
+      "add_button": "Добавить новый",
+      "manual": "⌨ Ввести Chat ID вручную",
+      "manual_hint": "ID группы начинается со знака минус (-) (напр.: -123456789 или -1001234567890). Добавьте бота в группу и отправьте /start — бот вернёт Chat ID.",
+      "no_chats": "Чаты ещё не сохранены — добавьте на странице Подключений",
+      "no_chats_for_bot": "Через этого бота ещё не подключено ни одного чата. Сначала добавьте группу или канал для этого бота.",
+      "open_connections": "Открыть страницу Подключений"
+    },
+    "chat_chooser": {
+      "title": "Добавить новый чат",
+      "subtitle": "Какой тип чата?"
+    },
+    "deep_link": {
+      "status_pending": "Не подключено",
+      "status_connected": "Подключено",
+      "steps_title": "Для подключения выполните следующие шаги:",
+      "check_status": "Проверить статус",
+      "fallback_label": "Кнопка START не видна? Отправьте боту эту команду:",
+      "copied": "Команда скопирована — отправьте боту",
+      "copy_error": "Не удалось скопировать",
+      "copy": "Копировать",
+      "footer": "Ожидание подключения… страница автоматически обновляется каждые {seconds} сек.",
+      "error_token": "Не удалось создать ссылку — попробуйте ещё раз.",
+      "error_open": "Не удалось открыть Telegram — скопируйте команду вручную.",
+      "retry": "Попробовать снова"
+    },
+    "telegram_modal": {
+      "title": "Подключить Telegram-бот",
+      "howto_title": "Где взять токен бота?",
+      "howto_steps": "Напишите @BotFather в Telegram → /newbot → укажите имя и username бота → BotFather выдаст вам токен.",
+      "token_label": "Токен бота",
+      "token_helper": "Полный токен от @BotFather (в виде 123456789:AA...).",
+      "token_trust": "Токен хранится на сервере в зашифрованном виде и никогда не сохраняется в открытом виде.",
+      "next_step": "После подключения добавьте бота в группу или канал для лидов — он автоматически вернёт Chat ID. Затем используйте его в настройках интеграции.",
+      "submit": "Подключить",
+      "cancel": "Отмена",
+      "success": "Telegram-бот успешно подключён",
+      "edit_title": "Обновить токен бота",
+      "edit_howto_title": "Как получить новый токен?",
+      "edit_howto_steps": "@BotFather → /mybots → выберите бота → API Token → 'Revoke current token' → скопируйте новый токен. Это должен быть ИМЕННО тот же бот (другой бот не принимается).",
+      "editing_bot": "Обновляемый бот: @{username}",
+      "update_submit": "Обновить",
+      "update_success": "Токен обновлён",
+      "errors": {
+        "token_required": "Токен бота не введён",
+        "token_invalid": "Неверный формат токена бота (в виде 123456789:AA...)"
+      }
     },
     "config": {
       "webhookUrl": "Webhook URL",
       "webhookHeaders": "HTTP-заголовки (необязательно)",
-      "webhookHeadersHint": "По одному в строке: Имя: значение",
+      "webhookHeadersHint": "По одной в строке: Имя: Значение",
       "botToken": "Токен бота",
       "chatId": "Chat ID",
-      "spreadsheetId": "Spreadsheet ID",
-      "bitrixWebhookUrl": "Webhook URL Bitrix24",
-      "subdomain": "Субдомен",
+      "spreadsheetId": "ID таблицы Google Sheets",
+      "bitrixWebhookUrl": "Bitrix24 webhook URL",
+      "subdomain": "Поддомен amoCRM",
       "token": "Токен",
-      "apiKey": "API ключ",
+      "apiKey": "API Key",
       "required": "Обязательное поле",
       "invalidUrl": "Неверный URL"
     }
@@ -636,121 +2035,259 @@
   },
   "products": {
     "title": "Продукты",
-    "create": "Новый продукт",
-    "empty": "Продукты пока не добавлены",
-    "colName": "Название",
-    "colStream": "Поток",
-    "colPrice": "Цена",
-    "colReceiver": "Получатель",
-    "colDomain": "Домен",
-    "colStatus": "Статус",
-    "edit": "Редактировать",
-    "delete": "Удалить",
-    "toggleStatus": "Изменить статус",
+    "subtitle": "Управляйте своими продуктами",
+    "addButton": "Добавить продукт",
+    "searchPlaceholder": "Поиск продуктов...",
+    "emptyMessage": "Продукты отсутствуют",
+    "table": {
+      "index": "№",
+      "name": "Название",
+      "stream": "Поток",
+      "price": "Цена",
+      "website": "Получатель",
+      "domain": "Домен",
+      "status": "Статус",
+      "actions": "Действия"
+    },
     "status": {
       "active": "Активный",
       "inactive": "Неактивный"
     },
-    "form": {
-      "createTitle": "Новый продукт",
-      "editTitle": "Редактировать продукт",
-      "name": "Название",
-      "namePlaceholder": "Например: Крем Здоров",
-      "nameRequired": "Введите название",
-      "stream": "Поток (необязательно)",
-      "streamPlaceholder": "Например: FB основной поток",
+    "modal": {
+      "add": "Добавить",
+      "edit": "Редактировать продукт",
+      "domain": "Домен",
+      "domainPlaceholder": "Выберите домен",
+      "website": "Получатель",
+      "websitePlaceholder": "Выберите получателя",
+      "websiteHint": "CRM системы, CPA сети и т.д.",
+      "images": "Изображения продукта",
+      "imagesHint": "Мин 1, Макс 4",
+      "imageUploadClick": "Нажмите для загрузки изображения",
+      "imageUploadMore": "{count} изображений. Можно добавить еще {remaining}.",
+      "imageMinMaxHint": "Минимум 1, максимум 4 изображения",
+      "template": "Шаблон",
+      "templatePlaceholder": "Выберите шаблон",
+      "name": "Название продукта",
+      "namePlaceholder": "Введите название продукта",
+      "description": "Описание",
+      "descriptionPlaceholder": "Подробная информация о продукте",
       "price": "Цена (сум)",
-      "pricePlaceholder": "Например: 149000",
-      "priceInvalid": "Введите корректную цену",
-      "receiver": "Получатель",
-      "noReceiver": "Не выбран",
-      "domain": "Домен (необязательно)",
-      "domainPlaceholder": "primer.uz"
+      "pricePlaceholder": "0",
+      "stream": "Поток (Stream)",
+      "streamPlaceholder": "Введите название потока",
+      "offerId": "Offer ID",
+      "offerIdPlaceholder": "Если имеется",
+      "note": "Примечание",
+      "notePlaceholder": "Дополнительные примечания...",
+      "chatId": "Chat ID",
+      "chatIdPlaceholder": "Telegram Chat ID",
+      "threadId": "Topic ID",
+      "hasTopic": "В этой группе есть темы",
+      "threadIdPlaceholder": "Например: 7",
+      "chatTopicHint": "Добавьте бота в группу и отправьте /start — получите Chat ID (и Topic ID, если находитесь в теме форума). Для личных чатов (положительный Chat ID) Topic ID не нужен.",
+      "image": "Изображение",
+      "imageSelected": "Изображение выбрано",
+      "imagePlaceholder": "Выберите изображение",
+      "active": "Активный",
+      "activeDescription": "Продукт будет активен",
+      "showProvince": "Запрашивать регион",
+      "showProvinceDescription": "Клиент выбирает регион на лендинге (выкл — не запрашивается)",
+      "cancel": "Отмена",
+      "save": "Сохранить"
     },
-    "deleteDialog": {
+    "delete": {
       "title": "Удалить продукт",
-      "description": "Удалить продукт \"{name}\"? Это действие нельзя отменить.",
-      "confirm": "Удалить"
+      "message": "Вы уверены, что хотите удалить \"{name}\"? Это действие необратимо!",
+      "confirm": "Да, удалить",
+      "cancel": "Отмена"
     },
-    "toasts": {
-      "saved": "Продукт сохранён",
-      "deleted": "Продукт удалён",
-      "error": "Произошла ошибка. Попробуйте ещё раз."
+    "toast": {
+      "created": "Продукт добавлен!",
+      "updated": "Продукт обновлен!",
+      "deleted": "Продукт удален!",
+      "copied": "Поток скопирован!",
+      "copyError": "Ошибка копирования",
+      "nameRequired": "Введите название продукта",
+      "priceInvalid": "Введите корректную цену",
+      "domainRequired": "Выберите домен",
+      "websiteRequired": "Выберите получателя",
+      "templateRequired": "Выберите шаблон",
+      "streamRequired": "Введите поток",
+      "imageError": "Выберите только файл изображения",
+      "apiKeyRequired": "Для этого сайта необходимо выбрать API Key!",
+      "apiUrlRequired": "Необходимо ввести API URL!",
+      "chatIdInvalid": "Chat ID должен содержать только цифры!",
+      "nameFieldRequired": "Поле Name обязательно для заполнения",
+      "phoneFieldRequired": "Поле Phone обязательно для заполнения",
+      "bitrixWebhookRequired": "Введите Bitrix24 webhook URL!",
+      "bitrixFieldsRequired": "Загрузите поля Bitrix24!",
+      "imageRequired": "Необходимо минимум 1 изображение"
+    },
+    "apiKeyNotFound": {
+      "message": "Перед добавлением интеграции для этого сайта необходимо создать API Key."
+    },
+    "tooltips": {
+      "copy": "Копировать",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "history": "История лидов"
+    },
+    "additionalFields": {
+      "title": "Дополнительные поля",
+      "addField": "Добавить поле"
+    },
+    "customUrl": {
+      "label": "API URL",
+      "placeholder": "https://example.com/api/endpoint",
+      "hint": "Введите URL API endpoint для отправки данных"
+    },
+    "apiKey": {
+      "label": "API Key",
+      "selectPlaceholder": "Выберите API Key",
+      "addButton": "API Key +",
+      "receiverPlaceholder": "Получатель"
+    },
+    "images": {
+      "existingLabel": "Существующее",
+      "newLabel": "Новое"
     }
   },
   "apiKeys": {
-    "title": "API ключи",
-    "subtitle": "API ключи для отправки лидов с ваших сайтов",
-    "create": "Новый ключ",
-    "empty": "API ключи пока не созданы",
-    "colName": "Название",
-    "colSite": "Сайт",
-    "colKey": "Ключ",
-    "colCreated": "Дата создания",
-    "delete": "Удалить",
-    "createDialog": {
-      "title": "Новый API ключ",
+    "title": "API Ключи",
+    "subtitle": "Управляйте вашими API ключами",
+    "addNew": "Новый API ключ",
+    "table": {
       "name": "Название",
-      "namePlaceholder": "Например: Лендинг",
-      "nameRequired": "Введите название",
-      "site": "Сайт",
-      "sitePlaceholder": "primer.uz",
-      "siteRequired": "Введите сайт",
-      "create": "Создать",
-      "creating": "Создание...",
-      "createdTitle": "API ключ создан",
-      "onceWarning": "Этот ключ показывается только один раз. Сохраните его в надёжном месте.",
-      "copy": "Скопировать",
-      "copied": "Скопировано",
-      "copyFailed": "Не удалось скопировать",
-      "done": "Готово"
+      "website": "Сайт",
+      "key": "API Ключ",
+      "createdAt": "Дата создания",
+      "actions": "Действия"
+    },
+    "actions": {
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "copy": "Копировать",
+      "show": "Показать",
+      "hide": "Скрыть"
+    },
+    "modal": {
+      "addTitle": "Добавить новый API ключ",
+      "editTitle": "Редактировать API ключ",
+      "name": "Название",
+      "namePlaceholder": "Пример: Основной API ключ",
+      "website": "Сайт",
+      "websiteSelect": "Выберите сайт",
+      "key": "API Ключ",
+      "keyPlaceholder": "Введите ваш API ключ",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "saving": "Сохранение..."
     },
     "deleteDialog": {
       "title": "Удалить API ключ",
-      "description": "Удалить ключ \"{name}\"? Сайты, использующие его, не смогут отправлять лиды.",
-      "confirm": "Удалить"
+      "message": "Вы действительно хотите удалить этот API ключ? Это действие нельзя отменить.",
+      "confirm": "Да, удалить",
+      "cancel": "Отмена"
     },
-    "toasts": {
-      "deleted": "API ключ удалён",
-      "error": "Произошла ошибка. Попробуйте ещё раз."
+    "messages": {
+      "fillAllFields": "Заполните все поля",
+      "added": "API ключ успешно добавлен!",
+      "updated": "API ключ успешно обновлен!",
+      "deleted": "API ключ успешно удален!",
+      "copied": "API ключ скопирован!",
+      "loadError": "Ошибка при загрузке API ключей"
+    },
+    "empty": {
+      "title": "API ключи еще не добавлены",
+      "description": "Добавьте API ключ для работы с CPA платформами",
+      "addFirst": "Добавить первый API ключ"
+    },
+    "loading": {
+      "keys": "Загрузка API ключей..."
+    },
+    "card": {
+      "title": "Все API ключи"
+    },
+    "search": {
+      "placeholder": "Поиск API ключей...",
+      "emptyResult": "API ключи не найдены"
     }
   },
   "domains": {
     "title": "Домены",
-    "search": {
-      "title": "Поиск домена",
-      "placeholder": "Например: primer или primer.uz",
-      "button": "Найти",
-      "noResults": "Ничего не найдено",
-      "buy": "Купить",
-      "taken": "Занят"
-    },
-    "purchaseDialog": {
-      "title": "Купить {name}?",
-      "description": "Цена: {price}. Сумма спишется с вашего баланса. Домен арендуется на 1 год и автоматически подключается к серверам Yuboraman.",
-      "confirm": "Купить",
-      "purchasing": "Покупка...",
-      "success": "Домен {name} куплен",
-      "insufficientBalance": "Недостаточно средств на балансе",
-      "topUp": "Пополнить баланс",
-      "error": "Произошла ошибка. Попробуйте ещё раз."
-    },
-    "owned": {
-      "title": "Мои домены",
-      "empty": "Домены пока не куплены",
-      "colName": "Домен",
-      "colStatus": "Статус",
-      "colPrice": "Цена",
-      "colExpires": "Срок"
-    },
+    "subtitle": "Найдите и купите домен",
+    "myDomains": "Мои домены",
+    "searchTitle": "Поиск домена",
+    "searchPlaceholder": "example.com",
+    "searchButton": "Поиск",
+    "searching": "Поиск...",
+    "searchResults": "Результаты поиска",
+    "noResults": "Результаты не найдены",
+    "noResultsMessage": "Ничего не найдено для \"{term}\"",
+    "clear": "Очистить",
+    "purchase": "Купить",
+    "purchasing": "Покупка...",
+    "purchased": "Уже куплен",
+    "available": "Доступен",
+    "unavailable": "Занят",
+    "base": "Базовый",
+    "price": "Цена",
     "status": {
       "active": "Активный",
-      "pending": "Ожидает",
-      "expired": "Истёк"
+      "expired": "Срок истек",
+      "pending": "Ожидание",
+      "error": "Ошибка",
+      "unknown": "Неизвестно"
     },
-    "info": {
-      "title": "Автоматическое подключение",
-      "body": "Купленные домены автоматически подключаются к серверам Yuboraman — дополнительная настройка DNS не требуется. Домен арендуется на 1 год."
+    "action": "Действие",
+    "table": {
+      "domain": "Домен",
+      "purchaseDate": "Куплен",
+      "expirationDate": "Срок",
+      "status": "Статус",
+      "actions": "Действия"
+    },
+    "modal": {
+      "title": "Подробная информация",
+      "domain": "Домен",
+      "purchaseDate": "Время покупки",
+      "expirationDate": "Срок",
+      "status": "Статус",
+      "facebookVerification": "Подтверждение Facebook",
+      "facebookVerificationPlaceholder": "Введите код подтверждения Facebook",
+      "pixel": "Pixel",
+      "pixelPlaceholder": "Введите Pixel ID",
+      "traffback": "Traffback",
+      "traffbackPlaceholder": "Введите URL traffback",
+      "cancel": "Отмена",
+      "save": "Сохранить"
+    },
+    "confirm": {
+      "title": "Купить домен",
+      "message": "Вы уверены, что хотите купить \"{domain}\" за {price}?",
+      "confirm": "Да, купить",
+      "cancel": "Отмена"
+    },
+    "loading": "Загрузка доменов...",
+    "empty": "У вас пока нет доменов",
+    "emptyHint": "Купите домен через поиск выше",
+    "searchEmpty": "Домены не найдены",
+    "rules": {
+      "title": "Правила покупки домена:",
+      "rule1": "Средства списываются со счета для покупки и продления домена.",
+      "rule2": "После покупки домен автоматически подключается к серверам Yuboraman.uz и не может быть изменен в течение всего срока аренды домена.",
+      "rule3": "Срок аренды составляет 1 год. После окончания срока аренды домен автоматически удаляется или продлевается по желанию владельца аккаунта."
+    },
+    "searchingFrom": "Поиск в Namecheap...",
+    "searchingHint": "Это может занять несколько минут. Пожалуйста, подождите.",
+    "detailsTooltip": "Подробная информация",
+    "errors": {
+      "emptySearch": "Пожалуйста, введите имя домена"
+    },
+    "success": {
+      "purchased": "Домен успешно куплен!",
+      "saved": "Информация о домене сохранена!"
     }
   },
   "dateRange": {
@@ -761,98 +2298,639 @@
   },
   "reports": {
     "title": "Отчёты",
-    "subtitle": "Ежедневные отчёты Facebook Ads отправляются в Telegram",
-    "create": "Новый отчёт",
-    "empty": "Отчёты пока не настроены",
-    "toggleStatus": "Изменить статус",
-    "sendNow": "Разовый",
-    "edit": "Редактировать",
-    "delete": "Удалить",
-    "columns": {
-      "adAccount": "Рекламный аккаунт",
-      "chatId": "Chat ID",
-      "time": "Время",
-      "period": "Период",
-      "campaigns": "Кампании",
-      "format": "Формат",
-      "status": "Статус",
-      "lastSent": "Последняя отправка"
+    "subtitle": "Отправка ежедневных отчётов Facebook Ads в Telegram",
+    "addNew": "Добавить отчёт",
+    "customReport": "Разовый",
+    "empty": {
+      "title": "Отчёты ещё не настроены",
+      "description": "Начните автоматическую ежедневную отправку статистики Facebook Ads в Telegram"
     },
-    "period": {
-      "week": "Неделя"
+    "table": {
+      "adAccount": "Ad Account",
+      "chatId": "Chat ID",
+      "sendHour": "Время отправки",
+      "metrics": "Показываемые метрики",
+      "status": "Статус",
+      "actions": "Действия"
     },
     "status": {
-      "active": "Активный",
-      "paused": "Приостановлен"
+      "active": "Активен",
+      "inactive": "Отключён"
     },
-    "form": {
-      "createTitle": "Новый отчёт",
+    "actions": {
+      "test": "Тестировать",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "activate": "Включить",
+      "deactivate": "Отключить"
+    },
+    "list": {
+      "name": "Название отчёта",
+      "namePlaceholder": "Напр.: Утренний отчёт",
+      "nameHint": "Если пусто — используется имя Ad Account",
+      "today": "Сегодня",
+      "yesterday": "Вчера",
+      "last7d": "Неделя",
+      "thisMonth": "Этот месяц",
+      "lastMonth": "Прошлый месяц",
+      "allCampaigns": "Все кампании",
+      "nCampaigns": "{count} кампаний",
+      "byObjective": "По цели",
+      "modeSummary": "Кратко",
+      "modeDetailed": "Подробно",
+      "modeDetailedAdset": "Подробно + группы",
+      "crmBadge": "CRM"
+    },
+    "crm": {
+      "sectionTitle": "Продажи CRM",
+      "toggle": "Добавить продажи CRM в отчёт",
+      "hint": "Статистика сделок CRM за выбранный период появится в конце отчёта.",
+      "noConnections": "CRM не подключена. Подключите Bitrix24 или amoCRM — и в отчёте появятся ваши продажи.",
+      "connectLink": "Перейти к подключениям",
+      "connectionLabel": "Подключение CRM",
+      "selectConnection": "Выберите подключение",
+      "metricsLabel": "Показатели",
+      "noMetrics": "Выберите хотя бы один показатель",
+      "staleConnection": "Сохранённое подключение CRM больше не активно — выберите другое или отключите блок.",
+      "wholeCrmNote": "Цифры считаются по всей CRM (не только по этой кампании).",
+      "funnelLabel": "Воронка (необязательно)",
+      "funnelNone": "Вся CRM (без воронки)",
+      "statusLabel": "Этапы",
+      "allStatusesHint": "Если ничего не выбрано — все этапы",
+      "funnelModeNote": "Отчёт будет построен по выбранным этапам воронки.",
+      "loadingFunnels": "Загрузка воронок…",
+      "funnelLoadError": "Не удалось загрузить воронки — сохранённый выбор не изменится"
+    },
+    "channels": {
+      "sectionTitle": "Каналы отправки",
+      "telegram": "Telegram",
+      "telegramHint": "Отчёт отправляется в Telegram-чат.",
+      "sheets": "Google Sheets",
+      "sheetsHint": "Отчёт добавляется строкой в таблицу Google Sheets.",
+      "noChannelError": "Включите хотя бы один канал",
+      "accountLabel": "Аккаунт Google",
+      "selectAccount": "Выберите аккаунт",
+      "noAccounts": "Аккаунт Google не подключён. Сначала подключите аккаунт, чтобы отправлять в Google Sheets.",
+      "connectLink": "Перейти к подключениям",
+      "modeLabel": "Таблица",
+      "modeNew": "Создать новую таблицу",
+      "modeExisting": "Выбрать существующую таблицу",
+      "newTitleLabel": "Название таблицы",
+      "newTitlePlaceholder": "Напр.: Ежедневный отчёт",
+      "balanceNeedsTelegram": "Оповещение о балансе работает только при включённом Telegram",
+      "sheetsBadge": "Sheets",
+      "writeModeLabel": "Способ записи",
+      "writeAppend": "Добавлять строки в таблицу",
+      "writeTemplate": "Запись в шаблон клиента",
+      "templateHint": "Метрики отчёта записываются в строку с датой шаблона, в выбранные вами столбцы.",
+      "templateNeedsExisting": "Режим шаблона работает только с существующей таблицей",
+      "headerRowLabel": "Строка заголовков",
+      "startRowLabel": "Строка начала данных",
+      "readHeadersButton": "Прочитать столбцы",
+      "readHeadersLoading": "Читаем столбцы…",
+      "readHeadersError": "Не удалось прочитать столбцы — проверьте таблицу и название листа",
+      "dateColumnLabel": "Столбец даты",
+      "dateColumnPlaceholder": "Выберите столбец",
+      "mappingTitle": "Столбцы метрик",
+      "mappingColumnPlaceholder": "Столбец",
+      "mappingMetricPlaceholder": "Метрика",
+      "addMapping": "Добавить столбец",
+      "removeMapping": "Удалить строку",
+      "templateSingleDayOnly": "Режим шаблона работает только с однодневными отчётами (Сегодня/Вчера)",
+      "templateNeedsMapping": "Укажите хотя бы один столбец метрики",
+      "dupColumnWarning": "Одна и та же буква столбца выбрана в нескольких строках — каждый столбец можно использовать только один раз",
+      "dupMetricWarning": "Одна и та же метрика выбрана в нескольких строках — каждую метрику можно привязать только к одному столбцу",
+      "dateCollisionWarning": "Столбец метрики не должен совпадать со столбцом даты — выберите другой столбец"
+    },
+    "modal": {
+      "addTitle": "Добавить новый отчёт",
       "editTitle": "Редактировать отчёт",
-      "adAccount": "Рекламный аккаунт",
-      "adAccountPlaceholder": "Выберите аккаунт",
-      "adAccountRequired": "Выберите рекламный аккаунт",
-      "noAccounts": "Рекламные аккаунты не найдены.",
-      "connectLink": "Подключите аккаунт Facebook",
-      "chatId": "Chat ID",
-      "chatIdPlaceholder": "-1001234567890",
-      "chatIdHint": "Telegram chat ID — отчёт будет отправляться в этот чат",
-      "chatIdRequired": "Введите chat ID",
-      "time": "Время отправки",
-      "timeRequired": "Укажите время отправки",
-      "campaignsLimit": "Количество кампаний",
-      "limitInvalid": "Количество кампаний должно быть целым числом от 1",
-      "format": "Формат",
-      "formatShort": "Краткий",
-      "formatDetailed": "Подробный"
-    },
-    "deleteDialog": {
-      "title": "Удалить отчёт",
-      "description": "Настройка отчёта для «{name}» будет удалена. Продолжить?",
+      "deleteTitle": "Удалить отчёт",
+      "deleteMessage": "Вы уверены, что хотите удалить этот отчёт?",
+      "fbAccount": "Facebook аккаунт",
+      "fbAccountPlaceholder": "Выберите аккаунт",
+      "adAccount": "Ad Account",
+      "adAccountPlaceholder": "Выберите Ad Account",
+      "adAccountLoading": "Загрузка ad accounts...",
+      "chatId": "Telegram Chat ID",
+      "chatIdPlaceholder": "Например: -1001234567890",
+      "threadId": "Topic ID",
+      "hasTopic": "В этой группе есть темы",
+      "threadIdPlaceholder": "Например: 7",
+      "chatTopicHint": "Добавьте бота в группу и отправьте /start — получите Chat ID (и Topic ID, если находитесь в теме форума). Для личных чатов (положительный Chat ID) Topic ID не нужен.",
+      "sendHour": "Время отправки",
+      "metrics": "Показываемые метрики",
+      "autoMetricsTitle": "Метрики определяются автоматически",
+      "autoMetricsDescription": "Наиболее релевантные метрики выбираются исходя из целей ваших кампаний (Lead, Sales, Traffic и т.д.).",
+      "metricsMode": "Выбор метрик",
+      "metricsPerPreset": "Метрики для каждого формата",
+      "metricsModeAuto": "🤖 Автоматически (рекомендуется)",
+      "metricsModeAutoDescription": "Автоматически выбираются 5 лучших метрик, исходя из цели кампании.",
+      "metricsModeFull": "📦 Полный пакет",
+      "metricsModeFullDescription": "Автоматически + CTR, CPM, Частота, Охват, Уникальные клики. Для видео кампаний также Hook Rate и Hold Rate.",
+      "metricsModeCustom": "⚙️ Вручную",
+      "metricsModeCustomDescription": "Отметьте нужные метрики из списка ниже.",
+      "metricsCustomEmpty": "Выберите хотя бы одну метрику!",
+      "reportMode": "Формат отчёта",
+      "reportModeSummary": "Краткий (только общие итоги)",
+      "reportModeDetailed": "Подробный (по кампаниям + итоги)",
+      "reportModeDetailedAdset": "Подробный + группы (кампания + ad sets)",
+      "reportModeNote": "Подробные форматы доступны только для 1-дневных отчётов (сегодня, вчера или однодневный диапазон). Недельные/месячные отчёты будут слишком длинными для Telegram.",
+      "reportModeNoteMixed": "Для Сегодня/Вчера — Подробный, для Недельный/Месячный — авто-Краткий (из-за длины).",
+      "useEmoji": "С эмодзи",
+      "useEmojiDescription": "Включено — используются эмодзи 📊 🏁 🎯 💸.",
+      "balanceAlert": "Оповещение о балансе / долге",
+      "balanceAlertDescription": "Уведомляет группу, когда реклама останавливается (платёж не прошёл или достигнут лимит) или растёт неоплаченный долг.",
+      "balanceAlertThreshold": "Лимит долга",
+      "balanceAlertThresholdHint": "Facebook списывает за расход постфактум — это ваш неоплаченный баланс (долг). Оповещаем заранее при приближении к 80% лимита и ещё раз при его превышении (в валюте аккаунта). 0 = только когда реклама останавливается.",
+      "balanceAlertHours": "Частота повтора (часы)",
+      "balanceAlertMention": "Кто оплачивает (@username)",
+      "balanceAlertMentionPlaceholder": "@username (необязательно)",
+      "template": {
+        "useCustom": "Шаблон заголовка — вручную",
+        "useCustomDescription": "Выкл — авто (📊 Имя hisobot (дата)). Вкл — настройте заголовок переменными под себя.",
+        "presetsLabel": "Готовые шаблоны:",
+        "preset": {
+          "default": "По умолчанию",
+          "name": "Только имя",
+          "nameFb": "Имя + FB",
+          "nameFbFull": "Имя + FB + дата",
+          "dateName": "Дата + Имя",
+          "empty": "Пусто (без заголовка)"
+        },
+        "label": "Шаблон (макс. 200 симв.)",
+        "placeholder": "{name} ({fb}) — {date_short}",
+        "variablesHint": "Вставить переменную (в позицию курсора):",
+        "preview": "Превью:",
+        "previewEmpty": "(заголовок не отображается — только данные)"
+      },
+      "campaignMode": "Кампании",
+      "campaignModeAll": "Все кампании (по умолчанию)",
+      "campaignModeSpecific": "Только выбранные кампании",
+      "campaignsLoading": "Загрузка кампаний...",
+      "campaignsLoadError": "Ошибка загрузки кампаний!",
+      "campaignsEmpty": "В этом ad account нет активных кампаний.",
+      "campaignsNoMatch": "По запросу ничего не найдено.",
+      "campaignsSearch": "Поиск по названию...",
+      "campaignsStats": "Активных: {active} · Пауза: {paused} · Выбрано: {selected}",
+      "campaignsClear": "Очистить",
+      "campaignsStatusFilter": "По статусу:",
+      "campaignsObjectiveFilter": "Фильтр по цели:",
+      "campaignsObjectiveAutoInclude": "🔄 Автоматически добавлять новые кампании этой цели",
+      "campaignsSelectAllFiltered": "Выбрать все подходящие ({count})",
+      "campaignStatusActive": "Активна",
+      "campaignStatusPaused": "Пауза",
+      "campaignPickHintNoAccount": "Сначала выберите Facebook аккаунт и Ad Account.",
+      "campaignsSpecificEmptyWarning": "Кампании не выбраны — в отчёт войдут все кампании.",
+      "sendHourPlaceholder": "Выберите час",
+      "datePreset": "Тип отчёта",
+      "datePresetsLabel": "Интервалы отчётов",
+      "datePresetsHelp": "Выберите один или несколько — для каждого (день/неделя/месяц) будет отдельное сообщение (день+неделя+месяц в одной конфигурации).",
+      "today": "Сегодняшний",
+      "yesterday": "Вчерашний",
+      "last7d": "Недельный (7 дней)",
+      "thisMonth": "Этот месяц",
+      "lastMonth": "Прошлый месяц",
+      "dayOfWeek": "День недели",
+      "dayOfMonth": "День месяца",
+      "dayOfMonthLabel": "{day}-е число",
+      "dayOfMonthWarning": "Отчёты на 29-31 числа пропускаются в коротких месяцах (февраль, 30-дневные).",
+      "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье",
+      "customTitle": "Разовый отчёт",
+      "since": "Дата начала",
+      "until": "Дата окончания",
+      "sendNow": "Отправить",
+      "save": "Сохранить",
+      "cancel": "Отмена",
       "confirm": "Удалить"
     },
-    "toasts": {
-      "saved": "Отчёт сохранён",
-      "deleted": "Отчёт удалён",
-      "sent": "Отчёт поставлен в очередь",
-      "error": "Произошла ошибка"
+    "metricGroups": {
+      "basic": "Основные метрики",
+      "unique": "Уникальные метрики",
+      "traffic": "Трафик и Ссылки",
+      "engagement": "Вовлечённость",
+      "video": "Видео",
+      "sales": "Продажи",
+      "conversions": "Конверсии",
+      "catalog": "Каталог",
+      "other": "Дополнительные"
+    },
+    "metrics": {
+      "result_count": {
+        "label": "Результат",
+        "description": "Количество лидов/конверсий"
+      },
+      "cost_per_result": {
+        "label": "Цена",
+        "description": "Стоимость за каждый результат"
+      },
+      "spend": {
+        "label": "Потрачено",
+        "description": "Общий потраченный бюджет"
+      },
+      "impressions": {
+        "label": "Показы",
+        "description": "Количество показов рекламы"
+      },
+      "reach": {
+        "label": "Охват",
+        "description": "Сколько уникальных людей увидели"
+      },
+      "clicks": {
+        "label": "Клики",
+        "description": "Количество кликов по рекламе"
+      },
+      "ctr": {
+        "label": "CTR",
+        "description": "Click-through rate (клик/показ %)"
+      },
+      "cpc": {
+        "label": "CPC",
+        "description": "Стоимость за каждый клик"
+      },
+      "cpm": {
+        "label": "CPM",
+        "description": "Цена за 1000 показов"
+      },
+      "cpp": {
+        "label": "CPP",
+        "description": "Цена за каждого человека"
+      },
+      "frequency": {
+        "label": "Частота",
+        "description": "Среднее количество показов на человека"
+      },
+      "unique_clicks": {
+        "label": "Уник. клики",
+        "description": "Уникальных людей кликнуло"
+      },
+      "cost_per_unique_click": {
+        "label": "Цена уник. клика",
+        "description": "Стоимость каждого уникального клика"
+      },
+      "link_clicks": {
+        "label": "Клики по ссылке",
+        "description": "Количество кликов по ссылке"
+      },
+      "landing_page_views": {
+        "label": "Просмотры страницы",
+        "description": "Полных загрузок целевой страницы"
+      },
+      "inline_link_clicks": {
+        "label": "Внутренние клики",
+        "description": "Клики по внутренним ссылкам"
+      },
+      "inline_link_click_ctr": {
+        "label": "CTR внутр. ссылок",
+        "description": "Процент кликов по внутренним ссылкам"
+      },
+      "cost_per_inline_link_click": {
+        "label": "Цена внутр. клика",
+        "description": "Стоимость каждого внутреннего клика"
+      },
+      "outbound_clicks": {
+        "label": "Внешние клики",
+        "description": "Клики на внешние ссылки"
+      },
+      "outbound_clicks_ctr": {
+        "label": "CTR внешних",
+        "description": "Процент внешних кликов"
+      },
+      "cost_per_outbound_click": {
+        "label": "Цена внешн. клика",
+        "description": "Стоимость каждого внешнего клика"
+      },
+      "website_ctr": {
+        "label": "CTR сайта",
+        "description": "Процент переходов на сайт"
+      },
+      "post_engagement": {
+        "label": "Вовлечённость",
+        "description": "Лайки, комментарии, репосты"
+      },
+      "comments": {
+        "label": "Комментарии",
+        "description": "Количество комментариев под постом рекламы"
+      },
+      "messaging_conversations": {
+        "label": "Переписки",
+        "description": "Начатые диалоги в мессенджере"
+      },
+      "cost_per_messaging_conversation": {
+        "label": "Цена переписки",
+        "description": "Стоимость каждой переписки"
+      },
+      "video_views": {
+        "label": "Просмотры видео",
+        "description": "Просмотры видео 3 сек+"
+      },
+      "video_plays": {
+        "label": "Запуски видео",
+        "description": "Количество запусков видео"
+      },
+      "video_p25": {
+        "label": "Видео 25%",
+        "description": "Просмотрено до 25%"
+      },
+      "video_p50": {
+        "label": "Видео 50%",
+        "description": "Просмотрено до 50%"
+      },
+      "video_p75": {
+        "label": "Видео 75%",
+        "description": "Просмотрено до 75%"
+      },
+      "video_p95": {
+        "label": "Видео 95%",
+        "description": "Просмотрено до 95%"
+      },
+      "video_p100": {
+        "label": "Видео 100%",
+        "description": "Просмотрено до конца"
+      },
+      "video_30s": {
+        "label": "Видео 30с+",
+        "description": "Просмотрено 30+ секунд"
+      },
+      "video_avg_time": {
+        "label": "Среднее время",
+        "description": "Среднее время просмотра видео"
+      },
+      "thruplay_count": {
+        "label": "ThruPlay",
+        "description": "Просмотры 15 сек+ или до конца"
+      },
+      "cost_per_thruplay": {
+        "label": "Цена ThruPlay",
+        "description": "Стоимость полного просмотра"
+      },
+      "hook_rate": {
+        "label": "Hook Rate",
+        "description": "Насколько видео захватывает внимание (3с просмотры / показы, %)"
+      },
+      "hold_rate": {
+        "label": "Hold Rate",
+        "description": "Удержание зрителей (ThruPlay / 3с просмотры, %)"
+      },
+      "purchases": {
+        "label": "Покупки",
+        "description": "Совершённые покупки"
+      },
+      "add_to_cart": {
+        "label": "В корзину",
+        "description": "Добавлений в корзину"
+      },
+      "initiate_checkout": {
+        "label": "Оформление",
+        "description": "Начатых оформлений заказа"
+      },
+      "roas": {
+        "label": "ROAS",
+        "description": "Окупаемость рекламы (доход/расход)"
+      },
+      "purchase_roas": {
+        "label": "ROAS покупок",
+        "description": "Окупаемость от покупок"
+      },
+      "mobile_app_purchase_roas": {
+        "label": "Мобильный ROAS",
+        "description": "Окупаемость от мобильных покупок"
+      },
+      "conversions": {
+        "label": "Конверсии",
+        "description": "Количество конверсий"
+      },
+      "conversion_values": {
+        "label": "Сумма конверсий",
+        "description": "Общая стоимость конверсий"
+      },
+      "cost_per_conversion": {
+        "label": "Цена конверсии",
+        "description": "Стоимость каждой конверсии"
+      },
+      "converted_product_quantity": {
+        "label": "Продано товаров",
+        "description": "Количество проданных товаров"
+      },
+      "converted_product_value": {
+        "label": "Стоимость товаров",
+        "description": "Общая стоимость проданных товаров"
+      },
+      "canvas_avg_view_percent": {
+        "label": "IE просмотр %",
+        "description": "Средний % просмотра Instant Experience"
+      },
+      "canvas_avg_view_time": {
+        "label": "IE время",
+        "description": "Среднее время Instant Experience"
+      },
+      "social_spend": {
+        "label": "Соц. расходы",
+        "description": "Расходы на соц. показы"
+      },
+      "full_view_impressions": {
+        "label": "Полные показы",
+        "description": "Полноэкранных показов"
+      },
+      "full_view_reach": {
+        "label": "Полный охват",
+        "description": "Людей увидевших полноэкранно"
+      },
+      "crm_new_count": {
+        "label": "Новые сделки",
+        "description": "Количество новых сделок в CRM за период"
+      },
+      "crm_cohort_won": {
+        "label": "Продано из новых",
+        "description": "Из сделок, созданных за период, уже продано"
+      },
+      "crm_cohort_open": {
+        "label": "Из новых в работе",
+        "description": "Созданные за период сделки, ещё не закрытые"
+      },
+      "crm_cohort_rate": {
+        "label": "Конверсия",
+        "description": "Доля проданных среди новых: продано / новые"
+      },
+      "crm_won_count": {
+        "label": "Проданные сделки",
+        "description": "Успешно закрытые за период (независимо от даты создания)"
+      },
+      "crm_won_sum": {
+        "label": "Сумма продаж",
+        "description": "Общая сумма проданных сделок"
+      },
+      "crm_lost_count": {
+        "label": "Проигранные сделки",
+        "description": "Неуспешно закрытые сделки за период"
+      },
+      "crm_win_rate": {
+        "label": "Процент продаж",
+        "description": "Доля проданных среди закрытых: продано / (продано + проиграно)"
+      },
+      "crm_avg_check": {
+        "label": "Средний чек",
+        "description": "Сумма продаж / число проданных сделок"
+      }
+    },
+    "toast": {
+      "createSuccess": "Отчёт успешно добавлен!",
+      "updateSuccess": "Отчёт обновлён!",
+      "deleteSuccess": "Отчёт удалён!",
+      "testSuccess": "Тестовый отчёт отправлен! Проверьте Telegram.",
+      "testError": "Ошибка при отправке отчёта!",
+      "error": "Произошла ошибка!",
+      "customSent": "Отчёт отправлен! Проверьте Telegram.",
+      "selectAtLeastOneCampaign": "Выберите хотя бы одну кампанию или переключитесь в режим \"Все\"."
     }
   },
   "finance": {
-    "title": "Финансы",
-    "subtitle": "Показатели ROI и разрез по кампаниям",
-    "noData": "Пока нет данных",
-    "kpi": {
-      "profit": "Прибыль",
-      "roas": "ROAS",
-      "cpl": "CPL",
-      "spend": "Расход",
-      "revenue": "Доход",
-      "hold": "Холд",
-      "deliveryRate": "Доставляемость"
+    "insights": {
+      "title": "Финансовая аналитика",
+      "subtitle": "Расход Facebook и результат CPA — обзор ROI",
+      "window": {
+        "today": "Сегодня",
+        "yesterday": "Вчера",
+        "7d": "7 дней",
+        "30d": "30 дней"
+      },
+      "rate": "Курс",
+      "currency_note": "в USD",
+      "refresh_note": "Данные о расходах обновляются каждые 6 часов",
+      "kpi": {
+        "leads": "Лиды",
+        "delivered": "Доставлено",
+        "delivery_rate": "Доставляемость",
+        "spend": "Расход",
+        "revenue": "Доход",
+        "hold": "Холд",
+        "cpl": "CPL",
+        "profit": "Прибыль",
+        "projected_profit": "Ожидаемая прибыль",
+        "roas": "ROAS",
+        "projected_hint": "Доход + Hold × процент доставки за последние 30 дней"
+      },
+      "currency_warning": "Валюта некоторых рекламных аккаунтов ({list}) пока не поддерживается — расходы неполные",
+      "connected_recently": "Недавно подключённый аккаунт Facebook — в первые 3 дня цена лида (CPL) может сильно колебаться, следите за кампаниями чаще.",
+      "trend": {
+        "title": "Динамика по дням",
+        "leads": "Лиды",
+        "revenue": "Доход",
+        "spend": "Расход",
+        "hold": "Холд",
+        "empty": "Нет данных за этот период"
+      },
+      "breakdown": {
+        "title": "Разрез по кампаниям",
+        "search": "Поиск кампании...",
+        "empty": "Настроить интеграцию",
+        "empty_hint": "Подключите Facebook — ваши кампании и расходы появятся здесь",
+        "expensive": "Дорого",
+        "expensive_hint": "Кампания убыточна или ROAS/CPL вышли за порог",
+        "warning": "Близко к порогу",
+        "warning_hint": "CPL превысил 80% заданного порога — следите за кампанией",
+        "all_accounts": "Все аккаунты",
+        "account_filter": "Фильтр аккаунтов",
+        "health": {
+          "green": "Зелёный — зона прибыли",
+          "amber": "Жёлтый — на грани",
+          "red": "Красный — зона убытка",
+          "break_even": "Break-even CPL: {value}",
+          "be_inline": "макс: {value}"
+        },
+        "capped": "Показаны {shown} крупнейших кампаний по расходам (всего {total})",
+        "cols": {
+          "campaign": "Кампания",
+          "leads": "Лиды",
+          "new": "Новые",
+          "accepted": "Принято",
+          "delivered": "Доставлено",
+          "cancelled": "Отмена",
+          "spend": "Расход",
+          "revenue": "Доход",
+          "cpl": "CPL",
+          "roas": "ROAS",
+          "profit": "Прибыль"
+        },
+        "badges": {
+          "unconnected": "Не подключён"
+        }
+      },
+      "platforms": {
+        "title": "По платформам",
+        "cols": {
+          "platform": "Платформа",
+          "leads": "Лиды",
+          "delivered": "Доставлено",
+          "delivery_rate": "Доставляемость",
+          "revenue": "Доход"
+        }
+      }
     },
-    "chart": {
-      "title": "Дневная динамика",
-      "spend": "Расход",
-      "revenue": "Доход",
-      "profit": "Прибыль"
+    "orders": {
+      "title": "Заказы",
+      "subtitle": "Список CPA-заказов",
+      "status_all": "Все",
+      "status": {
+        "pending": "Ожидает",
+        "accepted": "Принят",
+        "delivered": "Доставлен",
+        "cancelled": "Отменён",
+        "archived": "Архив"
+      },
+      "empty": "Заказы не найдены",
+      "cols": {
+        "order_id": "ID заказа",
+        "campaign": "Кампания",
+        "status": "Статус",
+        "payout": "Выплата",
+        "date": "Дата"
+      },
+      "page_info": "{from}–{to} из {total}",
+      "prev": "Назад",
+      "next": "Вперёд",
+      "payout_hold": "Будет выплачено при доставке (холд)",
+      "payout_none": "Не продано — выплаты нет"
     },
-    "campaigns": {
-      "title": "Разрез по кампаниям",
-      "colCampaign": "Кампания",
-      "colLeads": "Лиды",
-      "colAccepted": "Принято",
-      "colDelivered": "Доставлено",
-      "colSpend": "Расход",
-      "colCpl": "CPL",
-      "colRoas": "ROAS",
-      "colProfit": "Прибыль"
+    "settings": {
+      "title": "Настройки",
+      "rate_label": "Курс USD → UZS (вручную)",
+      "rate_hint": "Оставьте пустым — будет использован автоматический курс ЦБ",
+      "alert_cpl": "Порог предупреждения CPL ($)",
+      "alert_cpl_hint": "Если CPL выше — кампания помечается как «дорогая»",
+      "alert_roas": "Минимальный ROAS",
+      "alert_roas_hint": "Если ROAS ниже — признак убытка",
+      "cpl_alerts": "Оповещения CPL",
+      "cpl_alerts_hint": "Если цена лида превысит установленный порог — в Telegram придёт оповещение",
+      "pnl_alerts": "Уведомления об убытках",
+      "pnl_alerts_hint": "Если дневной расход кампании превышает ожидаемый доход CPA, в Telegram придёт предупреждение",
+      "pnl_digest": "Ежедневный отчёт о прибыли",
+      "pnl_digest_hint": "Каждый вечер в Telegram приходит список прибыльных кампаний",
+      "save": "Сохранить",
+      "saved": "Настройки сохранены",
+      "current_rate": "Текущий курс",
+      "load_error": "Не удалось загрузить настройки. Они не изменились — повторите попытку.",
+      "retry": "Повторить"
     },
-    "platforms": {
-      "title": "Разрез по платформам",
-      "colPlatform": "Платформа",
-      "colLeads": "Лиды",
-      "colDelivered": "Доставлено",
-      "colRevenue": "Доход"
+    "sync": {
+      "refresh": "Обновить",
+      "syncing": "Обновление...",
+      "last_updated": "Последнее обновление",
+      "just_now": "только что",
+      "minutes_ago": "{n} мин назад",
+      "hours_ago": "{n} ч назад",
+      "days_ago": "{n} дн назад",
+      "never": "ещё не обновлялось"
+    },
+    "common": {
+      "loading": "Загрузка...",
+      "no_campaign": "Прочее (без кампании)"
     }
   },
   "orders": {
@@ -931,6 +3009,629 @@
       "saved": "Цель сохранена",
       "deleted": "Цель удалена",
       "error": "Произошла ошибка"
+    }
+  },
+  "navigation": {
+    "menu": {
+      "dashboard": "Главная",
+      "lead-pacing": "Темп лидов",
+      "integrations": "Интеграции",
+      "connections": "Подключения",
+      "products": "Продукты",
+      "domains": "Домены",
+      "api-keys": "API Ключи",
+      "payments": "Платежи",
+      "pricing": "Тарифы",
+      "balance": "Баланс",
+      "settings": "Настройки",
+      "more": "Еще",
+      "reports": "Отчёты",
+      "capi": "Conversion API",
+      "finance-insights": "Финансы",
+      "finance-orders": "Заказы"
+    },
+    "group": {
+      "overview": "Основное",
+      "finance": "Финансы",
+      "workspace": "Ресурсы",
+      "system": "Аккаунт"
+    },
+    "user": {
+      "profile": "Профиль",
+      "logout": "Выход",
+      "settings": "Настройки"
+    },
+    "theme": {
+      "light": "Светлая",
+      "dark": "Темная",
+      "system": "Системная"
+    }
+  },
+  "pricing": {
+    "title": "Тарифы и Оплата",
+    "subtitle": "Выберите подходящий тариф для вашего бизнеса и достигайте высоких доходов",
+    "tabs": {
+      "pricing": "Тарифы",
+      "balance": "Баланс"
+    },
+    "billing": {
+      "monthly": "Месячный",
+      "yearly": "Годовой",
+      "yearlyBadge": "2 месяца бесплатно",
+      "perMonth": "/мес",
+      "perYear": "В год оплачивается {amount}",
+      "leadsPerMonth": "{leads} лид/мес",
+      "unlimitedLeads": "Безлимит лидов"
+    },
+    "badges": {
+      "popular": "Самый популярный",
+      "free": "Бесплатно",
+      "current": "Текущий план"
+    },
+    "balance": {
+      "current": "Текущий баланс",
+      "currentBalance": "Текущий баланс",
+      "addFunds": "Добавить средства",
+      "topUp": "Пополнение баланса",
+      "amount": "Сумма (сум)",
+      "amountPlaceholder": "Введите сумму",
+      "minAmount": "Минимум: {amount} сум",
+      "paymentInfo": "Платежные данные",
+      "cardNumber": "Номер карты",
+      "cardHolder": "Владелец карты",
+      "receipt": "Чек оплаты",
+      "uploadReceipt": "Загрузите чек оплаты",
+      "paymentHistory": "История платежей",
+      "noPayments": "Платежи отсутствуют",
+      "searchPayments": "Поиск платежей...",
+      "viewReceipt": "Просмотр",
+      "onlinePayment": "Онлайн оплата",
+      "onlinePaymentDesc": "Быстро и безопасно. Автоматическое подтверждение через платежную систему.",
+      "manualPayment": "Перевод на карту",
+      "manualPaymentDesc": "Переведите на карту и загрузите чек. Баланс пополнится после подтверждения администратором.",
+      "payVia": "Оплатить через",
+      "resumeDraft": "Продолжить"
+    },
+    "table": {
+      "amount": "Сумма",
+      "receipt": "Чек",
+      "status": "Статус",
+      "date": "Дата",
+      "actions": "Действия"
+    },
+    "status": {
+      "active": "Подтверждено",
+      "pending": "Ожидание",
+      "error": "Отклонено",
+      "draft": "Создан",
+      "expired": "Истёк",
+      "refunded": "Возвращён"
+    },
+    "toast": {
+      "loadError": "Ошибка загрузки платежей",
+      "amountError": "Введите корректную сумму",
+      "invoiceError": "Ошибка создания платёжной ссылки. Попробуйте ещё раз.",
+      "receiptError": "Загрузите чек оплаты",
+      "submitSuccess": "Платеж успешно отправлен",
+      "submitError": "Ошибка отправки платежа",
+      "copied": "Скопировано!",
+      "planComingSoon": "Функция выбора тарифа скоро будет добавлена",
+      "subscribeSuccess": "Тариф успешно приобретен!",
+      "subscribeError": "Ошибка при покупке тарифа",
+      "activateSuccess": "Тариф успешно активирован!",
+      "activateError": "Не удалось активировать тариф",
+      "renewSuccess": "Тариф успешно обновлён!",
+      "renewError": "Не удалось обновить тариф"
+    },
+    "buttons": {
+      "copy": "Копировать",
+      "topUp": "Пополнить",
+      "contact": "Связаться",
+      "currentPlan": "Текущий тариф",
+      "activate": "Активировать",
+      "upgradePlan": "Обновить тариф",
+      "subscribe": "Подписаться",
+      "renew": "Обновить"
+    },
+    "sections": {
+      "customNeeds": "Есть особые потребности?",
+      "customNeedsDesc": "Свяжитесь с нами для больших объемов лидов или специальных интеграций"
+    },
+    "features": {
+      "cancellation": "Отмена подписки",
+      "cancellationDesc": "Отмените подписку в любое время. Без вопросов и штрафов.",
+      "instantActivation": "Мгновенная активация",
+      "instantActivationDesc": "После оплаты ваш тариф активируется мгновенно и лиды начнут передаваться.",
+      "planChange": "Смена тарифа",
+      "planChangeDesc": "Возможность перейти на более высокий или низкий тариф в любое время."
+    },
+    "warnings": {
+      "title": "Важные напоминания",
+      "cardDigits": "На чеке должны быть видны последние 4 цифры номера карты",
+      "noReceipt": "Без чека оплаты баланс не будет пополнен",
+      "manualReview": "Чек проверяется вручную, это может занять некоторое время",
+      "timeRequired": "Если время оплаты не видно, платеж не будет принят",
+      "issuesContact": "При возникновении проблем:"
+    },
+    "modal": {
+      "receiptTitle": "Чек оплаты",
+      "confirmTitle": "Подтверждение тарифа",
+      "subscribeConfirm": "Вы уверены, что хотите подписаться на этот тариф? Оплата будет списана с вашего баланса.",
+      "activateConfirm": "Вы хотите активировать ваш тариф?",
+      "renewConfirm": "Хотите обновить текущий тариф? Стоимость тарифа будет списана с вашего баланса.",
+      "renewWarning": "Внимание: при обновлении оставшиеся лимиты лидов текущего периода будут сброшены до нуля и начнётся новый период.",
+      "confirm": "Подтвердить",
+      "cancel": "Отмена",
+      "shortfall": "Не хватает",
+      "topUp": "Пополнить на {amount}"
+    },
+    "faq": {
+      "title": "Частые вопросы",
+      "subtitle": "Самые частые вопросы о тарифах и оплате",
+      "faq-1": {
+        "question": "Что такое передача лидов и как это работает?",
+        "answer": "Мы автоматически передаем информацию о потенциальных клиентах (лидах) из Facebook Ads Forms в вашу CRM систему. Процесс происходит в реальном времени и не требует ручной обработки."
+      },
+      "faq-2": {
+        "question": "Что произойдет, если я превышу месячный лимит?",
+        "answer": "Существующие интеграции продолжают принимать лиды — ни один лид не теряется. Но при превышении лимита аккаунт ограничивается, и вы не сможете добавлять новые интеграции. Чтобы восстановить полный доступ, перейдите на более высокий тариф или выберите Безлимитный."
+      },
+      "faq-3": {
+        "question": "С какими CRM системами вы интегрируетесь?",
+        "answer": "Мы напрямую работаем с amoCRM (Kommo), Bitrix24, Google Sheets и Telegram. Также вы можете подключить свою систему через webhook/API."
+      },
+      "faq-4": {
+        "question": "Зачем нужно 100 Facebook аккаунтов?",
+        "answer": "Если у вас несколько бизнесов или различные кампании, вы можете подключить каждый к отдельному Facebook аккаунту. Все тарифы поддерживают до 100 аккаунтов."
+      },
+      "faq-5": {
+        "question": "Бесплатный тариф 1K действительно бесплатный?",
+        "answer": "Да! Тариф 1K полностью бесплатный и навсегда. Кредитная карта не требуется. Это возможность протестировать платформу для вашего бизнеса."
+      },
+      "faq-6": {
+        "question": "Как производится оплата?",
+        "answer": "Через Click (онлайн) или переводом на карту (с чеком) вы пополняете баланс и подписываетесь на нужный тариф. Стоимость тарифа списывается с баланса."
+      }
+    },
+    "balanceSubtitle": "Пополните баланс и просматривайте историю платежей"
+  },
+  "settings": {
+    "title": "Настройки",
+    "subtitle": "Управление профилем и настройками аккаунта",
+    "tabs": {
+      "profile": "Профиль",
+      "security": "Безопасность",
+      "notifications": "Уведомления"
+    },
+    "profile": {
+      "title": "Информация профиля",
+      "user": "Пользователь",
+      "balance": "Баланс",
+      "name": "Полное имя",
+      "namePlaceholder": "Введите ваше имя",
+      "email": "Email",
+      "emailPlaceholder": "Ваш email адрес",
+      "phone": "Телефон",
+      "phonePlaceholder": "+998 XX XXX XX XX",
+      "telegramId": "Telegram ID",
+      "telegramIdPlaceholder": "Telegram ID",
+      "verifyTelegram": "Подключить Telegram",
+      "telegramVerified": "Telegram подключён",
+      "editInTelegram": "Изменить в Telegram",
+      "changeTelegram": "Сменить Telegram",
+      "avatar": "Аватар",
+      "uploadAvatar": "Загрузить аватар",
+      "changeAvatar": "Изменить аватар",
+      "save": "Сохранить",
+      "imageError": "Выберите файл изображения",
+      "imageSuccess": "Изображение успешно обновлено",
+      "imageUploadError": "Ошибка загрузки изображения",
+      "nameError": "Имя должно содержать минимум 3 символа",
+      "phoneError": "Введите номер телефона в правильном формате",
+      "saveSuccess": "Профиль успешно обновлен",
+      "saveError": "Ошибка сохранения профиля"
+    },
+    "security": {
+      "title": "Настройки безопасности",
+      "currentPassword": "Текущий пароль",
+      "currentPasswordPlaceholder": "Ваш текущий пароль",
+      "newPassword": "Новый пароль",
+      "newPasswordPlaceholder": "Новый пароль",
+      "confirmPassword": "Подтвердите пароль",
+      "confirmPasswordPlaceholder": "Повторите новый пароль",
+      "changePassword": "Изменить пароль",
+      "setPassword": "Установить пароль",
+      "setPasswordSuccess": "Пароль успешно установлен",
+      "setPasswordHint": "Установите пароль для аккаунта — затем сможете входить по логину и паролю.",
+      "passwordRequirements": "Требования к паролю",
+      "requirements": {
+        "length": "Минимум 10 символов",
+        "uppercase": "Минимум 1 заглавная буква",
+        "lowercase": "Минимум 1 строчная буква",
+        "number": "Минимум 1 цифра",
+        "special": "Минимум 1 специальный символ (!@#$%^&*)"
+      },
+      "passwordInvalid": "Новый пароль не соответствует требованиям",
+      "passwordMismatch": "Пароли не совпадают",
+      "passwordSuccess": "Пароль успешно изменен",
+      "passwordError": "Ошибка изменения пароля",
+      "twoFactor": "Двухфакторная аутентификация",
+      "sessions": "Активные сессии",
+      "devices": "Устройства"
+    },
+    "notifications": {
+      "title": "Настройки уведомлений",
+      "email": "Email уведомления",
+      "emailDescription": "Новости и сообщения",
+      "push": "Push уведомления",
+      "sms": "SMS уведомления",
+      "smsDescription": "Важные сообщения",
+      "newLeads": "Новые лиды",
+      "systemUpdates": "Системные обновления",
+      "securityAlerts": "Предупреждения безопасности",
+      "comingSoon": "* Настройки уведомлений скоро будут активированы",
+      "comingSoonBadge": "Скоро"
+    }
+  },
+  "validation": {
+    "required": "Это поле обязательно",
+    "email": "Неверный формат email",
+    "minLength": "Минимум {min} символов",
+    "maxLength": "Максимум {max} символов",
+    "min": "Минимум {min}",
+    "max": "Максимум {max}",
+    "pattern": "Неверный формат",
+    "passwordMatch": "Пароли не совпадают",
+    "phoneInvalid": "Неверный номер телефона",
+    "urlInvalid": "Неверный URL",
+    "dateInvalid": "Неверная дата",
+    "fileSize": "Размер файла слишком большой",
+    "fileType": "Тип файла не поддерживается"
+  },
+  "landing": {
+    "nav": {
+      "features": "Услуги",
+      "pricing": "Тарифы",
+      "howItWorks": "Как это работает",
+      "contact": "Контакты",
+      "login": "Войти",
+      "register": "Начать",
+      "closeMenu": "Закрыть меню",
+      "openMenu": "Открыть меню",
+      "skipToMain": "Перейти к основному содержимому",
+      "mainNav": "Основная навигация",
+      "mobileNav": "Мобильная навигация"
+    },
+    "hero": {
+      "title1": "Отправляйте лиды из Facebook",
+      "title2": "в CRM автоматически",
+      "subtitle": "Ваши Facebook лиды попадают в Telegram, Google Sheets или Bitrix24 за секунды. Забудьте о ручном копировании.",
+      "cta": "Начать бесплатно",
+      "watchVideo": "Смотреть видео",
+      "dashboardCard": {
+        "subtitle": "Система управления лидами",
+        "title": "Показатели за сегодня",
+        "period": "Статистика в реальном времени",
+        "stats": {
+          "todayLeads": "Лиды за сегодня",
+          "weekLeads": "Лиды за неделю",
+          "activeIntegrations": "Активные интеграции",
+          "pausedIntegrations": "Приостановлено"
+        }
+      },
+      "reportCard": {
+        "subtitle": "Ежедневный отчёт",
+        "title": "Клиент X — Дневная сводка",
+        "period": "Данные за вчера",
+        "stats": {
+          "spend": "Расход",
+          "impressions": "Показы",
+          "clicks": "Клики",
+          "ctr": "CTR",
+          "cpl": "Цена лида"
+        }
+      },
+      "stats": {
+        "integrations": "Интеграций",
+        "support": "Техподдержка",
+        "setup": "За настройку",
+        "setupValue": "Бесплатно"
+      }
+    },
+    "integrations": {
+      "title": "Интеграции"
+    },
+    "why": {
+      "title": "Почему Yuboraman?",
+      "subtitle": "Функции, которых нет на других платформах автоматизации лидов — построены вокруг Facebook Ads и узбекского рынка",
+      "items": {
+        "uzbek": {
+          "title": "На узбекском",
+          "description": "Интерфейс, поддержка и тексты ошибок — полностью на узбекском"
+        },
+        "reports": {
+          "title": "Ежедневные отчёты",
+          "description": "Ежедневные результаты Facebook Ads (лиды, расход, CTR) приходят в Telegram автоматически — без открытия дашборда"
+        },
+        "bitrix": {
+          "title": "Bitrix24 встроен",
+          "description": "Прямая интеграция с Bitrix24 CRM — без посредников, просто настроить"
+        },
+        "telegram": {
+          "title": "Управление в Telegram",
+          "description": "Лиды, отчёты и настройки — всё управляется через Telegram бота"
+        }
+      }
+    },
+    "trust": {
+      "ssl": "SSL + DDoS защита",
+      "uzbek": "Полностью на узбекском",
+      "payment": "Оплата в сумах",
+      "automatic": "24/7 автоматически",
+      "support": "Поддержка в Telegram"
+    },
+    "leadFlow": {
+      "title": "Как приходят лиды",
+      "subtitle": "От формы Facebook до вашей CRM — без ручной работы и задержек.",
+      "source": "Источник лидов",
+      "liveLeads": "Лиды в реальном времени",
+      "hub": "Автоматический маршрутизатор",
+      "points": {
+        "instant": {
+          "label": "⚡ Мгновенно",
+          "text": "Лиды попадают в CRM за секунды после отправки формы"
+        },
+        "automatic": {
+          "label": "🤖 Автоматически",
+          "text": "Ручное копирование, экспорт и импорт — больше не нужны"
+        },
+        "reliable": {
+          "label": "✅ Надёжно",
+          "text": "Если отправка не удалась — повторяется автоматически, ни один лид не теряется"
+        }
+      }
+    },
+    "features": {
+      "title": "Наши услуги",
+      "subtitle": "От автоматизации Facebook Leads до полноценной маркетинговой экосистемы",
+      "items": [
+        {
+          "title": "Facebook Leads",
+          "description": "Приём лидов из Facebook форм и автоматическая отправка в вашу CRM в реальном времени"
+        },
+        {
+          "title": "CRM интеграция",
+          "description": "Telegram бот, Google Sheets и Bitrix24 — никакого ручного копирования, всё автоматически"
+        },
+        {
+          "title": "Рекламные отчёты",
+          "description": "Ежедневная статистика Facebook Ads (лиды, расход, CTR) приходит в Telegram автоматически"
+        },
+        {
+          "title": "Facebook Pixel",
+          "description": "Установка Pixel на ваш сайт и таргетирование рекламы на целевую аудиторию"
+        },
+        {
+          "title": "Домены",
+          "description": "Нужен landing page или CPA сайт? Регистрация домена, DNS и SSL в одном месте"
+        },
+        {
+          "title": "Безопасность",
+          "description": "SSL сертификат, DDoS защита и надёжная безопасность данных"
+        }
+      ]
+    },
+    "howItWorks": {
+      "title": "Как это работает",
+      "subtitle": "Четыре простых шага — и ваши Facebook лиды начинают приходить в CRM",
+      "steps": [
+        {
+          "title": "Зарегистрируйтесь",
+          "description": "Создайте бесплатный профиль за 30 секунд — без банковской карты"
+        },
+        {
+          "title": "Подключите Facebook",
+          "description": "Привяжите свой Facebook аккаунт одним кликом и выберите нужную форму"
+        },
+        {
+          "title": "Выберите CRM",
+          "description": "Telegram бот, Google Sheets или Bitrix24 — выберите то, что удобно"
+        },
+        {
+          "title": "Лиды приходят сами",
+          "description": "Facebook лиды попадают в выбранную CRM за секунды — ручная работа больше не нужна"
+        }
+      ]
+    },
+    "videos": {
+      "title": "Видеоуроки",
+      "subtitle": "Вся необходимая информация для правильного использования платформы",
+      "items": [
+        {
+          "title": "Урок 1",
+          "description": "Регистрация и активация профиля"
+        },
+        {
+          "title": "Урок 2",
+          "description": "Подключение аккаунтов Facebook и Google"
+        },
+        {
+          "title": "Урок 3",
+          "description": "Отправка лидов из Facebook форм в Telegram"
+        }
+      ]
+    },
+    "pricing": {
+      "title": "Тарифные планы",
+      "subtitle": "Выберите наиболее подходящий план для вашего бизнеса",
+      "monthly": "Ежемесячно",
+      "yearly": "Ежегодно",
+      "yearlyDiscount": "2 месяца бесплатно",
+      "comingSoon": "Скоро",
+      "free": "Бесплатно",
+      "perMonth": "сум/мес",
+      "leadsPerMonth": "{leads} лид/мес",
+      "unlimitedLeads": "Безлимит лидов",
+      "choose": "Выбрать",
+      "popular": "Самый популярный",
+      "features": {
+        "leads": "лидов",
+        "unlimited": "Безлимитные лиды",
+        "domains": "Подключение домена",
+        "integrations": "Все интеграции",
+        "support": "Техническая поддержка",
+        "stats": "Статистика"
+      }
+    },
+    "faq": {
+      "title": "Часто задаваемые вопросы",
+      "subtitle": "Ответы на самые популярные вопросы о нашем сервисе",
+      "items": [
+        {
+          "question": "Нужно ли покупать домен, чтобы пользоваться сервисом?",
+          "answer": "Нет, автоматизация Facebook Leads работает без домена — даже на бесплатном тарифе. Услуга доменов отдельная: она нужна только если вы хотите создать landing page или отдельный CPA сайт."
+        },
+        {
+          "question": "Что такое передача лидов?",
+          "answer": "Передача лидов — это автоматическая отправка данных клиентов из Facebook Lead Ads в вашу CRM систему (Telegram, Bitrix24, Google Sheets). Вам не нужно копировать вручную — система делает всё автоматически."
+        },
+        {
+          "question": "Сколько времени занимает настройка?",
+          "answer": "После регистрации полная настройка занимает всего 5-10 минут. Наши видеоуроки подробно объясняют каждый шаг. Если возникнут трудности, наша команда поддержки поможет."
+        },
+        {
+          "question": "С какими CRM работает сервис?",
+          "answer": "Сейчас доступна интеграция с Telegram, amoCRM (Kommo), Bitrix24 и Google Sheets. Новые интеграции добавляются регулярно. Если нужной CRM нет в списке, можно подключить через webhook/API."
+        },
+        {
+          "question": "Есть ли ограничения у бесплатного тарифа?",
+          "answer": "Да, на бесплатном тарифе можно передавать до 1,000 лидов в месяц. Этого достаточно для малого бизнеса или тестирования. При необходимости можно в любой момент перейти на платный тариф."
+        },
+        {
+          "question": "Безопасны ли данные?",
+          "answer": "Безусловно. Все данные защищены SSL шифрованием. Мы не передаём данные пользователей третьим лицам. Наши серверы защищены от DDoS атак."
+        },
+        {
+          "question": "Какие способы оплаты доступны?",
+          "answer": "Сейчас можно оплатить через Click (онлайн) или переводом на карту (с чеком). Оплата проходит безопасно и быстро. Пока доступны месячные тарифы (годовые — скоро)."
+        },
+        {
+          "question": "Есть ли техническая поддержка?",
+          "answer": "Да, техническая поддержка доступна всем пользователям. Вы можете получить быструю помощь через Telegram. В рабочие дни отвечаем с 09:00 до 18:00."
+        },
+        {
+          "question": "Можно ли отменить подписку?",
+          "answer": "Да, подписку можно отменить в любое время. После отмены вы можете пользоваться сервисом до конца текущего оплаченного периода. Никаких штрафов нет."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Начните бесплатно прямо сейчас!",
+      "subtitle": "До 1000 лидов бесплатно. Банковская карта не требуется.",
+      "button": "Бесплатная регистрация"
+    },
+    "footer": {
+      "tagline": "Профессиональные домены и маркетинговые услуги",
+      "quickLinks": "Быстрые ссылки",
+      "legal": "Юридическая информация",
+      "contact": "Контакты",
+      "privacy": "Политика конфиденциальности",
+      "terms": "Условия использования",
+      "dataDeletion": "Удаление данных",
+      "adminContact": "Связаться с администратором",
+      "copyright": "© 2024-{year} Yuboraman.uz",
+      "operator": "Этот сайт управляется BULTAKOV IBROHIM"
+    }
+  },
+  "leadPacing": {
+    "title": "Темп лидов",
+    "subtitle": "Месячные цели и дневной темп (мульти-охват)",
+    "leadsUnit": "шт",
+    "accountSummary": {
+      "title": "Весь профиль — текущий месяц",
+      "mtd": "Лиды за месяц",
+      "today": "Сегодня",
+      "errors": "Не доставлено"
+    },
+    "scope": {
+      "account": "Весь профиль",
+      "form": "Интеграция",
+      "fb_account": "FB аккаунт",
+      "ad_account": "Рекламный аккаунт"
+    },
+    "mode": {
+      "monthly": "Ежемесячно (повтор)",
+      "custom": "Свой период",
+      "monthlyHint": "Автоповтор каждый месяц.",
+      "customHint": "Точные даты начала–конца (до 90 дней), разово."
+    },
+    "coverage": {
+      "paid_only": "Только лиды из рекламных кампаний Facebook; IG-комменты, веб-формы, CPA и органика не входят — число может быть ниже общего."
+    },
+    "status": {
+      "onTrack": "По плану",
+      "behind": "Отставание",
+      "severe": "Сильное отставание",
+      "complete": "Выполнено",
+      "early": "Начало месяца",
+      "upcoming": "Ожидается",
+      "finished": "Завершён"
+    },
+    "list": {
+      "empty": "Цели ещё не добавлены. Добавьте месячную цель для каждого бизнеса/охвата.",
+      "add": "Добавить цель"
+    },
+    "overlapNote": "Примечание: охваты — независимые цели; один лид может учитываться в нескольких, их сумма не равна итогу по профилю.",
+    "card": {
+      "today": "Сегодня",
+      "viewDetails": "Подробнее",
+      "dayOfTotal": "{day}/{total} день"
+    },
+    "kpi": {
+      "planPct": "Месячный план",
+      "expectedPct": "Ожидается (по времени)",
+      "projected": "Прогноз (конец месяца)",
+      "dailyTarget": "Дневная цель",
+      "required": "Нужно в день сейчас",
+      "today": "Сегодня",
+      "errors": "Не доставлено",
+      "remainingDays": "Осталось дней"
+    },
+    "projectedSoon": "Прогноз станет точным с 4-го дня месяца",
+    "requiredUnrealistic": "При текущем темпе сложно — пересмотрите бюджет или цель",
+    "form": {
+      "title": "Добавить цель",
+      "edit": "Изменить цель",
+      "modeLabel": "Режим расчёта",
+      "periodStart": "Дата начала",
+      "periodEnd": "Дата окончания",
+      "customCap": "Период до 90 дней; начало не раньше 1 месяца назад.",
+      "targetCustom": "Цель по лидам за период",
+      "scopeType": "Тип охвата",
+      "scopeValue": "Охват",
+      "scopeValuePlaceholder": "Выберите из списка",
+      "scopeValueEmpty": "Нет вариантов для этого типа",
+      "fbFirst": "Сначала выберите Facebook аккаунт",
+      "target": "Месячная цель по лидам",
+      "targetHint": "Например: 5000 — нужное число лидов в месяц",
+      "recurring": "Автоповтор каждый месяц",
+      "recurringHint": "Если включено, цель переносится на следующий месяц",
+      "threshold": "Порог оповещения (%)",
+      "thresholdHint": "Если прогноз ниже этого процента, придёт оповещение",
+      "save": "Сохранить",
+      "saved": "Цель сохранена",
+      "cancel": "Отмена"
+    },
+    "delivery": {
+      "title": "Доставка (необязательно)",
+      "hint": "По умолчанию — ваш личный чат (отправляется вам). Для группы/канала выберите бота и чат.",
+      "hasTopic": "Группа использует темы (topic)",
+      "threadId": "ID темы (topic)"
+    },
+    "delete": {
+      "action": "Удалить",
+      "confirm": "Удалить эту цель?",
+      "done": "Цель удалена"
     }
   }
 }

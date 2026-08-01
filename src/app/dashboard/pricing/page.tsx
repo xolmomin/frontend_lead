@@ -1,5 +1,5 @@
-import { PricingView } from "@/components/billing/pricing-view";
+import { BillingView } from "@/components/billing/billing-view";
 
 export default function PricingPage() {
-  return <PricingView />;
+  return <BillingView section="pricing" />;
 }

@@ -1,59 +1,110 @@
-import { getTranslations } from "next-intl/server";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { PlayIcon } from "@hugeicons/core-free-icons";
-import { SectionHeader } from "./section-header";
+"use client";
+
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Play } from "lucide-react";
+
+/** "Video darsliklar" — production `videos` section (id=videos). */
+
+const PLAYLIST = "PLpOJZjIJkS1_4d2-s6FDR516cURUsbgfL";
 
 const VIDEOS = [
-  { key: "v1", duration: "4:12" },
-  { key: "v2", duration: "6:45" },
-  { key: "v3", duration: "5:20" },
-] as const;
+  {
+    id: "uMKnfmkvR00",
+    thumbnail: "https://i.ytimg.com/vi/uMKnfmkvR00/maxresdefault.jpg",
+  },
+  {
+    id: "z_xKJoYb6Vg",
+    thumbnail: "https://i.ytimg.com/vi/z_xKJoYb6Vg/maxresdefault.jpg",
+  },
+  {
+    id: "9uXWfRI2bgU",
+    thumbnail: "https://i.ytimg.com/vi/9uXWfRI2bgU/maxresdefault.jpg",
+  },
+];
 
-export async function Videos() {
-  const t = await getTranslations("marketing.videos");
+interface VideoItem {
+  title: string;
+  description: string;
+}
+
+function VideoCard({
+  video,
+  item,
+}: {
+  video: (typeof VIDEOS)[number];
+  item?: VideoItem;
+}) {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div className="card-elevated overflow-hidden rounded-2xl">
+      <div className="relative overflow-hidden aspect-video">
+        {playing ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&list=${PLAYLIST}`}
+            title={item?.title ?? ""}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+          />
+        ) : (
+          <button
+            onClick={() => setPlaying(true)}
+            className="w-full h-full cursor-pointer group"
+            aria-label={item?.title ?? "Play video"}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={video.thumbnail}
+              alt={item?.title ?? ""}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full gradient-primary-diagonal flex items-center justify-center shadow-glow-md group-hover:scale-110 transition-transform duration-300">
+                <Play
+                  className="w-6 h-6 sm:w-7 sm:h-7 text-white ml-1"
+                  fill="white"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+          </button>
+        )}
+      </div>
+      <div className="p-4 sm:p-5">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1">
+          {item?.title}
+        </h3>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {item?.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function Videos() {
+  const t = useTranslations("landing");
+  const raw = t.raw("videos.items");
+  const items: VideoItem[] = Array.isArray(raw) ? raw : [];
 
   return (
-    <section>
-      <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-        <SectionHeader
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          subtitle={t("subtitle")}
-        />
-
-        <ul className="mt-12 grid gap-4 sm:grid-cols-3">
+    <section id="videos" className="py-12 sm:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
+            {t("videos.title")}
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {t("videos.subtitle")}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {VIDEOS.map((video, index) => (
-            <li
-              key={video.key}
-              className="group overflow-hidden rounded-2xl border bg-card transition-colors hover:border-primary/40"
-            >
-              {/* CSS-only thumbnail placeholder */}
-              <div className="relative aspect-video bg-gradient-to-br from-primary/20 via-muted to-muted">
-                <div
-                  aria-hidden
-                  className="absolute left-4 top-4 flex flex-col gap-1.5"
-                >
-                  <span className="h-1.5 w-20 rounded-full bg-foreground/10" />
-                  <span className="h-1.5 w-12 rounded-full bg-foreground/10" />
-                </div>
-                <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex size-12 items-center justify-center rounded-full border bg-background/90 text-primary shadow-md transition-transform group-hover:scale-110">
-                    <HugeiconsIcon icon={PlayIcon} className="size-5" />
-                  </span>
-                </span>
-                <span className="absolute bottom-2 right-2 rounded-md border bg-background/80 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-                  {video.duration}
-                </span>
-              </div>
-              <div className="flex flex-col gap-1 p-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
-                  {t("lesson", { n: index + 1 })}
-                </span>
-                <h3 className="text-sm font-semibold">{t(video.key)}</h3>
-              </div>
-            </li>
+            <VideoCard key={video.id} video={video} item={items[index]} />
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

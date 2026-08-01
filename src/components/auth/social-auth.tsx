@@ -1,69 +1,74 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Loading03Icon } from "@hugeicons/core-free-icons";
+import { Loader2 } from "lucide-react";
 import {
   getOAuthProviders,
   getOAuthUrl,
-  telegramCallback,
   type OAuthProviders,
   type RedirectProvider,
-  type TelegramAuthPayload,
 } from "@/lib/api";
-import { cn } from "@/lib/utils";
-import {
-  GoogleIcon,
-  TelegramIcon,
-  FacebookIcon,
-} from "@/components/auth/provider-icons";
-
-const TELEGRAM_WIDGET_SRC = "https://telegram.org/js/telegram-widget.js?22";
-
-interface TelegramLogin {
-  auth: (
-    opts: { bot_id: string; request_access?: string },
-    cb: (user: TelegramAuthPayload | false) => void,
-  ) => void;
-}
-declare global {
-  interface Window {
-    Telegram?: { Login?: TelegramLogin };
-  }
-}
-
-function loadTelegramWidget(): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (window.Telegram?.Login) return resolve();
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[src="${TELEGRAM_WIDGET_SRC}"]`,
-    );
-    if (existing) {
-      existing.addEventListener("load", () => resolve());
-      existing.addEventListener("error", () => reject(new Error("tg")));
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = TELEGRAM_WIDGET_SRC;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("tg"));
-    document.head.appendChild(script);
-  });
-}
 
 interface SocialAuthProps {
+  disabled?: boolean;
+  onBusyChange?: (busy: boolean) => void;
   onError: (message: string | null) => void;
-  redirectTo?: string;
 }
 
-export function SocialAuth({ onError, redirectTo = "/dashboard" }: SocialAuthProps) {
-  const t = useTranslations("auth");
-  const router = useRouter();
+const BUTTON_CLASS =
+  "w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+
+function TelegramMark() {
+  return (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="#26A5E4"
+        d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
+      />
+    </svg>
+  );
+}
+
+function GoogleMark() {
+  return (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+      />
+    </svg>
+  );
+}
+
+function FacebookMark() {
+  return (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="#1877F2"
+        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+      />
+    </svg>
+  );
+}
+
+export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps) {
+  const t = useTranslations("auth.login.socialLogin");
+  const tErrors = useTranslations("auth.login.errors");
   const [providers, setProviders] = useState<OAuthProviders | null>(null);
-  const [busy, setBusy] = useState<string | null>(null);
+  const [busy, setBusy] = useState<RedirectProvider | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -78,113 +83,75 @@ export function SocialAuth({ onError, redirectTo = "/dashboard" }: SocialAuthPro
   async function startRedirect(provider: RedirectProvider) {
     onError(null);
     setBusy(provider);
+    onBusyChange?.(true);
     try {
       window.location.assign(await getOAuthUrl(provider));
     } catch {
-      onError(t("errors.oauthFailed"));
+      onError(tErrors("generic"));
       setBusy(null);
+      onBusyChange?.(false);
     }
   }
-
-  async function startTelegram(botId: number) {
-    onError(null);
-    setBusy("telegram");
-    try {
-      await loadTelegramWidget();
-      window.Telegram?.Login?.auth(
-        { bot_id: String(botId), request_access: "write" },
-        (user) => {
-          if (!user) {
-            setBusy(null);
-            return;
-          }
-          telegramCallback(user)
-            .then(() => router.push(redirectTo))
-            .catch(() => {
-              onError(t("errors.oauthFailed"));
-              setBusy(null);
-            });
-        },
-      );
-    } catch {
-      onError(t("errors.oauthFailed"));
-      setBusy(null);
-    }
-  }
-
-  const telegramReady =
-    !!providers?.telegram.enabled && providers.telegram.bot_id != null;
 
   const buttons: {
-    key: string;
-    name: string;
-    icon: React.ReactNode;
+    key: RedirectProvider;
+    label: string;
+    mark: React.ReactNode;
     enabled: boolean;
-    onClick: () => void;
   }[] = [
     {
       key: "telegram",
-      name: "Telegram",
-      icon: <TelegramIcon />,
-      enabled: telegramReady,
-      onClick: () =>
-        providers?.telegram.bot_id != null &&
-        startTelegram(providers.telegram.bot_id),
+      label: t("telegram"),
+      mark: <TelegramMark />,
+      enabled: !!providers?.telegram,
     },
     {
       key: "google",
-      name: "Google",
-      icon: <GoogleIcon />,
+      label: t("google"),
+      mark: <GoogleMark />,
       enabled: !!providers?.google,
-      onClick: () => startRedirect("google"),
     },
     {
       key: "facebook",
-      name: "Facebook",
-      icon: <FacebookIcon />,
+      label: t("facebook"),
+      mark: <FacebookMark />,
       enabled: !!providers?.facebook,
-      onClick: () => startRedirect("facebook"),
     },
   ];
 
   return (
-    <div className="mt-6 flex flex-col gap-3">
-      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-        <span className="h-px flex-1 bg-border" />
-        <span>{t("or")}</span>
-        <span className="h-px flex-1 bg-border" />
+    <>
+      <div className="relative my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-3 bg-white/80 dark:bg-slate-800/80 text-gray-500 dark:text-gray-400 rounded">
+            {t("divider")}
+          </span>
+        </div>
       </div>
 
-      {buttons.map((b) => {
-        const loading = busy === b.key;
-        const disabled = !b.enabled || busy !== null;
-        return (
+      <div className="space-y-3">
+        {buttons.map((b) => (
           <button
             key={b.key}
             type="button"
-            disabled={disabled}
-            onClick={b.onClick}
-            title={b.enabled ? undefined : t("comingSoon")}
-            className={cn(
-              "flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-input bg-card text-sm font-medium text-foreground shadow-sm transition-colors",
-              disabled
-                ? "cursor-not-allowed opacity-60"
-                : "cursor-pointer hover:bg-accent",
-            )}
+            onClick={() => startRedirect(b.key)}
+            disabled={disabled || busy !== null || !b.enabled}
+            className={BUTTON_CLASS}
           >
-            {loading ? (
-              <HugeiconsIcon
-                icon={Loading03Icon}
-                size={18}
-                className="animate-spin"
-              />
+            {busy === b.key ? (
+              <Loader2 className="w-5 h-5 animate-spin text-gray-500" />
             ) : (
-              b.icon
+              b.mark
             )}
-            <span>{t("socialContinue", { provider: b.name })}</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {b.label}
+            </span>
           </button>
-        );
-      })}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }

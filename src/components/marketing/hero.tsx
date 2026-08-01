@@ -1,255 +1,209 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
-import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  ArrowDown01Icon,
-  ArrowRight02Icon,
-  Facebook02Icon,
-  GoogleSheetIcon,
-  SentIcon,
-  TelegramIcon,
-  Tick02Icon,
-} from "@hugeicons/core-free-icons";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { Play, Zap } from "lucide-react";
+import { Button } from "./button";
+import { telegramLogo } from "./brand-logos";
 
-type FeedStatus = "delivered" | "retrying" | "queued";
+const STATS = [
+  { value: "40+", key: "integrations" },
+  { value: "24/7", key: "support" },
+  { valueKey: "hero.stats.setupValue", key: "setup" },
+] as const;
 
-const FEED_ROWS: Array<{
-  name: string;
-  route: string;
-  status: FeedStatus;
-  time: { key: "timeNow" | "timeSec" | "timeMin"; n?: number };
-}> = [
-  { name: "Dilnoza A.", route: "Lead Ads → Telegram", status: "delivered", time: { key: "timeNow" } },
-  { name: "Jasur T.", route: "Lead Ads → Bitrix24", status: "delivered", time: { key: "timeSec", n: 12 } },
-  { name: "Malika R.", route: "Lead Ads → Google Sheets", status: "retrying", time: { key: "timeSec", n: 40 } },
-  { name: "Bekzod S.", route: "Lead Ads → amoCRM", status: "queued", time: { key: "timeMin", n: 1 } },
-  { name: "Nilufar K.", route: "Lead Ads → Telegram", status: "delivered", time: { key: "timeMin", n: 2 } },
-];
+const DASHBOARD_STATS = [
+  { emoji: "📥", key: "todayLeads", value: "47" },
+  { emoji: "📊", key: "weekLeads", value: "312" },
+  { emoji: "✅", key: "activeIntegrations", value: "8" },
+  { emoji: "⏸️", key: "pausedIntegrations", value: "2" },
+] as const;
 
-function FlowNode({
-  icon,
-  label,
-  emphasized,
-}: {
-  icon: typeof SentIcon;
-  label: string;
-  emphasized?: boolean;
-}) {
-  return (
-    <div className="flex flex-col items-center gap-1.5">
-      <span
-        className={cn(
-          "flex size-10 items-center justify-center rounded-xl border bg-background",
-          emphasized && "border-primary/50 bg-primary text-primary-foreground shadow-md shadow-primary/25",
-        )}
-      >
-        <HugeiconsIcon icon={icon} className="size-5" />
-      </span>
-      <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-        {label}
-      </span>
-    </div>
-  );
-}
+const REPORT_STATS = [
+  { emoji: "💰", key: "spend", value: "$3,842.50" },
+  { emoji: "📊", key: "impressions", value: "87,320" },
+  { emoji: "🖱️", key: "clicks", value: "1,856" },
+  { emoji: "📈", key: "ctr", value: "2.13%" },
+  { emoji: "📉", key: "cpl", value: "$0.86" },
+] as const;
 
-function DashConnector() {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 48 8"
-      className="h-2 w-10 shrink-0 text-primary/60 sm:w-12"
-    >
-      <line
-        x1="0"
-        y1="4"
-        x2="48"
-        y2="4"
-        stroke="currentColor"
-        strokeWidth="2"
-        className="mk-dash"
-      />
-    </svg>
-  );
-}
+const ROTATE_INTERVAL = 4000;
 
-async function RelayCard() {
-  const t = await getTranslations("marketing.relay");
+export function Hero() {
+  const t = useTranslations("landing");
+  const [card, setCard] = useState(0);
 
-  const statusStyles: Record<FeedStatus, string> = {
-    delivered: "bg-primary/10 text-primary",
-    retrying: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    queued: "bg-muted text-muted-foreground",
-  };
-
-  const statusLabel: Record<FeedStatus, string> = {
-    delivered: t("delivered"),
-    retrying: t("retrying"),
-    queued: t("queued"),
-  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCard((current) => +(current === 0));
+    }, ROTATE_INTERVAL);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="relative mk-rise" style={{ animationDelay: "250ms" }}>
+    <section className="relative overflow-hidden pt-20 sm:pt-28 lg:pt-32 pb-12 sm:pb-20 lg:pb-28">
+      <div className="absolute inset-0 gradient-mesh" />
+      <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400/20 dark:bg-primary-400/10 rounded-full blur-3xl animate-float" />
       <div
-        aria-hidden
-        className="absolute -inset-8 -z-10 rounded-full bg-primary/15 blur-3xl"
+        className="absolute bottom-20 right-10 w-96 h-96 bg-secondary-400/20 dark:bg-secondary-400/10 rounded-full blur-3xl animate-float"
+        style={{ animationDelay: "3s" }}
       />
-      <div className="overflow-hidden rounded-2xl border bg-card shadow-xl">
-        <div className="flex items-center justify-between border-b px-4 py-3">
-          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-60" />
-              <span className="relative inline-flex size-2 rounded-full bg-primary" />
-            </span>
-            {t("title")}
-          </p>
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-primary">
-            {t("live")}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-center gap-1 border-b bg-muted/30 px-4 py-4 sm:gap-2">
-          <FlowNode icon={Facebook02Icon} label={t("source")} />
-          <DashConnector />
-          <FlowNode icon={SentIcon} label={t("router")} emphasized />
-          <DashConnector />
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="flex items-center -space-x-2">
-              <span className="flex size-10 items-center justify-center rounded-xl border bg-background">
-                <HugeiconsIcon icon={TelegramIcon} className="size-5" />
-              </span>
-              <span className="flex size-10 items-center justify-center rounded-xl border bg-background">
-                <HugeiconsIcon icon={GoogleSheetIcon} className="size-5" />
-              </span>
-              <span className="flex size-10 items-center justify-center rounded-xl border bg-background font-mono text-[10px] font-semibold">
-                B24
-              </span>
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-              {t("dest")}
-            </span>
-          </div>
-        </div>
-
-        <ul className="divide-y">
-          {FEED_ROWS.map((row, index) => (
-            <li
-              key={row.name}
-              className="flex items-center gap-3 px-4 py-2.5 mk-rise"
-              style={{ animationDelay: `${350 + index * 120}ms` }}
-            >
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted font-mono text-[10px] font-semibold text-muted-foreground">
-                {row.name
-                  .split(" ")
-                  .map((part) => part[0])
-                  .join("")}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium">
-                  {row.name}
-                </span>
-                <span className="block truncate font-mono text-[10px] text-muted-foreground">
-                  {row.route}
-                </span>
-              </span>
-              <span
-                className={cn(
-                  "flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
-                  statusStyles[row.status],
-                )}
-              >
-                {row.status === "delivered" && (
-                  <HugeiconsIcon icon={Tick02Icon} className="size-3" />
-                )}
-                {statusLabel[row.status]}
-              </span>
-              <span className="hidden w-16 text-right font-mono text-[10px] text-muted-foreground sm:block">
-                {row.time.n === undefined
-                  ? t(row.time.key)
-                  : t(row.time.key, { n: row.time.n })}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center justify-between border-t bg-muted/40 px-4 py-2.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          <span>{t("today")}</span>
-          <span>{t("rate")}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export async function Hero() {
-  const t = await getTranslations("marketing");
-
-  return (
-    <section className="relative overflow-hidden">
-      <div aria-hidden className="mk-grid-bg absolute inset-0 -z-10" />
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 pb-16 pt-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:pb-24 lg:pt-20">
-        <div className="flex flex-col gap-6">
-          <p
-            className="flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-[0.2em] text-primary mk-rise"
-            style={{ animationDelay: "0ms" }}
-          >
-            <span aria-hidden className="size-1.5 rounded-[2px] bg-primary" />
-            {t("heroEyebrow")}
-          </p>
-          <h1
-            className="max-w-xl text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl xl:text-6xl mk-rise"
-            style={{ animationDelay: "80ms" }}
-          >
-            {t.rich("heroTitle", {
-              hl: (chunks) => (
-                <span className="rounded-md bg-primary/10 px-1.5 text-primary">
-                  {chunks}
-                </span>
-              ),
-            })}
-          </h1>
-          <p
-            className="max-w-xl text-lg text-muted-foreground mk-rise"
-            style={{ animationDelay: "160ms" }}
-          >
-            {t("heroSubtitle")}
-          </p>
-          <div
-            className="flex flex-wrap items-center gap-3 mk-rise"
-            style={{ animationDelay: "240ms" }}
-          >
-            <Button asChild size="lg">
-              <Link href="/register">
-                {t("ctaRegister")}
-                <HugeiconsIcon icon={ArrowRight02Icon} className="size-4" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
+              {t("hero.title1")}
+              <br />
+              <span className="gradient-text-animated">{t("hero.title2")}</span>
+            </h1>
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto md:mx-0 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-150">
+              {t("hero.subtitle")}
+            </p>
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-300">
+              <Link href="/register" className="w-full sm:w-auto">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-full sm:w-auto px-8 py-3.5 text-lg font-bold shadow-lg hover:shadow-xl"
+                >
+                  {t("hero.cta")}
+                </Button>
               </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href="#qanday-ishlaydi">
-                {t("ctaHow")}
-                <HugeiconsIcon icon={ArrowDown01Icon} className="size-4" />
+              <a
+                href="#videos"
+                onClick={(event) => {
+                  event.preventDefault();
+                  const target = document.querySelector("#videos");
+                  if (target) target.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full sm:w-auto"
+              >
+                <Button
+                  variant="ghost"
+                  size="md"
+                  leftIcon={<Play className="w-4 h-4" aria-hidden="true" />}
+                  className="w-full sm:w-auto"
+                >
+                  {t("hero.watchVideo")}
+                </Button>
               </a>
-            </Button>
+            </div>
+            <div className="mt-8 sm:mt-12 flex flex-wrap gap-3 sm:gap-6 justify-center md:justify-start animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-500">
+              {STATS.map((stat) => (
+                <div
+                  key={stat.key}
+                  className="glass rounded-xl px-3 py-2.5 sm:px-6 sm:py-4 text-center"
+                >
+                  <div className="text-lg sm:text-2xl font-bold gradient-text">
+                    {"value" in stat ? stat.value : t(stat.valueKey)}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                    {t(`hero.stats.${stat.key}`)}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <dl
-            className="mt-4 grid max-w-md grid-cols-3 gap-4 border-t pt-6 mk-rise"
-            style={{ animationDelay: "320ms" }}
-          >
-            {(["speed", "integrations", "support"] as const).map((key) => (
-              <div key={key} className="flex flex-col gap-1">
-                <dd className="font-mono text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                  {t(`heroStats.${key}.value`)}
-                </dd>
-                <dt className="text-xs text-muted-foreground">
-                  {t(`heroStats.${key}.label`)}
-                </dt>
+          <div className="hidden md:block rotate-2 animate-in fade-in slide-in-from-right-8 duration-700 fill-mode-both delay-300">
+            <div className="relative max-w-sm ml-auto min-h-[320px]">
+              <div
+                className={`absolute inset-0 transition-all duration-400 ease-in-out ${card === 0 ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-16 pointer-events-none"}`}
+              >
+                <div className="glass-card p-5 sm:p-6 animate-float h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center">
+                      <Zap className="w-5 h-5 text-white" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 dark:text-white">
+                        Yuboraman
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        {t("hero.dashboardCard.subtitle")}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-xl bg-primary-50 dark:bg-slate-700/60 p-4">
+                    <p className="font-semibold text-sm text-gray-900 dark:text-white">
+                      {t("hero.dashboardCard.title")}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                      {t("hero.dashboardCard.period")}
+                    </p>
+                    <div className="mt-3 space-y-1.5">
+                      {DASHBOARD_STATS.map((stat) => (
+                        <p
+                          key={stat.key}
+                          className="text-sm text-gray-700 dark:text-gray-300"
+                        >
+                          <span aria-hidden="true">{stat.emoji}</span>{" "}
+                          {t(`hero.dashboardCard.stats.${stat.key}`)}:{" "}
+                          {stat.value}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))}
-          </dl>
+              <div
+                className={`absolute inset-0 transition-all duration-400 ease-in-out ${card === 1 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-16 pointer-events-none"}`}
+              >
+                <div className="glass-card p-5 sm:p-6 animate-float h-full">
+                  <div className="flex items-center gap-3 mb-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={telegramLogo}
+                      alt="Telegram"
+                      className="w-10 h-10"
+                    />
+                    <div>
+                      <div className="font-semibold text-gray-900 dark:text-white">
+                        Telegram · Yuboraman Bot
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        {t("hero.reportCard.subtitle")}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="rounded-xl bg-primary-50 dark:bg-slate-700/60 p-4">
+                    <p className="font-semibold text-sm text-gray-900 dark:text-white">
+                      {t("hero.reportCard.title")}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                      {t("hero.reportCard.period")}
+                    </p>
+                    <div className="mt-3 space-y-1.5">
+                      {REPORT_STATS.map((stat) => (
+                        <p
+                          key={stat.key}
+                          className="text-sm text-gray-700 dark:text-gray-300"
+                        >
+                          <span aria-hidden="true">{stat.emoji}</span>{" "}
+                          {t(`hero.reportCard.stats.${stat.key}`)}: {stat.value}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                {[0, 1].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCard(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${card === index ? "bg-primary-500 w-6" : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400"}`}
+                    aria-label={t(
+                      index === 0
+                        ? "hero.dashboardCard.subtitle"
+                        : "hero.reportCard.subtitle",
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-
-        <RelayCard />
       </div>
     </section>
   );

@@ -1,41 +1,45 @@
-import { getTranslations } from "next-intl/server";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { useTranslations } from "next-intl";
 import {
-  HeadsetIcon,
-  Plug01Icon,
-  Shield01Icon,
-  Wrench01Icon,
-} from "@hugeicons/core-free-icons";
+  Bot,
+  Languages,
+  Lock,
+  MessageCircle,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react";
 
-const ITEMS = [
-  { key: "integrations", icon: Plug01Icon },
-  { key: "support", icon: HeadsetIcon },
-  { key: "setup", icon: Wrench01Icon },
-  { key: "security", icon: Shield01Icon },
-] as const;
+const ITEMS: { icon: LucideIcon; key: string }[] = [
+  { icon: Lock, key: "ssl" },
+  { icon: Languages, key: "uzbek" },
+  { icon: Wallet, key: "payment" },
+  { icon: Bot, key: "automatic" },
+  { icon: MessageCircle, key: "support" },
+];
 
-export async function TrustStrip() {
-  const t = await getTranslations("marketing.trust");
-
+export function TrustStrip() {
+  const t = useTranslations("landing");
   return (
-    <section className="border-y bg-muted/30">
-      <ul className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-x-8 gap-y-6 px-4 py-8 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
-        {ITEMS.map((item) => (
-          <li key={item.key} className="flex items-start gap-3">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <HugeiconsIcon icon={item.icon} className="size-5" />
-            </span>
-            <span>
-              <span className="block text-sm font-semibold">
-                {t(`${item.key}.title`)}
-              </span>
-              <span className="block text-xs text-muted-foreground">
-                {t(`${item.key}.desc`)}
-              </span>
-            </span>
-          </li>
-        ))}
-      </ul>
+    <section className="py-6 sm:py-8 border-y border-gray-200/50 dark:border-gray-700/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-10">
+          {ITEMS.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.key}
+                className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 animate-in fade-in slide-in-from-bottom-2 duration-500 fill-mode-both"
+                style={{ animationDelay: `${index * 60}ms` }}
+              >
+                <Icon
+                  className="w-4 h-4 text-primary-500 flex-shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="whitespace-nowrap">{t(`trust.${item.key}`)}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }

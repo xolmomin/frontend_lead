@@ -48,6 +48,67 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Production (yuboraman.uz) brand scales — used as `primary-600`, `secondary-400/20`, `accent-500`
+   directly in markup ported from the live site. Coexists with the shadcn semantic tokens above. */
+@theme {
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+  --color-secondary-50: #ecfdf5;
+  --color-secondary-100: #d1fae5;
+  --color-secondary-200: #a7f3d0;
+  --color-secondary-300: #6ee7b7;
+  --color-secondary-400: #34d399;
+  --color-secondary-500: #10b981;
+  --color-secondary-600: #059669;
+  --color-secondary-700: #047857;
+  --color-secondary-800: #065f46;
+  --color-secondary-900: #064e3b;
+  --color-accent-100: #e0e7ff;
+  --color-accent-400: #818cf8;
+  --color-accent-500: #6366f1;
+  --color-accent-600: #4f46e5;
+  --color-accent-900: #312e81;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-gradient: gradient 15s ease infinite;
+  --animate-marquee: marquee 25s linear infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  @keyframes gradient {
+    0%,
+    100% {
+      background-position: 0%;
+    }
+    50% {
+      background-position: 100%;
+    }
+  }
+  @keyframes marquee {
+    0% {
+      transform: translate(0);
+    }
+    100% {
+      transform: translate(-50%);
+    }
+  }
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -135,47 +196,320 @@
   }
 }
 
-/* --- Auth screens (glass card on a soft mint gradient) --- */
+/* --- Production (yuboraman.uz) surfaces: gradient backdrop + glass family --- */
 
-/* Full-viewport backdrop: teal-50 -> white -> emerald-50 (dark = deep teal). */
+/* Full-viewport backdrop: primary-50 -> white -> secondary-50 (dark = slate-900/800/900). */
 .gradient-bg {
-  background: linear-gradient(
-    to bottom right,
-    oklch(0.98 0.02 175) 0%,
-    oklch(1 0 0) 50%,
-    oklch(0.97 0.03 160) 100%
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    var(--color-primary-50),
+    var(--color-white),
+    var(--color-secondary-50)
   );
 }
 .dark .gradient-bg {
-  background: linear-gradient(
-    to bottom right,
-    oklch(0.22 0.03 185) 0%,
-    oklch(0.15 0.01 200) 50%,
-    oklch(0.2 0.03 160) 100%
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    var(--color-slate-900),
+    var(--color-slate-800),
+    var(--color-slate-900)
   );
 }
 
-/* Frosted card: translucent surface + backdrop blur. */
+/* Frosted surfaces (bg + border + backdrop blur), 1:1 with production. */
 .glass {
-  background: color-mix(in oklab, var(--card) 80%, transparent);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background-color: color-mix(in oklab, var(--color-white) 80%, transparent);
+  backdrop-filter: blur(var(--blur-xl));
+  -webkit-backdrop-filter: blur(var(--blur-xl));
+  border: 1px solid color-mix(in oklab, var(--color-gray-200) 50%, transparent);
+}
+.dark .glass {
+  background-color: color-mix(in oklab, var(--color-gray-800) 80%, transparent);
+  border-color: color-mix(in oklab, var(--color-gray-700) 50%, transparent);
 }
 
-/* Primary auth CTA: teal-600 -> teal-700 gradient. */
+.glass-strong {
+  background-color: color-mix(in oklab, var(--color-white) 90%, transparent);
+  backdrop-filter: blur(var(--blur-2xl));
+  -webkit-backdrop-filter: blur(var(--blur-2xl));
+  border: 1px solid color-mix(in oklab, var(--color-gray-200) 60%, transparent);
+  box-shadow:
+    0 20px 25px -5px color-mix(in oklab, var(--color-gray-200) 20%, transparent),
+    0 8px 10px -6px color-mix(in oklab, var(--color-gray-200) 20%, transparent);
+}
+.dark .glass-strong {
+  background-color: color-mix(in oklab, var(--color-gray-900) 90%, transparent);
+  border-color: color-mix(in oklab, var(--color-gray-700) 60%, transparent);
+  box-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.3),
+    0 8px 10px -6px rgb(0 0 0 / 0.3);
+}
+
+.glass-subtle {
+  background-color: color-mix(in oklab, var(--color-white) 60%, transparent);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  border: 1px solid color-mix(in oklab, var(--color-gray-200) 30%, transparent);
+}
+.dark .glass-subtle {
+  background-color: color-mix(in oklab, var(--color-gray-800) 60%, transparent);
+  border-color: color-mix(in oklab, var(--color-gray-700) 30%, transparent);
+}
+
+.glass-card {
+  background-color: color-mix(in oklab, var(--color-white) 70%, transparent);
+  backdrop-filter: blur(var(--blur-xl));
+  -webkit-backdrop-filter: blur(var(--blur-xl));
+  border: 1px solid color-mix(in oklab, var(--color-white) 20%, transparent);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    0 10px 15px -3px color-mix(in oklab, var(--color-gray-200) 30%, transparent),
+    0 4px 6px -4px color-mix(in oklab, var(--color-gray-200) 30%, transparent);
+}
+.dark .glass-card {
+  background-color: color-mix(in oklab, var(--color-slate-800) 70%, transparent);
+  border-color: color-mix(in oklab, var(--color-slate-700) 30%, transparent);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.4),
+    0 4px 6px -4px rgb(0 0 0 / 0.4);
+}
+
+.glass-input {
+  background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid color-mix(in oklab, var(--color-gray-300) 50%, transparent);
+}
+.dark .glass-input {
+  background-color: color-mix(in oklab, var(--color-gray-800) 50%, transparent);
+  border-color: color-mix(in oklab, var(--color-gray-600) 50%, transparent);
+}
+
+/* Brand gradients (active nav item, icon chips, hero marks). */
+.gradient-primary {
+  background-image: linear-gradient(
+    to right in oklab,
+    var(--color-primary-500),
+    var(--color-secondary-500)
+  );
+}
+.gradient-primary-vertical {
+  background-image: linear-gradient(
+    to bottom in oklab,
+    var(--color-primary-500),
+    var(--color-secondary-500)
+  );
+}
+.gradient-primary-diagonal {
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    var(--color-primary-500),
+    var(--color-primary-600),
+    var(--color-secondary-500)
+  );
+}
+
+/* Primary auth CTA: teal-600 -> teal-700 gradient (kept for existing components). */
 .btn-teal-gradient {
   background-image: linear-gradient(
     to right,
-    oklch(0.6 0.12 180),
-    oklch(0.52 0.11 185)
+    var(--color-primary-600),
+    var(--color-primary-700)
   );
 }
 .btn-teal-gradient:hover {
   background-image: linear-gradient(
     to right,
-    oklch(0.56 0.12 180),
-    oklch(0.48 0.11 185)
+    var(--color-primary-700),
+    var(--color-primary-800)
   );
+}
+
+/* --- Production landing utilities (ported 1:1 from yuboraman.uz) --- */
+
+/* Soft radial mesh behind the hero. */
+.gradient-mesh {
+  background:
+    radial-gradient(at 40% 20%, #14b8a626 0, #0000 50%),
+    radial-gradient(at 80% 0%, #10b9811a 0, #0000 50%),
+    radial-gradient(at 0% 50%, #6366f11a 0, #0000 50%),
+    radial-gradient(at 80% 50%, #14b8a61a 0, #0000 50%),
+    radial-gradient(at 0% 100%, #10b98126 0, #0000 50%);
+}
+
+/* Static brand gradient text. */
+.gradient-text {
+  background-image: linear-gradient(
+    to right in oklab,
+    var(--color-primary-600),
+    var(--color-secondary-600)
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.dark .gradient-text {
+  background-image: linear-gradient(
+    to right in oklab,
+    var(--color-primary-400),
+    var(--color-secondary-400)
+  );
+}
+
+/* Animated brand gradient text (hero headline). */
+@keyframes gradient-x {
+  0%,
+  100% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+}
+.gradient-text-animated {
+  background-image: linear-gradient(
+    to right in oklab,
+    var(--color-primary-500),
+    var(--color-secondary-500),
+    var(--color-primary-500)
+  );
+  background-size: 200%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: 3s infinite gradient-x;
+}
+
+/* Elevated white card (features, video cards). */
+.card-elevated {
+  background-color: var(--color-white);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-gray-100);
+  box-shadow: 0 4px 20px -4px #0000001a;
+  transition: all 0.3s var(--ease-out);
+}
+.card-elevated:hover {
+  box-shadow: 0 8px 30px -4px #00000026;
+  translate: 0 calc(var(--spacing) * -1);
+}
+.dark .card-elevated {
+  background-color: var(--color-slate-800);
+  border-color: color-mix(in oklab, var(--color-slate-700) 50%, transparent);
+  box-shadow: 0 4px 20px -4px #0006;
+}
+.dark .card-elevated:hover {
+  box-shadow: 0 8px 30px -4px #00000080;
+}
+
+/* Teal glow shadows. */
+.shadow-glow-sm {
+  box-shadow: 0 0 15px #14b8a640;
+}
+.shadow-glow-md {
+  box-shadow: 0 0 25px #14b8a659;
+}
+
+/* --- Lead-flow section motion (CSS stand-ins for the production
+       framer-motion loops) --- */
+
+/* Dots travelling along the horizontal / vertical connector lines. */
+@keyframes mk-lead-x {
+  0% {
+    left: -10%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 110%;
+    opacity: 0;
+  }
+}
+@keyframes mk-lead-y {
+  0% {
+    top: -10%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 110%;
+    opacity: 0;
+  }
+}
+.mk-lead-x {
+  animation: mk-lead-x 2.2s linear infinite;
+}
+.mk-lead-y {
+  animation: mk-lead-y 1.8s linear infinite;
+}
+
+/* Light streak sweeping across the connector lines. */
+@keyframes mk-shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+.mk-shimmer {
+  animation: mk-shimmer 3s linear infinite;
+}
+
+/* Breathing ring around the central hub. */
+@keyframes mk-hub-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.3;
+  }
+}
+.mk-hub-pulse {
+  animation: mk-hub-pulse 2s ease-in-out infinite;
+}
+
+/* Expanding ring on the destination cards. */
+@keyframes mk-ping-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+.mk-ping-ring {
+  animation: mk-ping-ring 2.2s ease-out infinite;
+}
+
+/* Pulsing checkmark on the destination cards. */
+@keyframes mk-check-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+.mk-check-pulse {
+  animation: mk-check-pulse 2.2s ease-in-out infinite;
 }
 
 /* --- Marketing landing (mk-*) --- */
@@ -227,7 +561,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .mk-dash,
-  .mk-rise {
+  .mk-rise,
+  .mk-lead-x,
+  .mk-lead-y,
+  .mk-shimmer,
+  .mk-hub-pulse,
+  .mk-ping-ring,
+  .mk-check-pulse,
+  .gradient-text-animated {
     animation: none;
     opacity: 1;
     transform: none;
