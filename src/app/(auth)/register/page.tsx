@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { User, Mail, Phone, Lock } from "lucide-react";
 import { ApiError, login, register } from "@/lib/api";
-import { formatPhoneInput, normalizePhone } from "@/lib/phone";
+import { formatPhoneInput, toDigits } from "@/lib/phone";
 import { cn } from "@/lib/utils";
 import { YbCard } from "@/components/yb/card";
 import { YbInput } from "@/components/yb/input";
@@ -59,7 +59,7 @@ export default function RegisterPage() {
     const values = {
       fullName: String(formData.get("fullName") ?? "").trim(),
       email: String(formData.get("email") ?? "").trim(),
-      phone: normalizePhone(phone),
+      phone: toDigits(phone),
       password,
       confirmPassword: String(formData.get("confirmPassword") ?? ""),
       termsAccepted: formData.get("termsAccepted") === "on",
@@ -72,10 +72,8 @@ export default function RegisterPage() {
     if (!values.email) errors.email = v("emailRequired");
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email))
       errors.email = v("emailInvalid");
-    if (!values.phone || values.phone === "+998")
-      errors.phone = v("phoneRequired");
-    else if (!/^\+998\d{9}$/.test(values.phone))
-      errors.phone = v("phoneInvalid");
+    if (!values.phone || values.phone === "998") errors.phone = v("phoneRequired");
+    else if (!/^998\d{9}$/.test(values.phone)) errors.phone = v("phoneInvalid");
     if (!values.password) errors.password = v("passwordRequired");
     else if (values.password.length < 10) errors.password = v("passwordMin");
     else if (
@@ -102,7 +100,11 @@ export default function RegisterPage() {
         phone: values.phone,
         password: values.password,
       });
-      await login({ email: values.email, password: values.password });
+      await login({
+        email: values.email,
+        password: values.password,
+        remember: true,
+      });
       router.push("/dashboard");
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {

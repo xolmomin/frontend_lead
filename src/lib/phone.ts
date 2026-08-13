@@ -14,3 +14,8 @@ export function formatPhoneInput(value: string): string {
 export function normalizePhone(value: string): string {
   return value.replace(/\s/g, "");
 }
+
+/** Canonical form the backend stores: digits only, no "+" ("998901234567"). */
+export function toDigits(value: string): string {
+  return value.replace(/\D/g, "");
+}

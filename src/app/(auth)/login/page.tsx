@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Phone, Lock } from "lucide-react";
 import { login } from "@/lib/api";
-import { formatPhoneInput, normalizePhone } from "@/lib/phone";
+import { formatPhoneInput, normalizePhone, toDigits } from "@/lib/phone";
 import { YbCard } from "@/components/yb/card";
 import { YbInput } from "@/components/yb/input";
 import { YbButton } from "@/components/yb/button";
@@ -18,14 +18,30 @@ function looksLikePhone(value: string) {
   return /^[+\d\s]*$/.test(value);
 }
 
+const REMEMBER_KEY = "yb.remember";
+const REMEMBERED_ID_KEY = "yb.login_id";
+
 export default function LoginPage() {
   const t = useTranslations("auth");
   const router = useRouter();
   const [identifier, setIdentifier] = useState("+998");
+  const [remember, setRemember] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [socialBusy, setSocialBusy] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
+
+  // Restore the remembered identifier after mount — reading localStorage while
+  // rendering would not match the server-rendered HTML.
+  /* eslint-disable react-hooks/set-state-in-effect -- restoring a client-only
+     value; it cannot be part of the server-rendered initial state. */
+  useEffect(() => {
+    if (localStorage.getItem(REMEMBER_KEY) !== "1") return;
+    setRemember(true);
+    const saved = localStorage.getItem(REMEMBERED_ID_KEY);
+    if (saved) setIdentifier(looksLikePhone(saved) ? formatPhoneInput(saved) : saved);
+  }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,7 +68,19 @@ export default function LoginPage() {
 
     setSubmitting(true);
     try {
-      await login({ email: normalized, password });
+      // The backend stores phones as digits only.
+      await login({
+        email: isPhone ? toDigits(normalized) : normalized,
+        password,
+        remember,
+      });
+      if (remember) {
+        localStorage.setItem(REMEMBER_KEY, "1");
+        localStorage.setItem(REMEMBERED_ID_KEY, normalized);
+      } else {
+        localStorage.removeItem(REMEMBER_KEY);
+        localStorage.removeItem(REMEMBERED_ID_KEY);
+      }
       router.push("/dashboard");
     } catch {
       setFormError(t("login.errors.invalidCredentials"));
@@ -120,6 +148,8 @@ export default function LoginPage() {
                 name="remember"
                 className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
                 disabled={submitting}
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
               />
               <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
                 {t("login.rememberMe")}

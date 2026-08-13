@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatSum } from "@/lib/money";
+import { toDigits } from "@/lib/phone";
 import { useUser } from "@/hooks/use-user";
 import {
   getTelegramConnectToken,
@@ -225,7 +226,7 @@ export function SettingsView() {
       await updateSettings({
         name,
         email,
-        phone: phone.replace(/\s/g, ""),
+        phone: toDigits(phone),
         telegram_id: telegramId,
       });
       toast.success(t("profile.saveSuccess"));

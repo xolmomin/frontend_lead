@@ -14,16 +14,22 @@ export function registerAuthChangeHandler(handler: () => void) {
 // The backend sets this cookie too, but on its own domain — when the API runs
 // on a different site (e.g. cloudflared tunnels) the Next middleware would
 // never see it, so we mirror it on the frontend domain as well.
-function setSessionMarker(present: boolean) {
+// Without "remember me" the marker is a session cookie, so it dies with the
+// browser just like the backend's refresh cookie.
+function setSessionMarker(present: boolean, remember = true) {
   if (typeof document === "undefined") return;
-  document.cookie = present
+  if (!present) {
+    document.cookie = "logged_in=; path=/; max-age=0; samesite=lax";
+    return;
+  }
+  document.cookie = remember
     ? "logged_in=1; path=/; max-age=2592000; samesite=lax"
-    : "logged_in=; path=/; max-age=0; samesite=lax";
+    : "logged_in=1; path=/; samesite=lax";
 }
 
-export function setAccessToken(token: string | null) {
+export function setAccessToken(token: string | null, remember = true) {
   accessToken = token;
-  setSessionMarker(token !== null);
+  setSessionMarker(token !== null, remember);
   onAuthChange?.();
 }
 
@@ -158,8 +164,11 @@ export interface RegisterPayload {
 }
 
 export interface LoginPayload {
+  /** Email address or phone number (digits only). */
   email: string;
   password: string;
+  /** Keep the session for 30 days instead of until the browser closes. */
+  remember?: boolean;
 }
 
 export async function register(payload: RegisterPayload): Promise<void> {
@@ -171,12 +180,13 @@ export async function register(payload: RegisterPayload): Promise<void> {
 }
 
 export async function login(payload: LoginPayload): Promise<void> {
+  const remember = payload.remember ?? false;
   const data = await apiFetch<{ access_token: string }>("/auth/login", {
     method: "POST",
-    body: payload,
+    body: { ...payload, remember },
     skipRefresh: true,
   });
-  setAccessToken(data.access_token);
+  setAccessToken(data.access_token, remember);
 }
 
 export async function logout(): Promise<void> {
