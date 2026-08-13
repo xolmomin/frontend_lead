@@ -1,0 +1,15 @@
+# Project nomi backend stack (`lead`) dan ataylab boshqa: bir xil bo'lsa backend deploydagi
+# `--remove-orphans` bu konteynerni o'chirib yuboradi va aksincha.
+name: lead_frontend
+
+services:
+  frontend:
+    # CI pins IMAGE to a commit sha in .env on every deploy; rollback = edit that one line.
+    image: ${IMAGE:-ghcr.io/xolmomin/frontend_lead:latest}
+    container_name: lead-frontend
+    restart: unless-stopped
+    # Bound to the docker0 gateway, not 127.0.0.1: the reverse proxy runs in a container and
+    # cannot reach the host loopback. docker0 is host-local, so this is not publicly routable.
+    # pravaol already holds 3001 on this VPS — hence 3002.
+    ports:
+      - "172.17.0.1:3002:3000"

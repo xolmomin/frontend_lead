@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# Templates hold no secrets and are needed to set the VPS up.
+!.env.example
+!.env.prod.example
 
 # vercel
 .vercel

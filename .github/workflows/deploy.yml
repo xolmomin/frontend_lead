@@ -10,10 +10,43 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  IMAGE: ghcr.io/xolmomin/frontend_lead
+  IMAGE_NAME: ghcr.io/xolmomin/frontend_lead
+  DEPLOY_DIR: /var/www/lead/frontend
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      # Runs before the image build so a misconfigured VPS fails in seconds instead of after a
+      # full Next build, and with a message drone-scp cannot produce.
+      - name: Check VPS deploy directory and .env
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          envs: DEPLOY_DIR
+          script: |
+            set -eu
+            test -d "$DEPLOY_DIR" || {
+              echo "::error::$DEPLOY_DIR does not exist. On the VPS run: sudo mkdir -p $DEPLOY_DIR && sudo chown -R \$USER:\$USER /var/www/lead"
+              exit 1
+            }
+            test -w "$DEPLOY_DIR" || {
+              echo "::error::$DEPLOY_DIR is not writable by $(whoami). Run: sudo chown -R \$USER:\$USER /var/www/lead"
+              exit 1
+            }
+            # .env holds only IMAGE, but compose interpolation needs the file to exist — without
+            # it the deploy step's sed has nothing to pin and rollback stops working.
+            test -f "$DEPLOY_DIR/.env" || {
+              echo "::error::$DEPLOY_DIR/.env missing — see .env.prod.example"
+              exit 1
+            }
+            echo "Preflight OK: $DEPLOY_DIR ready"
+
   build-push:
+    needs: preflight
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,15 +62,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # NEXT_PUBLIC_API_URL is inlined into the client bundle at build time (src/lib/api.ts);
+      # a runtime env var would be ignored, so it must be a build-arg.
       - uses: docker/build-push-action@v6
         with:
           context: .
           push: true
+          platforms: linux/amd64
           build-args: |
             NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
           tags: |
-            ${{ env.IMAGE }}:latest
-            ${{ env.IMAGE }}:${{ github.sha }}
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -45,18 +81,79 @@ jobs:
     needs: build-push
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy compose file to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: docker-compose.prod.yml
+          target: ${{ env.DEPLOY_DIR }}
+
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
+          port: ${{ secrets.VPS_PORT || 22 }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: DEPLOY_DIR,IMAGE_NAME
           script: |
-            set -e
-            cd /opt/lead
+            set -eu
+            cd "$DEPLOY_DIR"
+
+            # Pin the running image to this commit. Compose reads IMAGE from .env, so a
+            # rollback is one line in .env instead of an edit the next deploy overwrites.
+            IMAGE_REF="${IMAGE_NAME}:${{ github.sha }}"
+            if grep -q '^IMAGE=' .env; then
+              sed -i "s|^IMAGE=.*|IMAGE=${IMAGE_REF}|" .env
+            else
+              echo "IMAGE=${IMAGE_REF}" >> .env
+            fi
+
             echo "${{ secrets.GHCR_PULL_TOKEN }}" | docker login ghcr.io -u xolmomin --password-stdin
+            # Same lock file as the backend deploy: both stacks share one VPS and one docker daemon.
             flock .deploy.lock -c '
+              set -e
               docker compose -f docker-compose.prod.yml pull frontend
-              docker compose -f docker-compose.prod.yml up -d --no-deps frontend
+              docker compose -f docker-compose.prod.yml up -d --remove-orphans \
+                --wait --wait-timeout 120
             '
             docker image prune -f
+
+      - name: Verify deployment
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          envs: DEPLOY_DIR,IMAGE_NAME
+          script: |
+            set -eu
+            cd "$DEPLOY_DIR"
+
+            fail() {
+              echo "::error::$1"
+              docker compose -f docker-compose.prod.yml ps
+              echo "--- frontend logs ---"
+              docker compose -f docker-compose.prod.yml logs frontend --tail 50
+              exit 1
+            }
+
+            expected="${IMAGE_NAME}:${{ github.sha }}"
+            running=$(docker inspect lead-frontend -f '{{.Config.Image}}' 2>/dev/null || echo missing)
+            [ "$running" = "$expected" ] || fail "lead-frontend runs '$running', expected '$expected' (stale container?)"
+
+            status=$(docker inspect -f '{{.State.Health.Status}}' lead-frontend 2>/dev/null || echo missing)
+            [ "$status" = "healthy" ] || fail "lead-frontend health is '$status', expected 'healthy'"
+
+            # The published port is what the reverse proxy actually talks to; an in-container
+            # health check passing while the port mapping is wrong still means a 502 for users.
+            curl -fsS -o /dev/null http://172.17.0.1:3002/ \
+              || fail "http://172.17.0.1:3002/ unreachable from the host (port mapping?)"
+
+            echo "Deploy verified: $expected healthy, reachable on 172.17.0.1:3002"
