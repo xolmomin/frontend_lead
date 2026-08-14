@@ -17,6 +17,17 @@ jobs:
   preflight:
     runs-on: ubuntu-latest
     steps:
+      # An unset GHCR_PULL_TOKEN used to surface only in the deploy step, after the full
+      # build, as docker's "password is empty" — which names neither the secret nor the repo.
+      - name: Check required secrets
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
+        run: |
+          [ -n "$GHCR_TOKEN" ] || {
+            echo "::error::GHCR_PULL_TOKEN secret is not set — see backend_lead/DEPLOY.md section 1"
+            exit 1
+          }
+
       # Runs before the image build so a misconfigured VPS fails in seconds instead of after a
       # full Next build, and with a message drone-scp cannot produce.
       - name: Check VPS deploy directory and .env
@@ -95,12 +106,16 @@ jobs:
 
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1
+        env:
+          # Forwarded through envs: rather than interpolated into the script — the action
+          # echoes the rendered script to the log, where an empty secret is all that shows.
+          GHCR_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           port: ${{ secrets.VPS_PORT || 22 }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          envs: DEPLOY_DIR,IMAGE_NAME
+          envs: DEPLOY_DIR,IMAGE_NAME,GHCR_TOKEN
           script: |
             set -eu
             cd "$DEPLOY_DIR"
@@ -114,7 +129,11 @@ jobs:
               echo "IMAGE=${IMAGE_REF}" >> .env
             fi
 
-            echo "${{ secrets.GHCR_PULL_TOKEN }}" | docker login ghcr.io -u xolmomin --password-stdin
+            [ -n "${GHCR_TOKEN:-}" ] || {
+              echo "::error::GHCR_PULL_TOKEN secret is not set — see backend_lead/DEPLOY.md section 1"
+              exit 1
+            }
+            printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
             # Same lock file as the backend deploy: both stacks share one VPS and one docker daemon.
             flock .deploy.lock -c '
               set -e
