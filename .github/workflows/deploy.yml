@@ -49,11 +49,11 @@ jobs:
           script: |
             set -eu
             test -d "$DEPLOY_DIR" || {
-              echo "::error::$DEPLOY_DIR does not exist. On the VPS run: sudo mkdir -p $DEPLOY_DIR && sudo chown -R \$USER:\$USER /var/www/lead"
+              echo "::error::$DEPLOY_DIR does not exist. On the VPS run: sudo mkdir -p $DEPLOY_DIR && sudo chown -R \$USER:\$USER /var/www/lidlar.uz"
               exit 1
             }
             test -w "$DEPLOY_DIR" || {
-              echo "::error::$DEPLOY_DIR is not writable by $(whoami). Run: sudo chown -R \$USER:\$USER /var/www/lead"
+              echo "::error::$DEPLOY_DIR is not writable by $(whoami). Run: sudo chown -R \$USER:\$USER /var/www/lidlar.uz"
               exit 1
             }
             # .env holds only IMAGE, but compose interpolation needs the file to exist — without
