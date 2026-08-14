@@ -1,8 +1,10 @@
 "use client";
 
+import { useId } from "react";
 import { useTranslations } from "next-intl";
 import { AlertTriangle, CheckCircle2, Info, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { YbModal } from "@/components/yb/modal";
 
 type ModalType = "info" | "warning" | "danger" | "success";
 
@@ -27,6 +29,11 @@ interface ConfirmModalProps {
   loading?: boolean;
 }
 
+/**
+ * Built on YbModal so it inherits the focus trap, Escape handling, body scroll
+ * lock and aria wiring — it used to hand-roll a bare role="dialog" with none of
+ * those, which mattered because this is the logout confirmation.
+ */
 export function ConfirmModal({
   isOpen,
   onClose,
@@ -39,22 +46,24 @@ export function ConfirmModal({
   loading = false,
 }: ConfirmModalProps) {
   const t = useTranslations("common");
-  if (!isOpen) return null;
+  const titleId = useId();
 
   const Icon =
     type === "success" ? CheckCircle2 : type === "info" ? Info : AlertTriangle;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
+    <YbModal
+      isOpen={isOpen}
+      // While the confirmed action is in flight the dialog must stay put.
+      onClose={loading ? () => {} : onClose}
+      showCloseButton={false}
+      closeOnEscape={!loading}
+      closeOnBackdrop={!loading}
+      size="sm"
+      labelledBy={titleId}
+      bare
     >
-      <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150"
-        onClick={loading ? undefined : onClose}
-      />
-      <div className="relative w-full max-w-sm bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 animate-in fade-in zoom-in-95 slide-in-from-bottom-2 duration-200">
+      <div className="p-6">
         <div
           className={cn(
             "inline-flex items-center justify-center w-12 h-12 rounded-full mb-4",
@@ -63,7 +72,10 @@ export function ConfirmModal({
         >
           <Icon className="w-6 h-6" />
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+        <h3
+          id={titleId}
+          className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2"
+        >
           {title}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
@@ -94,6 +106,6 @@ export function ConfirmModal({
           </button>
         </div>
       </div>
-    </div>
+    </YbModal>
   );
 }

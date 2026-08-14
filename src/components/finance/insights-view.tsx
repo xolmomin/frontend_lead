@@ -27,15 +27,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 import type { CampaignFinance, FinanceOverview } from "@/lib/api/finance";
 import {
@@ -58,6 +50,16 @@ import {
   isFinanceWindow,
   type FinanceWindow,
 } from "@/components/finance/finance-window";
+
+/** recharts stays out of the route's initial chunk — see trend-chart.tsx. */
+const TrendChart = dynamic(() => import("./trend-chart"), {
+  ssr: false,
+  loading: () => (
+    <div className="py-12 flex items-center justify-center">
+      <YbSpinner size="md" />
+    </div>
+  ),
+});
 
 export const AUTO_REFRESH_MS = 120_000;
 
@@ -460,52 +462,11 @@ export function FinanceInsightsView() {
               {t("insights.trend.empty")}
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height={260}>
-              <AreaChart
-                data={trend}
-                margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient id="finTrend" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.35} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  className="stroke-gray-200 dark:stroke-gray-700"
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="date"
-                  tick={{ fontSize: 11 }}
-                  className="text-gray-600 dark:text-gray-400"
-                  tickFormatter={(value: string) => value.slice(5)}
-                />
-                <YAxis
-                  tick={{ fontSize: 11 }}
-                  width={56}
-                  className="text-gray-600 dark:text-gray-400"
-                />
-                <Tooltip
-                  formatter={(value) => {
-                    const n = Number(value) || 0;
-                    return [
-                      metric === "leads" ? formatCount(n) : formatUsd(n),
-                      t(`insights.trend.${metric}`),
-                    ];
-                  }}
-                  contentStyle={{ fontSize: 12, borderRadius: 8 }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey={metric}
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  fill="url(#finTrend)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <TrendChart
+              data={trend}
+              metric={metric}
+              metricLabel={t(`insights.trend.${metric}`)}
+            />
           )}
         </div>
       </YbCard>

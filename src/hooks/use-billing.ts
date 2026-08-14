@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   billingKeys,
   createOnlinePayment,
@@ -13,15 +13,8 @@ import {
   type SubscribePayload,
 } from "@/lib/api/billing";
 import { statsKeys } from "@/lib/api/stats";
+import { useInvalidate } from "./_use-invalidate";
 
-function useInvalidate() {
-  const queryClient = useQueryClient();
-  return (...keys: readonly (readonly unknown[])[]) => {
-    for (const key of keys) {
-      void queryClient.invalidateQueries({ queryKey: key as unknown[] });
-    }
-  };
-}
 
 // --- Queries ---
 
@@ -55,8 +48,14 @@ export function useSubscribePlan() {
   const invalidate = useInvalidate();
   return useMutation({
     mutationFn: (payload: SubscribePayload) => subscribePlan(payload),
+    // A plan change moves the lead limit rendered on the dashboard summary.
     onSuccess: () =>
-      invalidate(statsKeys.plan, billingKeys.balance, billingKeys.payments),
+      invalidate(
+        statsKeys.plan,
+        statsKeys.summary,
+        billingKeys.balance,
+        billingKeys.payments,
+      ),
   });
 }
 

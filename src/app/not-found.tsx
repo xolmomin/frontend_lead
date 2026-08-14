@@ -1,15 +1,22 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { ArrowLeft, House, Search } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import { House, Search } from "lucide-react";
 import { Button } from "@/components/marketing/button";
+import { GoBackButton } from "@/components/marketing/go-back-button";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("common.notFound");
+  return {
+    title: t("title"),
+    description: t("description"),
+    robots: { index: false, follow: false },
+  };
+}
 
 /** Production 404 page (NotFound chunk), ported 1:1. */
-export default function NotFound() {
-  const router = useRouter();
-  const t = useTranslations("common");
+export default async function NotFound() {
+  const t = await getTranslations("common");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center px-4">
@@ -42,14 +49,7 @@ export default function NotFound() {
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in slide-in-from-bottom-5 duration-500 fill-mode-both delay-500">
-          <Button
-            variant="outline"
-            size="lg"
-            leftIcon={<ArrowLeft className="w-5 h-5" />}
-            onClick={() => router.back()}
-          >
-            {t("notFound.goBack")}
-          </Button>
+          <GoBackButton label={t("notFound.goBack")} />
           <Link href="/">
             <Button
               variant="primary"

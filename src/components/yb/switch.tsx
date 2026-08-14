@@ -1,15 +1,22 @@
 "use client";
 
-import { forwardRef, type InputHTMLAttributes, type ReactNode } from "react";
+import type { InputHTMLAttributes, ReactNode, Ref } from "react";
 import { cn } from "@/lib/utils";
 
 export interface YbSwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
   label?: ReactNode;
+  /** React 19 passes ref as a plain prop — no forwardRef needed. */
+  ref?: Ref<HTMLInputElement>;
 }
 
-export const YbSwitch = forwardRef<HTMLInputElement, YbSwitchProps>(
-  ({ label, className, disabled, ...props }, ref) => (
+export function YbSwitch({
+  label,
+  className,
+  disabled,
+  ...props
+}: YbSwitchProps) {
+  return (
     <label
       className={cn(
         "inline-flex items-center cursor-pointer",
@@ -18,16 +25,22 @@ export const YbSwitch = forwardRef<HTMLInputElement, YbSwitchProps>(
       )}
     >
       <div className="relative">
+        {/*
+          role="switch" belongs on the real, focusable control. It used to sit
+          on the decorative track below, which exposed an inoperable switch plus
+          an unlabelled checkbox to assistive tech — and its aria-checked was
+          hardcoded from props.checked, so it read "off" forever whenever the
+          switch was used uncontrolled.
+        */}
         <input
-          ref={ref}
           type="checkbox"
+          role="switch"
           className="sr-only peer"
           disabled={disabled}
           {...props}
         />
         <div
-          role="switch"
-          aria-checked={!!props.checked}
+          aria-hidden="true"
           className="w-11 h-6 bg-gray-300 dark:bg-gray-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary-500 peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"
         />
       </div>
@@ -37,6 +50,5 @@ export const YbSwitch = forwardRef<HTMLInputElement, YbSwitchProps>(
         </span>
       )}
     </label>
-  ),
-);
-YbSwitch.displayName = "YbSwitch";
+  );
+}

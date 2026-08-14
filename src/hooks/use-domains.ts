@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { billingKeys } from "@/lib/api/billing";
 import {
   domainKeys,
@@ -8,15 +8,8 @@ import {
   purchaseDomain,
   searchDomains,
 } from "@/lib/api/domains";
+import { useInvalidate } from "./_use-invalidate";
 
-function useInvalidate() {
-  const queryClient = useQueryClient();
-  return (...keys: readonly (readonly unknown[])[]) => {
-    for (const key of keys) {
-      void queryClient.invalidateQueries({ queryKey: key as unknown[] });
-    }
-  };
-}
 
 // --- Queries ---
 

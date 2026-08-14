@@ -19,12 +19,13 @@ import { formatSum } from "@/lib/money";
 import { toDigits } from "@/lib/phone";
 import { useUser } from "@/hooks/use-user";
 import {
-  getTelegramConnectToken,
-  updateImage,
-  updatePassword,
-  updateSettings,
-  type ProfileUser,
-} from "@/lib/api/profile";
+  useTelegramConnectToken,
+  useUpdatePassword,
+  useUpdateProfileImage,
+  useUpdateSettings,
+} from "@/hooks/use-profile";
+import { isNetworkError, isStatus } from "@/lib/api";
+import { userKeys, type ProfileUser } from "@/lib/api/profile";
 import { YbCard } from "@/components/yb/card";
 import { YbButton } from "@/components/yb/button";
 import { YbInput } from "@/components/yb/input";
@@ -71,7 +72,26 @@ export function SettingsView() {
   const userQuery = useUser();
   const user = (userQuery.data ?? null) as ProfileUser | null;
   const refreshUser = () =>
-    queryClient.invalidateQueries({ queryKey: ["me"] });
+    queryClient.invalidateQueries({ queryKey: userKeys.me });
+
+  const updateSettingsMutation = useUpdateSettings();
+  const updatePasswordMutation = useUpdatePassword();
+  const updateImageMutation = useUpdateProfileImage();
+  const telegramTokenMutation = useTelegramConnectToken();
+
+  // A dropped connection and a rejected payload used to produce the same toast,
+  // which made "wrong current password" indistinguishable from "you're offline".
+  const profileErrorMessage = (error: unknown) =>
+    isNetworkError(error)
+      ? tCommon("errors.network")
+      : t("profile.saveError");
+
+  const passwordErrorMessage = (error: unknown) => {
+    if (isNetworkError(error)) return tCommon("errors.network");
+    if (isStatus(error, 400, 401, 403))
+      return t("security.currentPasswordWrong");
+    return t("security.passwordError");
+  };
   const hasPassword = user?.has_password ?? true;
 
   const tabs = useMemo<YbTab[]>(
@@ -103,13 +123,14 @@ export function SettingsView() {
   const [telegramId, setTelegramId] = useState(
     user?.telegram_id?.toString() || "",
   );
-  const [savingProfile, setSavingProfile] = useState(false);
-  const [uploadingImage, setUploadingImage] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [savingPassword, setSavingPassword] = useState(false);
-  const [connectingTelegram, setConnectingTelegram] = useState(false);
+
+  const savingProfile = updateSettingsMutation.isPending;
+  const uploadingImage = updateImageMutation.isPending;
+  const savingPassword = updatePasswordMutation.isPending;
+  const connectingTelegram = telegramTokenMutation.isPending;
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [smsNotifications, setSmsNotifications] = useState(false);
 
@@ -171,22 +192,17 @@ export function SettingsView() {
       toast.error(t("profile.imageError"));
       return;
     }
-    setUploadingImage(true);
-    try {
-      const form = new FormData();
-      form.append("image", file);
-      await updateImage(form);
-      toast.success(t("profile.imageSuccess"));
-      refreshUser();
-    } catch {
-      toast.error(t("profile.imageUploadError"));
-    } finally {
-      setUploadingImage(false);
-    }
+    const form = new FormData();
+    form.append("image", file);
+    updateImageMutation.mutate(form, {
+      onSuccess: () => toast.success(t("profile.imageSuccess")),
+      onError: () => toast.error(t("profile.imageUploadError")),
+    });
   };
 
   const handleTelegramConnect = async () => {
-    setConnectingTelegram(true);
+    // The blank tab must be opened synchronously from the click, otherwise the
+    // popup blocker kills it once the request resolves.
     const win = window.open("", "_blank");
     if (win) {
       try {
@@ -194,7 +210,7 @@ export function SettingsView() {
       } catch {}
     }
     try {
-      const token = (await getTelegramConnectToken())?.token;
+      const token = (await telegramTokenMutation.mutateAsync())?.token;
       if (!token) {
         win?.close();
         toast.error(tCommon("messages.error"));
@@ -206,8 +222,6 @@ export function SettingsView() {
     } catch {
       win?.close();
       toast.error(tCommon("messages.error"));
-    } finally {
-      setConnectingTelegram(false);
     }
   };
 
@@ -221,21 +235,13 @@ export function SettingsView() {
       toast.error(t("profile.phoneError"));
       return;
     }
-    setSavingProfile(true);
-    try {
-      await updateSettings({
-        name,
-        email,
-        phone: toDigits(phone),
-        telegram_id: telegramId,
-      });
-      toast.success(t("profile.saveSuccess"));
-      refreshUser();
-    } catch {
-      toast.error(t("profile.saveError"));
-    } finally {
-      setSavingProfile(false);
-    }
+    updateSettingsMutation.mutate(
+      { name, email, phone: toDigits(phone), telegram_id: telegramId },
+      {
+        onSuccess: () => toast.success(t("profile.saveSuccess")),
+        onError: (error) => toast.error(profileErrorMessage(error)),
+      },
+    );
   };
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
@@ -248,25 +254,29 @@ export function SettingsView() {
       toast.error(t("security.passwordMismatch"));
       return;
     }
-    setSavingPassword(true);
-    try {
-      await updatePassword({
+    updatePasswordMutation.mutate(
+      {
         current_password: currentPassword,
         new_password: newPassword,
         confirm_new_password: confirmPassword,
-      });
-      toast.success(
-        t(hasPassword ? "security.passwordSuccess" : "security.setPasswordSuccess"),
-      );
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-      await refreshUser();
-    } catch {
-      toast.error(t("security.passwordError"));
-    } finally {
-      setSavingPassword(false);
-    }
+      },
+      {
+        onSuccess: () => {
+          toast.success(
+            t(
+              hasPassword
+                ? "security.passwordSuccess"
+                : "security.setPasswordSuccess",
+            ),
+          );
+          setCurrentPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+          void refreshUser();
+        },
+        onError: (error) => toast.error(passwordErrorMessage(error)),
+      },
+    );
   };
 
   const requirements: { key: keyof typeof passwordChecks; label: string }[] = [
@@ -292,6 +302,10 @@ export function SettingsView() {
             <div className="relative inline-block mb-4">
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mx-auto overflow-hidden">
                 {user?.image ? (
+                  // Deliberately a raw <img>: the avatar URL comes from the
+                  // backend and can point at any host, which next/image would
+                  // reject unless every possible origin is in
+                  // images.remotePatterns.
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={user.image}

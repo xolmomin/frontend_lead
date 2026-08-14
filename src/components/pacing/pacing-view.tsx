@@ -22,7 +22,7 @@ export function PacingView() {
   const [editing, setEditing] = useState<PacingGoal | null>(null);
   const [deleting, setDeleting] = useState<PacingGoal | null>(null);
 
-  const goals = goalsQuery.data ?? [];
+  const goals = useMemo(() => goalsQuery.data ?? [], [goalsQuery.data]);
   const cards = useMemo(() => goals.map(toPacingCard), [goals]);
   // Production has a dedicated whole-profile `account_summary` in the
   // response; locally it is derived from the account-scope goal (the card is

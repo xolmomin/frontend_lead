@@ -1,6 +1,8 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { statsKeys } from "@/lib/api/stats";
+import { useInvalidate } from "./_use-invalidate";
 import {
   completeFacebookOAuth,
   deleteFacebookConnection,
@@ -63,27 +65,26 @@ export function useStartFacebookOAuth() {
 }
 
 export function useCompleteFacebookOAuth() {
-  const queryClient = useQueryClient();
+  const invalidate = useInvalidate();
   return useMutation({
     mutationFn: (payload: { code: string; state: string }) =>
       completeFacebookOAuth(payload),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: facebookKeys.connections });
-    },
+    // "has_facebook_connection" is a dashboard setup checklist item — without
+    // this the checklist keeps showing Facebook as unconnected until a reload.
+    onSuccess: () => invalidate(facebookKeys.connections, statsKeys.setupStatus),
   });
 }
 
 export function useDeleteFacebookConnection() {
-  const queryClient = useQueryClient();
+  const invalidate = useInvalidate();
   return useMutation({
     mutationFn: (id: FacebookConnection["id"]) => deleteFacebookConnection(id),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: facebookKeys.connections });
-    },
+    onSuccess: () => invalidate(facebookKeys.connections, statsKeys.setupStatus),
   });
 }
 
 export function useSubscribeFacebookPage() {
+  const invalidate = useInvalidate();
   return useMutation({
     mutationFn: ({
       connectionId,
@@ -92,5 +93,11 @@ export function useSubscribeFacebookPage() {
       connectionId: FacebookConnection["id"];
       pageId: FacebookPage["id"];
     }) => subscribeFacebookPage(connectionId, pageId),
+    onSuccess: (_data, { connectionId }) =>
+      invalidate(
+        facebookKeys.pages(String(connectionId)),
+        facebookKeys.connections,
+        statsKeys.setupStatus,
+      ),
   });
 }

@@ -1,4 +1,4 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { cn } from "@/lib/utils";
 
 /** Production (yuboraman.uz) Button, ported 1:1 from the live bundle. */
@@ -31,23 +31,22 @@ export interface MarketingButtonProps
   size?: Size;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  /** React 19 passes ref as a plain prop — no forwardRef, so this renders
+      inside Server Components too (see app/not-found.tsx). */
+  ref?: Ref<HTMLButtonElement>;
 }
 
-export const Button = forwardRef<HTMLButtonElement, MarketingButtonProps>(
-  (
-    {
-      variant = "primary",
-      size = "md",
-      leftIcon,
-      rightIcon,
-      children,
-      className,
-      ...props
-    },
-    ref,
-  ) => (
+export function Button({
+  variant = "primary",
+  size = "md",
+  leftIcon,
+  rightIcon,
+  children,
+  className,
+  ...props
+}: MarketingButtonProps) {
+  return (
     <button
-      ref={ref}
       className={cn(
         "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
         VARIANTS[variant],
@@ -60,6 +59,5 @@ export const Button = forwardRef<HTMLButtonElement, MarketingButtonProps>(
       <span className="inline-flex items-center gap-1.5">{children}</span>
       {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
     </button>
-  ),
-);
-Button.displayName = "Button";
+  );
+}

@@ -7,6 +7,7 @@ import {
   useState,
   type MouseEvent,
 } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
@@ -91,10 +92,13 @@ export function MarketingNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center flex-shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="https://cdn.yuboraman.uz/static/logo2.png"
                 alt="Yuboraman.uz"
+                width={128}
+                height={32}
+                // Fixed header logo — above the fold on every landing view.
+                priority
                 className="h-8 w-auto"
               />
             </Link>

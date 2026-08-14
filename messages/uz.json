@@ -74,8 +74,17 @@
       "unsavedChanges": "Saqlanmagan o'zgarishlar mavjud"
     },
     "errors": {
+      "network": "Serverga ulanib bo'lmadi. Internetni tekshiring.",
       "copyFailed": "Nusxalashda xatolik yuz berdi",
       "loadFailed": "Ma'lumotlarni yuklashda xatolik yuz berdi"
+    },
+    "errorBoundary": {
+      "title": "Nimadir noto'g'ri ketdi",
+      "description": "Bu bo'limni yuklab bo'lmadi. Qaytadan urinib ko'ring.",
+      "retry": "Qaytadan urinish",
+      "home": "Bosh sahifaga",
+      "dashboard": "Boshqaruv paneliga",
+      "errorId": "Xato kodi: {digest}"
     },
     "accountInactive": "Hisob faol emas",
     "empty": {
@@ -3240,6 +3249,7 @@
       "passwordInvalid": "Yangi parol talablarga javob bermayapti",
       "passwordMismatch": "Parollar mos kelmadi",
       "passwordSuccess": "Parol muvaffaqiyatli o'zgartirildi",
+      "currentPasswordWrong": "Joriy parol noto'g'ri",
       "passwordError": "Parolni o'zgartirishda xatolik",
       "twoFactor": "Ikki bosqichli autentifikatsiya",
       "sessions": "Faol sessiyalar",

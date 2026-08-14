@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   createProduct,
   deleteProduct,
@@ -11,15 +11,8 @@ import {
   type Product,
   type UpdateProductPayload,
 } from "@/lib/api/products";
+import { useInvalidate } from "./_use-invalidate";
 
-function useInvalidate() {
-  const queryClient = useQueryClient();
-  return (...keys: readonly (readonly unknown[])[]) => {
-    for (const key of keys) {
-      void queryClient.invalidateQueries({ queryKey: key as unknown[] });
-    }
-  };
-}
 
 // --- Queries ---
 

@@ -89,16 +89,24 @@ export function IntegrationsView() {
   // Unfiltered list: folder counts + bulk-action scope (search is ignored, as
   // in production).
   const allQuery = useIntegrations({ folderId: null, search: "" });
-  const scopeQuery = useIntegrations({ folderId: selectedFolder, search: "" });
 
   const integrations = useMemo(
     () => integrationsQuery.data ?? [],
     [integrationsQuery.data],
   );
   const allIntegrations = useMemo(() => allQuery.data ?? [], [allQuery.data]);
+  // The selected folder's slice of the unfiltered list. Derived rather than
+  // fetched: allQuery already carries folder_id on every row, and a third
+  // concurrent GET /integrations for the same screen buys nothing.
   const scopeIntegrations = useMemo(
-    () => scopeQuery.data ?? [],
-    [scopeQuery.data],
+    () =>
+      selectedFolder === null
+        ? allIntegrations
+        : allIntegrations.filter(
+            (integration) =>
+              String(integration.folder_id) === String(selectedFolder),
+          ),
+    [allIntegrations, selectedFolder],
   );
 
   const folderCounts = useMemo(() => {
@@ -622,6 +630,8 @@ export function IntegrationsView() {
                         }
                       }}
                       placeholder={t("searchPlaceholder")}
+                      // Placeholder text is not an accessible name.
+                      aria-label={t("searchPlaceholder")}
                       className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:focus:border-primary-400 outline-none transition-colors"
                     />
                   </div>

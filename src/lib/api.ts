@@ -1,14 +1,28 @@
+// The access token below is a module-level global. That is safe in the browser
+// (one module instance per tab) and catastrophic on the server, where a single
+// module instance is shared by every concurrent request — user A's bearer token
+// would be attached to user B's fetch. "client-only" turns any accidental
+// Server Component import of this file into a build error instead.
+import "client-only";
+
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api/v1";
+
+/** How long a single request may run before it is aborted. */
+const REQUEST_TIMEOUT_MS = 15_000;
 
 let accessToken: string | null = null;
 
 // Notified on login/logout identity changes (NOT on silent refresh) so the
 // query cache can be wiped — otherwise user B sees user A's cached data.
-let onAuthChange: (() => void) | null = null;
+const authChangeHandlers = new Set<() => void>();
 
+/** Returns an unsubscribe; without it a remount would leak the previous handler. */
 export function registerAuthChangeHandler(handler: () => void) {
-  onAuthChange = handler;
+  authChangeHandlers.add(handler);
+  return () => {
+    authChangeHandlers.delete(handler);
+  };
 }
 
 // The backend sets this cookie too, but on its own domain — when the API runs
@@ -30,7 +44,7 @@ function setSessionMarker(present: boolean, remember = true) {
 export function setAccessToken(token: string | null, remember = true) {
   accessToken = token;
   setSessionMarker(token !== null, remember);
-  onAuthChange?.();
+  authChangeHandlers.forEach((handler) => handler());
 }
 
 export function getAccessToken() {
@@ -49,28 +63,69 @@ export class ApiError extends Error {
   }
 }
 
+/** Status used for failures that never reached the backend (offline, DNS, CORS, timeout). */
+export const NETWORK_ERROR_STATUS = 0;
+
+export function isNetworkError(error: unknown): boolean {
+  return error instanceof ApiError && error.status === NETWORK_ERROR_STATUS;
+}
+
+export function isStatus(error: unknown, ...statuses: number[]): boolean {
+  return error instanceof ApiError && statuses.includes(error.status);
+}
+
+/**
+ * Parses a response body as JSON.
+ *
+ * Anything non-JSON (a reverse-proxy interstitial, a tunnel error page, an HTML
+ * 500) is an error, never a value: returning the raw string here would let
+ * `apiFetch<T>` hand a string back typed as a domain object, and the first
+ * property access downstream would blow up the whole React tree instead.
+ */
 async function parseBody(res: Response): Promise<unknown> {
   const text = await res.text();
   if (!text) return null;
+
+  const contentType = res.headers.get("content-type") ?? "";
+  if (!contentType.includes("json")) {
+    throw new ApiError(res.status, {
+      detail: "non_json_response",
+      contentType,
+      body: text.slice(0, 500),
+    });
+  }
   try {
     return JSON.parse(text);
   } catch {
-    return text;
+    throw new ApiError(res.status, {
+      detail: "invalid_json",
+      body: text.slice(0, 500),
+    });
+  }
+}
+
+/** Body reader for error paths — must never throw over the original failure. */
+async function parseBodySafe(res: Response): Promise<unknown> {
+  try {
+    return await parseBody(res);
+  } catch (error) {
+    return error instanceof ApiError ? error.data : null;
   }
 }
 
 // Deduplicate concurrent refresh attempts.
 let refreshPromise: Promise<boolean> | null = null;
 
-async function refreshAccessToken(): Promise<boolean> {
+export async function refreshAccessToken(): Promise<boolean> {
   refreshPromise ??= (async () => {
     try {
       const res = await fetch(`${API_URL}/auth/refresh`, {
         method: "POST",
         credentials: "include",
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       });
       if (!res.ok) return false;
-      const data = (await parseBody(res)) as { access_token?: string } | null;
+      const data = (await parseBodySafe(res)) as { access_token?: string } | null;
       if (data?.access_token) {
         accessToken = data.access_token;
         return true;
@@ -90,15 +145,20 @@ interface ApiFetchOptions {
   body?: unknown;
   /** Skip the 401 -> refresh -> retry cycle (used for auth endpoints). */
   skipRefresh?: boolean;
+  /**
+   * Caller-side cancellation, e.g. React Query's `queryFn({ signal })`.
+   * Always combined with an internal timeout.
+   */
+  signal?: AbortSignal;
 }
 
 export async function apiFetch<T>(
   path: string,
   options: ApiFetchOptions = {},
 ): Promise<T> {
-  const { method = "GET", body, skipRefresh = false } = options;
+  const { method = "GET", body, skipRefresh = false, signal } = options;
 
-  const doFetch = () => {
+  const doFetch = async () => {
     const isFormData =
       typeof FormData !== "undefined" && body instanceof FormData;
     const headers: Record<string, string> = {};
@@ -107,17 +167,35 @@ export async function apiFetch<T>(
       headers["Content-Type"] = "application/json";
     }
     if (accessToken) headers["Authorization"] = `Bearer ${accessToken}`;
-    return fetch(`${API_URL}${path}`, {
-      method,
-      headers,
-      credentials: "include",
-      body:
-        body === undefined
-          ? undefined
-          : isFormData
-            ? (body as FormData)
-            : JSON.stringify(body),
-    });
+    // A hung backend must not leave queries pending forever, and an unmounted
+    // view must be able to cancel — so caller signal and timeout are merged.
+    const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+    try {
+      return await fetch(`${API_URL}${path}`, {
+        method,
+        headers,
+        credentials: "include",
+        // Per-user JSON must never be served from a shared/intermediary cache.
+        cache: "no-store",
+        signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+        body:
+          body === undefined
+            ? undefined
+            : isFormData
+              ? (body as FormData)
+              : JSON.stringify(body),
+      });
+    } catch (error) {
+      // Let genuine caller cancellation propagate so React Query can ignore it.
+      if (signal?.aborted) throw error;
+      // Everything else (offline, DNS, CORS preflight, timeout) arrives here as
+      // a bare TypeError/DOMException, which would slip past every
+      // `instanceof ApiError` check downstream.
+      throw new ApiError(NETWORK_ERROR_STATUS, {
+        detail: timeout.aborted ? "timeout" : "network",
+        cause: error instanceof Error ? error.message : String(error),
+      });
+    }
   };
 
   let res = await doFetch();
@@ -131,18 +209,25 @@ export async function apiFetch<T>(
       // Session is gone (refresh failed, or the new token was rejected too).
       accessToken = null;
       setSessionMarker(false);
-      if (typeof window !== "undefined" && window.location.pathname !== "/login") {
-        window.location.href = "/login";
-      }
-      throw new ApiError(401, await parseBody(res));
+      redirectToLogin();
+      throw new ApiError(401, await parseBodySafe(res));
     }
   }
 
   if (!res.ok) {
-    throw new ApiError(res.status, await parseBody(res));
+    throw new ApiError(res.status, await parseBodySafe(res));
   }
 
   return (await parseBody(res)) as T;
+}
+
+/** Full reload to /login, preserving where the user was headed. */
+function redirectToLogin() {
+  if (typeof window === "undefined") return;
+  const { pathname, search } = window.location;
+  if (pathname === "/login") return;
+  const next = encodeURIComponent(`${pathname}${search}`);
+  window.location.href = `/login?next=${next}`;
 }
 
 // --- Auth API ---
@@ -212,8 +297,13 @@ export interface OAuthProviders {
 }
 
 /** Which social providers the backend has credentials configured for. */
-export function getOAuthProviders(): Promise<OAuthProviders> {
-  return apiFetch<OAuthProviders>("/oauth/providers", { skipRefresh: true });
+export function getOAuthProviders(
+  signal?: AbortSignal,
+): Promise<OAuthProviders> {
+  return apiFetch<OAuthProviders>("/oauth/providers", {
+    skipRefresh: true,
+    signal,
+  });
 }
 
 /** Get the provider consent URL to redirect the browser to. */

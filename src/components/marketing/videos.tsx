@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Play } from "lucide-react";
 
@@ -53,12 +54,12 @@ function VideoCard({
             className="w-full h-full cursor-pointer group"
             aria-label={item?.title ?? "Play video"}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={video.thumbnail}
               alt={item?.title ?? ""}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full gradient-primary-diagonal flex items-center justify-center shadow-glow-md group-hover:scale-110 transition-transform duration-300">

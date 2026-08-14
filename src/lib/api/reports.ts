@@ -5,6 +5,7 @@
  * adjusted in one place when the backend contract changes.
  */
 import { apiFetch } from "@/lib/api";
+import { asList } from "./_shared";
 
 // --- Types ---
 
@@ -41,17 +42,6 @@ export type UpdateReportPayload = Partial<CreateReportPayload> & {
 
 // Some list endpoints may return either a bare array or an `{items: []}`
 // envelope; normalize both shapes.
-function asList<T>(data: unknown): T[] {
-  if (Array.isArray(data)) return data as T[];
-  if (
-    data &&
-    typeof data === "object" &&
-    Array.isArray((data as { items?: unknown }).items)
-  ) {
-    return (data as { items: T[] }).items;
-  }
-  return [];
-}
 
 // --- Query keys ---
 

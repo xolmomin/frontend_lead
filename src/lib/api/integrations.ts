@@ -5,6 +5,7 @@
  * be adjusted in one place when the backend contract changes.
  */
 import { API_URL, apiFetch } from "@/lib/api";
+import { asList } from "./_shared";
 
 // --- Types ---
 
@@ -69,13 +70,6 @@ export interface LeadPage {
 
 // Some list endpoints may return either a bare array or an `{items: []}`
 // envelope; normalize both shapes.
-function asList<T>(data: unknown): T[] {
-  if (Array.isArray(data)) return data as T[];
-  if (data && typeof data === "object" && Array.isArray((data as { items?: unknown }).items)) {
-    return (data as { items: T[] }).items;
-  }
-  return [];
-}
 
 // --- Query keys ---
 
@@ -90,6 +84,11 @@ export const integrationKeys = {
     integrationId: string,
     filters: { status?: string; page: number },
   ) => ["integration-leads", integrationId, filters] as const,
+  /** Every cached lead page of one integration. */
+  leadsFor: (integrationId: Integration["id"]) =>
+    ["integration-leads", String(integrationId)] as const,
+  /** Every cached lead page of every integration — use sparingly. */
+  allLeads: ["integration-leads"] as const,
 };
 
 // --- Folders ---
@@ -162,18 +161,6 @@ export async function listIntegrations(filters?: {
   return asList<Integration>(
     await apiFetch<unknown>(`/integrations${qs ? `?${qs}` : ""}`),
   );
-}
-
-/**
- * The stage-2 contract exposes no `GET /integrations/{id}`; resolve a single
- * integration from the list endpoint. Swap to a dedicated endpoint later if
- * the backend adds one.
- */
-export async function getIntegration(
-  id: string,
-): Promise<Integration | undefined> {
-  const items = await listIntegrations();
-  return items.find((item) => String(item.id) === String(id));
 }
 
 export interface FacebookSourceConfig {

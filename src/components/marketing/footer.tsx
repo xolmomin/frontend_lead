@@ -1,9 +1,15 @@
 "use client";
 
 import type { MouseEvent } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Mail, Send } from "lucide-react";
+
+// Evaluated once at module load rather than on every render: computing it
+// during render can disagree between the server HTML and the client hydration
+// when a build/session straddles New Year.
+const CURRENT_YEAR = new Date().getFullYear();
 
 const QUICK_LINKS = [
   { key: "features", href: "#features", isAnchor: true },
@@ -33,10 +39,11 @@ export function MarketingFooter() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="https://cdn.yuboraman.uz/static/logo.png"
                 alt="Yuboraman Logo"
+                width={32}
+                height={32}
                 className="h-8 w-auto"
               />
               <span className="text-lg font-bold text-white">Yuboraman</span>
@@ -122,7 +129,7 @@ export function MarketingFooter() {
         <div className="border-t border-gray-800 mt-10 pt-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
             <p className="text-sm text-gray-500">
-              {t("footer.copyright", { year: new Date().getFullYear() })}
+              {t("footer.copyright", { year: CURRENT_YEAR })}
             </p>
             <p className="text-xs text-gray-600">{t("footer.operator")}</p>
           </div>

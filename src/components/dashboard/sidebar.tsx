@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -159,13 +160,13 @@ export function SidebarContent({
           )}
         >
           <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
-            <img
+            <Image
               src="https://cdn.yuboraman.uz/static/logo.png"
               alt="Yuboraman Logo"
               className="w-full h-full object-contain"
-              decoding="async"
               width={40}
               height={40}
+              priority
             />
           </div>
           {!collapsed && (

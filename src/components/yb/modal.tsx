@@ -33,6 +33,14 @@ export interface YbModalProps {
   closeOnBackdrop?: boolean;
   onBack?: () => void;
   nested?: boolean;
+  /**
+   * Id of an element inside `children` that names the dialog. For modals that
+   * render their own heading instead of using the header bar (ConfirmModal),
+   * so they still get an accessible name.
+   */
+  labelledBy?: string;
+  /** Drop the default body padding when children bring their own. */
+  bare?: boolean;
 }
 
 export const YbModal = memo(function YbModal({
@@ -46,6 +54,8 @@ export const YbModal = memo(function YbModal({
   closeOnBackdrop = true,
   onBack,
   nested = false,
+  labelledBy,
+  bare = false,
 }: YbModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -118,7 +128,7 @@ export const YbModal = memo(function YbModal({
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-labelledby={title ? titleId : undefined}
+            aria-labelledby={labelledBy ?? (title ? titleId : undefined)}
             className={cn(
               "relative w-full bg-white dark:bg-gray-800 shadow-2xl rounded-2xl animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-200",
               SIZES[size],
@@ -159,7 +169,9 @@ export const YbModal = memo(function YbModal({
                 )}
               </div>
             )}
-            <div className="px-4 sm:px-6 py-4">{children}</div>
+            <div className={bare ? undefined : "px-4 sm:px-6 py-4"}>
+              {children}
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,12 @@ const SESSION_MARKER_COOKIE = "logged_in";
 
 export function proxy(request: NextRequest) {
   if (!request.cookies.has(SESSION_MARKER_COOKIE)) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    // Carry the destination through so a deep link survives the login round
+    // trip. LoginView only honours same-origin absolute paths.
+    const login = new URL("/login", request.url);
+    const { pathname, search } = request.nextUrl;
+    login.searchParams.set("next", `${pathname}${search}`);
+    return NextResponse.redirect(login);
   }
   return NextResponse.next();
 }

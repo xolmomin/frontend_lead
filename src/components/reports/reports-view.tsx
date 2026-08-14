@@ -96,7 +96,10 @@ export function ReportsView() {
 
   const reports = useMemo(() => reportsQuery.data ?? [], [reportsQuery.data]);
   const loading = reportsQuery.isLoading;
-  const adAccounts = adAccountsQuery.data ?? [];
+  const adAccounts = useMemo(
+    () => adAccountsQuery.data ?? [],
+    [adAccountsQuery.data],
+  );
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);

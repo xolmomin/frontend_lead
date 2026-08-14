@@ -12,26 +12,29 @@ import { Faq } from "@/components/marketing/faq";
 import { Cta } from "@/components/marketing/cta";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { StickyCta } from "@/components/marketing/sticky-cta";
+import { RouteMessages } from "@/i18n/route-messages";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen gradient-bg overflow-x-hidden">
-      <MarketingNavbar />
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <TrustStrip />
-        <HowLeadsArrive />
-        <Integrations />
-        <Services />
-        <Steps />
-        <WhyUs />
-        <Videos />
-        <Pricing />
-        <Faq />
-        <Cta />
-      </main>
-      <MarketingFooter />
-      <StickyCta />
-    </div>
+    <RouteMessages namespaces={["landing"]}>
+      <div className="min-h-screen gradient-bg overflow-x-hidden">
+        <MarketingNavbar />
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <TrustStrip />
+          <HowLeadsArrive />
+          <Integrations />
+          <Services />
+          <Steps />
+          <WhyUs />
+          <Videos />
+          <Pricing />
+          <Faq />
+          <Cta />
+        </main>
+        <MarketingFooter />
+        <StickyCta />
+      </div>
+    </RouteMessages>
   );
 }

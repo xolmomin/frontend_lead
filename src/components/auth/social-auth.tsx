@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import {
   getOAuthProviders,
   getOAuthUrl,
-  type OAuthProviders,
   type RedirectProvider,
 } from "@/lib/api";
 
@@ -67,18 +67,17 @@ function FacebookMark() {
 export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps) {
   const t = useTranslations("auth.login.socialLogin");
   const tErrors = useTranslations("auth.login.errors");
-  const [providers, setProviders] = useState<OAuthProviders | null>(null);
   const [busy, setBusy] = useState<RedirectProvider | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    getOAuthProviders()
-      .then((p) => active && setProviders(p))
-      .catch(() => active && setProviders(null));
-    return () => {
-      active = false;
-    };
-  }, []);
+  // Which providers the backend has credentials for. Not user-specific and it
+  // never changes within a session, so it is cached rather than refetched on
+  // every mount of the login/register forms.
+  const providersQuery = useQuery({
+    queryKey: ["oauth-providers"],
+    queryFn: ({ signal }) => getOAuthProviders(signal),
+    staleTime: Infinity,
+  });
+  const providers = providersQuery.data;
 
   async function startRedirect(provider: RedirectProvider) {
     onError(null);
@@ -131,6 +130,15 @@ export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps)
           </span>
         </div>
       </div>
+
+      {providersQuery.isError && (
+        <p
+          role="alert"
+          className="mb-3 text-center text-sm text-gray-500 dark:text-gray-400"
+        >
+          {tErrors("generic")}
+        </p>
+      )}
 
       <div className="space-y-3">
         {buttons.map((b) => (

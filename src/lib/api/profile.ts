@@ -6,6 +6,10 @@
  */
 import { apiFetch, type User } from "@/lib/api";
 
+export const userKeys = {
+  me: ["me"] as const,
+};
+
 // Fields the production settings page reads that the base `User` type does not
 // guarantee yet — all optional so missing backend data degrades gracefully.
 export interface ProfileUser extends User {

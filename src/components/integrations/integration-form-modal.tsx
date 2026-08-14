@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { AlertTriangle, Check, Copy } from "lucide-react";
@@ -96,6 +96,8 @@ export function IntegrationFormModal({
   const t = useTranslations("integrations");
   const tConfig = useTranslations("connections.config");
   const tConnGroups = useTranslations("connections.groups");
+  const nameId = useId();
+  const webhookUrlId = useId();
 
   const [sourceType, setSourceType] = useState<string>("");
   const [selectedPage, setSelectedPage] = useState("");
@@ -503,11 +505,15 @@ export function IntegrationFormModal({
               <div className="space-y-3 sm:space-y-4">
                 {webhookUrl && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label
+                      htmlFor={webhookUrlId}
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
                       {t("form.webhookUrl")}
                     </label>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <input
+                        id={webhookUrlId}
                         type="text"
                         value={webhookUrl}
                         readOnly
@@ -551,10 +557,14 @@ export function IntegrationFormModal({
               <SectionHeading step="2">{t("basicSettings")}</SectionHeading>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label
+                    htmlFor={nameId}
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                  >
                     {t("form.name")} <span className="text-red-500">*</span>
                   </label>
                   <input
+                    id={nameId}
                     type="text"
                     value={name}
                     onChange={(event) => {

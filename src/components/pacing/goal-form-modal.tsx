@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useId, useState, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Info } from "lucide-react";
@@ -47,6 +47,9 @@ export function GoalFormModal({
   onClose: () => void;
 }) {
   const t = useTranslations("leadPacing");
+  const scopeTypeId = useId();
+  const scopeValueId = useId();
+  const modeLabelId = useId();
   const isEdit = goal !== null;
 
   const createMutation = useCreatePacingGoal();
@@ -126,7 +129,7 @@ export function GoalFormModal({
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         {isEdit ? (
           <div>
-            <label className={LABEL_CLASS}>{t("form.scopeType")}</label>
+            <p className={LABEL_CLASS}>{t("form.scopeType")}</p>
             <div className={READONLY_FIELD_CLASS}>
               {t(goal.scope === "account" ? "scope.account" : "scope.form")}
               {goal.scope === "account"
@@ -137,8 +140,11 @@ export function GoalFormModal({
         ) : (
           <>
             <div>
-              <label className={LABEL_CLASS}>{t("form.scopeType")}</label>
+              <label htmlFor={scopeTypeId} className={LABEL_CLASS}>
+                {t("form.scopeType")}
+              </label>
               <select
+                id={scopeTypeId}
                 className={SELECT_CLASS}
                 value={scopeType}
                 onChange={(event) => {
@@ -160,8 +166,11 @@ export function GoalFormModal({
             {scopeType === "account" ? null : (
               <div className="space-y-3">
                 <div>
-                  <label className={LABEL_CLASS}>{t("form.scopeValue")}</label>
+                  <label htmlFor={scopeValueId} className={LABEL_CLASS}>
+                    {t("form.scopeValue")}
+                  </label>
                   <select
+                    id={scopeValueId}
                     className={SELECT_CLASS}
                     value={scopeId}
                     onChange={(event) => setScopeId(event.target.value)}
@@ -197,13 +206,19 @@ export function GoalFormModal({
 
         {isEdit ? (
           <div>
-            <label className={LABEL_CLASS}>{t("form.modeLabel")}</label>
+            <p className={LABEL_CLASS}>{t("form.modeLabel")}</p>
             <div className={READONLY_FIELD_CLASS}>{t("mode.monthly")}</div>
           </div>
         ) : (
           <div>
-            <label className={LABEL_CLASS}>{t("form.modeLabel")}</label>
-            <div className="grid grid-cols-2 gap-2">
+            <p id={modeLabelId} className={LABEL_CLASS}>
+              {t("form.modeLabel")}
+            </p>
+            <div
+              role="group"
+              aria-labelledby={modeLabelId}
+              className="grid grid-cols-2 gap-2"
+            >
               {(["monthly", "custom"] as const).map((value) => (
                 <button
                   key={value}
