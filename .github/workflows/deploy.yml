@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DEPLOY_DIR: /var/www/lead/frontend
+  DEPLOY_DIR: /var/www/lidlar.uz/frontend
 
 concurrency:
   group: deploy-frontend-${{ github.ref }}
