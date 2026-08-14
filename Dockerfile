@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7
 # --- deps ---
 FROM node:24-alpine AS deps
 WORKDIR /app
@@ -12,7 +13,12 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
-RUN npm run build
+# Keep NEXT_SERVER_ACTIONS_ENCRYPTION_KEY stable across builds. Without it Next generates a
+# random key per build and every already-loaded client's Server Action IDs stop resolving.
+# The secret is optional: an empty value falls back to the per-build random key.
+RUN --mount=type=secret,id=next_server_actions_key \
+    NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_key 2>/dev/null || true)" \
+    npm run build
 
 # --- runner ---
 FROM node:24-alpine AS runner

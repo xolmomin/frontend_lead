@@ -1,30 +1,38 @@
-name: Deploy frontend
+name: Build & Deploy Frontend
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-concurrency:
-  group: deploy-vps
-  cancel-in-progress: false
-
 env:
-  IMAGE_NAME: ghcr.io/xolmomin/frontend_lead
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
   DEPLOY_DIR: /var/www/lead/frontend
+
+concurrency:
+  group: deploy-frontend-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   preflight:
+    name: Preflight
     runs-on: ubuntu-latest
+    if: github.actor == 'xolmomin' || github.actor == 'Kholmumin'
     steps:
-      # An unset GHCR_PULL_TOKEN used to surface only in the deploy step, after the full
+      # An unset GHCR_PAT/GHCR_USER used to surface only in the deploy step, after the full
       # build, as docker's "password is empty" — which names neither the secret nor the repo.
       - name: Check required secrets
         env:
-          GHCR_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+          GHCR_USER: ${{ secrets.GHCR_USER }}
         run: |
-          [ -n "$GHCR_TOKEN" ] || {
-            echo "::error::GHCR_PULL_TOKEN secret is not set — see backend_lead/DEPLOY.md section 1"
+          [ -n "$GHCR_PAT" ] || {
+            echo "::error::GHCR_PAT secret is not set — see backend_lead/DEPLOY.md section 1"
+            exit 1
+          }
+          [ -n "$GHCR_USER" ] || {
+            echo "::error::GHCR_USER secret is not set — GHCR username used for the VPS pull login"
             exit 1
           }
 
@@ -56,43 +64,74 @@ jobs:
             }
             echo "Preflight OK: $DEPLOY_DIR ready"
 
-  build-push:
+  build-and-push:
+    name: Build & Push Image
     needs: preflight
     runs-on: ubuntu-latest
+    if: github.actor == 'xolmomin' || github.actor == 'Kholmumin'
     permissions:
       contents: read
       packages: write
+    outputs:
+      image: ${{ steps.meta.outputs.tags }}
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - uses: actions/checkout@v4
 
-      - uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - uses: docker/login-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase image name
+        id: img
+        run: echo "name=${IMAGE_NAME,,}" >> $GITHUB_OUTPUT
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ steps.img.outputs.name }}
+          tags: |
+            type=sha,format=long
+            type=ref,event=branch
+            type=raw,value=latest,enable={{is_default_branch}}
+
       # NEXT_PUBLIC_API_URL is inlined into the client bundle at build time (src/lib/api.ts);
       # a runtime env var would be ignored, so it must be a build-arg.
-      - uses: docker/build-push-action@v6
+      - name: Build & push
+        id: build
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          platforms: linux/amd64
-          build-args: |
-            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
-          tags: |
-            ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL || 'https://lead-back.pravaol.uz/api/v1' }}
+          secrets: |
+            next_server_actions_key=${{ secrets.SERVER_ACTIONS_KEY }}
 
   deploy:
-    needs: build-push
+    name: Deploy to VPS
+    needs: build-and-push
     runs-on: ubuntu-latest
+    if: github.actor == 'xolmomin' || github.actor == 'Kholmumin'
+    environment: production
     steps:
       - uses: actions/checkout@v4
+
+      - name: Lowercase image name
+        id: img
+        run: echo "name=${IMAGE_NAME,,}" >> $GITHUB_OUTPUT
 
       - name: Copy compose file to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -104,36 +143,36 @@ jobs:
           source: docker-compose.prod.yml
           target: ${{ env.DEPLOY_DIR }}
 
-      - name: Deploy on VPS
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         env:
           # Forwarded through envs: rather than interpolated into the script — the action
           # echoes the rendered script to the log, where an empty secret is all that shows.
-          GHCR_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+          GHCR_USER: ${{ secrets.GHCR_USER }}
+          IMAGE_REPO: ${{ env.REGISTRY }}/${{ steps.img.outputs.name }}
+          IMAGE_TAG: sha-${{ github.sha }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           port: ${{ secrets.VPS_PORT || 22 }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          envs: DEPLOY_DIR,IMAGE_NAME,GHCR_TOKEN
+          envs: DEPLOY_DIR,IMAGE_REPO,IMAGE_TAG,GHCR_PAT,GHCR_USER
           script: |
             set -eu
             cd "$DEPLOY_DIR"
 
             # Pin the running image to this commit. Compose reads IMAGE from .env, so a
             # rollback is one line in .env instead of an edit the next deploy overwrites.
-            IMAGE_REF="${IMAGE_NAME}:${{ github.sha }}"
+            IMAGE_REF="${IMAGE_REPO}:${IMAGE_TAG}"
             if grep -q '^IMAGE=' .env; then
               sed -i "s|^IMAGE=.*|IMAGE=${IMAGE_REF}|" .env
             else
               echo "IMAGE=${IMAGE_REF}" >> .env
             fi
 
-            [ -n "${GHCR_TOKEN:-}" ] || {
-              echo "::error::GHCR_PULL_TOKEN secret is not set — see backend_lead/DEPLOY.md section 1"
-              exit 1
-            }
-            printf '%s' "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            printf '%s' "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+
             # Same lock file as the backend deploy: both stacks share one VPS and one docker daemon.
             flock .deploy.lock -c '
               set -e
@@ -141,16 +180,23 @@ jobs:
               docker compose -f docker-compose.prod.yml up -d --remove-orphans \
                 --wait --wait-timeout 120
             '
+
+            # Keep the last 3 images for rollback, drop older ones. The in-use image is the
+            # newest, so it is never in this list; `|| true` covers a tag still held elsewhere.
+            docker images "$IMAGE_REPO" --format '{{.ID}}' | tail -n +4 | xargs -r docker rmi -f || true
             docker image prune -f
 
       - name: Verify deployment
         uses: appleboy/ssh-action@v1
+        env:
+          IMAGE_REPO: ${{ env.REGISTRY }}/${{ steps.img.outputs.name }}
+          IMAGE_TAG: sha-${{ github.sha }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           port: ${{ secrets.VPS_PORT || 22 }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          envs: DEPLOY_DIR,IMAGE_NAME
+          envs: DEPLOY_DIR,IMAGE_REPO,IMAGE_TAG
           script: |
             set -eu
             cd "$DEPLOY_DIR"
@@ -163,7 +209,7 @@ jobs:
               exit 1
             }
 
-            expected="${IMAGE_NAME}:${{ github.sha }}"
+            expected="${IMAGE_REPO}:${IMAGE_TAG}"
             running=$(docker inspect lead-frontend -f '{{.Config.Image}}' 2>/dev/null || echo missing)
             [ "$running" = "$expected" ] || fail "lead-frontend runs '$running', expected '$expected' (stale container?)"
 
