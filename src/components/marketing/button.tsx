@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { cn } from "@/lib/utils";
 
-/** Production (yuboraman.uz) Button, ported 1:1 from the live bundle. */
+/** Production (lidlar.uz) Button, ported 1:1 from the live bundle. */
 
 type Variant = "primary" | "secondary" | "outline" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";

@@ -167,7 +167,7 @@ export function HowLeadsArrive() {
             </div>
             <div className="mt-4 text-center">
               <div className="font-bold text-gray-900 dark:text-white">
-                Yuboraman
+                Lidlar
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
                 {t("leadFlow.hub")}

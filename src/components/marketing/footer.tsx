@@ -40,13 +40,13 @@ export function MarketingFooter() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Image
-                src="https://cdn.yuboraman.uz/static/logo.png"
-                alt="Yuboraman Logo"
+                src="https://cdn.lidlar.uz/static/logo.png"
+                alt="Lidlar Logo"
                 width={32}
                 height={32}
                 className="h-8 w-auto"
               />
-              <span className="text-lg font-bold text-white">Yuboraman</span>
+              <span className="text-lg font-bold text-white">Lidlar</span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
               {t("footer.tagline")}
@@ -116,11 +116,11 @@ export function MarketingFooter() {
               </li>
               <li>
                 <a
-                  href="mailto:yuboraman.uz@gmail.com"
+                  href="mailto:lidlar.uz@gmail.com"
                   className="text-sm text-gray-400 hover:text-white transition-colors min-h-[44px] inline-flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4" aria-hidden="true" />
-                  yuboraman.uz@gmail.com
+                  lidlar.uz@gmail.com
                 </a>
               </li>
             </ul>

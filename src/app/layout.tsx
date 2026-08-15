@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yuboraman.uz";
-const OG_IMAGE = "https://cdn.yuboraman.uz/static/logo2.png";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lidlar.uz";
+const OG_IMAGE = "https://cdn.lidlar.uz/static/logo2.png";
 
-const TITLE = "Yuboraman — Facebook lidlarni CRM ga avtomatik yuboring";
+const TITLE = "Lidlar — Facebook lidlarni CRM ga avtomatik yuboring";
 const DESCRIPTION =
   "Facebook Lead Ads lidlarini Telegram, Google Sheets, Bitrix24 va amoCRM ga avtomatik yuborish xizmati.";
 
@@ -26,10 +26,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: TITLE,
-    template: "%s | Yuboraman",
+    template: "%s | Lidlar",
   },
   description: DESCRIPTION,
-  applicationName: "Yuboraman",
+  applicationName: "Lidlar",
   alternates: {
     canonical: "/",
     // Both locales are served from the same URL (locale lives in a cookie),
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Yuboraman",
+    siteName: "Lidlar",
     url: SITE_URL,
     title: TITLE,
     description: DESCRIPTION,
     locale: "uz_UZ",
     alternateLocale: ["ru_RU"],
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Yuboraman" }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Lidlar" }],
   },
   twitter: {
     card: "summary_large_image",

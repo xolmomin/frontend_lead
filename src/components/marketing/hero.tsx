@@ -117,7 +117,7 @@ export function Hero() {
                     </div>
                     <div>
                       <div className="font-semibold text-gray-900 dark:text-white">
-                        Yuboraman
+                        Lidlar
                       </div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">
                         {t("hero.dashboardCard.subtitle")}
@@ -159,7 +159,7 @@ export function Hero() {
                     />
                     <div>
                       <div className="font-semibold text-gray-900 dark:text-white">
-                        Telegram · Yuboraman Bot
+                        Telegram · Lidlar Bot
                       </div>
                       <div className="text-xs text-gray-500 dark:text-gray-400">
                         {t("hero.reportCard.subtitle")}

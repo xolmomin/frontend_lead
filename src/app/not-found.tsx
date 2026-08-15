@@ -76,7 +76,7 @@ export default async function NotFound() {
             </Link>
             <span className="text-gray-300 dark:text-gray-700">•</span>
             <a
-              href="https://t.me/yuboraman"
+              href="https://t.me/lidlar"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary-600 dark:text-primary-400 hover:underline"

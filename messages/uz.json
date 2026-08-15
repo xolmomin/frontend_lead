@@ -1,7 +1,7 @@
 {
   "common": {
     "app": {
-      "name": "Yuboraman",
+      "name": "Lidlar",
       "description": "Boshqaruv paneli"
     },
     "actions": {
@@ -217,7 +217,7 @@
       "loggingIn": "Tizimga kirilmoqda...",
       "noAccount": "Hisobingiz yo'qmi?",
       "signUp": "Ro'yxatdan o'tish",
-      "footer": "© 2025 Yuboraman. Barcha huquqlar himoyalangan.",
+      "footer": "© 2025 Lidlar. Barcha huquqlar himoyalangan.",
       "validation": {
         "phoneRequired": "Telefon raqam kiritilishi shart",
         "phoneInvalid": "Telefon raqam noto'g'ri formatda",
@@ -261,7 +261,7 @@
       "termsEnd": "ga rozisiz",
       "haveAccount": "Hisobingiz bormi?",
       "signIn": "Kirish",
-      "footer": "© 2025 Yuboraman. Barcha huquqlar himoyalangan.",
+      "footer": "© 2025 Lidlar. Barcha huquqlar himoyalangan.",
       "validation": {
         "nameRequired": "To'liq ism kiritilishi shart",
         "nameMin": "Ism kamida 2 ta belgidan iborat bo'lishi kerak",
@@ -462,7 +462,7 @@
         "desc": "Mijoz reklamadagi formani to'ldiradi — lid shu zahoti webhook orqali qabul qilinadi."
       },
       "router": {
-        "title": "Yuboraman",
+        "title": "Lidlar",
         "desc": "Lid tekshiriladi, maydonlar moslashtiriladi va kerakli integratsiyaga yo'naltiriladi. Xato bo'lsa — avtomatik qayta urinish.",
         "chipRetry": "Avto-retry",
         "chipQueue": "Navbat",
@@ -491,7 +491,7 @@
     "services": {
       "eyebrow": "Xizmatlar",
       "title": "Bitta platforma — butun lid oqimingiz",
-      "subtitle": "Lid qabul qilishdan hisobotgacha — hammasi Yuboraman ichida.",
+      "subtitle": "Lid qabul qilishdan hisobotgacha — hammasi Lidlar ichida.",
       "leads": {
         "title": "Facebook Leads",
         "desc": "Lead Ads formalaridan lidlarni real vaqtda qabul qilish va kerakli joyga yetkazish."
@@ -581,8 +581,8 @@
       "title": "Ko'p so'raladigan savollar",
       "subtitle": "Javob topolmadingizmi? Telegramda yozing — tez orada javob beramiz.",
       "q1": {
-        "q": "Yuboraman qanday ishlaydi?",
-        "a": "Facebook reklama akkauntingizni OAuth orqali ulaysiz, Yuboraman Lead Ads formalaringizga webhook o'rnatadi. Mijoz formani to'ldirishi bilan lid bizga keladi va soniyalar ichida siz tanlagan CRM yoki Telegramga yuboriladi."
+        "q": "Lidlar qanday ishlaydi?",
+        "a": "Facebook reklama akkauntingizni OAuth orqali ulaysiz, Lidlar Lead Ads formalaringizga webhook o'rnatadi. Mijoz formani to'ldirishi bilan lid bizga keladi va soniyalar ichida siz tanlagan CRM yoki Telegramga yuboriladi."
       },
       "q2": {
         "q": "Xizmat qancha turadi?",
@@ -624,8 +624,8 @@
       "colContact": "Aloqa",
       "telegram": "Telegram kanal",
       "supportChat": "Qo'llab-quvvatlash chati",
-      "email": "info@yuboraman.uz",
-      "rights": "© 2026 Yuboraman. Barcha huquqlar himoyalangan.",
+      "email": "info@lidlar.uz",
+      "rights": "© 2026 Lidlar. Barcha huquqlar himoyalangan.",
       "madeIn": "O'zbekistonda ishlab chiqilgan"
     }
   },
@@ -1261,16 +1261,16 @@
     },
     "telegram_picker": {
       "label": "Yetkazuvchi bot",
-      "default_bot": "Asosiy bot (Yuboraman.uz) — standart",
+      "default_bot": "Asosiy bot (Lidlar.uz) — standart",
       "loading": "Yuklanmoqda...",
       "add_new": "Yangi bot ulash",
-      "default_hint": "Bot tanlanmasa, lidlar Yuboraman.uz asosiy boti orqali yetkaziladi.",
+      "default_hint": "Bot tanlanmasa, lidlar Lidlar.uz asosiy boti orqali yetkaziladi.",
       "no_username": "Username yo'q",
       "status_ok": "Bot OK:",
       "status_failed": "Xato:",
       "status_untested": "Tekshirilmagan:",
       "locked_title": "O'z Telegram botingiz orqali yetkazish",
-      "locked_hint": "Bu integratsiya lidlari Yuboraman.uz asosiy boti orqali yetkaziladi. O'z botingizni ulash uchun pullik tarifga o'ting."
+      "locked_hint": "Bu integratsiya lidlari Lidlar.uz asosiy boti orqali yetkaziladi. O'z botingizni ulash uchun pullik tarifga o'ting."
     },
     "form_missing": {
       "heading_one": "Saqlash uchun yana 1 ta narsa kerak:",
@@ -1430,7 +1430,7 @@
       },
       "sendTest": "🧪 Test yuborish",
       "testing": "Yuborilmoqda...",
-      "nativeFbWarning": "⚠️ Agar amoCRM'da \"Facebook Lead Forms\" integratsiyasi yoqilgan bo'lsa, Yuboraman orqali yuborilgan lidlar takrorlanishi mumkin. O'sha sahifa uchun native integratsiyani o'chiring.",
+      "nativeFbWarning": "⚠️ Agar amoCRM'da \"Facebook Lead Forms\" integratsiyasi yoqilgan bo'lsa, Lidlar orqali yuborilgan lidlar takrorlanishi mumkin. O'sha sahifa uchun native integratsiyani o'chiring.",
       "toast": {
         "connectionOk": "Connection muvaffaqiyatli!",
         "connectionFailed": "Bog'lanish muvaffaqiyatsiz — token yoki URL noto'g'ri bo'lishi mumkin",
@@ -1774,8 +1774,8 @@
     },
     "test_confirm": {
       "title": "Sinov xabar yuborilsin?",
-      "message_bot": "Bot egasiga (siz) Yuboraman.uz sinov xabari yuboriladi. Davom etamizmi?",
-      "message_chat": "\"{name}\" chatga Yuboraman.uz sinov xabari yuboriladi. Davom etamizmi?",
+      "message_bot": "Bot egasiga (siz) Lidlar.uz sinov xabari yuboriladi. Davom etamizmi?",
+      "message_chat": "\"{name}\" chatga Lidlar.uz sinov xabari yuboriladi. Davom etamizmi?",
       "confirm": "Ha, yuboring",
       "cancel": "Bekor qilish"
     },
@@ -1856,7 +1856,7 @@
       "group_card_title": "Guruh ulash",
       "channel_card_title": "Kanal ulash",
       "bot_label": "Qaysi bot orqali?",
-      "bot_platform": "@YuboramanBot (default)",
+      "bot_platform": "@LidlarBot (default)",
       "tab_auto": "⚡ Avtomatik",
       "tab_manual": "⌨ Qo'lda",
       "group_button": "Telegram'da guruh tanlash",
@@ -2271,7 +2271,7 @@
     "rules": {
       "title": "Domen sotib olish qoidalari:",
       "rule1": "Domenni sotib olish va yangilash uchun mablag'lar hisobdan yechib olinadi.",
-      "rule2": "Xariddan so'ng, domen avtomatik ravishda Yuboraman.uz serverlariga ulanadi va uni butun domen ijarasi muddati davomida o'zgartirish mumkin bo'lmaydi.",
+      "rule2": "Xariddan so'ng, domen avtomatik ravishda Lidlar.uz serverlariga ulanadi va uni butun domen ijarasi muddati davomida o'zgartirish mumkin bo'lmaydi.",
       "rule3": "Ijara davomiyligi 1 yilni tashkil qiladi. Ijara muddati tugaganidan keyin domen avtomatik ravishda o'chiriladi yoki hisob egasining xohishiga ko'ra yangilanadi."
     },
     "searchingFrom": "Namecheap'dan qidirilmoqda...",
@@ -3338,7 +3338,7 @@
       "title": "Integratsiyalar"
     },
     "why": {
-      "title": "Nega aynan Yuboraman?",
+      "title": "Nega aynan Lidlar?",
       "subtitle": "Boshqa lead-automation platformalarida topilmaydigan xususiyatlar — aynan Facebook reklama va O'zbek bozori uchun",
       "items": {
         "uzbek": {
@@ -3535,7 +3535,7 @@
       "terms": "Xizmat shartlari",
       "dataDeletion": "Ma'lumotlarni o'chirish",
       "adminContact": "Admin bilan bog'lanish",
-      "copyright": "© 2024-{year} Yuboraman.uz",
+      "copyright": "© 2024-{year} Lidlar.uz",
       "operator": "Ushbu veb-sayt BULTAKOV IBROHIM tomonidan boshqariladi"
     }
   },

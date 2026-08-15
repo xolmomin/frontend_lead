@@ -93,8 +93,8 @@ export function MarketingNavbar() {
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center flex-shrink-0">
               <Image
-                src="https://cdn.yuboraman.uz/static/logo2.png"
-                alt="Yuboraman.uz"
+                src="https://cdn.lidlar.uz/static/logo2.png"
+                alt="Lidlar.uz"
                 width={128}
                 height={32}
                 // Fixed header logo — above the fold on every landing view.

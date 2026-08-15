@@ -7,7 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-/** "Nega aynan Yuboraman?" — production `why` section. */
+/** "Nega aynan Lidlar?" — production `why` section. */
 
 const ITEMS: { icon: LucideIcon; key: string }[] = [
   { icon: Languages, key: "uzbek" },

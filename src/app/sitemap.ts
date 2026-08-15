@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yuboraman.uz";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lidlar.uz";
 
 /**
  * Only the publicly indexable routes. The dashboard is behind auth and the

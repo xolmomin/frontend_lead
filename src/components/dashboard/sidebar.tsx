@@ -161,8 +161,8 @@ export function SidebarContent({
         >
           <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
             <Image
-              src="https://cdn.yuboraman.uz/static/logo.png"
-              alt="Yuboraman Logo"
+              src="https://cdn.lidlar.uz/static/logo.png"
+              alt="Lidlar Logo"
               className="w-full h-full object-contain"
               width={40}
               height={40}
@@ -171,7 +171,7 @@ export function SidebarContent({
           </div>
           {!collapsed && (
             <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              Yuboraman
+              Lidlar
             </span>
           )}
         </div>

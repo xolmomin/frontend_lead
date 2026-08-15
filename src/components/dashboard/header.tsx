@@ -178,7 +178,7 @@ export function DashboardHeader() {
         <div className="hidden md:block flex-1" />
         <div className="flex items-center gap-2">
           <a
-            href="tg://resolve?domain=YuboramanUz"
+            href="tg://resolve?domain=LidlarUz"
             target="_blank"
             rel="noopener noreferrer"
             className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"

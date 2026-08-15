@@ -268,7 +268,7 @@ function PricingSection() {
             size="md"
             onClick={() =>
               window.open(
-                "https://t.me/YuboramanUz",
+                "https://t.me/LidlarUz",
                 "_blank",
                 "noopener,noreferrer",
               )
@@ -688,12 +688,12 @@ function BillingSectionView() {
             <p className="mt-3 text-sm text-yellow-700 dark:text-yellow-300">
               {t("warnings.issuesContact")}{" "}
               <a
-                href="https://t.me/YuboramanMuhokama"
+                href="https://t.me/LidlarMuhokama"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-medium underline inline-flex items-center gap-1"
               >
-                @YuboramanMuhokama <ExternalLink className="w-3 h-3" />
+                @LidlarMuhokama <ExternalLink className="w-3 h-3" />
               </a>
             </p>
           </div>

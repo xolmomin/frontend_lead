@@ -48,7 +48,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Production (yuboraman.uz) brand scales — used as `primary-600`, `secondary-400/20`, `accent-500`
+/* Production (lidlar.uz) brand scales — used as `primary-600`, `secondary-400/20`, `accent-500`
    directly in markup ported from the live site. Coexists with the shadcn semantic tokens above. */
 @theme {
   --color-primary-50: #f0fdfa;
@@ -196,7 +196,7 @@
   }
 }
 
-/* --- Production (yuboraman.uz) surfaces: gradient backdrop + glass family --- */
+/* --- Production (lidlar.uz) surfaces: gradient backdrop + glass family --- */
 
 /* Full-viewport backdrop: primary-50 -> white -> secondary-50 (dark = slate-900/800/900). */
 .gradient-bg {
@@ -325,7 +325,7 @@
   );
 }
 
-/* --- Production landing utilities (ported 1:1 from yuboraman.uz) --- */
+/* --- Production landing utilities (ported 1:1 from lidlar.uz) --- */
 
 /* Soft radial mesh behind the hero. */
 .gradient-mesh {

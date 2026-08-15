@@ -8,7 +8,7 @@ import { YbSwitch } from "@/components/yb/switch";
 
 /**
  * Production "Finance settings" modal (rate override + alert thresholds +
- * Telegram toggles), ported 1:1 from yuboraman.uz.
+ * Telegram toggles), ported 1:1 from lidlar.uz.
  *
  * The local API has no /finance/settings endpoint yet, so the form is a
  * UI shell: fields are editable locally but nothing is loaded or persisted and

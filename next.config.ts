@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       // Brand assets (logos).
-      { protocol: "https", hostname: "cdn.yuboraman.uz", pathname: "/static/**" },
+      { protocol: "https", hostname: "cdn.lidlar.uz", pathname: "/static/**" },
       // YouTube thumbnails on the landing page.
       { protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" },
     ],

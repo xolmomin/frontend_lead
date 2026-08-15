@@ -127,8 +127,8 @@ export function RegisterView() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 mb-4 animate-in zoom-in duration-300 delay-200 fill-mode-both">
             <Image
-              src="https://cdn.yuboraman.uz/static/logo.png"
-              alt="Yuboraman Logo"
+              src="https://cdn.lidlar.uz/static/logo.png"
+              alt="Lidlar Logo"
               width={80}
               height={80}
               priority
