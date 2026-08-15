@@ -64,9 +64,10 @@ unrecognized shapes, but per-response `z.infer` schemas remain future work.
 
 ## Other open items
 
-- `typedRoutes` is off in `next.config.ts`: the footer links to
-  `/privacy-policy`, `/terms-of-service` and `/data-deletion`, none of which
-  exist as routes. Enabling it fails the build until those pages land.
+- `typedRoutes` is off in `next.config.ts`. The three footer legal links
+  (`/privacy-policy`, `/terms-of-service`, `/data-deletion`) now exist under
+  `src/app/(marketing)/`, so the original blocker is gone — enabling it just
+  needs a build to confirm no other link is untyped.
 - The settings page calls `PATCH /me`, `POST /me/password`, `POST /me/image` and
   `POST /me/telegram-connect-token`. The backend only implements `GET /me` —
   those four actions 404 today.

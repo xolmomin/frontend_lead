@@ -3629,5 +3629,136 @@
       "confirm": "Bu maqsadni o'chirasizmi?",
       "done": "Maqsad o'chirildi"
     }
+  },
+  "legal": {
+    "back": "Lidlar.uz",
+    "emailLabel": "Email:",
+    "websiteLabel": "Veb-sayt:",
+    "email": "lidlar.uz@gmail.com",
+    "website": "https://lidlar.uz",
+    "dataDeletion": {
+      "title": "Ma'lumotlarni o'chirish",
+      "metaDescription": "Lidlar.uz ilovasi orqali bergan ma'lumotlaringizni qanday o'chirish mumkinligi haqida qo'llanma.",
+      "sections": [
+        {
+          "body": "Agar siz bizning ilovamiz orqali bergan barcha ma'lumotlaringizni o'chirishni istasangiz, quyidagi amallarni bajaring:",
+          "ordered": true,
+          "items": [
+            "Lidlar.uz saytiga kiring va Profil bo'limini tanlang.",
+            "O'chirish tugmasini bosing va rozi bo'ling.",
+            "Bu bilan sizning barcha ma'lumotlaringiz ilovamizdan o'chiriladi."
+          ]
+        },
+        {
+          "body": "Agar qo'shimcha savollaringiz bo'lsa, biz bilan bog'laning:",
+          "contact": "inline"
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Maxfiylik Siyosati",
+      "metaDescription": "Lidlar.uz shaxsiy ma'lumotlarni qanday yig'ishi, ulardan foydalanishi va ularni himoya qilishi haqida.",
+      "updated": "Oxirgi yangilangan sana: 2024-yil 10-dekabr",
+      "effective": "Amal qilish sanasi: 2024-yil 10-dekabr",
+      "sections": [
+        {
+          "title": "1. Kirish",
+          "body": "Lidlar.uz'ga xush kelibsiz. Ushbu Maxfiylik Siyosati sizning ma'lumotlaringizni qanday yig'ishimiz, ulardan foydalanishimiz va ularni qanday boshqarishimiz haqida ma'lumot beradi."
+        },
+        {
+          "title": "2. Qanday ma'lumotlarni yig'amiz",
+          "body": "Biz Facebook Lead Form orqali quyidagi ma'lumotlarni yig'amiz:",
+          "items": [
+            "Ism",
+            "Email manzil",
+            "Telefon raqami",
+            "Boshqa qo'shimcha ma'lumotlar"
+          ]
+        },
+        {
+          "title": "3. Ma'lumotlaringizdan qanday foydalanamiz",
+          "body": "Biz yig'ilgan ma'lumotlardan quyidagi maqsadlarda foydalanamiz:",
+          "items": [
+            "So'rov va talablaringizni qayta ishlash",
+            "Xizmatlarimizni taqdim etish",
+            "Xizmatlarimiz haqida siz bilan bog'lanish",
+            "Xizmatlarimizni yaxshilash"
+          ]
+        },
+        {
+          "title": "4. Ma'lumotlarni saqlash va xavfsizlik",
+          "body": "Shaxsiy ma'lumotlaringizni himoya qilish uchun tegishli xavfsizlik choralarini ko'ramiz. Ma'lumotlaringiz faqat vakolatli xodimlar tomonidan ko'riladi va xavfsiz joyda saqlanadi."
+        },
+        {
+          "title": "5. Ma'lumotlarni ulashish",
+          "body": "Shaxsiy ma'lumotlaringizni sotmaymiz. Ma'lumotlaringizni quyidagilar bilan ulashishimiz mumkin:",
+          "items": [
+            "Xizmatlarimizni amalga oshirishga yordam beruvchi xizmat ko'rsatuvchilar",
+            "Qonuniy talablar bo'yicha huquqni muhofaza qilish organlari"
+          ]
+        },
+        {
+          "title": "6. Sizning huquqlaringiz",
+          "body": "Siz quyidagi huquqlarga egasiz:",
+          "items": [
+            "Shaxsiy ma'lumotlaringizni ko'rish",
+            "Noto'g'ri ma'lumotlarni tuzatish",
+            "Ma'lumotlaringizni o'chirishni so'rash",
+            "Reklama xabarlaridan voz kechish"
+          ]
+        },
+        {
+          "title": "7. Siyosatga o'zgartirishlar",
+          "body": "Biz ushbu Maxfiylik Siyosatini vaqti-vaqti bilan yangilab turamiz. Yangi siyosat ushbu sahifada e'lon qilinadi."
+        },
+        {
+          "title": "8. Biz bilan bog'laning",
+          "body": "Agar ushbu Maxfiylik Siyosati bo'yicha savollaringiz bo'lsa, biz bilan quyidagi manzillar orqali bog'laning:",
+          "contact": "block"
+        }
+      ]
+    },
+    "terms": {
+      "title": "Xizmat ko'rsatish shartlari",
+      "metaDescription": "Lidlar.uz xizmatlaridan foydalanish qoidalari va shartlari.",
+      "updated": "Oxirgi yangilangan sana: 2024-yil 10-dekabr",
+      "effective": "Amal qilish sanasi: 2024-yil 10-dekabr",
+      "sections": [
+        {
+          "title": "1. Kirish",
+          "body": "Lidlar.uz'ga xush kelibsiz. Ushbu Xizmat ko'rsatish shartlari bizning xizmatlarimizdan foydalanishda amal qilinishi kerak bo'lgan qoidalarni belgilaydi. Xizmatlarimizdan foydalanish orqali siz ushbu shartlarga rozilik bildirasiz."
+        },
+        {
+          "title": "2. Xizmatdan foydalanish",
+          "body": "Bizning xizmatlarimizdan foydalanish uchun siz:",
+          "items": [
+            "Qonunga zid harakatlar qilmaslik;",
+            "Xizmatlarni noqonuniy maqsadlarda ishlatmaslik;",
+            "Boshqa foydalanuvchilarning huquqlarini buzmaslik;"
+          ]
+        },
+        {
+          "title": "3. Foydalanuvchi hisoblari",
+          "body": "Ba'zi xizmatlardan foydalanish uchun hisob ochishingiz kerak bo'lishi mumkin. Hisob ma'lumotlaringizni maxfiy saqlash va noto'g'ri ishlatilishining oldini olish mas'uliyati sizning zimangizda."
+        },
+        {
+          "title": "4. Xizmatning mavjudligi",
+          "body": "Biz xizmatlarimizni istalgan vaqtda o'zgartirish, to'xtatish yoki cheklash huquqini o'zimizda saqlab qolamiz. Bunday holatlarda sizni oldindan xabardor qilishga harakat qilamiz."
+        },
+        {
+          "title": "5. Javobgarlikni cheklash",
+          "body": "Lidlar.uz xizmatlardan foydalanish natijasida kelib chiqadigan to'g'ridan-to'g'ri yoki bilvosita zararlarga javobgar emas."
+        },
+        {
+          "title": "6. Shartlarni o'zgartirish",
+          "body": "Biz ushbu Xizmat ko'rsatish shartlarini vaqti-vaqti bilan yangilash huquqini o'zimizda saqlaymiz. Yangi shartlar ushbu sahifada e'lon qilinadi. Shartlar yangilangandan keyin xizmatlardan foydalanishda davom etish orqali siz yangi shartlarga rozilik bildirgan hisoblanasiz."
+        },
+        {
+          "title": "7. Bog'lanish",
+          "body": "Agar ushbu shartlar bo'yicha savollaringiz bo'lsa, biz bilan quyidagi manzillar orqali bog'lanishingiz mumkin:",
+          "contact": "block"
+        }
+      ]
+    }
   }
 }

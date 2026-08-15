@@ -23,5 +23,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.5,
     },
+    {
+      url: `${SITE_URL}/privacy-policy`,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
+      url: `${SITE_URL}/terms-of-service`,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
+    {
+      url: `${SITE_URL}/data-deletion`,
+      changeFrequency: "yearly",
+      priority: 0.2,
+    },
   ];
 }
