@@ -130,19 +130,19 @@ export const YbModal = memo(function YbModal({
             aria-modal="true"
             aria-labelledby={labelledBy ?? (title ? titleId : undefined)}
             className={cn(
-              "relative w-full bg-white dark:bg-gray-800 shadow-2xl rounded-2xl animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-200",
+              "relative w-full bg-card shadow-2xl rounded-2xl animate-in fade-in zoom-in-95 slide-in-from-bottom-4 duration-200",
               SIZES[size],
             )}
             onClick={(e) => e.stopPropagation()}
           >
             {(title || showCloseButton || onBack) && (
-              <div className="flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <div className="flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 border-b border-border bg-card">
                 {onBack && (
                   <button
                     type="button"
                     onClick={onBack}
                     aria-label={t("actions.back")}
-                    className="flex-shrink-0 -ml-1 p-2.5 sm:p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
+                    className="flex-shrink-0 -ml-1 p-2.5 sm:p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors touch-manipulation"
                   >
                     <ArrowLeft className="w-5 h-5" />
                   </button>
@@ -151,7 +151,7 @@ export const YbModal = memo(function YbModal({
                   <div
                     id={titleId}
                     className={cn(
-                      "min-w-0 flex-1 text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100",
+                      "min-w-0 flex-1 text-lg sm:t-h3 text-foreground",
                       typeof title === "string" && "truncate",
                     )}
                   >
@@ -162,7 +162,7 @@ export const YbModal = memo(function YbModal({
                   <button
                     onClick={onClose}
                     aria-label={t("actions.close")}
-                    className="flex-shrink-0 ml-auto p-2.5 sm:p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors touch-manipulation"
+                    className="flex-shrink-0 ml-auto p-2.5 sm:p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors touch-manipulation"
                   >
                     <X className="w-5 h-5" />
                   </button>

@@ -36,22 +36,23 @@ export function SetupChecklist() {
     <div className="animate-in fade-in slide-in-from-top-2 duration-300">
       <YbCard
         variant="elevated"
+        padding="none"
         className={cn(
-          "relative overflow-hidden border-l-4 p-0",
+          "relative overflow-hidden border-l-4",
           isComplete ? "border-l-emerald-500" : "border-l-primary-500",
         )}
       >
         <div className="p-4 sm:p-6">
           {isComplete ? (
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-                <PartyPopper className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-success-muted flex items-center justify-center flex-shrink-0">
+                <PartyPopper className="w-6 h-6 sm:w-7 sm:h-7 text-success" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">
+                <h3 className="text-lg sm:t-h3 text-foreground">
                   {t("onboarding.completedTitle")}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
+                <p className="text-sm text-muted-foreground mt-0.5">
                   {t("onboarding.completedDescription")}
                 </p>
               </div>
@@ -59,10 +60,10 @@ export function SetupChecklist() {
           ) : (
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100">
+                <h3 className="text-lg sm:t-h3 text-foreground">
                   {t("onboarding.title")}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
+                <p className="text-sm text-muted-foreground mt-0.5">
                   {t("onboarding.subtitle")}
                 </p>
               </div>
@@ -81,7 +82,9 @@ export function SetupChecklist() {
                   icon={<Workflow className="w-4 h-4" />}
                   label={t("onboarding.step2")}
                   ctaLabel={t("onboarding.step2Cta")}
-                  onCta={() => router.push("/dashboard/integrations?action=new")}
+                  onCta={() =>
+                    router.push("/dashboard/integrations?action=new")
+                  }
                 />
               </ul>
             </div>
@@ -112,16 +115,20 @@ function SetupStep({
       className={cn(
         "flex items-center gap-3 p-2.5 rounded-lg transition-colors",
         done
-          ? "bg-emerald-50/50 dark:bg-emerald-900/10"
+          ? "bg-success-muted/50"
           : active
-            ? "bg-primary-50 dark:bg-primary-900/10 ring-1 ring-primary-200 dark:ring-primary-800"
-            : "bg-gray-50 dark:bg-gray-800/50",
+            ? "bg-primary/8 ring-1 ring-primary-200 dark:ring-primary-800"
+            : "bg-muted/50",
       )}
     >
       <span
         className={cn(
           "flex-shrink-0",
-          done ? "text-emerald-500" : active ? "text-primary-500" : "text-gray-400",
+          done
+            ? "text-success"
+            : active
+              ? " text-primary"
+              : "text-muted-foreground",
         )}
         aria-hidden="true"
       >
@@ -135,11 +142,14 @@ function SetupStep({
         className={cn(
           "flex items-center gap-2 flex-1 min-w-0 text-sm",
           done
-            ? "text-gray-500 dark:text-gray-500 line-through"
-            : "text-gray-900 dark:text-gray-100 font-medium",
+            ? "text-muted-foreground line-through"
+            : "text-foreground font-medium",
         )}
       >
-        <span aria-hidden="true" className={cn("flex-shrink-0", done ? "opacity-50" : "")}>
+        <span
+          aria-hidden="true"
+          className={cn("flex-shrink-0", done ? "opacity-50" : "")}
+        >
           {icon}
         </span>
         <span className="truncate">{label}</span>

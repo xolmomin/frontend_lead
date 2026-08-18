@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { AlertTriangle, ExternalLink, Zap } from "lucide-react";
+import { AlertTriangle, Check, ExternalLink, X, Zap } from "lucide-react";
 import { useStatsByIntegration } from "@/hooks/use-stats";
 import type { IntegrationStat } from "@/lib/api/stats";
 import { YbCard, YbCardHeader, YbCardTitle } from "@/components/yb/card";
-import { YbSpinner } from "@/components/yb/spinner";
+import { YbSkeleton } from "@/components/yb/skeleton";
 
 const WINDOWS = ["today", "week", "month"] as const;
 type Window = (typeof WINDOWS)[number];
@@ -33,19 +33,19 @@ export function IntegrationPerformance() {
         <YbCardHeader>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
             <div className="flex items-center gap-2 min-w-0">
-              <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex-shrink-0">
-                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 dark:text-orange-400" />
+              <div className="p-2 rounded-lg bg-primary/12 flex-shrink-0">
+                <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               </div>
               <div className="min-w-0">
                 <YbCardTitle className="text-base sm:text-xl">
                   {t("integrationPerf.title")}
                 </YbCardTitle>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {t("integrationPerf.subtitle")}
                 </p>
               </div>
             </div>
-            <div className="inline-flex rounded-lg bg-gray-100 dark:bg-gray-800 p-0.5 gap-0.5 flex-shrink-0 self-start sm:self-auto">
+            <div className="inline-flex rounded-lg bg-muted p-0.5 gap-0.5 flex-shrink-0 self-start sm:self-auto">
               {WINDOWS.map((w) => (
                 <button
                   key={w}
@@ -53,8 +53,8 @@ export function IntegrationPerformance() {
                   onClick={() => setWindow(w)}
                   className={`text-xs px-2.5 py-1 rounded-md transition-colors ${
                     w === window
-                      ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm font-medium"
-                      : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                      ? "bg-card text-primary shadow-sm font-medium"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {t(`integrationPerf.window.${w}`)}
@@ -65,11 +65,20 @@ export function IntegrationPerformance() {
         </YbCardHeader>
         <div>
           {loading ? (
-            <div className="py-10 flex items-center justify-center">
-              <YbSpinner size="md" />
+            <div className="space-y-3 py-2" role="status" aria-busy="true">
+              {Array.from({ length: 4 }, (_, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <YbSkeleton className="h-8 w-8 shrink-0 rounded-lg" />
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <YbSkeleton className="h-3.5 w-1/2" />
+                    <YbSkeleton className="h-3 w-1/4" />
+                  </div>
+                  <YbSkeleton className="h-4 w-10 shrink-0" />
+                </div>
+              ))}
             </div>
           ) : !items || items.length === 0 ? (
-            <div className="py-10 text-center text-gray-400 dark:text-gray-600">
+            <div className="py-10 text-center text-muted-foreground/70">
               <Zap className="w-10 h-10 mx-auto mb-3 opacity-50" />
               <p className="text-sm max-w-xs mx-auto">
                 {t("integrationPerf.empty")}
@@ -116,7 +125,7 @@ function PerformanceRow({
         : "from-rose-400 to-rose-500";
 
   return (
-    <li className="rounded-xl border border-gray-200/70 dark:border-gray-700 bg-gray-50/40 dark:bg-gray-800/30 overflow-hidden">
+    <li className="rounded-xl border border-border/70 bg-muted/40 overflow-hidden">
       <div
         role="button"
         tabIndex={0}
@@ -128,25 +137,27 @@ function PerformanceRow({
           }
         }}
         title={t("integrationPerf.openIntegration")}
-        className="p-3 cursor-pointer transition-colors hover:bg-gray-100/70 dark:hover:bg-gray-800/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40"
+        className="p-3 cursor-pointer transition-colors hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <div className="flex items-center gap-2 sm:gap-3 mb-2">
           <div className="min-w-0 flex-1">
             <p
-              className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate"
+              className="text-sm font-semibold text-foreground truncate"
               title={name}
             >
               {name}
             </p>
             <div className="flex items-center gap-2 text-[11px] mt-0.5 tabular-nums font-medium">
-              <span className="text-emerald-600 dark:text-emerald-400">
-                ✓ {delivered.toLocaleString()}
+              <span className="inline-flex items-center gap-1 text-success">
+                <Check className="h-3 w-3" aria-hidden="true" />
+                {delivered.toLocaleString()}
               </span>
               {errors > 0 && (
                 <>
-                  <span className="text-gray-300 dark:text-gray-600">·</span>
-                  <span className="text-rose-500">
-                    ✗ {errors.toLocaleString()}
+                  <span className="text-muted-foreground/50">·</span>
+                  <span className="inline-flex items-center gap-1 text-destructive">
+                    <X className="h-3 w-3" aria-hidden="true" />
+                    {errors.toLocaleString()}
                   </span>
                 </>
               )}
@@ -155,20 +166,18 @@ function PerformanceRow({
           <div className="text-right shrink-0">
             <p
               className={`text-lg font-bold tabular-nums leading-none ${
-                needsAttention
-                  ? "text-rose-600 dark:text-rose-400"
-                  : "text-gray-900 dark:text-gray-100"
+                needsAttention ? "text-destructive" : "text-foreground"
               }`}
             >
               {percent}%
             </p>
             {needsAttention ? (
-              <p className="text-[9px] uppercase tracking-widest font-bold mt-1 text-rose-600 dark:text-rose-400 flex items-center gap-0.5 justify-end">
+              <p className="text-[9px] uppercase tracking-widest font-bold mt-1 text-destructive flex items-center gap-0.5 justify-end">
                 <AlertTriangle className="w-2.5 h-2.5" aria-hidden="true" />
                 {t("integrationPerf.attention")}
               </p>
             ) : (
-              <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1 tabular-nums">
+              <p className="text-[10px] text-muted-foreground mt-1 tabular-nums">
                 {item.total.toLocaleString()} {t("integrationPerf.leads")}
               </p>
             )}
@@ -182,13 +191,13 @@ function PerformanceRow({
               }}
               aria-label={t("integrationPerf.openIntegration")}
               title={t("integrationPerf.openIntegration")}
-              className="w-7 h-7 flex items-center justify-center rounded-lg border border-sky-500 text-sky-600 hover:bg-sky-50 dark:border-sky-400 dark:text-sky-400 dark:hover:bg-sky-900/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+              className="w-7 h-7 flex cursor-pointer items-center justify-center rounded-lg border border-primary text-primary transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
         </div>
-        <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+        <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
           <div
             className={`h-full rounded-full bg-gradient-to-r ${gradient} transition-all duration-500`}
             style={{ width: `${percent}%` }}

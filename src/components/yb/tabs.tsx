@@ -66,7 +66,12 @@ export function YbTabs({
   }
 
   return (
-    <div ref={listRef} role="tablist" aria-label={ariaLabel} className={className}>
+    <div
+      ref={listRef}
+      role="tablist"
+      aria-label={ariaLabel}
+      className={className}
+    >
       {tabs.map((tab, index) => {
         const isActive = tab.id === active;
         return (

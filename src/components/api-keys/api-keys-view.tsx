@@ -121,9 +121,7 @@ export function ApiKeysView() {
         header: t("table.name"),
         accessor: (row) => (
           <div>
-            <p className="font-medium text-gray-900 dark:text-gray-100">
-              {row.name}
-            </p>
+            <p className="font-medium text-foreground">{row.name}</p>
           </div>
         ),
         searchable: true,
@@ -133,9 +131,7 @@ export function ApiKeysView() {
         key: "website",
         header: t("table.website"),
         accessor: (row) => (
-          <span className="text-sm text-gray-700 dark:text-gray-300">
-            {row.site}
-          </span>
+          <span className="text-sm text-foreground/80">{row.site}</span>
         ),
         sortable: true,
       },
@@ -147,7 +143,7 @@ export function ApiKeysView() {
           const value = keyValue(row);
           return (
             <div className="flex items-center gap-2">
-              <code className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded border border-gray-300 dark:border-gray-600">
+              <code className="px-2 py-1 bg-muted text-xs font-mono rounded border border-input">
                 {isVisible ? value : maskKey(value)}
               </code>
               <div className="flex items-center gap-1">
@@ -156,23 +152,23 @@ export function ApiKeysView() {
                 >
                   <button
                     onClick={() => toggleKeyVisibility(String(row.id))}
-                    className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                    className="p-1.5 hover:bg-muted rounded transition-colors"
                     aria-label={t(isVisible ? "actions.hide" : "actions.show")}
                   >
                     {isVisible ? (
-                      <EyeOff className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                      <EyeOff className="w-4 h-4 text-muted-foreground" />
                     ) : (
-                      <Eye className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                      <Eye className="w-4 h-4 text-muted-foreground" />
                     )}
                   </button>
                 </YbTooltip>
                 <YbTooltip content={t("actions.copy")}>
                   <button
                     onClick={() => handleCopy(value)}
-                    className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                    className="p-1.5 hover:bg-muted rounded transition-colors"
                     aria-label={t("actions.copy")}
                   >
-                    <Copy className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    <Copy className="w-4 h-4 text-muted-foreground" />
                   </button>
                 </YbTooltip>
               </div>
@@ -184,7 +180,7 @@ export function ApiKeysView() {
         key: "created_at",
         header: t("table.createdAt"),
         accessor: (row) => (
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="text-sm text-muted-foreground">
             {formatDateTime(row.created_at, locale) ?? "—"}
           </span>
         ),
@@ -216,12 +212,8 @@ export function ApiKeysView() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-            {t("title")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            {t("subtitle")}
-          </p>
+          <h1 className="t-h2 text-foreground">{t("title")}</h1>
+          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
         </div>
         <YbButton
           variant="primary"
@@ -242,20 +234,16 @@ export function ApiKeysView() {
         <div>
           {loading ? (
             <div className="py-12 flex flex-col items-center justify-center">
-              <YbSpinner className="w-12 h-12 text-primary-600 dark:text-primary-400 mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">
-                {t("loading.keys")}
-              </p>
+              <YbSpinner className="w-12 h-12 text-primary mb-4" />
+              <p className="text-muted-foreground">{t("loading.keys")}</p>
             </div>
           ) : keys.length === 0 ? (
             <div className="py-16 text-center">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
-                <Key className="w-10 h-10 text-gray-400" />
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                <Key className="w-10 h-10 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                {t("empty.title")}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <h3 className="t-h4 text-foreground mb-2">{t("empty.title")}</h3>
+              <p className="text-muted-foreground mb-6">
                 {t("empty.description")}
               </p>
               <YbButton
@@ -269,6 +257,7 @@ export function ApiKeysView() {
             </div>
           ) : (
             <YbDataTable
+              density="compact"
               data={keys}
               columns={columns}
               searchPlaceholder={t("search.placeholder")}
@@ -288,7 +277,7 @@ export function ApiKeysView() {
           <div>
             <label
               htmlFor={`${addFormId}-name`}
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-foreground/80 mb-2"
             >
               {t("modal.name")}
             </label>
@@ -298,14 +287,14 @@ export function ApiKeysView() {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               placeholder={t("modal.namePlaceholder")}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-4 py-2 border border-input rounded-lg bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               required
             />
           </div>
           <div>
             <label
               htmlFor={`${addFormId}-website`}
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-sm font-medium text-foreground/80 mb-2"
             >
               {t("modal.website")}
             </label>
@@ -315,7 +304,7 @@ export function ApiKeysView() {
               value={form.website}
               onChange={(e) => setForm({ ...form, website: e.target.value })}
               placeholder={t("modal.websiteSelect")}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="w-full px-4 py-2 border border-input rounded-lg bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               required
             />
           </div>

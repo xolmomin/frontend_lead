@@ -74,12 +74,10 @@ function VideoCard({
         )}
       </div>
       <div className="p-4 sm:p-5">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-1">
+        <h3 className="text-base sm:t-h4 text-foreground mb-1">
           {item?.title}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {item?.description}
-        </p>
+        <p className="text-sm text-muted-foreground">{item?.description}</p>
       </div>
     </div>
   );
@@ -91,13 +89,11 @@ export function Videos() {
   const items: VideoItem[] = Array.isArray(raw) ? raw : [];
 
   return (
-    <section id="videos" className="py-12 sm:py-16 lg:py-20">
+    <section id="videos" className="section-muted py-14 sm:py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-            {t("videos.title")}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <h2 className="t-h1 text-foreground">{t("videos.title")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             {t("videos.subtitle")}
           </p>
         </div>

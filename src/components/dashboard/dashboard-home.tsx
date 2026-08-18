@@ -3,10 +3,11 @@
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { ArrowRight, TrendingUp, Zap } from "lucide-react";
+import { ArrowRight, CalendarDays, TrendingUp, Zap } from "lucide-react";
 import { usePlan, useStatsSummary } from "@/hooks/use-stats";
 import { YbButton } from "@/components/yb/button";
 import { YbCard } from "@/components/yb/card";
+import { YbPageHeader } from "@/components/yb/page-header";
 import { PlanCard, type PlanSummary } from "./plan-card";
 import { StatCard } from "./stats-cards";
 import { ChartsSection } from "./leads-chart";
@@ -59,12 +60,7 @@ export function DashboardHome() {
   return (
     <div className="space-y-4 sm:space-y-6">
       <div className="animate-in fade-in slide-in-from-top-4 duration-300">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-          {t("title")}
-        </h1>
-        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1">
-          {t("subtitle")}
-        </p>
+        <YbPageHeader title={t("title")} description={t("subtitle")} />
       </div>
 
       <SetupChecklist />
@@ -90,8 +86,8 @@ export function DashboardHome() {
             deliveredLabel={t("stats.delivered")}
             failedLabel={t("stats.failed")}
             leadsLabel={t("stats.leadsCount")}
-            icon={<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-            iconBgGradient="from-blue-500 to-blue-600"
+            icon={<Zap className="w-4 h-4 sm:w-5 sm:h-5" />}
+            tone="brand"
             loading={statsLoading}
           />
           <StatCard
@@ -100,8 +96,8 @@ export function DashboardHome() {
             deliveredLabel={t("stats.delivered")}
             failedLabel={t("stats.failed")}
             leadsLabel={t("stats.leadsCount")}
-            icon={<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-            iconBgGradient="from-purple-500 to-purple-600"
+            icon={<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />}
+            tone="brand"
             loading={statsLoading}
           />
           <StatCard
@@ -110,8 +106,8 @@ export function DashboardHome() {
             deliveredLabel={t("stats.delivered")}
             failedLabel={t("stats.failed")}
             leadsLabel={t("stats.leadsCount")}
-            icon={<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white" />}
-            iconBgGradient="from-green-500 to-green-600"
+            icon={<CalendarDays className="w-4 h-4 sm:w-5 sm:h-5" />}
+            tone="success"
             loading={statsLoading}
           />
         </div>
@@ -131,25 +127,26 @@ export function DashboardHome() {
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
           <YbCard
             variant="elevated"
-            className="relative overflow-hidden bg-gradient-to-r from-primary-500/10 via-secondary-500/10 to-accent-500/10 dark:from-primary-500/20 dark:via-secondary-500/20 dark:to-accent-500/20 border-primary-200 dark:border-primary-700 p-0"
+            padding="none"
+            className="relative overflow-hidden bg-gradient-to-r from-primary-500/10 via-secondary-500/10 to-accent-500/10 dark:from-primary-500/20 dark:via-secondary-500/20 dark:to-accent-500/20 border-primary/35"
           >
             <div className="p-4 sm:p-6">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">
+                  <h3 className="t-h3 text-foreground mb-1 sm:mb-2">
                     {t("pricing.title")}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     {t("pricing.description")}
                   </p>
                 </div>
                 <YbButton
-                  variant="primary"
                   size="lg"
                   onClick={() => router.push("/dashboard/pricing")}
                   leftIcon={<Zap className="w-5 h-5" />}
                   rightIcon={<ArrowRight className="w-5 h-5" />}
-                  className="w-full md:w-auto bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 shadow-lg"
+                  variant="gradient"
+                  className="w-full md:w-auto"
                 >
                   {t("pricing.button")}
                 </YbButton>

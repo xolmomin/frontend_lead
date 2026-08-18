@@ -29,15 +29,11 @@ export function ErrorState({
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
       <div className="max-w-md text-center">
-        <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-950/40">
-          <TriangleAlert className="h-8 w-8 text-red-600 dark:text-red-400" />
+        <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-destructive-muted">
+          <TriangleAlert className="h-8 w-8 text-destructive" />
         </div>
-        <h2 className="mb-3 text-2xl font-bold text-gray-900 dark:text-gray-100">
-          {t("title")}
-        </h2>
-        <p className="mb-6 text-gray-600 dark:text-gray-400">
-          {t("description")}
-        </p>
+        <h2 className="mb-3 t-h3 text-foreground">{t("title")}</h2>
+        <p className="mb-6 text-muted-foreground">{t("description")}</p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <YbButton
             variant="primary"
@@ -57,7 +53,7 @@ export function ErrorState({
           </Link>
         </div>
         {digest && (
-          <p className="mt-8 font-mono text-xs text-gray-400 dark:text-gray-600">
+          <p className="mt-8 font-mono text-xs text-muted-foreground/70">
             {t("errorId", { digest })}
           </p>
         )}

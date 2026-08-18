@@ -133,7 +133,8 @@ export function YbTooltip({
       const center = anchor.left + anchor.width / 2;
       const left = center - width / 2;
       const right = center + width / 2;
-      if (right > window.innerWidth - EDGE) next = window.innerWidth - EDGE - right;
+      if (right > window.innerWidth - EDGE)
+        next = window.innerWidth - EDGE - right;
       else if (left < EDGE) next = EDGE - left;
     } else {
       const height = el.offsetHeight;
@@ -149,16 +150,21 @@ export function YbTooltip({
 
   const child =
     isValidElement(children) && visible && !disabled
-      ? cloneElement(children as ReactElement<{ "aria-describedby"?: string }>, {
-          "aria-describedby": id,
-        })
+      ? cloneElement(
+          children as ReactElement<{ "aria-describedby"?: string }>,
+          {
+            "aria-describedby": id,
+          },
+        )
       : children;
 
   const horizontal = position === "top" || position === "bottom";
   const shiftTransform = horizontal
     ? `translateX(${shift}px)`
     : `translateY(${shift}px)`;
-  const arrowStyle = horizontal ? { marginLeft: -shift } : { marginTop: -shift };
+  const arrowStyle = horizontal
+    ? { marginLeft: -shift }
+    : { marginTop: -shift };
 
   const portal =
     mounted && typeof document !== "undefined"
@@ -176,7 +182,7 @@ export function YbTooltip({
               }}
               className="z-[100] pointer-events-none animate-in fade-in duration-100"
             >
-              <div className="relative px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg shadow-lg whitespace-nowrap">
+              <div className="relative px-3 py-1.5 bg-foreground text-background text-xs font-medium rounded-lg shadow-e2 whitespace-nowrap">
                 {content}
                 <div
                   className={`absolute ${ARROWS[position]} border-4`}

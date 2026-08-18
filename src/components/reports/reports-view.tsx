@@ -145,7 +145,11 @@ export function ReportsView() {
     setIsDeleteOpen(true);
   }, []);
 
-  const canSubmitCreate = !!(form.adAccountId && form.chatId && form.sendHour !== "");
+  const canSubmitCreate = !!(
+    form.adAccountId &&
+    form.chatId &&
+    form.sendHour !== ""
+  );
   const canSubmitEdit = !!(form.chatId && form.sendHour !== "");
 
   const handleCreate = () => {
@@ -246,7 +250,11 @@ export function ReportsView() {
         parts.push(t("list.allCampaigns"));
       }
       parts.push(
-        t(report.format === "detailed" ? "list.modeDetailed" : "list.modeSummary"),
+        t(
+          report.format === "detailed"
+            ? "list.modeDetailed"
+            : "list.modeSummary",
+        ),
       );
       return parts.join(" · ");
     },
@@ -259,9 +267,7 @@ export function ReportsView() {
         key: "index",
         header: "#",
         accessor: (_row, index) => (
-          <span className="text-sm text-gray-700 dark:text-gray-300">
-            {(index || 0) + 1}
-          </span>
+          <span className="text-sm text-foreground/80">{(index || 0) + 1}</span>
         ),
         sortable: false,
       },
@@ -270,13 +276,13 @@ export function ReportsView() {
         header: t("table.adAccount"),
         accessor: (row) => (
           <div>
-            <p className="font-medium text-gray-900 dark:text-gray-100">
+            <p className="font-medium text-foreground">
               {row.ad_account_name || row.ad_account_id}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-muted-foreground">
               {reportSummary(row)}
             </p>
-            <p className="text-xs text-gray-400 dark:text-gray-500 font-mono">
+            <p className="text-xs text-muted-foreground font-mono">
               {row.ad_account_id}
             </p>
           </div>
@@ -287,7 +293,7 @@ export function ReportsView() {
         key: "chat_id",
         header: t("table.chatId"),
         accessor: (row) => (
-          <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+          <span className="text-sm font-mono text-foreground/80">
             {row.chat_id ?? "—"}
           </span>
         ),
@@ -297,9 +303,7 @@ export function ReportsView() {
         key: "send_hour",
         header: t("table.sendHour"),
         accessor: (row) => (
-          <span className="text-sm text-gray-700 dark:text-gray-300">
-            {row.send_time}
-          </span>
+          <span className="text-sm text-foreground/80">{row.send_time}</span>
         ),
         sortable: true,
       },
@@ -310,11 +314,13 @@ export function ReportsView() {
           <span
             className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
               row.status === "active"
-                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                ? "bg-success-muted text-success dark:text-success"
+                : "bg-destructive-muted text-destructive dark:text-destructive"
             }`}
           >
-            {row.status === "active" ? t("status.active") : t("status.inactive")}
+            {row.status === "active"
+              ? t("status.active")
+              : t("status.inactive")}
           </span>
         ),
         sortable: true,
@@ -343,7 +349,9 @@ export function ReportsView() {
                 </YbButton>
               </YbTooltip>
               <YbTooltip
-                content={t(isActive ? "actions.deactivate" : "actions.activate")}
+                content={t(
+                  isActive ? "actions.deactivate" : "actions.activate",
+                )}
               >
                 <YbButton
                   variant="outline"
@@ -355,7 +363,7 @@ export function ReportsView() {
                   className={`px-2.5 ${
                     isActive
                       ? "border-orange-500 text-orange-600 hover:bg-orange-50 dark:border-orange-400 dark:text-orange-400 dark:hover:bg-orange-900/20"
-                      : "border-green-500 text-green-600 hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-900/20"
+                      : "border-success text-success hover:bg-success-muted dark:text-success"
                   }`}
                 >
                   {isActive ? (
@@ -382,7 +390,7 @@ export function ReportsView() {
                   size="sm"
                   onClick={() => openDelete(row)}
                   aria-label={t("actions.delete")}
-                  className="px-2.5 border-red-500 text-red-600 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-900/20"
+                  className="px-2.5 border-destructive text-destructive hover:bg-destructive-muted dark:text-destructive"
                 >
                   <Trash2 className="w-4 h-4" aria-hidden="true" />
                 </YbButton>
@@ -393,7 +401,15 @@ export function ReportsView() {
         sortable: false,
       },
     ],
-    [t, testingId, handleTest, handleToggleActive, openEdit, openDelete, reportSummary],
+    [
+      t,
+      testingId,
+      handleTest,
+      handleToggleActive,
+      openEdit,
+      openDelete,
+      reportSummary,
+    ],
   );
 
   const modalFields = (mode: "create" | "edit") => (
@@ -415,10 +431,10 @@ export function ReportsView() {
       )}
 
       <div>
-        <span className="block text-sm font-medium text-gray-900 dark:text-gray-100">
+        <span className="block text-sm font-medium text-foreground">
           {t("modal.datePresetsLabel")}
         </span>
-        <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+        <p className="mt-0.5 text-xs text-muted-foreground">
           {t("modal.datePresetsHelp")}
         </p>
         <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -429,17 +445,17 @@ export function ReportsView() {
                 key={preset}
                 className={`flex items-center gap-2 px-3 py-2 rounded-md border cursor-pointer transition-colors ${
                   checked
-                    ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 dark:border-primary-400"
-                    : "border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                    ? " border-primary bg-primary/10 dark:border-primary-400"
+                    : "border-input hover:bg-muted"
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={checked}
                   onChange={() => setForm((f) => ({ ...f, period: preset }))}
-                  className="rounded text-primary-600 focus:ring-primary-500"
+                  className="rounded text-primary focus-visible:ring-ring"
                 />
-                <span className="text-sm text-gray-900 dark:text-gray-100">
+                <span className="text-sm text-foreground">
                   {t(`modal.${PRESET_KEYS[preset]}`)}
                 </span>
               </label>
@@ -466,7 +482,7 @@ export function ReportsView() {
           required
         />
         {!singleDay && (
-          <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400 italic">
+          <p className="mt-1.5 text-xs text-muted-foreground italic">
             ℹ️ {t("modal.reportModeNote")}
           </p>
         )}
@@ -475,7 +491,7 @@ export function ReportsView() {
       <div>
         <label
           htmlFor={`report-chat-id-${mode}`}
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          className="block text-sm font-medium text-foreground/80 mb-2"
         >
           {t("modal.chatId")}
         </label>
@@ -486,9 +502,9 @@ export function ReportsView() {
           value={form.chatId}
           onChange={(e) => setForm((f) => ({ ...f, chatId: e.target.value }))}
           placeholder={t("modal.chatIdPlaceholder")}
-          className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-sm"
+          className="w-full px-4 py-2.5 border border-input rounded-lg bg-card text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-all text-sm"
         />
-        <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
+        <p className="mt-1.5 text-xs text-muted-foreground">
           {t("modal.chatTopicHint")}
         </p>
       </div>
@@ -508,10 +524,8 @@ export function ReportsView() {
     <div className="space-y-4 lg:space-y-6 p-4 lg:p-0">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex-1">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            {t("title")}
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+          <h1 className="t-h2 text-foreground mb-2">{t("title")}</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             {t("subtitle")}
           </p>
         </div>
@@ -530,20 +544,20 @@ export function ReportsView() {
           <div>
             {loading ? (
               <div className="py-12 flex flex-col items-center justify-center">
-                <YbSpinner className="w-12 h-12 text-primary-600 dark:text-primary-400 mb-4" />
+                <YbSpinner className="w-12 h-12 text-primary mb-4" />
               </div>
             ) : reports.length === 0 ? (
               <div className="py-16 text-center animate-in fade-in zoom-in-95 duration-300">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/20 dark:to-primary-800/20 flex items-center justify-center">
                   <BarChart3
-                    className="w-10 h-10 text-primary-600 dark:text-primary-400"
+                    className="w-10 h-10 text-primary"
                     aria-hidden="true"
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                <h3 className="t-h4 text-foreground mb-2">
                   {t("empty.title")}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                   {t("empty.description")}
                 </p>
                 <YbButton
@@ -629,7 +643,7 @@ export function ReportsView() {
               loading={saving}
               disabled={!canSubmitEdit || saving}
               className="flex-1"
-            >              
+            >
               {t("modal.save")}
             </YbButton>
           </div>

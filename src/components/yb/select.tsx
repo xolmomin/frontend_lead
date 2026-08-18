@@ -171,27 +171,21 @@ export function YbSelect({
             ? "cursor-not-allowed opacity-50"
             : [
                 "cursor-pointer",
-                isSelected && "bg-primary-50 dark:bg-primary-900/20",
-                isHighlighted && !isSelected && "bg-gray-100 dark:bg-gray-700",
-                !isSelected &&
-                  !isHighlighted &&
-                  "hover:bg-gray-50 dark:hover:bg-gray-800",
+                isSelected && "bg-primary/10",
+                isHighlighted && !isSelected && "bg-muted",
+                !isSelected && !isHighlighted && "hover:bg-muted",
               ],
         )}
       >
         <span
           className={cn(
             "text-sm",
-            isSelected
-              ? "font-medium text-primary-700 dark:text-primary-300"
-              : "text-gray-900 dark:text-gray-100",
+            isSelected ? "font-medium text-primary" : "text-foreground",
           )}
         >
           {option.label}
         </span>
-        {isSelected && (
-          <Check className="w-4 h-4 text-primary-600 dark:text-primary-400" />
-        )}
+        {isSelected && <Check className="w-4 h-4 text-primary" />}
       </div>
     );
   };
@@ -201,10 +195,10 @@ export function YbSelect({
       {label && (
         <label
           id={labelId}
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          className="block text-sm font-medium text-foreground/80 mb-2"
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-destructive ml-1">*</span>}
         </label>
       )}
       <button
@@ -219,46 +213,44 @@ export function YbSelect({
         className={cn(
           "w-full px-4 py-2.5 flex items-center justify-between",
           "border rounded-lg transition-all",
-          "bg-white dark:bg-gray-800",
-          "text-gray-900 dark:text-gray-100",
-          "focus:outline-none focus:ring-2 focus:ring-primary-500",
-          open && "ring-2 ring-primary-500",
-          error && "border-red-500 focus:ring-red-500",
-          !error && "border-gray-300 dark:border-gray-600",
-          disabled && "opacity-50 cursor-not-allowed bg-gray-50 dark:bg-gray-900",
+          "bg-card",
+          "text-foreground",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          open && "ring-2 ring-primary",
+          error && "border-destructive focus-visible:ring-destructive",
+          !error && "border-input",
+          disabled && "opacity-50 cursor-not-allowed bg-muted",
         )}
       >
         <span
           className={cn(
             "min-w-0 truncate text-left text-sm",
-            !selected && "text-gray-500 dark:text-gray-400",
+            !selected && "text-muted-foreground",
           )}
         >
           {selected ? selected.label : resolvedPlaceholder}
         </span>
         <ChevronDown
           className={cn(
-            "ml-2 h-5 w-5 shrink-0 text-gray-400 transition-transform",
+            "ml-2 h-5 w-5 shrink-0 text-muted-foreground transition-transform",
             open && "transform rotate-180",
           )}
         />
       </button>
-      {error && (
-        <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
-      )}
+      {error && <p className="mt-1 text-sm text-destructive">{error}</p>}
       {open && (
         <div
           className={cn(
-            "absolute z-50 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden",
+            "absolute z-50 w-full bg-card border border-border rounded-lg shadow-lg overflow-hidden",
             "animate-in fade-in duration-150",
             dropDirection === "bottom"
               ? "mt-2 top-full slide-in-from-top-2"
               : "mb-2 bottom-full slide-in-from-bottom-2",
           )}
         >
-          <div className="p-3 border-b border-gray-200 dark:border-gray-700">
+          <div className="p-3 border-b border-border">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 ref={searchRef}
                 type="text"
@@ -269,7 +261,7 @@ export function YbSelect({
                 }}
                 onKeyDown={onKeyDown}
                 placeholder={resolvedSearchPlaceholder}
-                className="w-full pl-10 pr-8 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="w-full pl-10 pr-8 py-2 text-sm bg-muted border border-input rounded-lg text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
               {search && (
                 <button
@@ -280,16 +272,19 @@ export function YbSelect({
                     setHighlighted(0);
                     searchRef.current?.focus();
                   }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <X className="w-4 h-4 text-gray-400" aria-hidden="true" />
+                  <X
+                    className="w-4 h-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
                 </button>
               )}
             </div>
           </div>
           <div className="max-h-60 overflow-y-auto" role="listbox">
             {filtered.length === 0 ? (
-              <div className="px-3 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+              <div className="px-3 py-8 text-center text-sm text-muted-foreground">
                 {resolvedEmpty}
               </div>
             ) : (
@@ -300,7 +295,7 @@ export function YbSelect({
                     ? groups.map((group, gi) => (
                         <div key={gi}>
                           {group.label !== "" && (
-                            <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider bg-gray-50 dark:bg-gray-800/50">
+                            <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider bg-muted/50">
                               {group.label}
                             </div>
                           )}

@@ -46,12 +46,14 @@ export function ChartsSection() {
       <div
         role="tablist"
         aria-label={t("charts.tabs.label")}
-        className="inline-flex max-w-full overflow-x-auto rounded-xl bg-gray-100 dark:bg-gray-800 p-1 gap-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+        className="inline-flex max-w-full overflow-x-auto rounded-xl bg-muted p-1 gap-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
         {PERIODS.map((period) => {
           const isActive = period === active;
           const showDot =
-            isActive && hasErrors && ["hourly", "weekly", "daily"].includes(period);
+            isActive &&
+            hasErrors &&
+            ["hourly", "weekly", "daily"].includes(period);
           return (
             <button
               key={period}
@@ -61,15 +63,15 @@ export function ChartsSection() {
               onClick={() => setActive(period)}
               className={`relative inline-flex flex-shrink-0 items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors ${
                 isActive
-                  ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                  ? "bg-card text-primary shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <PeriodIcon period={period} />
               <span>{t(`charts.tabs.${period}`)}</span>
               {showDot && (
                 <span
-                  className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-red-500"
+                  className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-destructive"
                   aria-label={t("charts.tabs.hasErrors")}
                 />
               )}

@@ -12,7 +12,7 @@ const SIZES: Record<Size, string> = {
 };
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "border-primary-200 border-t-primary-600",
+  primary: " border-primary/35 border-t-primary-600",
   secondary: "border-secondary-200 border-t-secondary-600",
   white: "border-white/20 border-t-white",
 };

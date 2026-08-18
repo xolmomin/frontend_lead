@@ -228,7 +228,8 @@ export function FinanceInsightsView() {
                 : vb - va;
       });
     }
-    if (!accountFilter && other && matchesSearch(other)) rows = [...rows, other];
+    if (!accountFilter && other && matchesSearch(other))
+      rows = [...rows, other];
     return rows;
   }, [breakdown, search, accountFilter, sort]);
 
@@ -273,21 +274,21 @@ export function FinanceInsightsView() {
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
-            <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex-shrink-0">
-              <DollarSign className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-2 rounded-lg bg-success-muted flex-shrink-0">
+              <DollarSign className="w-5 h-5 text-success" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-gray-100 truncate">
+              <h1 className="t-h3 text-foreground truncate">
                 {t("insights.title")}
               </h1>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5 truncate">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 truncate">
                 {t("insights.subtitle")}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
             {rate != null ? (
-              <span className="hidden md:inline text-[11px] text-gray-400 dark:text-gray-500">
+              <span className="hidden md:inline text-[11px] text-muted-foreground">
                 {t("insights.rate")}: 1$ = {formatCount(Math.round(rate))}
               </span>
             ) : null}
@@ -296,9 +297,11 @@ export function FinanceInsightsView() {
               onClick={() => refetchAllRef.current()}
               disabled={syncing}
               title={`${t("sync.last_updated")}: ${lastSyncLabel()}`}
-              className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-primary-400 disabled:opacity-60 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border border-border bg-card text-foreground/75 hover:border-primary/60 disabled:opacity-60 transition-colors"
             >
-              <RefreshCw className={cn("w-3.5 h-3.5", syncing && "animate-spin")} />
+              <RefreshCw
+                className={cn("w-3.5 h-3.5", syncing && "animate-spin")}
+              />
               <span className="hidden sm:inline">
                 {syncing ? t("sync.syncing") : lastSyncLabel()}
               </span>
@@ -308,14 +311,14 @@ export function FinanceInsightsView() {
               onClick={() => setSettingsOpen(true)}
               title={t("settings.title")}
               aria-label={t("settings.title")}
-              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:border-primary-400 transition-colors"
+              className="inline-flex items-center justify-center p-1.5 rounded-lg border border-border bg-card text-foreground/75 hover:border-primary/60 transition-colors"
             >
               <Settings className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
         <div className="flex sm:justify-end">
-          <div className="inline-flex w-full sm:w-auto rounded-lg bg-gray-100 dark:bg-gray-800 p-0.5 gap-0.5">
+          <div className="inline-flex w-full sm:w-auto rounded-lg bg-muted p-0.5 gap-0.5">
             {FINANCE_WINDOWS.map((window) => (
               <button
                 key={window}
@@ -323,8 +326,8 @@ export function FinanceInsightsView() {
                 onClick={() => setWindowSel(window)}
                 className={`flex-1 sm:flex-none text-xs px-3 py-1.5 rounded-md transition-colors ${
                   window === windowSel
-                    ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm font-medium"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    ? "bg-card text-primary shadow-sm font-medium"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {t(`insights.window.${window}`)}
@@ -335,9 +338,9 @@ export function FinanceInsightsView() {
       </div>
 
       {currencyWarnings.length > 0 ? (
-        <div className="flex items-start gap-3 p-3 sm:p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
-          <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-amber-800 dark:text-amber-200">
+        <div className="flex items-start gap-3 p-3 sm:p-4 bg-warning-muted border border-warning/40 rounded-xl">
+          <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-warning">
             {t("insights.currency_warning", {
               list: currencyWarnings.join(", "),
             })}
@@ -357,7 +360,9 @@ export function FinanceInsightsView() {
       <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3">
         <StatCard
           label={t("insights.kpi.profit")}
-          value={typeof totals?.profit === "number" ? formatUsd(totals.profit) : "—"}
+          value={
+            typeof totals?.profit === "number" ? formatUsd(totals.profit) : "—"
+          }
           tone={
             typeof totals?.profit === "number"
               ? totals.profit < 0
@@ -381,7 +386,9 @@ export function FinanceInsightsView() {
               : "—"
           }
           tone={
-            totals?.roas !== null && totals?.roas !== undefined && totals.roas < 1
+            totals?.roas !== null &&
+            totals?.roas !== undefined &&
+            totals.roas < 1
               ? "rose"
               : "default"
           }
@@ -389,13 +396,15 @@ export function FinanceInsightsView() {
         <StatCard
           label={t("insights.kpi.delivery_rate")}
           value={
-            totals?.delivery_rate !== null && totals?.delivery_rate !== undefined
+            totals?.delivery_rate !== null &&
+            totals?.delivery_rate !== undefined
               ? `${totals.delivery_rate}%`
               : "—"
           }
           icon={<Truck className="w-4 h-4" />}
           meterPct={
-            totals?.delivery_rate !== null && totals?.delivery_rate !== undefined
+            totals?.delivery_rate !== null &&
+            totals?.delivery_rate !== undefined
               ? totals.delivery_rate
               : null
           }
@@ -415,7 +424,10 @@ export function FinanceInsightsView() {
           label={t("insights.kpi.cpl")}
           value={typeof totals?.cpl === "number" ? formatUsd(totals.cpl) : "—"}
         />
-        <StatCard label={t("insights.kpi.hold")} value={formatUsd(totals?.hold)} />
+        <StatCard
+          label={t("insights.kpi.hold")}
+          value={formatUsd(totals?.hold)}
+        />
         <StatCard
           label={t("insights.kpi.leads")}
           value={formatCount(leadsTotal)}
@@ -433,7 +445,7 @@ export function FinanceInsightsView() {
           <YbCardTitle className="text-base sm:text-lg">
             {t("insights.trend.title")}
           </YbCardTitle>
-          <div className="inline-flex self-start sm:self-auto rounded-lg bg-gray-100 dark:bg-gray-800 p-0.5 gap-0.5">
+          <div className="inline-flex self-start sm:self-auto rounded-lg bg-muted p-0.5 gap-0.5">
             {TREND_METRICS.map((option) => (
               <button
                 key={option}
@@ -443,8 +455,8 @@ export function FinanceInsightsView() {
                 disabled={option === "hold"}
                 className={`text-[11px] px-2.5 py-1 rounded-md transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
                   option === metric
-                    ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm font-medium"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                    ? "bg-card text-primary shadow-sm font-medium"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {t(`insights.trend.${option}`)}
@@ -458,7 +470,7 @@ export function FinanceInsightsView() {
               <YbSpinner size="md" />
             </div>
           ) : trend.length === 0 ? (
-            <div className="py-12 text-center text-sm text-gray-400 dark:text-gray-500">
+            <div className="py-12 text-center text-sm text-muted-foreground">
               {t("insights.trend.empty")}
             </div>
           ) : (
@@ -478,7 +490,7 @@ export function FinanceInsightsView() {
               {t("insights.breakdown.title")}
             </YbCardTitle>
             {isCapped ? (
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+              <p className="text-xs text-muted-foreground mt-0.5">
                 {t("insights.breakdown.capped", {
                   shown: shownCount,
                   total: breakdownTotal ?? 0,
@@ -492,7 +504,7 @@ export function FinanceInsightsView() {
                 aria-label={t("insights.breakdown.account_filter")}
                 value={accountFilter}
                 onChange={(e) => setAccountSel(e.target.value)}
-                className="text-sm px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+                className="text-sm px-3 py-1.5 rounded-lg border border-border bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <option value="">{t("insights.breakdown.all_accounts")}</option>
                 {adAccounts.map((account) => (
@@ -503,13 +515,13 @@ export function FinanceInsightsView() {
               </select>
             ) : null}
             <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t("insights.breakdown.search")}
-                className="pl-8 pr-3 py-1.5 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+                className="pl-8 pr-3 py-1.5 text-sm rounded-lg border border-border bg-card text-foreground w-full sm:w-64 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               />
             </div>
           </div>
@@ -521,8 +533,8 @@ export function FinanceInsightsView() {
             </div>
           ) : filteredRows.length === 0 ? (
             <div className="py-12 text-center">
-              <BarChart3 className="w-10 h-10 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-              <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto mb-4">
+              <BarChart3 className="w-10 h-10 mx-auto mb-3 text-muted-foreground/50" />
+              <p className="text-sm text-muted-foreground max-w-xs mx-auto mb-4">
                 {t("insights.breakdown.empty_hint")}
               </p>
               <YbButton
@@ -537,7 +549,7 @@ export function FinanceInsightsView() {
             <div className="overflow-x-auto -mx-4 sm:mx-0">
               <table className="w-full text-sm min-w-[860px]">
                 <thead>
-                  <tr className="text-left text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                  <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground border-b border-border">
                     <th
                       role="columnheader"
                       aria-sort="none"
@@ -598,7 +610,7 @@ export function FinanceInsightsView() {
                     />
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                <tbody className="divide-y divide-border">
                   {filteredRows.map((row) => {
                     const level = row.unconnected
                       ? "ok"
@@ -609,13 +621,13 @@ export function FinanceInsightsView() {
                         key={row.campaign_id}
                         className={`transition-colors ${
                           level === "over"
-                            ? "bg-rose-50/60 dark:bg-rose-900/15 hover:bg-rose-50 dark:hover:bg-rose-900/25"
+                            ? "bg-destructive-muted/60 hover:bg-destructive-muted"
                             : level === "warn"
-                              ? "bg-amber-50/60 dark:bg-amber-900/15 hover:bg-amber-50 dark:hover:bg-amber-900/25"
-                              : "hover:bg-gray-50/70 dark:hover:bg-gray-800/40"
+                              ? "bg-warning-muted/60 hover:bg-warning-muted"
+                              : "hover:bg-muted/60"
                         }`}
                       >
-                        <td className="py-2.5 px-3 font-medium text-gray-900 dark:text-gray-100 max-w-[240px]">
+                        <td className="py-2.5 px-3 font-medium text-foreground max-w-[240px]">
                           <div className="flex items-center gap-1.5 truncate">
                             {row.health && !row.unconnected ? (
                               <span
@@ -625,36 +637,40 @@ export function FinanceInsightsView() {
                                 title={
                                   row.break_even_cpl !== null &&
                                   row.break_even_cpl !== undefined
-                                    ? t("insights.breakdown.health.break_even", {
-                                        value: formatUsd(row.break_even_cpl),
-                                      })
+                                    ? t(
+                                        "insights.breakdown.health.break_even",
+                                        {
+                                          value: formatUsd(row.break_even_cpl),
+                                        },
+                                      )
                                     : undefined
                                 }
                                 className={cn(
                                   "inline-block w-2.5 h-2.5 rounded-full mr-2 flex-shrink-0",
-                                  row.health === "green" &&
-                                    "bg-emerald-500 dark:bg-emerald-400",
-                                  row.health === "amber" &&
-                                    "bg-amber-500 dark:bg-amber-400",
-                                  row.health === "red" &&
-                                    "bg-rose-500 dark:bg-rose-400",
+                                  row.health === "green" && "bg-success",
+                                  row.health === "amber" && "bg-warning",
+                                  row.health === "red" && "bg-destructive",
                                 )}
                               />
                             ) : null}
                             {level === "over" ? (
                               <AlertTriangle
-                                className="w-3.5 h-3.5 text-rose-500 flex-shrink-0"
+                                className="w-3.5 h-3.5 text-destructive flex-shrink-0"
                                 aria-label={t("insights.breakdown.expensive")}
                               />
                             ) : level === "warn" ? (
-                              <span title={t("insights.breakdown.warning_hint")}>
+                              <span
+                                title={t("insights.breakdown.warning_hint")}
+                              >
                                 <AlertTriangle
-                                  className="w-3.5 h-3.5 text-amber-500 flex-shrink-0"
+                                  className="w-3.5 h-3.5 text-warning flex-shrink-0"
                                   aria-label={t("insights.breakdown.warning")}
                                 />
                               </span>
                             ) : null}
-                            <span className="truncate">{row.campaign_name}</span>
+                            <span className="truncate">
+                              {row.campaign_name}
+                            </span>
                             {row.is_new ? (
                               <YbBadge
                                 variant="info"
@@ -675,29 +691,29 @@ export function FinanceInsightsView() {
                             ) : null}
                           </div>
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-foreground/80">
                           {formatCount(row.leads)}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-green-600 dark:text-green-400">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-success">
                           {formatCount(row.accepted)}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-emerald-600 dark:text-emerald-400">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-success">
                           {formatCount(row.delivered)}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-foreground/80">
                           {formatUsd(row.spend)}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-foreground/80">
                           {row.revenue != null ? formatUsd(row.revenue) : "—"}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-500 dark:text-gray-400">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-muted-foreground">
                           <div className="flex flex-col items-end">
                             <span>
                               {row.cpl === null ? "—" : formatUsd(row.cpl)}
                             </span>
                             {row.break_even_cpl !== null &&
                             row.break_even_cpl !== undefined ? (
-                              <span className="text-[10px] text-gray-400 dark:text-gray-500">
+                              <span className="text-[10px] text-muted-foreground">
                                 {t("insights.breakdown.health.be_inline", {
                                   value: formatUsd(row.break_even_cpl),
                                 })}
@@ -709,9 +725,9 @@ export function FinanceInsightsView() {
                           className={`py-2.5 px-3 text-right tabular-nums font-medium ${
                             typeof row.roas === "number"
                               ? row.roas < 1
-                                ? "text-rose-500"
-                                : "text-gray-700 dark:text-gray-300"
-                              : "text-gray-500 dark:text-gray-400"
+                                ? "text-destructive"
+                                : "text-foreground/80"
+                              : "text-muted-foreground"
                           }`}
                         >
                           {typeof row.roas === "number"
@@ -722,9 +738,9 @@ export function FinanceInsightsView() {
                           className={`py-2.5 px-3 text-right tabular-nums font-semibold ${
                             typeof row.profit === "number"
                               ? row.profit < 0
-                                ? "text-rose-600 dark:text-rose-400"
-                                : "text-emerald-600 dark:text-emerald-400"
-                              : "text-gray-500 dark:text-gray-400"
+                                ? "text-destructive"
+                                : "text-success"
+                              : "text-muted-foreground"
                           }`}
                         >
                           {typeof row.profit === "number"
@@ -752,7 +768,7 @@ export function FinanceInsightsView() {
             <div className="overflow-x-auto -mx-4 sm:mx-0">
               <table className="w-full text-sm min-w-[520px]">
                 <thead>
-                  <tr className="text-left text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                  <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground border-b border-border">
                     <th className="py-2.5 px-3 font-medium">
                       {t("insights.platforms.cols.platform")}
                     </th>
@@ -770,7 +786,7 @@ export function FinanceInsightsView() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                <tbody className="divide-y divide-border">
                   {platforms.map((platform) => {
                     // delivery_rate is not exposed by the local platform
                     // endpoint — derive it from delivered / leads.
@@ -783,21 +799,21 @@ export function FinanceInsightsView() {
                     return (
                       <tr
                         key={platform.platform}
-                        className="hover:bg-gray-50/70 dark:hover:bg-gray-800/40 transition-colors"
+                        className="hover:bg-muted/60 transition-colors"
                       >
-                        <td className="py-2.5 px-3 font-medium text-gray-900 dark:text-gray-100">
+                        <td className="py-2.5 px-3 font-medium text-foreground">
                           {platform.platform}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-foreground/80">
                           {formatCount(platform.leads)}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-emerald-600 dark:text-emerald-400">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-success">
                           {formatCount(platform.delivered)}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-500 dark:text-gray-400">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-muted-foreground">
                           {deliveryRate !== null ? `${deliveryRate}%` : "—"}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="py-2.5 px-3 text-right tabular-nums text-foreground/80">
                           {formatUsd(platform.revenue)}
                         </td>
                       </tr>
@@ -839,10 +855,10 @@ function StatCard({
 }) {
   const valueClass =
     tone === "emerald"
-      ? "text-emerald-600 dark:text-emerald-400"
+      ? "text-success"
       : tone === "rose"
-        ? "text-rose-600 dark:text-rose-400"
-        : "text-gray-900 dark:text-gray-100";
+        ? "text-destructive"
+        : "text-foreground";
   const meterLevel =
     typeof meterPct === "number"
       ? meterPct < 50
@@ -854,7 +870,7 @@ function StatCard({
   return (
     <YbCard variant="default">
       <div className="p-3 sm:p-4">
-        <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mb-1">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
           {icon}
           <span className="truncate">{label}</span>
           {hint ? (
@@ -862,21 +878,23 @@ function StatCard({
               <button
                 type="button"
                 aria-label={hint}
-                className="inline-flex flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="inline-flex flex-shrink-0 text-muted-foreground hover:text-foreground"
               >
                 <Info className="w-3.5 h-3.5" />
               </button>
             </YbTooltip>
           ) : null}
         </div>
-        <p className={`text-base sm:text-lg font-bold tabular-nums ${valueClass}`}>
+        <p
+          className={`text-base sm:text-lg font-bold tabular-nums ${valueClass}`}
+        >
           {value}
         </p>
         {typeof change === "number" ? (
           <ChangePct pct={change} invert={invertChange} />
         ) : null}
         {meterLevel === null ? null : (
-          <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+          <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
             <div
               data-testid="delivery-rate-meter"
               className={`h-full rounded-full transition-all duration-300 ${meterBarClass(meterLevel)}`}
@@ -895,9 +913,7 @@ function ChangePct({ pct, invert }: { pct: number; invert?: boolean }) {
   return (
     <div
       className={`mt-1 flex items-center gap-0.5 text-[11px] font-medium ${
-        good
-          ? "text-emerald-600 dark:text-emerald-400"
-          : "text-rose-500 dark:text-rose-400"
+        good ? "text-success" : "text-destructive dark:text-destructive"
       }`}
     >
       {positive ? (
@@ -925,7 +941,9 @@ function SortableTh({
   return (
     <th
       role="columnheader"
-      aria-sort={active ? (sort?.dir === "asc" ? "ascending" : "descending") : "none"}
+      aria-sort={
+        active ? (sort?.dir === "asc" ? "ascending" : "descending") : "none"
+      }
       tabIndex={0}
       onClick={() => onSort(sortKey)}
       onKeyDown={(e: KeyboardEvent<HTMLTableCellElement>) => {
@@ -936,9 +954,7 @@ function SortableTh({
       }}
       className={cn(
         "py-2.5 px-3 font-medium text-right cursor-pointer select-none transition-colors",
-        active
-          ? "text-primary-600 dark:text-primary-400"
-          : "hover:text-gray-600 dark:hover:text-gray-300",
+        active ? "text-primary" : "hover:text-foreground",
       )}
     >
       {label}

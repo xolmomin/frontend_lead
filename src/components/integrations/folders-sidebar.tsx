@@ -43,8 +43,8 @@ function CountBadge({ count, selected }: { count: number; selected: boolean }) {
       className={cn(
         "px-2 py-0.5 text-xs font-medium rounded-full min-w-[1.5rem] text-center flex-shrink-0 tabular-nums",
         selected
-          ? "bg-primary-200 dark:bg-primary-800 text-primary-800 dark:text-primary-200"
-          : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400",
+          ? "bg-primary-200 dark:bg-primary-800 text-primary dark:text-primary-200"
+          : "bg-muted text-muted-foreground",
       )}
     >
       {count}
@@ -67,10 +67,10 @@ function AllFoldersItem({
   const allLabel = t("folders.all");
   const fullLabel = `${allLabel} (${count})`;
   const itemClass = cn(
-    "w-full flex items-center rounded-lg text-sm transition-colors border-l-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40",
+    "w-full flex items-center rounded-lg text-sm transition-colors border-l-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
     selected
-      ? "bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 font-medium border-primary-500"
-      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border-transparent",
+      ? "bg-primary/10 text-primary font-medium border-primary"
+      : "text-foreground/80 hover:bg-muted border-transparent",
   );
 
   if (collapsed) {
@@ -129,23 +129,30 @@ function FolderItem({
   const itemClass = cn(
     "rounded-lg text-sm transition-colors border-l-4",
     selected
-      ? "bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border-primary-500"
-      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border-transparent",
+      ? "bg-primary/10 text-primary border-primary"
+      : "text-foreground/80 hover:bg-muted border-transparent",
   );
 
   if (collapsed) {
     return (
-      <Tip content={`${folder.name} (${count})`} position="right" className="w-full">
+      <Tip
+        content={`${folder.name} (${count})`}
+        position="right"
+        className="w-full"
+      >
         <div
           role="listitem"
-          className={cn(itemClass, "flex w-full items-center justify-center px-2 py-2.5")}
+          className={cn(
+            itemClass,
+            "flex w-full items-center justify-center px-2 py-2.5",
+          )}
         >
           <button
             type="button"
             onClick={onSelect}
             aria-label={`${folder.name} (${count})`}
             aria-current={selected ? "page" : undefined}
-            className="flex items-center justify-center w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40 rounded"
+            className="flex items-center justify-center w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
           >
             <FolderIcon className="w-4 h-4" aria-hidden="true" />
           </button>
@@ -165,7 +172,7 @@ function FolderItem({
         type="button"
         onClick={onSelect}
         aria-current={selected ? "page" : undefined}
-        className="flex-1 flex items-center gap-2 text-left min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40 rounded -mx-1 px-1"
+        className="flex-1 flex items-center gap-2 text-left min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded -mx-1 px-1"
       >
         <FolderIcon className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
         <span className={cn("truncate", selected && "font-medium")}>
@@ -179,7 +186,7 @@ function FolderItem({
             type="button"
             aria-label={`${t("actions.edit")}: ${folder.name}`}
             onClick={onEdit}
-            className="p-1 rounded text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40"
+            className="p-1 rounded text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Pencil className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
@@ -189,7 +196,7 @@ function FolderItem({
             type="button"
             aria-label={`${t("actions.delete")}: ${folder.name}`}
             onClick={onDelete}
-            className="p-1 rounded text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
+            className="p-1 rounded text-destructive hover:bg-destructive-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/40"
           >
             <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
@@ -218,10 +225,7 @@ function EmptyFolders({
             aria-label={t("folders.emptyCTA")}
             className="px-2"
           >
-            <Plus
-              className="w-5 h-5 text-primary-500 dark:text-primary-400"
-              aria-hidden="true"
-            />
+            <Plus className="w-5 h-5 text-primary" aria-hidden="true" />
           </YbButton>
         </Tip>
       </div>
@@ -229,17 +233,14 @@ function EmptyFolders({
   }
   return (
     <div className="px-4 py-8 text-center space-y-4">
-      <div className="mx-auto w-14 h-14 rounded-2xl bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center">
-        <Plus
-          className="w-7 h-7 text-primary-500 dark:text-primary-400"
-          aria-hidden="true"
-        />
+      <div className="mx-auto w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+        <Plus className="w-7 h-7 text-primary" aria-hidden="true" />
       </div>
       <div className="space-y-1">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+        <h3 className="text-sm font-semibold text-foreground">
           {t("folders.emptyTitle")}
         </h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+        <p className="text-xs text-muted-foreground leading-relaxed">
           {t("folders.emptyDescription")}
         </p>
       </div>
@@ -356,10 +357,10 @@ export function FoldersSidebar({
       )}
       aria-label={t("folders.sidebarTitle")}
     >
-      <YbCard className="flex flex-col h-full overflow-hidden p-0">
+      <YbCard padding="none" className="flex flex-col h-full overflow-hidden">
         <YbCardHeader
           className={cn(
-            "flex-shrink-0 mb-0 px-4 py-3 border-b border-gray-200 dark:border-slate-700",
+            "flex-shrink-0 mb-0 px-4 py-3 border-b border-border",
             collapsed && "px-2 py-2",
           )}
         >
@@ -370,7 +371,12 @@ export function FoldersSidebar({
                 {t("folders.sidebarTitle")}
               </YbCardTitle>
             )}
-            <div className={cn("flex items-center gap-1", collapsed && "flex-col w-full")}>
+            <div
+              className={cn(
+                "flex items-center gap-1",
+                collapsed && "flex-col w-full",
+              )}
+            >
               {!collapsed && !isEmpty && (
                 <Tip
                   content={t(
@@ -460,7 +466,7 @@ export function FoldersSidebar({
               {showSearch && (
                 <div className="flex-shrink-0 relative mb-2 px-1">
                   <Search
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none"
                     aria-hidden="true"
                   />
                   <input
@@ -470,14 +476,14 @@ export function FoldersSidebar({
                     onChange={(event) => setSearch(event.target.value)}
                     placeholder={t("folders.sidebarSearchPlaceholder")}
                     aria-label={t("folders.sidebarSearchPlaceholder")}
-                    className="w-full pl-9 pr-8 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+                    className="w-full pl-9 pr-8 py-2 text-sm rounded-lg border border-border bg-card text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-primary"
                   />
                   {search && (
                     <button
                       type="button"
                       onClick={clearSearch}
                       aria-label={t("modal.close")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/40"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <X className="w-3.5 h-3.5" aria-hidden="true" />
                     </button>
@@ -499,7 +505,7 @@ export function FoldersSidebar({
                 )}
                 {noSearchResults && (
                   <p
-                    className="px-3 py-4 text-sm text-center text-gray-500 dark:text-gray-400"
+                    className="px-3 py-4 text-sm text-center text-muted-foreground"
                     role="status"
                     aria-live="polite"
                   >

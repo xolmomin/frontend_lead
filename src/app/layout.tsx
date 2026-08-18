@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
@@ -7,7 +7,18 @@ import { cn } from "@/lib/utils";
 import { pickMessages } from "@/i18n/pick";
 import { Providers } from "@/components/providers";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-sans" });
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-sans",
+});
+
+// Headings only. Cyrillic subset is required — the `ru` locale ships the same
+// markup. Weights are pinned to the four the type scale in globals.css uses.
+const manrope = Manrope({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-heading-family",
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -80,6 +91,7 @@ export default async function RootLayout({
       className={cn(
         "h-full antialiased font-sans",
         inter.variable,
+        manrope.variable,
         geistMono.variable,
       )}
     >

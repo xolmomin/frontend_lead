@@ -21,11 +21,7 @@ import {
   useDomains,
   usePurchaseDomain,
 } from "@/hooks/use-domains";
-import {
-  YbCard,
-  YbCardHeader,
-  YbCardTitle,
-} from "@/components/yb/card";
+import { YbCard, YbCardHeader, YbCardTitle } from "@/components/yb/card";
 import { YbButton } from "@/components/yb/button";
 import { YbBadge } from "@/components/yb/badge";
 import { YbInput } from "@/components/yb/input";
@@ -124,9 +120,7 @@ export function DomainsView() {
         searchValue: (row) => row.name,
         accessor: (row) => (
           <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-900 dark:text-gray-100">
-              {row.name}
-            </span>
+            <span className="font-medium text-foreground">{row.name}</span>
             {isExpired(row) && (
               <YbBadge variant="danger" size="sm">
                 {t("status.expired")}
@@ -142,8 +136,8 @@ export function DomainsView() {
         searchValue: (row) => formatDate(row.created_at),
         accessor: (row) => (
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
+            <Calendar className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">
               {formatDate(row.created_at)}
             </span>
           </div>
@@ -161,15 +155,15 @@ export function DomainsView() {
               <Calendar
                 className={cn(
                   "w-4 h-4",
-                  expired ? "text-red-500" : "text-gray-400",
+                  expired ? "text-destructive" : "text-muted-foreground",
                 )}
               />
               <span
                 className={cn(
                   "text-sm",
                   expired
-                    ? "text-red-600 dark:text-red-400 font-semibold"
-                    : "text-gray-600 dark:text-gray-400",
+                    ? "text-destructive font-semibold"
+                    : "text-muted-foreground",
                 )}
               >
                 {formatDate(row.expires_at)}
@@ -225,25 +219,21 @@ export function DomainsView() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          {t("title")}
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">{t("subtitle")}</p>
+        <h1 className="t-h2 text-foreground mb-2">{t("title")}</h1>
+        <p className="text-muted-foreground">{t("subtitle")}</p>
       </div>
 
       {/* Rules */}
       <YbCard className="border-l-4 border-l-primary-500">
         <YbCardHeader>
-          <YbCardTitle className="text-lg font-bold text-gray-900 dark:text-gray-100">
+          <YbCardTitle className="t-h4 text-foreground">
             {t("rules.title")}
           </YbCardTitle>
         </YbCardHeader>
-        <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+        <ul className="space-y-3 text-foreground/80">
           {(["rule1", "rule2", "rule3"] as const).map((rule) => (
             <li key={rule} className="flex gap-3">
-              <span className="text-primary-600 dark:text-primary-400 font-bold">
-                •
-              </span>
+              <span className="text-primary font-bold">•</span>
               <span>{t(`rules.${rule}`)}</span>
             </li>
           ))}
@@ -284,33 +274,33 @@ export function DomainsView() {
           <div className="mt-8 py-16 flex flex-col items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
             <div className="relative">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 border-4 border-primary-200 dark:border-primary-800 rounded-full animate-ping opacity-20" />
+                <div className="w-32 h-32 border-4 border-primary/35 dark:border-primary-800 rounded-full animate-ping opacity-20" />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-24 h-24 border-4 border-primary-300 dark:border-primary-700 rounded-full animate-pulse" />
+                <div className="w-24 h-24 border-4 border-primary/40 rounded-full animate-pulse" />
               </div>
               <div className="relative w-16 h-16">
-                <Loader2 className="w-16 h-16 text-primary-600 dark:text-primary-400 animate-spin" />
+                <Loader2 className="w-16 h-16 text-primary animate-spin" />
               </div>
             </div>
             <div className="mt-8 text-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              <h3 className="t-h4 text-foreground mb-2">
                 {t("searchingFrom")}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md">
+              <p className="text-sm text-muted-foreground max-w-md">
                 {t("searchingHint")}
               </p>
               <div className="flex items-center justify-center gap-2 mt-4">
                 <div
-                  className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"
+                  className="w-2 h-2 bg-primary rounded-full animate-bounce"
                   style={{ animationDelay: "0s" }}
                 />
                 <div
-                  className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"
+                  className="w-2 h-2 bg-primary rounded-full animate-bounce"
                   style={{ animationDelay: "0.2s" }}
                 />
                 <div
-                  className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"
+                  className="w-2 h-2 bg-primary rounded-full animate-bounce"
                   style={{ animationDelay: "0.4s" }}
                 />
               </div>
@@ -321,7 +311,7 @@ export function DomainsView() {
         {!searching && hasSearched && results.length > 0 && (
           <div className="mt-6 animate-in fade-in duration-300">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="t-h4 text-foreground">
                 {t("searchResults")} ({results.length})
               </h3>
               <YbButton variant="ghost" size="sm" onClick={clearSearch}>
@@ -329,38 +319,41 @@ export function DomainsView() {
                 {t("clear")}
               </YbButton>
             </div>
-            <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-slate-700">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <table className="w-full">
-                <thead className="bg-gray-50 dark:bg-slate-800">
+                <thead className="bg-muted">
                   <tr>
-                    {[t("table.domain"), t("price"), t("status"), t("action")].map(
-                      (header) => (
-                        <th
-                          key={header}
-                          scope="col"
-                          className="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-200"
-                        >
-                          {header}
-                        </th>
-                      ),
-                    )}
+                    {[
+                      t("table.domain"),
+                      t("price"),
+                      t("status"),
+                      t("action"),
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        scope="col"
+                        className="px-6 py-3 text-left text-sm font-semibold text-foreground"
+                      >
+                        {header}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 dark:divide-slate-700 bg-white dark:bg-slate-900">
+                <tbody className="divide-y divide-border bg-card">
                   {results.map((result) => (
                     <tr
                       key={result.name}
-                      className="hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"
+                      className="hover:bg-muted transition-colors"
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <span className="font-medium text-gray-900 dark:text-gray-100">
+                          <span className="font-medium text-foreground">
                             {result.name}
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="text-lg font-semibold text-emerald-600 dark:text-emerald-400">
+                        <span className="text-lg font-semibold text-success">
                           {formatSom(result.price)}
                         </span>
                       </td>
@@ -374,7 +367,7 @@ export function DomainsView() {
                       <td className="px-6 py-4">
                         {result.available ? (
                           <YbButton
-                            variant="secondary"
+                            variant="primary"
                             size="sm"
                             onClick={() => setPurchaseTarget(result)}
                             disabled={purchaseMutation.isPending}
@@ -390,7 +383,7 @@ export function DomainsView() {
                               : t("purchase")}
                           </YbButton>
                         ) : (
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                          <span className="text-sm text-muted-foreground">
                             {t("purchased")}
                           </span>
                         )}
@@ -405,11 +398,9 @@ export function DomainsView() {
 
         {!searching && hasSearched && results.length === 0 && (
           <div className="mt-8 py-12 text-center animate-in fade-in duration-300">
-            <SearchX className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-              {t("noResults")}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <SearchX className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="t-h4 text-foreground mb-2">{t("noResults")}</h3>
+            <p className="text-muted-foreground">
               {t("noResultsMessage", { term: searchTerm })}
             </p>
           </div>
@@ -423,20 +414,17 @@ export function DomainsView() {
         </YbCardHeader>
         {domainsQuery.isLoading ? (
           <div className="py-12 flex flex-col items-center justify-center">
-            <Loader2 className="w-12 h-12 text-primary-600 dark:text-primary-400 mb-4 animate-spin" />
-            <p className="text-gray-600 dark:text-gray-400">{t("loading")}</p>
+            <Loader2 className="w-12 h-12 text-primary mb-4 animate-spin" />
+            <p className="text-muted-foreground">{t("loading")}</p>
           </div>
         ) : domains.length === 0 ? (
           <div className="py-12 text-center">
-            <p className="text-gray-500 dark:text-gray-400 mb-4">
-              {t("empty")}
-            </p>
-            <p className="text-sm text-gray-400 dark:text-gray-500">
-              {t("emptyHint")}
-            </p>
+            <p className="text-muted-foreground mb-4">{t("empty")}</p>
+            <p className="text-sm text-muted-foreground">{t("emptyHint")}</p>
           </div>
         ) : (
           <YbDataTable
+            density="compact"
             data={domains}
             columns={columns}
             searchPlaceholder={t("searchPlaceholder")}
@@ -453,34 +441,34 @@ export function DomainsView() {
         title={`${detailsDomain?.name ?? ""} - ${t("modal.title")}`}
       >
         <div className="space-y-4">
-          <div className="p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+          <div className="p-4 bg-muted rounded-lg">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-gray-600 dark:text-gray-400">
+                <span className="text-muted-foreground">
                   {t("modal.domain")}:
                 </span>
-                <p className="font-semibold text-gray-900 dark:text-gray-100">
+                <p className="font-semibold text-foreground">
                   {detailsDomain?.name}
                 </p>
               </div>
               <div>
-                <span className="text-gray-600 dark:text-gray-400">
+                <span className="text-muted-foreground">
                   {t("modal.purchaseDate")}:
                 </span>
-                <p className="font-semibold text-gray-900 dark:text-gray-100">
+                <p className="font-semibold text-foreground">
                   {detailsDomain && formatDate(detailsDomain.created_at)}
                 </p>
               </div>
               <div>
-                <span className="text-gray-600 dark:text-gray-400">
+                <span className="text-muted-foreground">
                   {t("modal.expirationDate")}:
                 </span>
-                <p className="font-semibold text-gray-900 dark:text-gray-100">
+                <p className="font-semibold text-foreground">
                   {detailsDomain && formatDate(detailsDomain.expires_at)}
                 </p>
               </div>
               <div>
-                <span className="text-gray-600 dark:text-gray-400">
+                <span className="text-muted-foreground">
                   {t("modal.status")}:
                 </span>
                 <div className="mt-1">

@@ -11,6 +11,7 @@ import {
   Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { YbSkeletonRows } from "./skeleton";
 
 const SEARCH_DEBOUNCE = 300;
 
@@ -80,7 +81,7 @@ export function YbPagination({
       )}
     >
       {totalItems && itemsPerPage ? (
-        <div className="text-sm text-gray-700 dark:text-gray-300">
+        <div className="text-sm text-foreground/80">
           {t("table.showing")} <span className="font-medium">{from}</span>{" "}
           {t("table.to")} <span className="font-medium">{to}</span>{" "}
           {t("table.of")} <span className="font-medium">{totalItems}</span>{" "}
@@ -94,10 +95,10 @@ export function YbPagination({
           title={currentPage === 1 ? undefined : t("pagination.previous")}
           className={cn(
             "flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200",
-            "border border-gray-300 dark:border-gray-600",
+            "border border-input",
             currentPage === 1
-              ? "text-gray-400 dark:text-gray-600 cursor-not-allowed"
-              : "text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-500",
+              ? "text-muted-foreground/70 cursor-not-allowed"
+              : "text-foreground/80 hover:bg-primary/10 hover: border-primary",
           )}
         >
           <ChevronLeft className="w-4 h-4" />
@@ -107,7 +108,7 @@ export function YbPagination({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="flex items-center justify-center w-9 h-9 text-gray-500 dark:text-gray-400"
+                className="flex items-center justify-center w-9 h-9 text-muted-foreground"
               >
                 ...
               </span>
@@ -118,15 +119,13 @@ export function YbPagination({
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              title={
-                isActive ? undefined : t("pagination.goToPage", { page })
-              }
+              title={isActive ? undefined : t("pagination.goToPage", { page })}
               className={cn(
                 "flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200",
                 "border text-sm font-medium",
                 isActive
-                  ? "bg-primary-600 text-white border-primary-600 shadow-lg shadow-primary-500/30"
-                  : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-500",
+                  ? "bg-primary text-white border-primary shadow-lg shadow-primary-500/30"
+                  : "border-input text-foreground/80 hover:bg-primary/10 hover: border-primary",
               )}
             >
               {page}
@@ -136,15 +135,13 @@ export function YbPagination({
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          title={
-            currentPage === totalPages ? undefined : t("pagination.next")
-          }
+          title={currentPage === totalPages ? undefined : t("pagination.next")}
           className={cn(
             "flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-200",
-            "border border-gray-300 dark:border-gray-600",
+            "border border-input",
             currentPage === totalPages
-              ? "text-gray-400 dark:text-gray-600 cursor-not-allowed"
-              : "text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-500",
+              ? "text-muted-foreground/70 cursor-not-allowed"
+              : "text-foreground/80 hover:bg-primary/10 hover: border-primary",
           )}
         >
           <ChevronRight className="w-4 h-4" />
@@ -163,6 +160,9 @@ export interface YbColumn<T> {
   searchable?: boolean;
   searchValue?: (row: T) => string;
   sortable?: boolean;
+  /** Right-aligns the column and switches it to tabular figures. */
+  numeric?: boolean;
+  align?: "left" | "center" | "right";
   className?: string;
 }
 
@@ -177,6 +177,15 @@ export interface YbDataTableProps<T> {
   className?: string;
   showPagination?: boolean;
   showSearch?: boolean;
+  /** Row height. `compact` suits long operational lists. */
+  density?: "compact" | "comfortable";
+  /** Keeps the header visible while a long table scrolls. */
+  stickyHeader?: boolean;
+}
+
+// Numeric columns right-align by default so digits line up down the column.
+function alignOf<T>(column: YbColumn<T>): "left" | "center" | "right" {
+  return column.align ?? (column.numeric ? "right" : "left");
 }
 
 // Pull a searchable string out of whatever the accessor rendered.
@@ -201,8 +210,11 @@ export function YbDataTable<T extends object>({
   className,
   showPagination = true,
   showSearch = true,
+  density = "comfortable",
+  stickyHeader = false,
 }: YbDataTableProps<T>) {
   const t = useTranslations("common");
+  const cellPadding = density === "compact" ? "px-4 py-2.5" : "px-6 py-4";
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
@@ -286,12 +298,12 @@ export function YbDataTable<T extends object>({
   const sortIcon = (key: string) =>
     sortKey === key ? (
       sortDir === "asc" ? (
-        <ChevronUp className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+        <ChevronUp className="w-4 h-4 text-primary" />
       ) : (
-        <ChevronDown className="w-4 h-4 text-primary-600 dark:text-primary-400" />
+        <ChevronDown className="w-4 h-4 text-primary" />
       )
     ) : (
-      <ChevronsUpDown className="w-4 h-4 text-gray-400" />
+      <ChevronsUpDown className="w-4 h-4 text-muted-foreground" />
     );
 
   return (
@@ -300,27 +312,27 @@ export function YbDataTable<T extends object>({
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
           {showSearch && (
             <div className="relative w-full sm:w-96">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => changeSearch(e.target.value)}
                 placeholder={searchPlaceholder || t("search")}
                 aria-label={searchPlaceholder || t("search")}
-                className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-card border border-input rounded-xl focus-visible:ring-2 focus-visible:ring-ring dark:focus-visible:ring-ring focus:border-transparent outline-none transition-all"
               />
             </div>
           )}
           {showPagination && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
+              <span className="text-sm text-muted-foreground whitespace-nowrap">
                 {t("table.perPage")}
               </span>
               <select
                 aria-label={t("table.perPage")}
                 value={pageSize}
                 onChange={(e) => changePageSize(Number(e.target.value))}
-                className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent outline-none transition-all text-sm"
+                className="px-3 py-2 bg-card border border-input rounded-lg focus-visible:ring-2 focus-visible:ring-ring dark:focus-visible:ring-ring focus:border-transparent outline-none transition-all text-sm"
               >
                 {pageSizeOptions.map((size) => (
                   <option key={size} value={size}>
@@ -332,9 +344,19 @@ export function YbDataTable<T extends object>({
           )}
         </div>
       )}
-      <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg">
+      <div
+        className={cn(
+          "overflow-x-auto rounded-xl border border-border shadow-e1",
+          stickyHeader && "max-h-[70vh] overflow-y-auto",
+        )}
+      >
         <table className="w-full">
-          <thead className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <thead
+            className={cn(
+              "bg-muted border-b border-border",
+              stickyHeader && "sticky top-0 z-10",
+            )}
+          >
             <tr>
               {columns.map((column) => (
                 <th
@@ -360,13 +382,25 @@ export function YbDataTable<T extends object>({
                         }
                   }
                   className={cn(
-                    "px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-200",
+                    cellPadding,
+                    "text-sm font-semibold text-foreground",
+                    alignOf(column) === "right"
+                      ? "text-right"
+                      : alignOf(column) === "center"
+                        ? "text-center"
+                        : "text-left",
                     column.sortable !== false &&
-                      "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 select-none",
+                      "cursor-pointer select-none transition-colors hover:bg-muted-foreground/10",
                     column.className,
                   )}
                 >
-                  <div className="flex items-center gap-2">
+                  <div
+                    className={cn(
+                      "flex items-center gap-2",
+                      alignOf(column) === "right" && "justify-end",
+                      alignOf(column) === "center" && "justify-center",
+                    )}
+                  >
                     <span>{column.header}</span>
                     {column.sortable !== false && sortIcon(column.key)}
                   </div>
@@ -374,29 +408,24 @@ export function YbDataTable<T extends object>({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
+          <tbody className="divide-y divide-border bg-card">
             {loading ? (
               <tr>
-                <td colSpan={columns.length} className="px-6 py-12 text-center">
-                  <div className="flex items-center justify-center gap-3">
-                    <div className="w-6 h-6 border-3 border-primary-500 border-t-transparent rounded-full animate-spin" />
-                    <span className="text-gray-500 dark:text-gray-400">
-                      {t("table.loading")}
-                    </span>
-                  </div>
+                <td colSpan={columns.length} className="px-6 py-6">
+                  <YbSkeletonRows rows={5} columns={columns.length} />
                 </td>
               </tr>
             ) : paged.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="px-6 py-12 text-center">
                   <div className="flex flex-col items-center gap-2">
-                    <span className="text-gray-500 dark:text-gray-400 text-lg">
+                    <span className="text-muted-foreground text-lg">
                       {emptyMessage || t("table.noData")}
                     </span>
                     {search && (
                       <button
                         onClick={() => changeSearch("")}
-                        className="text-sm text-primary-600 dark:text-primary-400 hover:underline"
+                        className="cursor-pointer text-sm text-primary hover:underline"
                       >
                         {t("table.clearSearch")}
                       </button>
@@ -409,15 +438,19 @@ export function YbDataTable<T extends object>({
                 const record = row as { id?: unknown; pk?: unknown };
                 const key = String(record.id ?? record.pk ?? index);
                 return (
-                  <tr
-                    key={key}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                  >
+                  <tr key={key} className="transition-colors hover:bg-muted/70">
                     {columns.map((column) => (
                       <td
                         key={column.key}
                         className={cn(
-                          "px-6 py-4 text-sm text-gray-900 dark:text-gray-100",
+                          cellPadding,
+                          "text-sm text-foreground",
+                          column.numeric && "t-numeric",
+                          alignOf(column) === "right"
+                            ? "text-right"
+                            : alignOf(column) === "center"
+                              ? "text-center"
+                              : "text-left",
                           column.className,
                         )}
                       >

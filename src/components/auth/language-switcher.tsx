@@ -50,19 +50,19 @@ export function LanguageSwitcher() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-2"
+        className="relative p-2 rounded-lg hover:bg-muted transition-colors flex items-center gap-2"
         title={t("language.switch")}
       >
         <span className="sm:hidden">
           <CurrentFlag className="w-6 h-4 rounded" />
         </span>
-        <span className="hidden sm:flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <span className="hidden sm:flex items-center gap-2 text-sm font-medium text-foreground/80">
           <CurrentFlag className="w-6 h-4 rounded" />
           <span>{current.name}</span>
         </span>
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-2 zoom-in-95 duration-150">
+        <div className="absolute right-0 mt-2 w-48 bg-card rounded-xl shadow-lg border border-border overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-2 zoom-in-95 duration-150">
           <div className="p-2">
             {LANGUAGES.map((lang) => {
               const Flag = lang.Flag;
@@ -74,8 +74,8 @@ export function LanguageSwitcher() {
                   onClick={() => selectLanguage(lang.code)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
                     selected
-                      ? "bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400"
-                      : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                      ? "bg-primary/10 text-primary"
+                      : "hover:bg-muted text-foreground/80"
                   }`}
                 >
                   <Flag className="w-6 h-4 rounded flex-shrink-0" />

@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Zap } from "lucide-react";
+import { Bot, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
 import {
   bitrixLogo,
   facebookLogo,
@@ -23,7 +23,7 @@ function LineDotsX({ extraDelay = 0 }: { extraDelay?: number }) {
       {DOT_DELAYS.map((delay) => (
         <div
           key={delay}
-          className="mk-lead-x absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary-500"
+          className="mk-lead-x absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary"
           style={{
             boxShadow:
               "0 0 14px rgba(20,184,166,0.9), 0 0 4px rgba(20,184,166,1)",
@@ -41,7 +41,7 @@ function LineDotsY({ extraDelay = 0 }: { extraDelay?: number }) {
       {DOT_DELAYS.map((delay) => (
         <div
           key={delay}
-          className="mk-lead-y absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary-500"
+          className="mk-lead-y absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-primary"
           style={{
             boxShadow: "0 0 8px rgba(20,184,166,0.9)",
             animationDelay: `${delay + extraDelay}s`,
@@ -51,6 +51,12 @@ function LineDotsY({ extraDelay = 0 }: { extraDelay?: number }) {
     </>
   );
 }
+
+const LEAD_FLOW_POINTS = [
+  { key: "instant", icon: Zap },
+  { key: "automatic", icon: Bot },
+  { key: "reliable", icon: ShieldCheck },
+] as const;
 
 export function HowLeadsArrive() {
   const t = useTranslations("landing");
@@ -75,10 +81,10 @@ export function HowLeadsArrive() {
       />
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white break-words">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground break-words">
             {t("leadFlow.title")}
           </h2>
-          <p className="mt-3 text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto break-words">
+          <p className="mt-3 text-base text-muted-foreground max-w-2xl mx-auto break-words">
             {t("leadFlow.subtitle")}
           </p>
         </div>
@@ -90,20 +96,20 @@ export function HowLeadsArrive() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={facebookLogo} alt="Facebook" className="w-10 h-10" />
                 <div>
-                  <div className="font-semibold text-gray-900 dark:text-white text-sm">
+                  <div className="font-semibold text-foreground text-sm">
                     Facebook Lead Ads
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-muted-foreground">
                     {t("leadFlow.source")}
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-destructive" />
                 </span>
-                <span className="text-xs text-gray-600 dark:text-gray-400">
+                <span className="text-xs text-muted-foreground">
                   {t("leadFlow.liveLeads")}
                 </span>
               </div>
@@ -155,7 +161,7 @@ export function HowLeadsArrive() {
                 aria-hidden="true"
               />
               <span
-                className="mk-hub-pulse absolute inset-0 rounded-2xl ring-2 ring-primary-400/60"
+                className="mk-hub-pulse absolute inset-0 rounded-2xl ring-2 ring-primary/60"
                 aria-hidden="true"
               />
               <div className="relative w-full h-full rounded-2xl gradient-primary flex items-center justify-center shadow-xl">
@@ -166,10 +172,8 @@ export function HowLeadsArrive() {
               </div>
             </div>
             <div className="mt-4 text-center">
-              <div className="font-bold text-gray-900 dark:text-white">
-                Lidlar
-              </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="font-bold text-foreground">Lidlar</div>
+              <div className="text-xs text-muted-foreground">
                 {t("leadFlow.hub")}
               </div>
             </div>
@@ -199,7 +203,7 @@ export function HowLeadsArrive() {
               <div key={destination.name}>
                 <div className="glass-card px-3 py-3 sm:px-4 flex items-center gap-2 sm:gap-3 min-w-0 relative">
                   <span
-                    className="mk-ping-ring absolute inset-0 rounded-xl border-2 border-green-400/60 pointer-events-none"
+                    className="mk-ping-ring absolute inset-0 rounded-xl border-2 border-success/60 pointer-events-none"
                     style={{ animationDelay: `${index * 0.73}s` }}
                     aria-hidden="true"
                   />
@@ -209,31 +213,34 @@ export function HowLeadsArrive() {
                     alt={destination.name}
                     className="w-8 h-8 flex-shrink-0 relative z-10"
                   />
-                  <span className="font-medium text-sm text-gray-900 dark:text-white truncate relative z-10">
+                  <span className="font-medium text-sm text-foreground truncate relative z-10">
                     {destination.name}
                   </span>
-                  <span
-                    className="mk-check-pulse ml-auto text-sm text-green-600 dark:text-green-400 font-bold flex-shrink-0 relative z-10"
+                  <CheckCircle2
+                    className="mk-check-pulse relative z-10 ml-auto h-4 w-4 flex-shrink-0 text-success"
                     style={{ animationDelay: `${index * 0.73}s` }}
-                  >
-                    ✓
-                  </span>
+                    aria-hidden="true"
+                  />
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-          {(["instant", "automatic", "reliable"] as const).map((key) => (
-            <div
-              key={key}
-              className="text-sm text-gray-600 dark:text-gray-400 break-words"
-            >
-              <span className="font-semibold text-gray-900 dark:text-white">
-                {t(`leadFlow.points.${key}.label`)}
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3">
+          {LEAD_FLOW_POINTS.map(({ key, icon: Icon }) => (
+            <div key={key} className="flex flex-col items-center text-center">
+              <span
+                className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/12 text-primary"
+                aria-hidden="true"
+              >
+                <Icon className="h-5 w-5" />
               </span>
-              {" — "}
-              {t(`leadFlow.points.${key}.text`)}
+              <p className="t-h4 text-foreground">
+                {t(`leadFlow.points.${key}.label`)}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground break-words">
+                {t(`leadFlow.points.${key}.text`)}
+              </p>
             </div>
           ))}
         </div>

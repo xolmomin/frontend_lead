@@ -79,12 +79,17 @@
       "loadFailed": "Ma'lumotlarni yuklashda xatolik yuz berdi"
     },
     "errorBoundary": {
-      "title": "Nimadir noto'g'ri ketdi",
-      "description": "Bu bo'limni yuklab bo'lmadi. Qaytadan urinib ko'ring.",
-      "retry": "Qaytadan urinish",
-      "home": "Bosh sahifaga",
-      "dashboard": "Boshqaruv paneliga",
-      "errorId": "Xato kodi: {digest}"
+      "title": "Xatolik yuz berdi",
+      "description": "Kutilmagan xatolik yuz berdi. Iltimos, sahifani yangilang yoki keyinroq qayta urinib ko'ring.",
+      "errorIdLabel": "Xatolik kodi (qo'llab-quvvatlash uchun):",
+      "copyErrorId": "Kodni nusxalash",
+      "errorIdCopied": "Xatolik kodi nusxalandi",
+      "reload": "Sahifani yangilash",
+      "goHome": "Bosh sahifaga",
+      "tryAgain": "Qayta urinib ko'rish",
+      "supportPrefix": "Muammo davom etsa,",
+      "supportSuffix": "ga murojaat qiling",
+      "devInfo": "Developer Info"
     },
     "accountInactive": "Hisob faol emas",
     "empty": {
@@ -173,19 +178,6 @@
       "switchToLight": "Yorug' rejimga o'tish",
       "switchToDark": "Qorong'i rejimga o'tish",
       "switchToSystem": "Tizim rejimiga o'tish"
-    },
-    "errorBoundary": {
-      "title": "Xatolik yuz berdi",
-      "description": "Kutilmagan xatolik yuz berdi. Iltimos, sahifani yangilang yoki keyinroq qayta urinib ko'ring.",
-      "errorIdLabel": "Xatolik kodi (qo'llab-quvvatlash uchun):",
-      "copyErrorId": "Kodni nusxalash",
-      "errorIdCopied": "Xatolik kodi nusxalandi",
-      "reload": "Sahifani yangilash",
-      "goHome": "Bosh sahifaga",
-      "tryAgain": "Qayta urinib ko'rish",
-      "supportPrefix": "Muammo davom etsa,",
-      "supportSuffix": "ga murojaat qiling",
-      "devInfo": "Developer Info"
     }
   },
   "nav": {
@@ -3040,7 +3032,10 @@
       "light": "Yorug'",
       "dark": "Qorong'i",
       "system": "Tizim"
-    }
+    },
+    "openMenu": "Menyuni ochish",
+    "telegramChannel": "Telegram kanal",
+    "breadcrumb": "Sahifa yo'li"
   },
   "pricing": {
     "title": "Narxlar va To'lovlar",
@@ -3374,15 +3369,15 @@
       "hub": "Avtomatik yo'naltiruvchi",
       "points": {
         "instant": {
-          "label": "⚡ Tezkor",
+          "label": "Tezkor",
           "text": "Lid kelishi bilan bir necha soniyada CRM'ga tushadi"
         },
         "automatic": {
-          "label": "🤖 Avtomatik",
+          "label": "Avtomatik",
           "text": "Qo'lda nusxalash, export/import — endi kerak emas"
         },
         "reliable": {
-          "label": "✅ Ishonchli",
+          "label": "Ishonchli",
           "text": "Xatolik bo'lsa qayta yuboriladi, hech qaysi lid yo'qolmaydi"
         }
       }
@@ -3535,8 +3530,8 @@
       "terms": "Xizmat shartlari",
       "dataDeletion": "Ma'lumotlarni o'chirish",
       "adminContact": "Admin bilan bog'lanish",
-      "copyright": "© 2024-{year} Lidlar.uz",
-      "operator": "Ushbu veb-sayt BULTAKOV IBROHIM tomonidan boshqariladi"
+      "copyright": "© 2026-{year} Lidlar.uz",
+      "operator": "Ushbu veb-sayt"
     }
   },
   "leadPacing": {

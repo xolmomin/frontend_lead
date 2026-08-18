@@ -53,7 +53,12 @@ export default function PeriodChart({
       return <HourlyChart data={data} lang={lang} t={t} />;
     case "weekly":
       return (
-        <DailyChart data={data} lang={lang} t={t} titleKey="charts.weekly.title" />
+        <DailyChart
+          data={data}
+          lang={lang}
+          t={t}
+          titleKey="charts.weekly.title"
+        />
       );
     case "daily":
       return <DailyChart data={data} lang={lang} t={t} />;
@@ -114,8 +119,8 @@ function MonthlyChart({
         <YbCardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
-                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="p-2 rounded-lg bg-success-muted">
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-success" />
               </div>
               <YbCardTitle className="text-base sm:text-xl">
                 {t("charts.monthly.title", { year })}
@@ -163,7 +168,7 @@ function MonthlyChart({
                           className={
                             isCurrent
                               ? ""
-                              : "text-gray-600 dark:text-gray-400 fill-current"
+                              : "text-muted-foreground fill-current"
                           }
                         >
                           {value}
@@ -177,7 +182,7 @@ function MonthlyChart({
                   />
                   <YAxis
                     tick={{ fontSize: 11, fill: "currentColor" }}
-                    className="text-gray-600 dark:text-gray-400"
+                    className="text-muted-foreground"
                     axisLine={false}
                     tickLine={false}
                     allowDecimals={false}
@@ -211,7 +216,8 @@ function YearlyChart({ data, t }: { data: ChartPoint[]; t: Translate }) {
     const map = new Map<number, number>();
     for (const p of data) {
       const year = parseInt(p.date.slice(0, 4), 10);
-      if (!Number.isNaN(year)) map.set(year, (map.get(year) ?? 0) + pointTotal(p));
+      if (!Number.isNaN(year))
+        map.set(year, (map.get(year) ?? 0) + pointTotal(p));
     }
     return Array.from(map.entries())
       .sort((a, b) => a[0] - b[0])
@@ -235,8 +241,8 @@ function YearlyChart({ data, t }: { data: ChartPoint[]; t: Translate }) {
         <YbCardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
-                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="p-2 rounded-lg bg-success-muted">
+                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-success" />
               </div>
               <YbCardTitle className="text-base sm:text-xl">
                 {t("charts.yearly.title")}
@@ -284,7 +290,7 @@ function YearlyChart({ data, t }: { data: ChartPoint[]; t: Translate }) {
                           className={
                             isCurrent
                               ? ""
-                              : "text-gray-600 dark:text-gray-400 fill-current"
+                              : "text-muted-foreground fill-current"
                           }
                         >
                           {value}
@@ -298,7 +304,7 @@ function YearlyChart({ data, t }: { data: ChartPoint[]; t: Translate }) {
                   />
                   <YAxis
                     tick={{ fontSize: 11, fill: "currentColor" }}
-                    className="text-gray-600 dark:text-gray-400"
+                    className="text-muted-foreground"
                     axisLine={false}
                     tickLine={false}
                     allowDecimals={false}
@@ -383,15 +389,15 @@ function HourlyChart({
         <YbCardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/30">
-                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 dark:text-amber-400" />
+              <div className="p-2 rounded-lg bg-primary/12">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-warning" />
               </div>
               <div>
                 <YbCardTitle className="text-base sm:text-xl">
                   {t("charts.hourly.title")}
                 </YbCardTitle>
                 {todayLabel && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {todayLabel}
                   </p>
                 )}
@@ -480,7 +486,7 @@ function HourlyChart({
                             className={
                               isCurrent
                                 ? ""
-                                : "text-gray-600 dark:text-gray-400 fill-current"
+                                : "text-muted-foreground fill-current"
                             }
                           >
                             {value}
@@ -493,7 +499,7 @@ function HourlyChart({
                     />
                     <YAxis
                       tick={{ fontSize: 11, fill: "currentColor" }}
-                      className="text-gray-600 dark:text-gray-400"
+                      className="text-muted-foreground"
                       axisLine={false}
                       tickLine={false}
                       allowDecimals={false}
@@ -535,10 +541,10 @@ function HourlyChart({
               </div>
               {peak && (
                 <div className="mt-3 px-1 flex items-center justify-between text-xs">
-                  <span className="text-gray-500 dark:text-gray-400">
+                  <span className="text-muted-foreground">
                     {t("charts.hourly.peakLabel")}
                   </span>
-                  <span className="font-semibold text-amber-600 dark:text-amber-400">
+                  <span className="font-semibold text-warning">
                     {peak.hour}:00 — {peak.total.toLocaleString()}{" "}
                     {t("charts.hourly.peakUnit")}
                   </span>
@@ -602,15 +608,15 @@ function DailyChart({
         <YbCardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-indigo-100 dark:bg-indigo-900/30">
-                <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400" />
+              <div className="p-2 rounded-lg bg-primary/12">
+                <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               </div>
               <div>
                 <YbCardTitle className="text-base sm:text-xl">
                   {t(titleKey)}
                 </YbCardTitle>
                 {monthLabel && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {monthLabel}
                   </p>
                 )}
@@ -694,9 +700,7 @@ function DailyChart({
                           fontWeight={isToday ? 700 : 400}
                           fill={isToday ? CURRENT_COLOR : "currentColor"}
                           className={
-                            isToday
-                              ? ""
-                              : "text-gray-600 dark:text-gray-400 fill-current"
+                            isToday ? "" : "text-muted-foreground fill-current"
                           }
                         >
                           {value}
@@ -708,7 +712,7 @@ function DailyChart({
                   />
                   <YAxis
                     tick={{ fontSize: 11, fill: "currentColor" }}
-                    className="text-gray-600 dark:text-gray-400"
+                    className="text-muted-foreground"
                     axisLine={false}
                     tickLine={false}
                     allowDecimals={false}
@@ -766,19 +770,19 @@ function TotalSummary({
   return (
     <div className="flex items-center gap-1.5 sm:gap-3">
       <div className="text-right">
-        <p className="text-base sm:text-xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
+        <p className="text-base sm:t-h3 text-foreground leading-tight">
           {total.toLocaleString()}
         </p>
-        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+        <p className="text-[10px] sm:text-xs text-muted-foreground">
           {t("charts.summary.total")}
         </p>
       </div>
       {hasErrors && (
-        <div className="border-l border-gray-200 dark:border-gray-700 pl-1.5 sm:pl-3">
-          <p className="text-base sm:text-xl font-bold text-red-500 leading-tight flex items-center justify-center gap-1">
+        <div className="border-l border-border pl-1.5 sm:pl-3">
+          <p className="text-base sm:text-xl font-bold text-destructive leading-tight flex items-center justify-center gap-1">
             <span>{errors!.toLocaleString()}</span>
           </p>
-          <p className="text-[10px] sm:text-xs text-red-500/80 text-center">
+          <p className="text-[10px] sm:text-xs text-destructive/80 text-center">
             {t("charts.summary.errors")}
           </p>
         </div>
@@ -805,16 +809,16 @@ function SimpleTooltip({
   if (!point) return null;
   const total = point.total ?? 0;
   return (
-    <div className="rounded-lg shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-2 text-xs">
-      <p className="font-semibold text-gray-900 dark:text-gray-100 mb-1.5">
+    <div className="rounded-lg shadow-lg bg-card border border-border px-3 py-2 text-xs">
+      <p className="font-semibold text-foreground mb-1.5">
         {point.tooltipLabel ?? point.label}
       </p>
       <div className="space-y-0.5">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-gray-600 dark:text-gray-400">
+          <span className="text-muted-foreground">
             {t("charts.tooltip.total")}
           </span>
-          <span className="font-bold text-gray-900 dark:text-gray-100">
+          <span className="font-bold text-foreground">
             {total.toLocaleString()}
           </span>
         </div>
@@ -845,47 +849,47 @@ function AreaTooltip({
   const errors = point.errors ?? 0;
   const success = Math.max(0, total - errors);
   return (
-    <div className="rounded-lg shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-3 py-2 text-xs">
-      <p className="font-semibold text-gray-900 dark:text-gray-100 mb-1.5">
+    <div className="rounded-lg shadow-lg bg-card border border-border px-3 py-2 text-xs">
+      <p className="font-semibold text-foreground mb-1.5">
         {point.tooltipLabel ?? point.label}
         {(isCurrentHour || isToday) && (
-          <span className="ml-2 text-[10px] font-normal text-indigo-600 dark:text-indigo-400">
+          <span className="ml-2 text-[10px] font-normal text-primary">
             ({t(isCurrentHour ? "charts.hourly.now" : "charts.today")})
           </span>
         )}
       </p>
       <div className="space-y-0.5">
         <div className="flex items-center justify-between gap-3">
-          <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+          <span className="flex items-center gap-1.5 text-muted-foreground">
             <span
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: SUCCESS_COLOR }}
             />
             {t("charts.legend.success")}
           </span>
-          <span className="font-semibold text-gray-900 dark:text-gray-100">
+          <span className="font-semibold text-foreground">
             {success.toLocaleString()}
           </span>
         </div>
         {errors > 0 && (
           <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+            <span className="flex items-center gap-1.5 text-muted-foreground">
               <span
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: ERROR_COLOR }}
               />
               {t("charts.legend.errors")}
             </span>
-            <span className="font-semibold text-red-500">
+            <span className="font-semibold text-destructive">
               {errors.toLocaleString()}
             </span>
           </div>
         )}
-        <div className="flex items-center justify-between gap-3 pt-1 mt-1 border-t border-gray-200 dark:border-gray-700">
-          <span className="text-gray-600 dark:text-gray-400">
+        <div className="flex items-center justify-between gap-3 pt-1 mt-1 border-t border-border">
+          <span className="text-muted-foreground">
             {t("charts.tooltip.total")}
           </span>
-          <span className="font-bold text-gray-900 dark:text-gray-100">
+          <span className="font-bold text-foreground">
             {total.toLocaleString()}
           </span>
         </div>
@@ -896,7 +900,7 @@ function AreaTooltip({
 
 function ChartEmpty({ icon, message }: { icon: ReactNode; message: string }) {
   return (
-    <div className="h-64 sm:h-72 flex flex-col items-center justify-center text-gray-400 dark:text-gray-600">
+    <div className="h-64 sm:h-72 flex flex-col items-center justify-center text-muted-foreground/70">
       <div className="opacity-50 mb-3">{icon}</div>
       <p className="text-sm text-center max-w-xs">{message}</p>
     </div>

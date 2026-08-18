@@ -3,8 +3,20 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Play, Zap } from "lucide-react";
-import { Button } from "./button";
+import {
+  BarChart3,
+  CheckCircle2,
+  Eye,
+  Inbox,
+  MousePointerClick,
+  PauseCircle,
+  Play,
+  TrendingDown,
+  TrendingUp,
+  Wallet,
+  Zap,
+} from "lucide-react";
+import { YbButton } from "@/components/yb/button";
 import { telegramLogo } from "./brand-logos";
 
 const STATS = [
@@ -13,19 +25,21 @@ const STATS = [
   { valueKey: "hero.stats.setupValue", key: "setup" },
 ] as const;
 
+// Line icons, matching the rest of the product. These were emoji, which read
+// as a placeholder next to a lucide-iconed app.
 const DASHBOARD_STATS = [
-  { emoji: "📥", key: "todayLeads", value: "47" },
-  { emoji: "📊", key: "weekLeads", value: "312" },
-  { emoji: "✅", key: "activeIntegrations", value: "8" },
-  { emoji: "⏸️", key: "pausedIntegrations", value: "2" },
+  { icon: Inbox, key: "todayLeads", value: "47" },
+  { icon: BarChart3, key: "weekLeads", value: "312" },
+  { icon: CheckCircle2, key: "activeIntegrations", value: "8" },
+  { icon: PauseCircle, key: "pausedIntegrations", value: "2" },
 ] as const;
 
 const REPORT_STATS = [
-  { emoji: "💰", key: "spend", value: "$3,842.50" },
-  { emoji: "📊", key: "impressions", value: "87,320" },
-  { emoji: "🖱️", key: "clicks", value: "1,856" },
-  { emoji: "📈", key: "ctr", value: "2.13%" },
-  { emoji: "📉", key: "cpl", value: "$0.86" },
+  { icon: Wallet, key: "spend", value: "$3,842.50" },
+  { icon: Eye, key: "impressions", value: "87,320" },
+  { icon: MousePointerClick, key: "clicks", value: "1,856" },
+  { icon: TrendingUp, key: "ctr", value: "2.13%" },
+  { icon: TrendingDown, key: "cpl", value: "$0.86" },
 ] as const;
 
 const ROTATE_INTERVAL = 4000;
@@ -52,23 +66,23 @@ export function Hero() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="md:grid md:grid-cols-2 md:gap-12 md:items-center">
           <div className="text-center md:text-left">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
+            <h1 className="t-display text-foreground animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
               {t("hero.title1")}
               <br />
               <span className="gradient-text-animated">{t("hero.title2")}</span>
             </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto md:mx-0 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-150">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto md:mx-0 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-150">
               {t("hero.subtitle")}
             </p>
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-300">
               <Link href="/register" className="w-full sm:w-auto">
-                <Button
-                  variant="primary"
+                <YbButton
+                  variant="gradient"
                   size="lg"
                   className="w-full sm:w-auto px-8 py-3.5 text-lg font-bold shadow-lg hover:shadow-xl"
                 >
                   {t("hero.cta")}
-                </Button>
+                </YbButton>
               </Link>
               <a
                 href="#videos"
@@ -79,14 +93,14 @@ export function Hero() {
                 }}
                 className="w-full sm:w-auto"
               >
-                <Button
+                <YbButton
                   variant="ghost"
                   size="md"
                   leftIcon={<Play className="w-4 h-4" aria-hidden="true" />}
                   className="w-full sm:w-auto"
                 >
                   {t("hero.watchVideo")}
-                </Button>
+                </YbButton>
               </a>
             </div>
             <div className="mt-8 sm:mt-12 flex flex-wrap gap-3 sm:gap-6 justify-center md:justify-start animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both delay-500">
@@ -98,7 +112,7 @@ export function Hero() {
                   <div className="text-lg sm:text-2xl font-bold gradient-text">
                     {"value" in stat ? stat.value : t(stat.valueKey)}
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     {t(`hero.stats.${stat.key}`)}
                   </div>
                 </div>
@@ -116,30 +130,37 @@ export function Hero() {
                       <Zap className="w-5 h-5 text-white" aria-hidden="true" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 dark:text-white">
+                      <div className="font-semibold text-foreground">
                         Lidlar
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-muted-foreground">
                         {t("hero.dashboardCard.subtitle")}
                       </div>
                     </div>
                   </div>
-                  <div className="rounded-xl bg-primary-50 dark:bg-slate-700/60 p-4">
-                    <p className="font-semibold text-sm text-gray-900 dark:text-white">
+                  <div className="rounded-xl bg-primary/10 p-4">
+                    <p className="font-semibold text-sm text-foreground">
                       {t("hero.dashboardCard.title")}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {t("hero.dashboardCard.period")}
                     </p>
                     <div className="mt-3 space-y-1.5">
                       {DASHBOARD_STATS.map((stat) => (
                         <p
                           key={stat.key}
-                          className="text-sm text-gray-700 dark:text-gray-300"
+                          className="flex items-center gap-2 text-sm text-foreground/80"
                         >
-                          <span aria-hidden="true">{stat.emoji}</span>{" "}
-                          {t(`hero.dashboardCard.stats.${stat.key}`)}:{" "}
-                          {stat.value}
+                          <stat.icon
+                            className="h-4 w-4 flex-shrink-0 text-primary"
+                            aria-hidden="true"
+                          />
+                          <span className="truncate">
+                            {t(`hero.dashboardCard.stats.${stat.key}`)}
+                          </span>
+                          <span className="t-numeric ml-auto font-medium text-foreground">
+                            {stat.value}
+                          </span>
                         </p>
                       ))}
                     </div>
@@ -158,29 +179,37 @@ export function Hero() {
                       className="w-10 h-10"
                     />
                     <div>
-                      <div className="font-semibold text-gray-900 dark:text-white">
+                      <div className="font-semibold text-foreground">
                         Telegram · Lidlar Bot
                       </div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-muted-foreground">
                         {t("hero.reportCard.subtitle")}
                       </div>
                     </div>
                   </div>
-                  <div className="rounded-xl bg-primary-50 dark:bg-slate-700/60 p-4">
-                    <p className="font-semibold text-sm text-gray-900 dark:text-white">
+                  <div className="rounded-xl bg-primary/10 p-4">
+                    <p className="font-semibold text-sm text-foreground">
                       {t("hero.reportCard.title")}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    <p className="text-xs text-muted-foreground mt-0.5">
                       {t("hero.reportCard.period")}
                     </p>
                     <div className="mt-3 space-y-1.5">
                       {REPORT_STATS.map((stat) => (
                         <p
                           key={stat.key}
-                          className="text-sm text-gray-700 dark:text-gray-300"
+                          className="flex items-center gap-2 text-sm text-foreground/80"
                         >
-                          <span aria-hidden="true">{stat.emoji}</span>{" "}
-                          {t(`hero.reportCard.stats.${stat.key}`)}: {stat.value}
+                          <stat.icon
+                            className="h-4 w-4 flex-shrink-0 text-primary"
+                            aria-hidden="true"
+                          />
+                          <span className="truncate">
+                            {t(`hero.reportCard.stats.${stat.key}`)}
+                          </span>
+                          <span className="t-numeric ml-auto font-medium text-foreground">
+                            {stat.value}
+                          </span>
                         </p>
                       ))}
                     </div>
@@ -192,7 +221,7 @@ export function Hero() {
                   <button
                     key={index}
                     onClick={() => setCard(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${card === index ? "bg-primary-500 w-6" : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400"}`}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${card === index ? "bg-primary w-6" : "bg-muted-foreground/30 hover:bg-muted-foreground/60"}`}
                     aria-label={t(
                       index === 0
                         ? "hero.dashboardCard.subtitle"

@@ -57,17 +57,15 @@ export function ForgotPasswordView() {
   if (sent) {
     return (
       <div className="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-5 duration-500">
-        <YbCard variant="glass" className="p-8 text-center">
+        <YbCard variant="glass" padding="lg" className="text-center">
           <div className="absolute top-4 right-4">
             <LanguageSwitcher />
           </div>
-          <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-green-100 dark:bg-green-900/30">
-            <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
+          <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-success-muted">
+            <CheckCircle2 className="w-10 h-10 text-success" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-            {t("success.codeSent")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
+          <h1 className="t-h3 text-foreground mb-3">{t("success.codeSent")}</h1>
+          <p className="text-muted-foreground mb-8">
             {t("success.codeMessage")}
           </p>
           <div className="space-y-3">
@@ -79,7 +77,7 @@ export function ForgotPasswordView() {
             <button
               type="button"
               onClick={() => setSent(false)}
-              className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400"
+              className="text-sm text-primary hover:text-primary"
             >
               {t("resendCode")}
             </button>
@@ -91,13 +89,13 @@ export function ForgotPasswordView() {
 
   return (
     <div className="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-5 duration-500">
-      <YbCard variant="glass" className="p-8">
+      <YbCard variant="glass" padding="lg">
         <div className="absolute top-4 right-4">
           <LanguageSwitcher />
         </div>
         <Link
           href="/login"
-          className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           {t("backToLogin")}
@@ -113,10 +111,8 @@ export function ForgotPasswordView() {
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            {t("title")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">{t("subtitle")}</p>
+          <h1 className="t-h2 text-foreground mb-2">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("subtitle")}</p>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-5" noValidate>
@@ -135,7 +131,7 @@ export function ForgotPasswordView() {
           />
 
           {formError && (
-            <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+            <p role="alert" className="text-sm text-destructive">
               {formError}
             </p>
           )}
@@ -153,11 +149,11 @@ export function ForgotPasswordView() {
         </form>
 
         <div className="text-center pt-6">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-muted-foreground">
             {t("rememberPassword")}{" "}
             <Link
               href="/login"
-              className="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+              className="font-medium text-primary hover:text-primary"
             >
               {t("backToLogin")}
             </Link>

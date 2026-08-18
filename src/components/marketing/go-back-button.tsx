@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/marketing/button";
+import { YbButton } from "@/components/yb/button";
 
 /**
  * The only client-side bit of the 404 page — router.back() needs a handler.
@@ -12,13 +12,13 @@ import { Button } from "@/components/marketing/button";
 export function GoBackButton({ label }: { label: string }) {
   const router = useRouter();
   return (
-    <Button
+    <YbButton
       variant="outline"
       size="lg"
       leftIcon={<ArrowLeft className="w-5 h-5" />}
       onClick={() => router.back()}
     >
       {label}
-    </Button>
+    </YbButton>
   );
 }

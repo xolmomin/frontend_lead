@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 import { Sidebar } from "./sidebar";
 import { DashboardHeader } from "./header";
 
@@ -30,11 +31,13 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const collapsed = useSyncExternalStore(subscribe, getCollapsed, () => false);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
+    <div className="app-canvas min-h-screen">
       <Sidebar collapsed={collapsed} onToggle={toggleCollapsed} />
       <div
-        className={collapsed ? "md:pl-20" : "md:pl-72"}
-        style={{ transition: "padding-left 0.3s ease" }}
+        className={cn(
+          "transition-[padding] duration-300 ease-out motion-reduce:transition-none",
+          collapsed ? "md:pl-20" : "md:pl-72",
+        )}
       >
         <DashboardHeader />
         <main className="p-3 sm:p-4 md:p-6 lg:p-8 max-w-[1920px] mx-auto">

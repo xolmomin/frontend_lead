@@ -33,14 +33,14 @@ const FaqItem = memo(function FaqItem({
         aria-expanded={isOpen}
         aria-controls={panelId}
       >
-        <span className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white break-words min-w-0">
+        <span className="text-sm sm:text-base font-semibold text-foreground break-words min-w-0">
           {item.question}
         </span>
         <span
           className={`flex-shrink-0 transition-transform duration-250 ${isOpen ? "rotate-180" : ""}`}
         >
           <ChevronDown
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-muted-foreground"
             aria-hidden="true"
           />
         </span>
@@ -53,7 +53,7 @@ const FaqItem = memo(function FaqItem({
       >
         <div className="overflow-hidden">
           <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0">
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               {item.answer}
             </p>
           </div>
@@ -90,17 +90,15 @@ export function Faq() {
   );
 
   return (
-    <section id="faq" className="py-12 sm:py-16 lg:py-20">
+    <section id="faq" className="py-14 sm:py-20 lg:py-28">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLd }}
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-            {t("faq.title")}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <h2 className="t-h1 text-foreground">{t("faq.title")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             {t("faq.subtitle")}
           </p>
         </div>

@@ -4,7 +4,8 @@ import { facebookLogo } from "./brand-logos";
 
 /** "Qanday ishlaydi" — production `howItWorks` 4-step section (id=how). */
 
-type StepIcon = LucideIcon | ((props: { className?: string }) => React.ReactNode);
+type StepIcon =
+  LucideIcon | ((props: { className?: string }) => React.ReactNode);
 
 function FacebookMark({ className }: { className?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
@@ -24,19 +25,17 @@ export function Steps() {
   const steps: StepItem[] = Array.isArray(raw) ? raw : [];
 
   return (
-    <section id="how" className="py-12 sm:py-16 lg:py-20">
+    <section id="how" className="section-muted py-14 sm:py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-            {t("howItWorks.title")}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <h2 className="t-h1 text-foreground">{t("howItWorks.title")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             {t("howItWorks.subtitle")}
           </p>
         </div>
         {/* Mobile: vertical timeline */}
         <div className="md:hidden relative" aria-hidden="true">
-          <div className="absolute left-4 sm:left-5 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700" />
+          <div className="absolute left-4 sm:left-5 top-0 bottom-0 w-0.5 bg-muted" />
           <div className="space-y-6 sm:space-y-8">
             {steps.map((step, index) => {
               const Icon = ICONS[index];
@@ -49,15 +48,15 @@ export function Steps() {
                     <div className="flex items-center gap-2 sm:gap-3 mb-2">
                       {Icon && (
                         <Icon
-                          className="w-5 h-5 text-primary-500 flex-shrink-0"
+                          className="w-5 h-5 text-primary flex-shrink-0"
                           aria-hidden="true"
                         />
                       )}
-                      <h3 className="text-base font-semibold text-gray-900 dark:text-white break-words">
+                      <h3 className="text-base font-semibold text-foreground break-words">
                         {step.title}
                       </h3>
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 break-words">
+                    <p className="text-sm text-muted-foreground break-words">
                       {step.description}
                     </p>
                   </div>
@@ -69,7 +68,7 @@ export function Steps() {
         {/* Desktop: horizontal steps */}
         <div className="hidden md:block">
           <div className="relative">
-            <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200 dark:bg-gray-700" />
+            <div className="absolute top-5 left-0 right-0 h-0.5 bg-muted" />
             <div className="grid grid-cols-4 gap-6 lg:gap-8 relative items-stretch">
               {steps.map((step, index) => {
                 const Icon = ICONS[index];
@@ -79,18 +78,18 @@ export function Steps() {
                       {index + 1}
                     </div>
                     <div className="glass-card p-5 lg:p-6 h-full">
-                      <div className="w-12 h-12 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center mx-auto mb-3">
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
                         {Icon && (
                           <Icon
-                            className="w-6 h-6 text-primary-500"
+                            className="w-6 h-6 text-primary"
                             aria-hidden="true"
                           />
                         )}
                       </div>
-                      <h3 className="text-base lg:text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
+                      <h3 className="text-base lg:t-h4 text-foreground mb-2 text-center">
                         {step.title}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+                      <p className="text-sm text-muted-foreground text-center">
                         {step.description}
                       </p>
                     </div>

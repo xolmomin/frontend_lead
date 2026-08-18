@@ -36,19 +36,19 @@ export function PauseScheduleModal({
   const rows = [
     {
       key: "pause",
-      icon: <Pause className="w-4 h-4 text-orange-500" aria-hidden="true" />,
+      icon: <Pause className="w-4 h-4 text-warning" aria-hidden="true" />,
       label: t("autoPauseLabel"),
       help: t("helpPauseShort"),
     },
     {
       key: "start",
-      icon: <Play className="w-4 h-4 text-green-500" aria-hidden="true" />,
+      icon: <Play className="w-4 h-4 text-success" aria-hidden="true" />,
       label: t("autoStartLabel"),
       help: t("helpStartShort"),
     },
     {
       key: "send",
-      icon: <Send className="w-4 h-4 text-blue-500" aria-hidden="true" />,
+      icon: <Send className="w-4 h-4 text-info" aria-hidden="true" />,
       label: t("autoSendLabel"),
       help: t("helpSendShort"),
     },
@@ -62,11 +62,9 @@ export function PauseScheduleModal({
       size="md"
     >
       <div className="space-y-4">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t("subtitle")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
         {isBulk && scopeNote && (
-          <p className="whitespace-pre-line rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">
+          <p className="whitespace-pre-line rounded-lg bg-warning-muted border border-warning/40 px-3 py-2 text-xs text-warning">
             {scopeNote}
           </p>
         )}
@@ -74,15 +72,15 @@ export function PauseScheduleModal({
           {rows.map((row) => (
             <div
               key={row.key}
-              className="flex items-center justify-between gap-3 p-3 bg-gray-50 dark:bg-gray-900/40 rounded-xl border border-gray-200 dark:border-gray-700"
+              className="flex items-center justify-between gap-3 p-3 bg-muted/40 rounded-xl border border-border"
             >
-              <span className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <span className="flex items-center gap-2 text-sm font-medium text-foreground/80">
                 {row.icon}
                 {row.label}
               </span>
               <select
                 disabled
-                className="px-3 py-1.5 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                className="px-3 py-1.5 text-sm rounded-lg border border-border bg-muted text-muted-foreground cursor-not-allowed"
                 aria-label={row.label}
               >
                 <option>{t("noSchedule")}</option>
@@ -94,13 +92,13 @@ export function PauseScheduleModal({
           type="button"
           onClick={() => setShowHelp((current) => !current)}
           aria-expanded={showHelp}
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-primary-600 dark:text-primary-400 hover:underline"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
         >
           <HelpCircle className="w-3.5 h-3.5" aria-hidden="true" />
           {t("helpToggle")}
         </button>
         {showHelp && (
-          <ul className="space-y-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 px-3 py-2 text-xs text-blue-800 dark:text-blue-200">
+          <ul className="space-y-1.5 rounded-lg bg-info-muted border border-info/30 px-3 py-2 text-xs text-info">
             {rows.map((row) => (
               <li key={row.key}>{row.help}</li>
             ))}

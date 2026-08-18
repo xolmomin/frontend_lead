@@ -33,7 +33,7 @@ export function GoalCard({
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="font-semibold text-gray-900 dark:text-gray-100 truncate">
+              <span className="font-semibold text-foreground truncate">
                 {p.scope_label || t(`scope.${p.scope_type}`)}
               </span>
               <YbBadge variant="secondary" size="sm">
@@ -41,7 +41,7 @@ export function GoalCard({
               </YbBadge>
             </div>
             {p.mode === "custom" && p.period_start && p.period_end ? (
-              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-gray-400">
+              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-muted-foreground">
                 <Calendar className="h-3 w-3 shrink-0" />
                 <span>
                   {formatPeriodDay(p.period_start)}–
@@ -61,7 +61,7 @@ export function GoalCard({
             <button
               type="button"
               onClick={() => onEdit(p)}
-              className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+              className="p-1.5 text-muted-foreground hover:text-foreground"
               aria-label={t("form.edit")}
             >
               <Pencil className="h-4 w-4" />
@@ -69,7 +69,7 @@ export function GoalCard({
             <button
               type="button"
               onClick={() => onDelete(p)}
-              className="p-1.5 text-gray-400 hover:text-red-600"
+              className="p-1.5 text-muted-foreground hover:text-destructive"
               aria-label={t("delete.action")}
             >
               <Trash2 className="h-4 w-4" />
@@ -78,15 +78,15 @@ export function GoalCard({
         </div>
 
         <div className="flex items-end justify-between gap-2">
-          <p className="text-xl font-bold tabular-nums text-gray-900 dark:text-gray-100">
+          <p className="text-xl font-bold tabular-nums text-foreground">
             {formatNumber(p.month_to_date)} / {formatNumber(p.target)}
           </p>
-          <span className="text-sm font-medium text-gray-400">
+          <span className="text-sm font-medium text-muted-foreground">
             {p.plan_pct.toFixed(0)}%
           </span>
         </div>
 
-        <div className="h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+        <div className="h-2 rounded-full bg-muted overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 ${progressBarClass(status.variant)}`}
             style={{ width: `${clampPct(p.plan_pct)}%` }}
@@ -95,20 +95,22 @@ export function GoalCard({
 
         <div className="grid grid-cols-3 gap-2 text-xs">
           <div>
-            <p className="text-gray-400">{t("kpi.today")}</p>
-            <p className="font-semibold tabular-nums text-gray-700 dark:text-gray-200">
+            <p className="text-muted-foreground">{t("kpi.today")}</p>
+            <p className="font-semibold tabular-nums text-foreground">
               {formatNumber(p.today)} / {formatNumber(p.fixed_daily)}
             </p>
           </div>
           <div>
-            <p className="text-gray-400">{t("kpi.projected")}</p>
-            <p className="font-semibold tabular-nums text-gray-700 dark:text-gray-200">
-              {p.projected_pct === null ? "—" : `${p.projected_pct.toFixed(0)}%`}
+            <p className="text-muted-foreground">{t("kpi.projected")}</p>
+            <p className="font-semibold tabular-nums text-foreground">
+              {p.projected_pct === null
+                ? "—"
+                : `${p.projected_pct.toFixed(0)}%`}
             </p>
           </div>
           <div>
-            <p className="text-gray-400">{t("kpi.required")}</p>
-            <p className="font-semibold tabular-nums text-gray-700 dark:text-gray-200">
+            <p className="text-muted-foreground">{t("kpi.required")}</p>
+            <p className="font-semibold tabular-nums text-foreground">
               {p.is_complete || p.is_finished
                 ? "—"
                 : formatNumber(p.required_daily)}
@@ -117,7 +119,7 @@ export function GoalCard({
         </div>
 
         {coverage ? (
-          <p className="flex items-start gap-1 text-[11px] text-amber-600 dark:text-amber-400">
+          <p className="flex items-start gap-1 text-[11px] text-warning">
             <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
             <span>{t(`coverage.${coverage}`)}</span>
           </p>

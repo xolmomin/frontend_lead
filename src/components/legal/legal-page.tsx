@@ -38,7 +38,7 @@ export async function getLegalDocument(
   return t.raw(key) as LegalDocument;
 }
 
-const LINK = "text-primary-600 dark:text-primary-400 hover:underline";
+const LINK = "text-primary hover:underline";
 
 export async function LegalPage({ document }: { document: LegalDocumentKey }) {
   const t = await getTranslations("legal");
@@ -58,27 +58,23 @@ export async function LegalPage({ document }: { document: LegalDocumentKey }) {
           {t("back")}
         </Link>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100">
-          {doc.title}
-        </h1>
+        <h1 className="t-h1 text-foreground">{doc.title}</h1>
 
         {doc.updated ? (
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            {doc.updated}
-          </p>
+          <p className="mt-4 text-sm text-muted-foreground">{doc.updated}</p>
         ) : null}
 
         <div className="mt-8 space-y-8">
           {doc.sections.map((section, index) => (
             <section key={section.title ?? `section-${index}`}>
               {section.title ? (
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                <h2 className="text-xl font-semibold text-foreground mb-3">
                   {section.title}
                 </h2>
               ) : null}
 
               {section.body ? (
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   {section.body}
                   {section.contact === "inline" ? (
                     <>
@@ -93,13 +89,13 @@ export async function LegalPage({ document }: { document: LegalDocumentKey }) {
 
               {section.items ? (
                 section.ordered ? (
-                  <ol className="mt-4 ml-5 list-decimal space-y-2 text-gray-600 dark:text-gray-400">
+                  <ol className="mt-4 ml-5 list-decimal space-y-2 text-muted-foreground">
                     {section.items.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ol>
                 ) : (
-                  <ul className="mt-4 ml-5 list-disc space-y-2 text-gray-600 dark:text-gray-400">
+                  <ul className="mt-4 ml-5 list-disc space-y-2 text-muted-foreground">
                     {section.items.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
@@ -108,7 +104,7 @@ export async function LegalPage({ document }: { document: LegalDocumentKey }) {
               ) : null}
 
               {section.contact === "block" ? (
-                <dl className="mt-4 space-y-2 text-gray-600 dark:text-gray-400">
+                <dl className="mt-4 space-y-2 text-muted-foreground">
                   <div className="flex flex-wrap gap-2">
                     <dt>{t("emailLabel")}</dt>
                     <dd>
@@ -137,7 +133,7 @@ export async function LegalPage({ document }: { document: LegalDocumentKey }) {
         </div>
 
         {doc.effective ? (
-          <p className="mt-10 pt-6 border-t border-gray-200 dark:border-slate-700 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-10 pt-6 border-t border-border text-sm text-muted-foreground">
             {doc.effective}
           </p>
         ) : null}

@@ -51,12 +51,10 @@ function ToggleRow({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50">
+    <div className="flex items-center justify-between p-4 rounded-xl bg-muted/50">
       <div>
-        <p className="font-medium text-gray-900 dark:text-gray-100">{title}</p>
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          {description}
-        </p>
+        <p className="font-medium text-foreground">{title}</p>
+        <p className="text-sm text-muted-foreground">{description}</p>
       </div>
       <label className="relative inline-flex items-center cursor-pointer">
         <input
@@ -65,7 +63,7 @@ function ToggleRow({
           onChange={(e) => onChange(e.target.checked)}
           className="sr-only peer"
         />
-        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-500" />
+        <div className="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer- focus-visible:ring-ring dark:peer- focus-visible:ring-ring rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-input after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
       </label>
     </div>
   );
@@ -227,7 +225,7 @@ function ProductModal({
           onChange={setIsActive}
         />
       </form>
-      <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex justify-end gap-3 pt-4 mt-4 border-t border-border">
         <YbButton type="button" variant="ghost" onClick={onClose}>
           {t("modal.cancel")}
         </YbButton>
@@ -311,13 +309,11 @@ export function ProductsView() {
         searchValue: (row) => row.name,
         accessor: (row) => (
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <Package className="w-5 h-5 text-gray-400" />
+            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+              <Package className="w-5 h-5 text-muted-foreground" />
             </div>
             <div>
-              <p className="font-medium text-gray-900 dark:text-gray-100">
-                {row.name}
-              </p>
+              <p className="font-medium text-foreground">{row.name}</p>
             </div>
           </div>
         ),
@@ -330,27 +326,28 @@ export function ProductsView() {
         accessor: (row) =>
           row.stream ? (
             <div className="flex items-center gap-2">
-              <code className="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-sm">
+              <code className="px-2 py-1 bg-muted rounded text-sm">
                 {row.stream}
               </code>
               <button
                 onClick={() => copyStream(row)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="p-1.5 rounded-lg hover:bg-muted transition-colors"
                 title={t("tooltips.copy")}
               >
                 {copiedId === row.id ? (
-                  <Check className="w-4 h-4 text-green-500" />
+                  <Check className="w-4 h-4 text-success" />
                 ) : (
-                  <Copy className="w-4 h-4 text-gray-500" />
+                  <Copy className="w-4 h-4 text-muted-foreground" />
                 )}
               </button>
             </div>
           ) : (
-            <span className="text-gray-400">—</span>
+            <span className="text-muted-foreground">—</span>
           ),
       },
       {
         key: "price",
+        numeric: true,
         header: t("table.price"),
         sortable: true,
         searchValue: (row) => String(row.price),
@@ -369,7 +366,7 @@ export function ProductsView() {
               {row.delivery_connection.name}
             </YbBadge>
           ) : (
-            <span className="text-gray-400">—</span>
+            <span className="text-muted-foreground">—</span>
           ),
       },
       {
@@ -387,13 +384,13 @@ export function ProductsView() {
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-primary-600 hover:text-primary-700 dark:text-primary-400"
+              className="flex items-center gap-1 text-primary hover:text-primary"
             >
               {row.domain}
               <ExternalLink className="w-3 h-3" />
             </a>
           ) : (
-            <span className="text-gray-400">—</span>
+            <span className="text-muted-foreground">—</span>
           ),
       },
       {
@@ -423,7 +420,7 @@ export function ProductsView() {
                 setEditingProduct(row);
                 setModalOpen(true);
               }}
-              className="p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2 rounded-lg hover:bg-info-muted text-info transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               title={t("tooltips.edit")}
               aria-label={t("tooltips.edit")}
             >
@@ -431,7 +428,7 @@ export function ProductsView() {
             </button>
             <button
               onClick={() => setDeletingProduct(row)}
-              className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2 rounded-lg hover:bg-destructive-muted text-destructive transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               title={t("tooltips.delete")}
               aria-label={t("tooltips.delete")}
             >
@@ -448,12 +445,8 @@ export function ProductsView() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-            {t("title")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            {t("subtitle")}
-          </p>
+          <h1 className="t-h2 text-foreground">{t("title")}</h1>
+          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
         </div>
         <YbButton onClick={openAdd} leftIcon={<Plus className="w-4 h-4" />}>
           {t("addButton")}

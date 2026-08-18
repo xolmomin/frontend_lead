@@ -17,12 +17,20 @@ import {
 import { YbCard, YbCardHeader } from "@/components/yb/card";
 import type { ChartPoint } from "@/lib/api/stats";
 
+// CSS custom properties rather than literals, so the charts follow the active
+// theme — the old hex values were tuned for light mode and stayed put in dark.
+export const SUCCESS_COLOR = "var(--success)";
+export const ERROR_COLOR = "var(--destructive)";
+/** Highlight for the in-progress bar/point. Teal-cyan, not the old indigo. */
+export const CURRENT_COLOR = "var(--chart-2)";
 
-export const SUCCESS_COLOR = "#10b981";
-export const ERROR_COLOR = "#f87171";
-export const CURRENT_COLOR = "#6366f1";
-
-export const PERIODS = ["hourly", "weekly", "daily", "monthly", "yearly"] as const;
+export const PERIODS = [
+  "hourly",
+  "weekly",
+  "daily",
+  "monthly",
+  "yearly",
+] as const;
 export type Period = (typeof PERIODS)[number];
 
 // Local `/stats/chart` query parameters per production tab.
@@ -35,18 +43,99 @@ export const PERIOD_QUERY: Record<Period, { period: string; days: number }> = {
 };
 
 export const MONTHS_FULL: Record<string, string[]> = {
-  uz: ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr"],
-  ru: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  uz: [
+    "Yanvar",
+    "Fevral",
+    "Mart",
+    "Aprel",
+    "May",
+    "Iyun",
+    "Iyul",
+    "Avgust",
+    "Sentabr",
+    "Oktabr",
+    "Noyabr",
+    "Dekabr",
+  ],
+  ru: [
+    "Январь",
+    "Февраль",
+    "Март",
+    "Апрель",
+    "Май",
+    "Июнь",
+    "Июль",
+    "Август",
+    "Сентябрь",
+    "Октябрь",
+    "Ноябрь",
+    "Декабрь",
+  ],
+  en: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
 };
 
 export const MONTHS_SHORT: Record<string, string[]> = {
-  uz: ["Yan", "Fev", "Mar", "Apr", "May", "Iyn", "Iyl", "Avg", "Sen", "Okt", "Noy", "Dek"],
-  ru: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
-  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  uz: [
+    "Yan",
+    "Fev",
+    "Mar",
+    "Apr",
+    "May",
+    "Iyn",
+    "Iyl",
+    "Avg",
+    "Sen",
+    "Okt",
+    "Noy",
+    "Dek",
+  ],
+  ru: [
+    "Янв",
+    "Фев",
+    "Мар",
+    "Апр",
+    "Май",
+    "Июн",
+    "Июл",
+    "Авг",
+    "Сен",
+    "Окт",
+    "Ноя",
+    "Дек",
+  ],
+  en: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
 };
 
-export type Translate = (key: string, values?: Record<string, string | number | Date>) => string;
+export type Translate = (
+  key: string,
+  values?: Record<string, string | number | Date>,
+) => string;
 
 export interface AreaPoint {
   date: string;
@@ -83,24 +172,29 @@ export function PeriodIcon({ period }: { period: Period }) {
   return <BarChart3 className="w-4 h-4" aria-hidden="true" />;
 }
 
-
 const SKELETON_BARS = [35, 55, 78, 62, 45, 70, 88, 50, 32, 60, 75, 48];
 
-export function ChartSkeleton({ icon, tall = false }: { icon: ReactNode; tall?: boolean }) {
+export function ChartSkeleton({
+  icon,
+  tall = false,
+}: {
+  icon: ReactNode;
+  tall?: boolean;
+}) {
   return (
     <YbCard variant="elevated">
       <YbCardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-300 dark:text-gray-600">
+            <div className="p-2 rounded-lg bg-muted text-muted-foreground/50">
               {icon}
             </div>
             <div className="space-y-1.5">
-              <div className="h-4 w-28 sm:w-36 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
-              <div className="h-3 w-16 rounded bg-gray-100 dark:bg-gray-800/60 animate-pulse" />
+              <div className="h-4 w-28 sm:w-36 rounded bg-muted animate-pulse" />
+              <div className="h-3 w-16 rounded bg-muted/60 animate-pulse" />
             </div>
           </div>
-          <div className="h-8 w-12 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+          <div className="h-8 w-12 rounded bg-muted animate-pulse" />
         </div>
       </YbCardHeader>
       <div>
@@ -111,7 +205,10 @@ export function ChartSkeleton({ icon, tall = false }: { icon: ReactNode; tall?: 
             <div
               key={index}
               className="flex-1 rounded-t bg-gradient-to-t from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-800/40 animate-pulse"
-              style={{ height: `${height}%`, animationDelay: `${index * 70}ms` }}
+              style={{
+                height: `${height}%`,
+                animationDelay: `${index * 70}ms`,
+              }}
             />
           ))}
         </div>

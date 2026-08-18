@@ -60,8 +60,8 @@ function SectionHeading({
   children: React.ReactNode;
 }) {
   return (
-    <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 flex items-center justify-center text-xs sm:text-sm font-bold">
+    <h3 className="text-base sm:t-h4 text-foreground flex items-center gap-2">
+      <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs sm:text-sm font-bold">
         {step}
       </span>
       {children}
@@ -70,7 +70,7 @@ function SectionHeading({
 }
 
 const SECTION_CLASS =
-  "space-y-4 p-4 sm:p-5 bg-gray-50 dark:bg-gray-900/50 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-gray-700";
+  "space-y-4 p-4 sm:p-5 bg-muted/50 rounded-xl sm:rounded-2xl border border-border";
 
 /**
  * Add/edit integration modal, ported from the production add-scenario modal:
@@ -425,8 +425,8 @@ export function IntegrationFormModal({
                     className={cn(
                       "w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-sm sm:text-base font-bold transition-all duration-300",
                       stepStatus[step.key]
-                        ? "bg-green-500 text-white shadow-lg shadow-green-500/30"
-                        : "bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400",
+                        ? "bg-success text-white shadow-lg shadow-green-500/30"
+                        : "bg-muted text-muted-foreground",
                     )}
                   >
                     {stepStatus[step.key] ? (
@@ -435,7 +435,7 @@ export function IntegrationFormModal({
                       step.icon
                     )}
                   </div>
-                  <span className="text-[10px] sm:text-xs mt-1.5 text-gray-600 dark:text-gray-400 text-center font-medium">
+                  <span className="text-[10px] sm:text-xs mt-1.5 text-muted-foreground text-center font-medium">
                     {step.label}
                   </span>
                 </div>
@@ -443,9 +443,7 @@ export function IntegrationFormModal({
                   <div
                     className={cn(
                       "flex-1 h-1 rounded-full mx-2 sm:mx-3 transition-all duration-300",
-                      stepStatus[step.key]
-                        ? "bg-green-500"
-                        : "bg-gray-200 dark:bg-gray-700",
+                      stepStatus[step.key] ? "bg-success" : "bg-muted",
                     )}
                   />
                 )}
@@ -455,7 +453,9 @@ export function IntegrationFormModal({
 
           {/* Step 1: source */}
           <div className={SECTION_CLASS}>
-            <SectionHeading step="1">{t("form.stepSourceTitle")}</SectionHeading>
+            <SectionHeading step="1">
+              {t("form.stepSourceTitle")}
+            </SectionHeading>
             <SearchSelect
               label={t("form.source")}
               value={sourceType}
@@ -507,7 +507,7 @@ export function IntegrationFormModal({
                   <div>
                     <label
                       htmlFor={webhookUrlId}
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                      className="block text-sm font-medium text-foreground/80 mb-2"
                     >
                       {t("form.webhookUrl")}
                     </label>
@@ -517,7 +517,7 @@ export function IntegrationFormModal({
                         type="text"
                         value={webhookUrl}
                         readOnly
-                        className="flex-1 px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-xl sm:rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 text-sm touch-manipulation"
+                        className="flex-1 px-3 sm:px-4 py-3 sm:py-2 border border-input rounded-xl sm:rounded-lg bg-muted text-foreground text-sm touch-manipulation"
                       />
                       <YbButton
                         type="button"
@@ -535,11 +535,11 @@ export function IntegrationFormModal({
                     </div>
                   </div>
                 )}
-                <div className="p-3 sm:p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+                <div className="p-3 sm:p-4 bg-warning-muted border border-warning/40 rounded-xl">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                    <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-amber-800 dark:text-amber-200">
+                      <p className="text-sm text-warning">
                         {webhookUrl
                           ? t("webhook.sendDataHint")
                           : t("form.webhookInfo")}
@@ -559,9 +559,9 @@ export function IntegrationFormModal({
                 <div className="sm:col-span-2">
                   <label
                     htmlFor={nameId}
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    className="block text-sm font-medium text-foreground/80 mb-2"
                   >
-                    {t("form.name")} <span className="text-red-500">*</span>
+                    {t("form.name")} <span className="text-destructive">*</span>
                   </label>
                   <input
                     id={nameId}
@@ -576,15 +576,15 @@ export function IntegrationFormModal({
                     onBlur={() => setNameError(validateName(name))}
                     placeholder={t("form.namePlaceholder")}
                     className={cn(
-                      "w-full px-3 sm:px-4 py-3 sm:py-2.5 border rounded-xl sm:rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 text-base sm:text-sm touch-manipulation transition-colors",
+                      "w-full px-3 sm:px-4 py-3 sm:py-2.5 border rounded-xl sm:rounded-lg bg-card text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-base sm:text-sm touch-manipulation transition-colors",
                       nameError
-                        ? "border-red-500 focus:ring-red-500"
-                        : "border-gray-300 dark:border-gray-600",
+                        ? "border-destructive focus-visible:ring-destructive"
+                        : "border-input",
                     )}
                     required
                   />
                   {nameError && (
-                    <p className="mt-1.5 text-sm text-red-500 flex items-center gap-1">
+                    <p className="mt-1.5 text-sm text-destructive flex items-center gap-1">
                       <AlertTriangle className="w-4 h-4" />
                       {nameError}
                     </p>

@@ -82,9 +82,7 @@ export function SettingsView() {
   // A dropped connection and a rejected payload used to produce the same toast,
   // which made "wrong current password" indistinguishable from "you're offline".
   const profileErrorMessage = (error: unknown) =>
-    isNetworkError(error)
-      ? tCommon("errors.network")
-      : t("profile.saveError");
+    isNetworkError(error) ? tCommon("errors.network") : t("profile.saveError");
 
   const passwordErrorMessage = (error: unknown) => {
     if (isNetworkError(error)) return tCommon("errors.network");
@@ -153,7 +151,8 @@ export function SettingsView() {
     if (!user || user.telegram_id) return;
     let interval: ReturnType<typeof setInterval> | null = null;
     const start = () => {
-      if (interval === null) interval = setInterval(() => refreshUser(), 10_000);
+      if (interval === null)
+        interval = setInterval(() => refreshUser(), 10_000);
     };
     const stop = () => {
       if (interval !== null) {
@@ -183,9 +182,7 @@ export function SettingsView() {
   };
   const passwordValid = Object.values(passwordChecks).every(Boolean);
 
-  const handleImageChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
@@ -290,10 +287,8 @@ export function SettingsView() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-          {t("title")}
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">{t("subtitle")}</p>
+        <h1 className="t-h2 text-foreground">{t("title")}</h1>
+        <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -315,7 +310,9 @@ export function SettingsView() {
                   />
                 ) : (
                   <span className="text-3xl sm:text-4xl font-bold text-white">
-                    {initials(user?.name || user?.full_name || user?.email || "U")}
+                    {initials(
+                      user?.name || user?.full_name || user?.email || "U",
+                    )}
                   </span>
                 )}
               </div>
@@ -324,7 +321,7 @@ export function SettingsView() {
                 aria-label={tCommon("actions.upload")}
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploadingImage}
-                className="absolute bottom-0 right-0 p-2 rounded-full bg-primary-500 text-white hover:bg-primary-600 transition-colors shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+                className="absolute bottom-0 right-0 p-2 rounded-full bg-primary text-white hover:bg-primary transition-colors shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {uploadingImage ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -340,26 +337,24 @@ export function SettingsView() {
                 className="hidden"
               />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="t-h4 text-foreground">
               {user?.name || user?.full_name || t("profile.user")}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {user?.email}
-            </p>
+            <p className="text-sm text-muted-foreground">{user?.email}</p>
             <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-primary-500/10 to-secondary-500/10 dark:from-primary-500/20 dark:to-secondary-500/20">
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-muted-foreground">
                 {t("profile.balance")}
               </p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              <p className="t-h3 text-foreground">
                 {formatSum(user?.balance ?? 0) ?? "0"} so&apos;m
               </p>
             </div>
           </div>
         </YbCard>
 
-        <YbCard className="lg:col-span-3 p-0">
+        <YbCard padding="none" className="lg:col-span-3">
           <div className="p-0">
-            <div className="border-b border-gray-200 dark:border-gray-700">
+            <div className="border-b border-border">
               <YbTabs
                 tabs={tabs}
                 active={activeTab}
@@ -369,10 +364,10 @@ export function SettingsView() {
                 className="grid grid-cols-3 sm:flex"
                 tabClassName={({ isActive }) =>
                   cn(
-                    "flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium border-b-2 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500",
+                    "flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-2 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     isActive
-                      ? "border-primary-500 text-primary-600 dark:text-primary-400 bg-primary-50/50 dark:bg-primary-900/20"
-                      : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300",
+                      ? " border-primary text-primary bg-primary/8"
+                      : "border-transparent text-muted-foreground hover:text-foreground/80",
                   )
                 }
               />
@@ -385,7 +380,7 @@ export function SettingsView() {
                   aria-labelledby={tabId(idBase, "profile")}
                   tabIndex={0}
                   onSubmit={handleProfileSubmit}
-                  className="space-y-5 focus:outline-none animate-in fade-in slide-in-from-bottom-2 duration-200"
+                  className="space-y-5 focus-visible:outline-none animate-in fade-in slide-in-from-bottom-2 duration-200"
                 >
                   <YbInput
                     label={t("profile.name")}
@@ -431,13 +426,15 @@ export function SettingsView() {
                         >
                           <path d={TELEGRAM_ICON_PATH} />
                         </svg>
-                        {connectingTelegram ? "..." : t("profile.verifyTelegram")}
+                        {connectingTelegram
+                          ? "..."
+                          : t("profile.verifyTelegram")}
                         <ExternalLink className="w-3.5 h-3.5" />
                       </button>
                     )}
                     {user?.telegram_id && (
                       <div className="flex items-center justify-between gap-2 flex-wrap">
-                        <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                        <div className="flex items-center gap-2 text-sm text-success">
                           <Check className="w-4 h-4" />
                           {t("profile.telegramVerified")}
                         </div>
@@ -481,7 +478,7 @@ export function SettingsView() {
                   aria-labelledby={tabId(idBase, "security")}
                   tabIndex={0}
                   onSubmit={handlePasswordSubmit}
-                  className="space-y-5 focus:outline-none animate-in fade-in slide-in-from-bottom-2 duration-200"
+                  className="space-y-5 focus-visible:outline-none animate-in fade-in slide-in-from-bottom-2 duration-200"
                 >
                   {hasPassword ? (
                     <YbInput
@@ -494,7 +491,7 @@ export function SettingsView() {
                       required
                     />
                   ) : (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       {t("security.setPasswordHint")}
                     </p>
                   )}
@@ -508,8 +505,8 @@ export function SettingsView() {
                     required
                   />
                   {newPassword && (
-                    <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 space-y-2">
-                      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <div className="p-4 rounded-xl bg-muted/50 space-y-2">
+                      <p className="text-sm font-medium text-foreground/80">
                         {t("security.passwordRequirements")}:
                       </p>
                       {requirements.map((req) => (
@@ -518,15 +515,15 @@ export function SettingsView() {
                           className="flex items-center gap-2 text-sm"
                         >
                           {passwordChecks[req.key] ? (
-                            <Check className="w-4 h-4 text-green-500" />
+                            <Check className="w-4 h-4 text-success" />
                           ) : (
-                            <Circle className="w-4 h-4 text-gray-400" />
+                            <Circle className="w-4 h-4 text-muted-foreground" />
                           )}
                           <span
                             className={
                               passwordChecks[req.key]
-                                ? "text-green-600 dark:text-green-400"
-                                : "text-gray-500"
+                                ? "text-success"
+                                : "text-muted-foreground"
                             }
                           >
                             {req.label}
@@ -549,7 +546,9 @@ export function SettingsView() {
                       type="submit"
                       variant="primary"
                       loading={savingPassword}
-                      disabled={!passwordValid || newPassword !== confirmPassword}
+                      disabled={
+                        !passwordValid || newPassword !== confirmPassword
+                      }
                       leftIcon={<Shield className="w-4 h-4" />}
                     >
                       {t(
@@ -568,19 +567,19 @@ export function SettingsView() {
                   id={tabPanelId(idBase, "notifications")}
                   aria-labelledby={tabId(idBase, "notifications")}
                   tabIndex={0}
-                  className="space-y-6 focus:outline-none animate-in fade-in slide-in-from-bottom-2 duration-200"
+                  className="space-y-6 focus-visible:outline-none animate-in fade-in slide-in-from-bottom-2 duration-200"
                 >
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 opacity-60">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-muted/50 opacity-60">
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-gray-900 dark:text-gray-100">
+                        <p className="font-medium text-foreground">
                           {t("notifications.email")}
                         </p>
-                        <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                        <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded-full bg-warning-muted text-warning dark:text-warning">
                           {t("notifications.comingSoonBadge")}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         {t("notifications.emailDescription")}
                       </p>
                     </div>
@@ -588,25 +587,27 @@ export function SettingsView() {
                       <input
                         type="checkbox"
                         checked={emailNotifications}
-                        onChange={(e) => setEmailNotifications(e.target.checked)}
+                        onChange={(e) =>
+                          setEmailNotifications(e.target.checked)
+                        }
                         disabled
                         aria-disabled="true"
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-500" />
+                      <div className="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer- focus-visible:ring-ring dark:peer- focus-visible:ring-ring rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-input after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
                     </label>
                   </div>
-                  <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 opacity-60">
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-muted/50 opacity-60">
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-gray-900 dark:text-gray-100">
+                        <p className="font-medium text-foreground">
                           {t("notifications.sms")}
                         </p>
-                        <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                        <span className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded-full bg-warning-muted text-warning dark:text-warning">
                           {t("notifications.comingSoonBadge")}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         {t("notifications.smsDescription")}
                       </p>
                     </div>
@@ -619,10 +620,10 @@ export function SettingsView() {
                         aria-disabled="true"
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary-500" />
+                      <div className="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer- focus-visible:ring-ring dark:peer- focus-visible:ring-ring rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-input after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary" />
                     </label>
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+                  <p className="text-sm text-muted-foreground italic">
                     {t("notifications.comingSoon")}
                   </p>
                 </div>

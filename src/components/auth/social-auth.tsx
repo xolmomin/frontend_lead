@@ -17,7 +17,7 @@ interface SocialAuthProps {
 }
 
 const BUTTON_CLASS =
-  "w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
+  "w-full flex items-center justify-center gap-3 px-4 py-3 border border-input rounded-xl bg-card hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed";
 
 function TelegramMark() {
   return (
@@ -64,7 +64,11 @@ function FacebookMark() {
   );
 }
 
-export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps) {
+export function SocialAuth({
+  disabled,
+  onBusyChange,
+  onError,
+}: SocialAuthProps) {
   const t = useTranslations("auth.login.socialLogin");
   const tErrors = useTranslations("auth.login.errors");
   const [busy, setBusy] = useState<RedirectProvider | null>(null);
@@ -122,10 +126,10 @@ export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps)
     <>
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300 dark:border-gray-600" />
+          <div className="w-full border-t border-input" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-3 bg-white/80 dark:bg-slate-800/80 text-gray-500 dark:text-gray-400 rounded">
+          <span className="px-3 bg-card/80 text-muted-foreground rounded">
             {t("divider")}
           </span>
         </div>
@@ -134,7 +138,7 @@ export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps)
       {providersQuery.isError && (
         <p
           role="alert"
-          className="mb-3 text-center text-sm text-gray-500 dark:text-gray-400"
+          className="mb-3 text-center text-sm text-muted-foreground"
         >
           {tErrors("generic")}
         </p>
@@ -150,11 +154,11 @@ export function SocialAuth({ disabled, onBusyChange, onError }: SocialAuthProps)
             className={BUTTON_CLASS}
           >
             {busy === b.key ? (
-              <Loader2 className="w-5 h-5 animate-spin text-gray-500" />
+              <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
             ) : (
               b.mark
             )}
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="text-sm font-medium text-foreground/80">
               {b.label}
             </span>
           </button>

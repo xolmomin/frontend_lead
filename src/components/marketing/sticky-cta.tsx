@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
-import { Button } from "./button";
+import { YbButton } from "@/components/yb/button";
 
 /**
  * Mobile-only fixed bottom CTA, shown after scrolling past 600px
@@ -25,14 +25,14 @@ export function StickyCta() {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-3 glass-strong">
       <Link href="/register" className="block">
-        <Button
-          variant="primary"
+        <YbButton
+          variant="gradient"
           size="md"
           className="w-full shadow-glow-sm"
           rightIcon={<ArrowRight className="w-4 h-4" aria-hidden="true" />}
         >
           {t("hero.cta")}
-        </Button>
+        </YbButton>
       </Link>
     </div>
   );

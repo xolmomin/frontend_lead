@@ -31,12 +31,10 @@ const PAGE_SIZE = 20;
 
 const STATUS_CLASSES: Record<OrderStatus, string> = {
   pending: "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400",
-  accepted:
-    "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-  delivered:
-    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-  cancelled: "bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400",
-  archived: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400",
+  accepted: "bg-success-muted text-success dark:text-success",
+  delivered: "bg-success-muted text-success dark:text-success",
+  cancelled: "bg-destructive-muted text-destructive dark:text-destructive",
+  archived: "bg-muted text-muted-foreground",
 };
 
 export function OrdersView() {
@@ -68,19 +66,17 @@ export function OrdersView() {
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2 min-w-0">
-          <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex-shrink-0">
-            <ShoppingCart className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-2 rounded-lg bg-success-muted flex-shrink-0">
+            <ShoppingCart className="w-5 h-5 text-success" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {t("orders.title")}
-            </h1>
-            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+            <h1 className="t-h3 text-foreground">{t("orders.title")}</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
               {t("orders.subtitle")}
             </p>
           </div>
         </div>
-        <div className="inline-flex rounded-lg bg-gray-100 dark:bg-gray-800 p-0.5 gap-0.5 flex-shrink-0 self-start sm:self-auto">
+        <div className="inline-flex rounded-lg bg-muted p-0.5 gap-0.5 flex-shrink-0 self-start sm:self-auto">
           {FINANCE_WINDOWS.map((window) => (
             <button
               key={window}
@@ -88,8 +84,8 @@ export function OrdersView() {
               onClick={() => withPageReset(() => setWindowSel(window))}
               className={`text-xs px-3 py-1.5 rounded-md transition-colors ${
                 window === windowSel
-                  ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm font-medium"
-                  : "text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                  ? "bg-card text-primary shadow-sm font-medium"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {t(`insights.window.${window}`)}
@@ -122,7 +118,7 @@ export function OrdersView() {
             {t("orders.title")}
           </YbCardTitle>
           {total > 0 ? (
-            <span className="text-xs text-gray-400 dark:text-gray-500 tabular-nums">
+            <span className="text-xs text-muted-foreground tabular-nums">
               {t("orders.page_info", {
                 from: fromIndex,
                 to: toIndex,
@@ -138,8 +134,8 @@ export function OrdersView() {
             </div>
           ) : orders.length === 0 ? (
             <div className="py-12 text-center">
-              <Inbox className="w-10 h-10 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <Inbox className="w-10 h-10 mx-auto mb-3 text-muted-foreground/50" />
+              <p className="text-sm text-muted-foreground">
                 {t("orders.empty")}
               </p>
             </div>
@@ -148,7 +144,7 @@ export function OrdersView() {
               <div className="overflow-x-auto -mx-4 sm:mx-0">
                 <table className="w-full text-sm min-w-[640px]">
                   <thead>
-                    <tr className="text-left text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                    <tr className="text-left text-xs uppercase tracking-wide text-muted-foreground border-b border-border">
                       <th className="py-2.5 px-3 font-medium">
                         {t("orders.cols.order_id")}
                       </th>
@@ -166,23 +162,23 @@ export function OrdersView() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                  <tbody className="divide-y divide-border">
                     {orders.map((order, index) => (
                       <tr
                         key={`${order.id ?? "na"}-${index}`}
-                        className="hover:bg-gray-50/70 dark:hover:bg-gray-800/40 transition-colors"
+                        className="hover:bg-muted/60 transition-colors"
                       >
-                        <td className="py-2.5 px-3 font-mono text-xs text-gray-700 dark:text-gray-300">
+                        <td className="py-2.5 px-3 font-mono text-xs text-foreground/80">
                           {order.external_id || "—"}
                         </td>
-                        <td className="py-2.5 px-3 text-gray-700 dark:text-gray-300 max-w-[200px] truncate">
+                        <td className="py-2.5 px-3 text-foreground/80 max-w-[200px] truncate">
                           {order.campaign || "—"}
                         </td>
                         <td className="py-2.5 px-3">
                           <span
                             className={`inline-block px-2 py-0.5 rounded-full text-[11px] font-medium ${
                               STATUS_CLASSES[order.status] ||
-                              "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                              "bg-muted text-muted-foreground"
                             }`}
                           >
                             {statusLabel(order.status)}
@@ -190,34 +186,36 @@ export function OrdersView() {
                         </td>
                         <td className="py-2.5 px-3 text-right tabular-nums font-medium">
                           {order.status === "delivered" ? (
-                            <span className="text-emerald-600 dark:text-emerald-400">
+                            <span className="text-success">
                               {formatUsd(order.payout)}
                             </span>
                           ) : order.status === "accepted" ? (
                             <span
-                              className="text-amber-600 dark:text-amber-400"
+                              className="text-warning"
                               title={t("orders.payout_hold")}
                             >
                               {formatUsd(order.payout)}
                             </span>
                           ) : (
                             <span
-                              className="text-gray-400 dark:text-gray-600"
+                              className="text-muted-foreground/70"
                               title={t("orders.payout_none")}
                             >
                               —
                             </span>
                           )}
                         </td>
-                        <td className="py-2.5 px-3 text-right tabular-nums text-gray-500 dark:text-gray-400">
-                          {order.created_at ? order.created_at.slice(0, 10) : "—"}
+                        <td className="py-2.5 px-3 text-right tabular-nums text-muted-foreground">
+                          {order.created_at
+                            ? order.created_at.slice(0, 10)
+                            : "—"}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <div className="flex items-center justify-between pt-4 mt-2 border-t border-gray-100 dark:border-gray-800">
+              <div className="flex items-center justify-between pt-4 mt-2 border-t border-border">
                 <YbButton
                   variant="secondary"
                   size="sm"
@@ -227,7 +225,9 @@ export function OrdersView() {
                 >
                   {t("orders.prev")}
                 </YbButton>
-                <span className="text-xs text-gray-400 tabular-nums">{page}</span>
+                <span className="text-xs text-muted-foreground tabular-nums">
+                  {page}
+                </span>
                 <YbButton
                   variant="secondary"
                   size="sm"
@@ -261,8 +261,8 @@ function FilterChip({
       onClick={onClick}
       className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
         active
-          ? "bg-primary-600 border-primary-600 text-white"
-          : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-primary-400"
+          ? "bg-primary border-primary text-white"
+          : "bg-card border-border text-foreground/75 hover:border-primary/60"
       }`}
     >
       {children}

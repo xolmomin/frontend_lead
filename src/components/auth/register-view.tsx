@@ -29,9 +29,9 @@ function passwordStrength(value: string): Strength {
 }
 
 const STRENGTH_BAR: Record<Strength, string> = {
-  weak: "bg-red-500",
-  medium: "bg-yellow-500",
-  strong: "bg-green-500",
+  weak: "bg-destructive",
+  medium: "bg-warning",
+  strong: "bg-success",
 };
 
 export function RegisterView() {
@@ -73,7 +73,8 @@ export function RegisterView() {
     if (!values.email) errors.email = v("emailRequired");
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email))
       errors.email = v("emailInvalid");
-    if (!values.phone || values.phone === "998") errors.phone = v("phoneRequired");
+    if (!values.phone || values.phone === "998")
+      errors.phone = v("phoneRequired");
     else if (!/^998\d{9}$/.test(values.phone)) errors.phone = v("phoneInvalid");
     if (!values.password) errors.password = v("passwordRequired");
     else if (values.password.length < 10) errors.password = v("passwordMin");
@@ -120,7 +121,7 @@ export function RegisterView() {
 
   return (
     <div className="w-full max-w-md relative z-10 py-12 animate-in fade-in slide-in-from-bottom-5 duration-500">
-      <YbCard variant="glass" className="p-8">
+      <YbCard variant="glass" padding="lg">
         <div className="absolute top-4 right-4">
           <LanguageSwitcher />
         </div>
@@ -135,12 +136,8 @@ export function RegisterView() {
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            {t("register.title")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t("register.subtitle")}
-          </p>
+          <h1 className="t-h2 text-foreground mb-2">{t("register.title")}</h1>
+          <p className="text-muted-foreground">{t("register.subtitle")}</p>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-5" noValidate>
@@ -193,21 +190,21 @@ export function RegisterView() {
             {password && !fieldErrors.password && (
               <div className="mt-2">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">
+                  <span className="text-xs text-muted-foreground">
                     {t("register.passwordStrength")}
                   </span>
                   <span
                     className={cn(
                       "text-xs font-medium",
-                      strength === "weak" && "text-red-600",
-                      strength === "medium" && "text-yellow-600",
-                      strength === "strong" && "text-green-600",
+                      strength === "weak" && "text-destructive",
+                      strength === "medium" && "text-warning",
+                      strength === "strong" && "text-success",
                     )}
                   >
                     {strengthLabel[strength]}
                   </span>
                 </div>
-                <div className="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                   <div
                     className={cn(
                       "h-full transition-all duration-300",
@@ -242,21 +239,21 @@ export function RegisterView() {
               <input
                 type="checkbox"
                 name="termsAccepted"
-                className="w-4 h-4 mt-0.5 text-primary-600 border-gray-300 rounded focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+                className="w-4 h-4 mt-0.5 text-primary border-input rounded focus-visible:ring-2 focus-visible:ring-ring"
                 disabled={submitting}
               />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+              <span className="ml-2 text-sm text-foreground/80">
                 {t("register.termsAgreement")}{" "}
                 <Link
                   href="/terms-of-service"
-                  className="text-primary-600 hover:text-primary-700 dark:text-primary-400"
+                  className=" text-primary hover:text-primary"
                 >
                   {t("register.termsLink")}
                 </Link>{" "}
                 {t("register.and")}{" "}
                 <Link
                   href="/privacy-policy"
-                  className="text-primary-600 hover:text-primary-700 dark:text-primary-400"
+                  className=" text-primary hover:text-primary"
                 >
                   {t("register.privacyLink")}
                 </Link>
@@ -264,14 +261,14 @@ export function RegisterView() {
               </span>
             </label>
             {fieldErrors.termsAccepted && (
-              <p className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+              <p className="mt-1.5 text-sm text-destructive">
                 {fieldErrors.termsAccepted}
               </p>
             )}
           </div>
 
           {formError && (
-            <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+            <p role="alert" className="text-sm text-destructive">
               {formError}
             </p>
           )}
@@ -296,11 +293,11 @@ export function RegisterView() {
           />
 
           <div className="text-center pt-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-muted-foreground">
               {t("register.haveAccount")}{" "}
               <Link
                 href="/login"
-                className="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                className="font-medium text-primary hover:text-primary"
               >
                 {t("register.signIn")}
               </Link>
@@ -310,9 +307,7 @@ export function RegisterView() {
       </YbCard>
 
       <div className="text-center mt-8 animate-in fade-in duration-500 delay-500 fill-mode-both">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t("register.footer")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("register.footer")}</p>
       </div>
     </div>
   );

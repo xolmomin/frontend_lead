@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
-import { Button } from "./button";
+import { YbButton } from "@/components/yb/button";
 
 /** "Hoziroq bepul boshlang!" — production `cta` banner. */
 export function Cta() {
@@ -32,16 +32,16 @@ export function Cta() {
             </div>
             <div className="flex-shrink-0 text-center md:text-right">
               <Link href="/register">
-                <Button
+                <YbButton
                   variant="outline"
                   size="lg"
-                  className="bg-white text-primary-700 border-white hover:bg-white/90 shadow-glow-sm"
+                  className="bg-white text-primary border-white hover:bg-white/90 shadow-glow-sm"
                   rightIcon={
                     <ArrowRight className="w-5 h-5" aria-hidden="true" />
                   }
                 >
                   {t("cta.button")}
-                </Button>
+                </YbButton>
               </Link>
             </div>
           </div>

@@ -70,8 +70,8 @@ export function IntegrationStatusBadge({
       variant="outline"
       className={cn(
         status === "active"
-          ? "border-emerald-600/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
-          : "border-amber-600/30 bg-amber-500/10 text-amber-700 dark:text-amber-400",
+          ? "border-success/30 bg-success/10 text-success"
+          : "border-warning/30 bg-warning/10 text-warning",
       )}
     >
       {status === "active" ? t("active") : t("paused")}
@@ -80,12 +80,10 @@ export function IntegrationStatusBadge({
 }
 
 const leadStatusClasses: Record<LeadStatus, string> = {
-  pending:
-    "border-amber-600/30 bg-amber-500/10 text-amber-700 dark:text-amber-400",
-  delivered:
-    "border-emerald-600/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  pending: "border-warning/30 bg-warning/10 text-warning",
+  delivered: "border-success/30 bg-success/10 text-success",
   failed: "border-destructive/30 bg-destructive/10 text-destructive",
-  paused_hold: "border-sky-600/30 bg-sky-500/10 text-sky-700 dark:text-sky-400",
+  paused_hold: "border-info/30 bg-info-muted text-info",
 };
 
 export function LeadStatusBadge({ status }: { status: LeadStatus }) {

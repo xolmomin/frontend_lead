@@ -32,11 +32,10 @@ const TARGET_MAX = "Maqsad juda katta";
 const SCOPE_REQUIRED = "Qamrov qiymatini tanlang";
 
 const SELECT_CLASS =
-  "w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100";
+  "w-full px-3 py-2 text-sm rounded-lg border border-border bg-card text-foreground";
 const READONLY_FIELD_CLASS =
-  "w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300";
-const LABEL_CLASS =
-  "block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1";
+  "w-full px-3 py-2 text-sm rounded-lg border border-border bg-muted text-foreground/80";
+const LABEL_CLASS = "block text-xs font-medium text-foreground/75 mb-1";
 
 export function GoalFormModal({
   goal,
@@ -74,7 +73,8 @@ export function GoalFormModal({
           label: integration.name,
         }))
       : [];
-  const scopeOptionsLoading = scopeType === "form" && integrationsQuery.isLoading;
+  const scopeOptionsLoading =
+    scopeType === "form" && integrationsQuery.isLoading;
   const formCoverage = coverageNote(
     scopeType === "ad_account" ? "paid_only" : null,
   );
@@ -183,18 +183,18 @@ export function GoalFormModal({
                     ))}
                   </select>
                   {!scopeOptionsLoading && scopeOptions.length === 0 ? (
-                    <p className="text-[11px] text-gray-400 mt-1">
+                    <p className="text-[11px] text-muted-foreground mt-1">
                       {t("form.scopeValueEmpty")}
                     </p>
                   ) : null}
                   {errors.scopeId ? (
-                    <p className="text-[11px] text-red-500 mt-1">
+                    <p className="text-[11px] text-destructive mt-1">
                       {errors.scopeId}
                     </p>
                   ) : null}
                 </div>
                 {formCoverage ? (
-                  <p className="flex items-start gap-1 text-[11px] text-amber-600 dark:text-amber-400">
+                  <p className="flex items-start gap-1 text-[11px] text-warning">
                     <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
                     <span>{t(`coverage.${formCoverage}`)}</span>
                   </p>
@@ -229,15 +229,15 @@ export function GoalFormModal({
                   onClick={() => setMode(value)}
                   className={`px-3 py-2 text-sm rounded-lg border transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                     mode === value
-                      ? "border-primary-500 bg-primary-50 dark:bg-primary-500/10 text-primary-700 dark:text-primary-300 font-medium"
-                      : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300"
+                      ? " border-primary bg-primary-50/10 text-primary font-medium"
+                      : "border-border bg-card text-foreground/75"
                   }`}
                 >
                   {t(`mode.${value}`)}
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-gray-400 mt-1">
+            <p className="text-[11px] text-muted-foreground mt-1">
               {t(mode === "custom" ? "mode.customHint" : "mode.monthlyHint")}
             </p>
           </div>
@@ -273,11 +273,11 @@ export function GoalFormModal({
               type="checkbox"
               defaultChecked
               disabled
-              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500/40"
+              className="mt-0.5 h-4 w-4 rounded border-input text-primary focus-visible:ring-ring"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+            <span className="text-sm text-foreground/80">
               {t("form.recurring")}
-              <span className="block text-[11px] text-gray-400">
+              <span className="block text-[11px] text-muted-foreground">
                 {t("form.recurringHint")}
               </span>
             </span>

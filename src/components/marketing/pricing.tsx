@@ -5,7 +5,9 @@ import { useTranslations } from "next-intl";
 import { Check, Crown, TrendingUp, Zap, type LucideIcon } from "lucide-react";
 import { usePlans } from "@/hooks/use-billing";
 import type { BillingPlan } from "@/lib/api/billing";
-import { Button } from "./button";
+import { YbButton } from "@/components/yb/button";
+import { YbCard } from "@/components/yb/card";
+import { cn } from "@/lib/utils";
 
 /** "Tarif rejalar" — production `pricing` section (id=pricing). */
 
@@ -20,10 +22,38 @@ interface DisplayPlan {
 
 /** Production plan data, used until the billing API responds. */
 const FALLBACK_PLANS: DisplayPlan[] = [
-  { id: 0, name: "Boshlang'ich", price: 0, limit: 1000, isFree: true, isUnlimited: false },
-  { id: 1, name: "Professional", price: 49000, limit: 5000, isFree: false, isUnlimited: false },
-  { id: 2, name: "Biznes", price: 69000, limit: 10000, isFree: false, isUnlimited: false },
-  { id: 3, name: "Korporativ", price: 89000, limit: null, isFree: false, isUnlimited: true },
+  {
+    id: 0,
+    name: "Boshlang'ich",
+    price: 0,
+    limit: 1000,
+    isFree: true,
+    isUnlimited: false,
+  },
+  {
+    id: 1,
+    name: "Professional",
+    price: 49000,
+    limit: 5000,
+    isFree: false,
+    isUnlimited: false,
+  },
+  {
+    id: 2,
+    name: "Biznes",
+    price: 69000,
+    limit: 10000,
+    isFree: false,
+    isUnlimited: false,
+  },
+  {
+    id: 3,
+    name: "Korporativ",
+    price: 89000,
+    limit: null,
+    isFree: false,
+    isUnlimited: true,
+  },
 ];
 
 const REGISTER_LINKS: Record<number, string> = {
@@ -87,18 +117,16 @@ export function Pricing() {
   };
 
   return (
-    <section id="pricing" className="py-12 sm:py-16 lg:py-20">
+    <section id="pricing" className="py-14 sm:py-20 lg:py-28">
       <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-            {t("pricing.title")}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <h2 className="t-h1 text-foreground">{t("pricing.title")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             {t("pricing.subtitle")}
           </p>
-          <div className="mt-8 inline-flex items-center gap-1 p-1 rounded-xl bg-gray-100 dark:bg-slate-800">
+          <div className="mt-8 inline-flex items-center gap-1 p-1 rounded-xl bg-muted">
             <button
-              className="px-4 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center bg-white dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm"
+              className="px-4 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center bg-card text-foreground shadow-sm"
               aria-current="true"
             >
               {t("pricing.monthly")}
@@ -106,7 +134,7 @@ export function Pricing() {
             <button
               disabled
               aria-disabled="true"
-              className="px-4 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+              className="px-4 py-2 rounded-lg text-sm font-medium min-h-[44px] flex items-center gap-2 text-muted-foreground cursor-not-allowed"
             >
               {t("pricing.yearly")}
               <span className="text-xs font-semibold text-white bg-gradient-to-r from-primary-500 to-secondary-500 px-2 py-0.5 rounded-full">
@@ -119,12 +147,18 @@ export function Pricing() {
           {plans.map((plan, index) => {
             const { Icon, gradient } = planVisual(plan, index);
             const href =
-              REGISTER_LINKS[Number(plan.id)] ?? REGISTER_LINKS[index] ?? "/register";
+              REGISTER_LINKS[Number(plan.id)] ??
+              REGISTER_LINKS[index] ??
+              "/register";
             const features = featuresFor(plan);
             return (
               <div key={plan.id}>
-                <div
-                  className={`rounded-xl p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm relative overflow-hidden h-full flex flex-col ${plan.isUnlimited ? "ring-2 ring-primary-500 dark:ring-primary-400" : ""}`}
+                <YbCard
+                  variant={plan.isUnlimited ? "elevated" : "default"}
+                  className={cn(
+                    "relative flex h-full flex-col overflow-hidden",
+                    plan.isUnlimited && "ring-2 ring-primary lg:-my-2 lg:py-8",
+                  )}
                 >
                   {plan.isUnlimited && (
                     <div className="absolute top-0 right-0">
@@ -140,26 +174,24 @@ export function Pricing() {
                       <Icon className="w-7 h-7 text-white" />
                     </div>
                     <div className="mb-4">
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
-                        {plan.name}
-                      </h3>
+                      <h3 className="t-h2 text-foreground mb-1">{plan.name}</h3>
                     </div>
                     <div className="mb-6">
                       {plan.isFree ? (
-                        <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                        <span className="text-4xl font-bold text-foreground">
                           {t("pricing.free")}
                         </span>
                       ) : (
                         <div className="flex items-baseline gap-1">
-                          <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+                          <span className="text-4xl font-bold text-foreground">
                             {formatNumber(plan.price)}
                           </span>
-                          <span className="text-gray-600 dark:text-gray-400">
+                          <span className="text-muted-foreground">
                             {t("pricing.perMonth")}
                           </span>
                         </div>
                       )}
-                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-2">
+                      <p className="text-sm font-medium text-muted-foreground mt-2">
                         {plan.isUnlimited
                           ? t("pricing.unlimitedLeads")
                           : t("pricing.leadsPerMonth", {
@@ -182,7 +214,7 @@ export function Pricing() {
                                 aria-hidden="true"
                               />
                             </div>
-                            <span className="text-sm text-gray-700 dark:text-gray-300 break-words min-w-0">
+                            <span className="text-sm text-foreground/80 break-words min-w-0">
                               {feature}
                             </span>
                           </li>
@@ -190,16 +222,16 @@ export function Pricing() {
                       </ul>
                     </div>
                     <Link href={href} className="block">
-                      <Button
+                      <YbButton
                         variant={plan.isUnlimited ? "primary" : "outline"}
                         size="md"
                         className="w-full"
                       >
                         {t("pricing.choose")}
-                      </Button>
+                      </YbButton>
                     </Link>
                   </div>
-                </div>
+                </YbCard>
               </div>
             );
           })}

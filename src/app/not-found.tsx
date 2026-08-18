@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { House, Search } from "lucide-react";
-import { Button } from "@/components/marketing/button";
+import { YbButton } from "@/components/yb/button";
 import { GoBackButton } from "@/components/marketing/go-back-button";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,64 +30,59 @@ export default async function NotFound() {
           </div>
         </div>
         <div className="mb-8 animate-in fade-in duration-500 fill-mode-both delay-300">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {t("notFound.title")}
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">
+          <p className="text-lg text-muted-foreground mb-2">
             {t("notFound.description")}
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            {t("notFound.hint")}
-          </p>
+          <p className="text-sm text-muted-foreground">{t("notFound.hint")}</p>
         </div>
         <div
           className="mb-8 animate-in fade-in zoom-in-90 duration-500 fill-mode-both"
           style={{ animationDelay: "400ms" }}
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-100 dark:bg-slate-800">
-            <Search className="w-10 h-10 text-gray-400 dark:text-gray-600" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-muted">
+            <Search className="w-10 h-10 text-muted-foreground/70" />
           </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-in fade-in slide-in-from-bottom-5 duration-500 fill-mode-both delay-500">
           <GoBackButton label={t("notFound.goBack")} />
           <Link href="/">
-            <Button
-              variant="primary"
+            <YbButton
+              variant="gradient"
               size="lg"
               leftIcon={<House className="w-5 h-5" />}
             >
               {t("notFound.home")}
-            </Button>
+            </YbButton>
           </Link>
         </div>
         <div
-          className="mt-12 pt-8 border-t border-gray-200 dark:border-slate-700 animate-in fade-in duration-500 fill-mode-both"
+          className="mt-12 pt-8 border-t border-border animate-in fade-in duration-500 fill-mode-both"
           style={{ animationDelay: "600ms" }}
         >
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-sm text-muted-foreground mb-4">
             {t("notFound.needHelp")}
           </p>
           <div className="flex flex-wrap gap-4 justify-center text-sm">
             <Link
               href="/dashboard/pricing"
-              className="text-primary-600 dark:text-primary-400 hover:underline"
+              className="text-primary hover:underline"
             >
               {t("notFound.pricing")}
             </Link>
-            <span className="text-gray-300 dark:text-gray-700">•</span>
+            <span className="text-muted-foreground/50">•</span>
             <a
               href="https://t.me/lidlar"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary-600 dark:text-primary-400 hover:underline"
+              className="text-primary hover:underline"
             >
               {t("notFound.support")}
             </a>
-            <span className="text-gray-300 dark:text-gray-700">•</span>
-            <Link
-              href="/login"
-              className="text-primary-600 dark:text-primary-400 hover:underline"
-            >
+            <span className="text-muted-foreground/50">•</span>
+            <Link href="/login" className="text-primary hover:underline">
               {t("notFound.login")}
             </Link>
           </div>

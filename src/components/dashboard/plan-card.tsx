@@ -104,14 +104,14 @@ export function PlanCard({
 
   return (
     <div className="h-full animate-in fade-in slide-in-from-bottom-2 duration-300">
-      <YbCard variant="elevated" className="h-full p-0">
+      <YbCard variant="elevated" padding="none" className="h-full">
         <div className="p-0">
           {loading ? (
             <div className="flex items-center justify-center h-24">
               <YbSpinner size="md" />
             </div>
           ) : plan ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 sm:divide-x divide-gray-100 dark:divide-gray-800">
+            <div className="grid grid-cols-1 sm:grid-cols-2 sm:divide-x divide-border">
               <PlanBlock
                 plan={plan}
                 planPercentage={planPercentage}
@@ -119,7 +119,7 @@ export function PlanCard({
                 isInactive={isInactive}
                 onUpgrade={onUpgrade}
               />
-              <div className="border-t sm:border-t-0 border-gray-100 dark:border-gray-800">
+              <div className="border-t sm:border-t-0 border-border">
                 <ExpiryBlock
                   plan={plan}
                   lang={lang}
@@ -130,7 +130,7 @@ export function PlanCard({
               </div>
             </div>
           ) : (
-            <div className="text-center py-6 text-sm text-gray-500">
+            <div className="text-center py-6 text-sm text-muted-foreground">
               {tCommon("errors.loadFailed")}
             </div>
           )}
@@ -162,45 +162,44 @@ function PlanBlock({
             "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
             isLowOnLeads
               ? "bg-orange-100 dark:bg-orange-900/30"
-              : "bg-emerald-100 dark:bg-emerald-900/30",
+              : "bg-success-muted",
           )}
           aria-hidden="true"
         >
           {isLowOnLeads ? (
             <AlertTriangle className="w-4 h-4 text-orange-600 dark:text-orange-400" />
           ) : (
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-success" />
           )}
         </div>
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 leading-tight">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground leading-tight">
             {t("plan.title")}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+          <p className="text-xs text-muted-foreground truncate">
             {t("plan.subtitle", { planName: plan.planName })}
           </p>
         </div>
       </div>
       <div className="flex items-baseline justify-between gap-2">
-        <p className="flex-shrink-0 whitespace-nowrap text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 leading-none">
+        <p className="flex-shrink-0 whitespace-nowrap text-xl sm:t-h3 text-foreground leading-none">
           {plan.isUnlimited ? "∞" : plan.remainingLeads?.toLocaleString()}
-          <span className="text-xs font-normal text-gray-500 dark:text-gray-400 ml-1">
+          <span className="text-xs font-normal text-muted-foreground ml-1">
             {t("plan.leadsRemaining")}
           </span>
         </p>
         {!plan.isUnlimited && (
-          <span className="text-xs text-gray-500 dark:text-gray-400 tabular-nums min-w-0 truncate text-right">
-            {plan.usedLeads.toLocaleString()}/{plan.totalLeads?.toLocaleString()}{" "}
-            · {planPercentage.toFixed(0)}% {t("plan.used")}
+          <span className="text-xs text-muted-foreground tabular-nums min-w-0 truncate text-right">
+            {plan.usedLeads.toLocaleString()}/
+            {plan.totalLeads?.toLocaleString()} · {planPercentage.toFixed(0)}%{" "}
+            {t("plan.used")}
           </span>
         )}
       </div>
       {plan.isUnlimited ? (
-        <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-2 mb-2">
-          {t("plan.unlimited")}
-        </p>
+        <p className="text-xs text-success mt-2 mb-2">{t("plan.unlimited")}</p>
       ) : (
-        <div className="mt-1.5 mb-2 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+        <div className="mt-1.5 mb-2 h-1.5 rounded-full bg-muted overflow-hidden">
           <div
             className={cn(
               "h-full rounded-full transition-all duration-500",
@@ -216,10 +215,10 @@ function PlanBlock({
         type="button"
         onClick={onUpgrade}
         className={cn(
-          "mt-auto w-full inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900",
+          "mt-auto w-full inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900",
           isLowOnLeads || isInactive
-            ? "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 focus-visible:ring-red-500"
-            : "bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus-visible:ring-primary-500",
+            ? "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 focus-visible:ring-destructive"
+            : "bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus-visible:ring-ring",
         )}
       >
         <TrendingUp className="w-3.5 h-3.5" aria-hidden="true" />
@@ -264,24 +263,19 @@ function ExpiryBlock({
         <div
           className={cn(
             "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0",
-            alarm ? "bg-red-100 dark:bg-red-900/30" : "bg-blue-100 dark:bg-blue-900/30",
+            alarm ? "bg-destructive-muted" : "bg-info-muted",
           )}
           aria-hidden="true"
         >
           <Calendar
-            className={cn(
-              "w-4 h-4",
-              alarm
-                ? "text-red-600 dark:text-red-400"
-                : "text-blue-600 dark:text-blue-400",
-            )}
+            className={cn("w-4 h-4", alarm ? "text-destructive" : "text-info")}
           />
         </div>
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 leading-tight">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground leading-tight">
             {t("expiry.title")}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+          <p className="text-xs text-muted-foreground truncate">
             {hasExpiry ? formatExpiry(plan.expiryDate!, lang) : "—"}
           </p>
         </div>
@@ -290,9 +284,7 @@ function ExpiryBlock({
         <p
           className={cn(
             "text-xl sm:text-2xl font-bold leading-none",
-            alarm
-              ? "text-red-600 dark:text-red-400"
-              : "text-gray-900 dark:text-gray-100",
+            alarm ? "text-destructive" : "text-foreground",
           )}
         >
           {timeLeft}
@@ -302,10 +294,10 @@ function ExpiryBlock({
         type="button"
         onClick={onTopUp}
         className={cn(
-          "mt-auto w-full inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900",
+          "mt-auto w-full inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-gray-900",
           alarm
-            ? "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 focus-visible:ring-red-500"
-            : "bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus-visible:ring-primary-500",
+            ? "bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 focus-visible:ring-destructive"
+            : "bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus-visible:ring-ring",
         )}
       >
         <CreditCard className="w-3.5 h-3.5" aria-hidden="true" />

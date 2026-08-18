@@ -46,7 +46,10 @@ export function usePlatformCatalog(): {
   const saveFavorites = (values: string[]) => {
     setFavorites(values);
     try {
-      window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(values));
+      window.localStorage.setItem(
+        FAVORITES_STORAGE_KEY,
+        JSON.stringify(values),
+      );
     } catch {
       // storage may be unavailable
     }
@@ -121,10 +124,13 @@ export function PlatformFavoritesModal({
   };
 
   const toggleGroup = (platforms: PlatformOption[]) => {
-    const allChecked = platforms.every((platform) => selected.has(platform.value));
+    const allChecked = platforms.every((platform) =>
+      selected.has(platform.value),
+    );
     setSelected((current) => {
       const next = new Set(current);
-      if (allChecked) platforms.forEach((platform) => next.delete(platform.value));
+      if (allChecked)
+        platforms.forEach((platform) => next.delete(platform.value));
       else platforms.forEach((platform) => next.add(platform.value));
       return next;
     });
@@ -143,11 +149,11 @@ export function PlatformFavoritesModal({
       size="lg"
     >
       <div className="flex flex-col max-h-[70vh]">
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           {t("platforms.favorites.subtitle")}
         </p>
         <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             value={search}
@@ -155,11 +161,11 @@ export function PlatformFavoritesModal({
             placeholder={t("platforms.favorites.search")}
             className={cn(
               "w-full pl-10 pr-4 py-2.5 rounded-lg border text-sm",
-              "border-gray-300 dark:border-gray-600",
-              "bg-white dark:bg-gray-800",
-              "text-gray-900 dark:text-gray-100",
-              "placeholder:text-gray-400 dark:placeholder:text-gray-500",
-              "focus:ring-2 focus:ring-primary-500 focus:border-primary-500",
+              "border-input",
+              "bg-card",
+              "text-foreground",
+              "placeholder:text-muted-foreground",
+              "focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-primary",
               "outline-none transition-colors",
             )}
           />
@@ -168,14 +174,14 @@ export function PlatformFavoritesModal({
               type="button"
               aria-label={tCommon("actions.reset")}
               onClick={() => setSearch("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <X className="w-4 h-4" aria-hidden="true" />
             </button>
           )}
         </div>
         <div className="flex items-center justify-between mb-3 px-1">
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+          <span className="text-xs text-muted-foreground">
             {t("platforms.favorites.selected", { count: selected.size })}
           </span>
         </div>
@@ -190,7 +196,7 @@ export function PlatformFavoritesModal({
                 className="animate-in fade-in slide-in-from-bottom-2 duration-200"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     {group.groupName}
                   </h4>
                   <button
@@ -199,8 +205,8 @@ export function PlatformFavoritesModal({
                     className={cn(
                       "text-xs font-medium px-2 py-0.5 rounded transition-colors",
                       allChecked
-                        ? "text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20"
-                        : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50",
+                        ? "text-primary hover:bg-primary/10"
+                        : "text-muted-foreground hover:bg-muted",
                     )}
                   >
                     {t("platforms.favorites.selectAll")}
@@ -217,16 +223,16 @@ export function PlatformFavoritesModal({
                         className={cn(
                           "flex items-center gap-3 p-3 rounded-lg border text-left transition-all",
                           isChecked
-                            ? "border-primary-300 dark:border-primary-700 bg-primary-50 dark:bg-primary-900/20 hover:bg-primary-100 dark:hover:bg-primary-900/30"
-                            : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 hover:border-gray-300 dark:hover:border-gray-600",
+                            ? "border-primary/40 bg-primary/10 hover:bg-primary/15"
+                            : "border-border bg-card hover:bg-muted hover:border-input",
                         )}
                       >
                         <div
                           className={cn(
                             "w-5 h-5 rounded flex items-center justify-center flex-shrink-0 transition-colors",
                             isChecked
-                              ? "bg-primary-500 dark:bg-primary-600"
-                              : "border-2 border-gray-300 dark:border-gray-600",
+                              ? "bg-primary dark:bg-primary"
+                              : "border-2 border-input",
                           )}
                         >
                           {isChecked && (
@@ -237,8 +243,8 @@ export function PlatformFavoritesModal({
                           className={cn(
                             "text-sm font-medium flex-1 truncate",
                             isChecked
-                              ? "text-gray-900 dark:text-gray-100"
-                              : "text-gray-600 dark:text-gray-400",
+                              ? "text-foreground"
+                              : "text-muted-foreground",
                           )}
                         >
                           {platform.label}
@@ -251,12 +257,12 @@ export function PlatformFavoritesModal({
             );
           })}
           {filtered.length === 0 && (
-            <div className="py-8 text-center text-gray-400 dark:text-gray-500 text-sm">
+            <div className="py-8 text-center text-muted-foreground text-sm">
               {t("emptyMessage")}
             </div>
           )}
         </div>
-        <div className="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-end gap-3 pt-4 mt-4 border-t border-border">
           <YbButton variant="outline" onClick={onClose}>
             {t("platforms.favorites.cancel")}
           </YbButton>

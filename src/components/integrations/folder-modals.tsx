@@ -77,10 +77,10 @@ function FolderForm({
   const length = name.length;
   const counterColor =
     length >= NAME_MAX
-      ? "text-red-600 dark:text-red-400 font-semibold"
+      ? "text-destructive font-semibold"
       : length >= NAME_WARN
-        ? "text-amber-600 dark:text-amber-400"
-        : "text-gray-400 dark:text-gray-500";
+        ? "text-warning"
+        : "text-muted-foreground";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
@@ -88,16 +88,19 @@ function FolderForm({
         <div className="flex items-baseline justify-between gap-3 mb-1.5">
           <label
             htmlFor={fieldId}
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-foreground/80"
           >
             {t("folders.nameLabel")}
-            <span aria-hidden="true" className="ml-0.5 text-red-500">
+            <span aria-hidden="true" className="ml-0.5 text-destructive">
               *
             </span>
           </label>
           <span
             id={counterId}
-            className={cn("text-xs tabular-nums transition-colors", counterColor)}
+            className={cn(
+              "text-xs tabular-nums transition-colors",
+              counterColor,
+            )}
             aria-live="polite"
             aria-atomic="true"
           >
@@ -123,12 +126,12 @@ function FolderForm({
           onBlur={() => setError(validate(name))}
           className={cn(
             "w-full px-4 py-2.5 rounded-lg border-2 transition-all duration-200",
-            "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100",
-            "placeholder:text-gray-400 dark:placeholder:text-gray-500",
-            "focus:outline-none focus:ring-2 focus:ring-offset-0",
+            "bg-card text-foreground",
+            "placeholder:text-muted-foreground",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0",
             error
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20",
+              ? "border-destructive focus:border-destructive focus-visible:ring-destructive"
+              : "border-input focus-visible:border-primary focus-visible:ring-ring",
             submitting && "opacity-50 cursor-not-allowed",
           )}
         />
@@ -136,7 +139,7 @@ function FolderForm({
           <p
             id={errorId}
             role="alert"
-            className="mt-1.5 text-sm text-red-600 dark:text-red-400"
+            className="mt-1.5 text-sm text-destructive"
           >
             {error}
           </p>
@@ -269,7 +272,9 @@ export function FolderModals({
           onClose={onCloseDeleteDialog}
           onConfirm={onConfirmDelete}
           title={t("modal.deleteFolderTitle")}
-          message={t("modal.deleteFolderMessage", { name: folderToDelete.name })}
+          message={t("modal.deleteFolderMessage", {
+            name: folderToDelete.name,
+          })}
           confirmText={t("modal.confirmDelete")}
           cancelText={t("modal.cancel")}
           type="danger"

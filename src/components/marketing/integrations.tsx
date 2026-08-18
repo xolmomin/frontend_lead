@@ -24,7 +24,7 @@ export function Integrations() {
   return (
     <section className="py-12 sm:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-8 uppercase tracking-wider">
+        <h2 className="text-center text-sm font-medium text-muted-foreground mb-8 uppercase tracking-wider">
           {t("integrations.title")}
         </h2>
         <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
@@ -41,7 +41,7 @@ export function Integrations() {
                   alt={integration.name}
                   className="h-8 sm:h-10 w-auto"
                 />
-                <span className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                <span className="text-xs sm:text-sm font-medium text-muted-foreground whitespace-nowrap">
                   {integration.name}
                 </span>
               </div>

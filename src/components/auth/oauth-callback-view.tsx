@@ -56,7 +56,7 @@ export function OAuthCallbackView() {
           <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
             <HugeiconsIcon icon={AlertCircleIcon} size={26} />
           </div>
-          <h1 className="text-lg font-semibold text-foreground">
+          <h1 className="t-h4 text-foreground">
             {phoneRequired
               ? t("errors.telegramPhoneRequired")
               : t("errors.oauthFailed")}
@@ -77,7 +77,9 @@ export function OAuthCallbackView() {
               className="animate-spin"
             />
           </div>
-          <p className="text-sm text-muted-foreground">{t("oauthConnecting")}</p>
+          <p className="text-sm text-muted-foreground">
+            {t("oauthConnecting")}
+          </p>
         </>
       )}
     </div>
@@ -89,7 +91,11 @@ export function OAuthCallbackPending() {
   return (
     <div className="glass w-full max-w-md rounded-xl border border-border p-8 text-center shadow-lg">
       <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-        <HugeiconsIcon icon={Loading03Icon} size={26} className="animate-spin" />
+        <HugeiconsIcon
+          icon={Loading03Icon}
+          size={26}
+          className="animate-spin"
+        />
       </div>
       <div className="mx-auto h-4 w-40 animate-pulse rounded bg-muted" />
     </div>

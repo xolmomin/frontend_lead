@@ -51,49 +51,47 @@ export function PacingView() {
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
-          <TrendingUp className="h-6 w-6 text-primary-500" />
+          <TrendingUp className="h-6 w-6 text-primary" />
           <div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              {t("title")}
-            </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {t("subtitle")}
-            </p>
+            <h1 className="t-h3 text-foreground">{t("title")}</h1>
+            <p className="text-sm text-muted-foreground">{t("subtitle")}</p>
           </div>
         </div>
-        <YbButton variant="primary" size="sm" onClick={() => setCreateOpen(true)}>
+        <YbButton
+          variant="primary"
+          size="sm"
+          onClick={() => setCreateOpen(true)}
+        >
           <Plus className="h-4 w-4 mr-1" />
           {t("list.add")}
         </YbButton>
       </div>
 
       {goalsQuery.isLoading ? (
-        <div className="h-40 rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse" />
+        <div className="h-40 rounded-xl bg-muted animate-pulse" />
       ) : (
         <>
           {accountCard ? (
             <YbCard variant="elevated">
               <div className="p-4 flex flex-wrap items-center gap-x-8 gap-y-2">
-                <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                <span className="text-sm font-semibold text-foreground">
                   {t("accountSummary.title")}
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-muted-foreground">
                   {t("accountSummary.mtd")}:{" "}
-                  <b className="tabular-nums text-gray-900 dark:text-gray-100">
+                  <b className="tabular-nums text-foreground">
                     {formatNumber(accountCard.month_to_date)}
                   </b>
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-muted-foreground">
                   {t("accountSummary.today")}:{" "}
-                  <b className="tabular-nums text-gray-900 dark:text-gray-100">
+                  <b className="tabular-nums text-foreground">
                     {formatNumber(accountCard.today)}
                   </b>
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-muted-foreground">
                   {t("accountSummary.errors")}:{" "}
-                  <b className="tabular-nums text-gray-900 dark:text-gray-100">
-                    —
-                  </b>
+                  <b className="tabular-nums text-foreground">—</b>
                 </span>
               </div>
             </YbCard>
@@ -101,7 +99,7 @@ export function PacingView() {
 
           {cards.length > 0 ? (
             <>
-              <p className="flex items-start gap-1 text-[11px] text-gray-400">
+              <p className="flex items-start gap-1 text-[11px] text-muted-foreground">
                 <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
                 <span>{t("overlapNote")}</span>
               </p>
@@ -118,7 +116,7 @@ export function PacingView() {
             </>
           ) : (
             <YbCard variant="default">
-              <div className="p-8 text-center text-sm text-gray-500 dark:text-gray-400">
+              <div className="p-8 text-center text-sm text-muted-foreground">
                 {t("list.empty")}
               </div>
             </YbCard>
@@ -140,9 +138,7 @@ export function PacingView() {
         title={t("delete.action")}
         size="sm"
       >
-        <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-          {t("delete.confirm")}
-        </p>
+        <p className="text-sm text-foreground/80 mb-4">{t("delete.confirm")}</p>
         <div className="flex gap-3">
           <YbButton
             type="button"

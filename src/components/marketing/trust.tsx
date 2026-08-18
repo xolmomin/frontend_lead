@@ -19,7 +19,7 @@ const ITEMS: { icon: LucideIcon; key: string }[] = [
 export function TrustStrip() {
   const t = useTranslations("landing");
   return (
-    <section className="py-6 sm:py-8 border-y border-gray-200/50 dark:border-gray-700/50">
+    <section className="py-6 sm:py-8 border-y border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-10">
           {ITEMS.map((item, index) => {
@@ -27,14 +27,16 @@ export function TrustStrip() {
             return (
               <div
                 key={item.key}
-                className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 animate-in fade-in slide-in-from-bottom-2 duration-500 fill-mode-both"
+                className="flex items-center gap-2 text-sm text-muted-foreground animate-in fade-in slide-in-from-bottom-2 duration-500 fill-mode-both"
                 style={{ animationDelay: `${index * 60}ms` }}
               >
                 <Icon
-                  className="w-4 h-4 text-primary-500 flex-shrink-0"
+                  className="w-4 h-4 text-primary flex-shrink-0"
                   aria-hidden="true"
                 />
-                <span className="whitespace-nowrap">{t(`trust.${item.key}`)}</span>
+                <span className="whitespace-nowrap">
+                  {t(`trust.${item.key}`)}
+                </span>
               </div>
             );
           })}

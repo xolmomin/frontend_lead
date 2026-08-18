@@ -21,10 +21,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type {
-  DeliveryConnection,
-  DeliveryType,
-} from "@/lib/api/integrations";
+import type { DeliveryConnection, DeliveryType } from "@/lib/api/integrations";
 import type { FacebookConnection } from "@/lib/api/facebook";
 import {
   useDeleteFacebookConnection,
@@ -41,11 +38,7 @@ import {
   ConnectionConfigFields,
   parseConnectionConfig,
 } from "@/components/connections/connection-config-fields";
-import {
-  YbCard,
-  YbCardHeader,
-  YbCardTitle,
-} from "@/components/yb/card";
+import { YbCard, YbCardHeader, YbCardTitle } from "@/components/yb/card";
 import { YbButton } from "@/components/yb/button";
 import { YbInput } from "@/components/yb/input";
 import { YbModal } from "@/components/yb/modal";
@@ -141,12 +134,11 @@ function sourceMeta(
     case "google":
       return {
         Mark: ({ className }) => (
-          <Sheet className={cn("text-red-600 dark:text-red-400", className)} />
+          <Sheet className={cn("text-destructive", className)} />
         ),
         label: t("sources.google"),
-        badgeBg:
-          "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800",
-        badgeText: "text-red-700 dark:text-red-300",
+        badgeBg: "bg-destructive-muted border-destructive/40",
+        badgeText: "text-destructive",
       };
     case "bitrix24":
       return {
@@ -181,26 +173,20 @@ function sourceMeta(
     case "cpa":
       return {
         Mark: ({ className }) => (
-          <BarChart3
-            className={cn("text-emerald-600 dark:text-emerald-400", className)}
-          />
+          <BarChart3 className={cn("text-success", className)} />
         ),
         label: "CPA",
-        badgeBg:
-          "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800",
-        badgeText: "text-emerald-700 dark:text-emerald-300",
+        badgeBg: "bg-success-muted border-success/40",
+        badgeText: "text-success",
       };
     default:
       return {
         Mark: ({ className }) => (
-          <Webhook
-            className={cn("text-gray-600 dark:text-gray-400", className)}
-          />
+          <Webhook className={cn("text-muted-foreground", className)} />
         ),
         label: "Webhook",
-        badgeBg:
-          "bg-gray-50 dark:bg-gray-800/60 border-gray-200 dark:border-gray-700",
-        badgeText: "text-gray-700 dark:text-gray-300",
+        badgeBg: "bg-muted/60 border-border",
+        badgeText: "text-foreground/80",
       };
   }
 }
@@ -269,9 +255,7 @@ function DeliveryConnectionModal({
     if (!name) {
       nextErrors.name = tIntegrations("cpa_account_modal.errors.name_required");
     }
-    const parsed = parseConnectionConfig(formData, type, (key) =>
-      tConfig(key),
-    );
+    const parsed = parseConnectionConfig(formData, type, (key) => tConfig(key));
     if (!parsed.ok) Object.assign(nextErrors, parsed.errors);
     if (Object.keys(nextErrors).length > 0 || !parsed.ok) {
       setErrors(nextErrors);
@@ -336,10 +320,10 @@ function DeliveryConnectionModal({
           defaults={connection?.config}
           errors={errors}
         />
-        <div className="mt-4 p-3 bg-gray-50 dark:bg-slate-900/40 rounded-lg text-xs text-gray-600 dark:text-gray-400">
+        <div className="mt-4 p-3 bg-muted/40 rounded-lg text-xs text-muted-foreground">
           {t("add_modal.security_note")}
         </div>
-        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-end gap-3 pt-4 border-t border-border">
           <YbButton type="button" variant="ghost" onClick={onClose}>
             {tCommon("actions.cancel")}
           </YbButton>
@@ -396,10 +380,10 @@ function AddProfileModal({
       },
       {
         id: "google",
-        icon: <Sheet className="w-7 h-7 text-red-600" />,
+        icon: <Sheet className="w-7 h-7 text-destructive" />,
         authBadgeColor:
-          "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-        hoverBorder: "hover:border-red-400 dark:hover:border-red-500",
+          "bg-destructive-muted text-destructive dark:text-destructive",
+        hoverBorder: "hover:border-destructive dark:hover:border-destructive",
         title: t("add_modal.google.title"),
         description: t("add_modal.google.description"),
         authType: t("add_modal.auth.oauth"),
@@ -440,10 +424,9 @@ function AddProfileModal({
       },
       {
         id: "webhook",
-        icon: <Webhook className="w-7 h-7 text-gray-600 dark:text-gray-300" />,
-        authBadgeColor:
-          "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
-        hoverBorder: "hover:border-gray-400 dark:hover:border-gray-500",
+        icon: <Webhook className="w-7 h-7 text-foreground/75" />,
+        authBadgeColor: "bg-muted text-foreground/80",
+        hoverBorder: "hover:border-input",
         title: "Webhook",
         description: t("add_modal.auth.webhook"),
         authType: t("add_modal.auth.webhook"),
@@ -470,12 +453,9 @@ function AddProfileModal({
         },
       ].map((platform) => ({
         id: `cpa_${platform.slug}`,
-        icon: (
-          <BarChart3 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-        ),
-        authBadgeColor:
-          "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-        hoverBorder: "hover:border-emerald-400 dark:hover:border-emerald-500",
+        icon: <BarChart3 className="w-6 h-6 text-success" />,
+        authBadgeColor: "bg-success-muted text-success dark:text-success",
+        hoverBorder: "hover:border-success",
         title: platform.name,
         description: platform.description,
         authType: t("add_modal.auth.phone_password"),
@@ -495,24 +475,24 @@ function AddProfileModal({
       aria-disabled={disabled}
       className={cn(
         "group flex flex-col items-start gap-3 p-4 text-left",
-        "border-2 border-gray-200 dark:border-slate-700 rounded-xl",
-        "bg-white dark:bg-slate-800",
+        "border-2 border-border rounded-xl",
+        "bg-card",
         "transition-all duration-150",
         "disabled:opacity-60 disabled:cursor-not-allowed",
         !disabled && [
           card.hoverBorder,
           "hover:shadow-md",
-          "focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:focus-visible:ring-offset-background",
           "cursor-pointer",
         ],
       )}
     >
       <div className="flex items-center gap-3 w-full">
-        <div className="shrink-0 h-12 w-12 rounded-lg flex items-center justify-center bg-white dark:bg-slate-700 border border-gray-200 dark:border-slate-600">
+        <div className="shrink-0 h-12 w-12 rounded-lg flex items-center justify-center bg-card border border-border">
           {card.icon}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
+          <h3 className="font-semibold text-foreground truncate">
             {card.title}
           </h3>
           <span
@@ -526,13 +506,13 @@ function AddProfileModal({
         </div>
         <ArrowRight
           className={cn(
-            "w-5 h-5 shrink-0 text-gray-400 transition-transform",
+            "w-5 h-5 shrink-0 text-muted-foreground transition-transform",
             !disabled && "group-hover:translate-x-1",
           )}
           aria-hidden="true"
         />
       </div>
-      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+      <p className="text-sm text-muted-foreground leading-relaxed">
         {card.description}
       </p>
     </button>
@@ -556,12 +536,12 @@ function AddProfileModal({
       size="lg"
     >
       <div className="space-y-5">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-muted-foreground">
           {t("add_modal.subtitle")}
         </p>
         <div className="relative">
           <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none"
             aria-hidden="true"
           />
           <input
@@ -570,13 +550,13 @@ function AddProfileModal({
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t("add_modal.search_placeholder")}
             aria-label={t("add_modal.search_placeholder")}
-            className="w-full pl-9 pr-9 py-2 text-sm bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent outline-none transition-all text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+            className="w-full pl-9 pr-9 py-2 text-sm bg-card border border-input rounded-lg focus-visible:ring-2 focus-visible:ring-ring dark:focus-visible:ring-ring focus:border-transparent outline-none transition-all text-foreground placeholder:text-muted-foreground"
           />
           {search && (
             <button
               type="button"
               onClick={() => setSearch("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-colors"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground rounded transition-colors"
               aria-label={t("add_modal.search_clear")}
             >
               <XCircle className="w-4 h-4" aria-hidden="true" />
@@ -586,20 +566,20 @@ function AddProfileModal({
         {query && total === 0 && (
           <div className="py-10 text-center">
             <Search
-              className="w-10 h-10 mx-auto mb-2 text-gray-300 dark:text-gray-600"
+              className="w-10 h-10 mx-auto mb-2 text-muted-foreground/50"
               aria-hidden="true"
             />
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <p className="text-sm font-medium text-foreground/80">
               {t("add_modal.no_results")}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               {t("add_modal.no_results_hint")}
             </p>
           </div>
         )}
         {filteredAccounts.length > 0 && (
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               {t("add_modal.section_accounts")}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -609,7 +589,7 @@ function AddProfileModal({
         )}
         {filteredCpa.length > 0 && (
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               {t("add_modal.section_cpa")}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -617,7 +597,7 @@ function AddProfileModal({
             </div>
           </div>
         )}
-        <div className="mt-4 p-3 bg-gray-50 dark:bg-slate-900/40 rounded-lg text-xs text-gray-600 dark:text-gray-400">
+        <div className="mt-4 p-3 bg-muted/40 rounded-lg text-xs text-muted-foreground">
           {t("add_modal.security_note")}
         </div>
       </div>
@@ -691,8 +671,7 @@ export function ConnectionsView() {
     return { destinationRows: destinations, cpaRows: cpaList };
   }, [deliveryQuery.data]);
 
-  const total =
-    sourceRows.length + destinationRows.length + cpaRows.length;
+  const total = sourceRows.length + destinationRows.length + cpaRows.length;
   const loading =
     (facebookQuery.isLoading || deliveryQuery.isLoading) && total === 0;
 
@@ -787,12 +766,10 @@ export function ConnectionsView() {
       accessor: (row) => (
         <div className="min-w-0">
           <div className="flex items-center gap-2 min-w-0">
-            <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
-              {row.name}
-            </p>
+            <p className="font-medium text-foreground truncate">{row.name}</p>
           </div>
           {row.identifier && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-xs text-muted-foreground truncate">
               {row.identifier}
             </p>
           )}
@@ -813,19 +790,19 @@ export function ConnectionsView() {
         return (
           <div className="flex items-start gap-2.5 min-w-0">
             <div
-              className="shrink-0 w-5 h-5 mt-0.5 rounded-md flex items-center justify-center bg-white dark:bg-slate-800/70 border border-gray-200 dark:border-slate-700"
+              className="shrink-0 w-5 h-5 mt-0.5 rounded-md flex items-center justify-center bg-card border border-border"
               aria-hidden="true"
             >
               <meta.Mark className="w-3.5 h-3.5" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 min-w-0">
-                <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                <p className="font-medium text-foreground truncate">
                   {row.name}
                 </p>
               </div>
               {row.identifier && (
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                <p className="text-xs text-muted-foreground truncate">
                   {row.identifier}
                 </p>
               )}
@@ -854,7 +831,7 @@ export function ConnectionsView() {
             {row.ok === true && (
               <>
                 <CheckCircle2
-                  className="w-4 h-4 shrink-0 text-green-600"
+                  className="w-4 h-4 shrink-0 text-success"
                   aria-hidden="true"
                 />
                 <span className="sr-only">{t("status.ok")}:</span>
@@ -863,7 +840,7 @@ export function ConnectionsView() {
             {row.ok === false && (
               <>
                 <XCircle
-                  className="w-4 h-4 shrink-0 text-red-600"
+                  className="w-4 h-4 shrink-0 text-destructive"
                   aria-hidden="true"
                 />
                 <span className="sr-only">{t("status.failed")}:</span>
@@ -871,11 +848,11 @@ export function ConnectionsView() {
             )}
             {row.ok === null && (
               <span
-                className="w-2 h-2 shrink-0 rounded-full bg-gray-300 dark:bg-gray-600"
+                className="w-2 h-2 shrink-0 rounded-full bg-muted-foreground/30"
                 aria-hidden="true"
               />
             )}
-            <span className="text-sm text-gray-700 dark:text-gray-300">
+            <span className="text-sm text-foreground/80">
               {row.ok === true
                 ? t("status.ok")
                 : row.ok === false
@@ -883,7 +860,7 @@ export function ConnectionsView() {
                   : t("status.untested")}
             </span>
           </div>
-          <span className="text-[11px] text-gray-400 dark:text-gray-500">
+          <span className="text-[11px] text-muted-foreground">
             {t("table.connectedShort")}: {formatDate(row.created_at)}
           </span>
         </div>
@@ -948,12 +925,8 @@ export function ConnectionsView() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-            {t("title")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            {t("subtitle")}
-          </p>
+          <h1 className="t-h2 text-foreground">{t("title")}</h1>
+          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
         </div>
         <YbButton
           variant="primary"
@@ -968,12 +941,10 @@ export function ConnectionsView() {
 
       {total >= MAX_CONNECTIONS && (
         <div className="animate-in fade-in slide-in-from-top-2 duration-200">
-          <YbCard className="border-l-4 border-l-amber-500 bg-amber-50 dark:bg-amber-900/10 py-3">
+          <YbCard className="border-l-4 border-l-amber-500 bg-warning-muted py-3">
             <div className="flex items-center gap-3">
-              <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-              <p className="text-sm text-amber-700 dark:text-amber-300">
-                {t("limit.reached")}
-              </p>
+              <AlertTriangle className="w-5 h-5 text-warning" />
+              <p className="text-sm text-warning">{t("limit.reached")}</p>
             </div>
           </YbCard>
         </div>
@@ -982,22 +953,18 @@ export function ConnectionsView() {
       {loading ? (
         <YbCard>
           <div className="py-12 flex flex-col items-center justify-center">
-            <Loader2 className="w-12 h-12 text-primary-600 dark:text-primary-400 mb-4 animate-spin" />
-            <p className="text-gray-600 dark:text-gray-400">
-              {t("loadingProfiles")}
-            </p>
+            <Loader2 className="w-12 h-12 text-primary mb-4 animate-spin" />
+            <p className="text-muted-foreground">{t("loadingProfiles")}</p>
           </div>
         </YbCard>
       ) : total === 0 ? (
         <YbCard>
           <div className="py-16 text-center">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
-              <Plus className="w-10 h-10 text-gray-400" />
+            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+              <Plus className="w-10 h-10 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-              {t("noProfiles")}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <h3 className="t-h4 text-foreground mb-2">{t("noProfiles")}</h3>
+            <p className="text-muted-foreground mb-6">
               {t("noProfilesDescription")}
             </p>
             <YbButton
@@ -1023,20 +990,20 @@ export function ConnectionsView() {
                   {t("groups.sources_title")} ({sourceRows.length})
                 </YbCardTitle>
               </div>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 {t("groups.sources_subtitle")}
               </p>
             </YbCardHeader>
             {sourceRows.length === 0 ? (
               <div className="py-10 text-center">
                 <Rss
-                  className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600"
+                  className="w-12 h-12 mx-auto mb-3 text-muted-foreground/50"
                   aria-hidden="true"
                 />
-                <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1.5">
+                <h3 className="text-base font-semibold text-foreground mb-1.5">
                   {t("groups.sources_empty_title")}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 max-w-md mx-auto">
+                <p className="text-sm text-muted-foreground mb-4 max-w-md mx-auto">
                   {t("groups.sources_empty_desc")}
                 </p>
                 <YbButton
@@ -1072,20 +1039,20 @@ export function ConnectionsView() {
                   {t("groups.destinations_title")} ({destinationRows.length})
                 </YbCardTitle>
               </div>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 {t("groups.destinations_subtitle")}
               </p>
             </YbCardHeader>
             {destinationRows.length === 0 ? (
               <div className="py-10 text-center">
                 <Send
-                  className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600"
+                  className="w-12 h-12 mx-auto mb-3 text-muted-foreground/50"
                   aria-hidden="true"
                 />
-                <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1.5">
+                <h3 className="text-base font-semibold text-foreground mb-1.5">
                   {t("groups.destinations_empty_title")}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 max-w-md mx-auto">
+                <p className="text-sm text-muted-foreground mb-4 max-w-md mx-auto">
                   {t("groups.destinations_empty_desc")}
                 </p>
                 <YbButton
@@ -1102,7 +1069,7 @@ export function ConnectionsView() {
               <div className="space-y-5">
                 <div className="relative">
                   <Search
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none"
                     aria-hidden="true"
                   />
                   <input
@@ -1111,13 +1078,13 @@ export function ConnectionsView() {
                     onChange={(e) => setDestinationSearch(e.target.value)}
                     placeholder={t("destinations_search.placeholder")}
                     aria-label={t("destinations_search.placeholder")}
-                    className="w-full pl-9 pr-9 py-2 text-sm bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent outline-none transition-all text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                    className="w-full pl-9 pr-9 py-2 text-sm bg-card border border-input rounded-lg focus-visible:ring-2 focus-visible:ring-ring dark:focus-visible:ring-ring focus:border-transparent outline-none transition-all text-foreground placeholder:text-muted-foreground"
                   />
                   {destinationSearch && (
                     <button
                       type="button"
                       onClick={() => setDestinationSearch("")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-colors"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground rounded transition-colors"
                       aria-label={t("destinations_search.clear")}
                     >
                       <XCircle className="w-4 h-4" aria-hidden="true" />
@@ -1127,13 +1094,13 @@ export function ConnectionsView() {
                 {hasDestinationSearch && filteredDestinationCount === 0 ? (
                   <div className="py-10 text-center">
                     <Search
-                      className="w-10 h-10 mx-auto mb-2 text-gray-300 dark:text-gray-600"
+                      className="w-10 h-10 mx-auto mb-2 text-muted-foreground/50"
                       aria-hidden="true"
                     />
-                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <p className="text-sm font-medium text-foreground/80">
                       {t("destinations_search.no_results")}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-xs text-muted-foreground mt-1">
                       {t("destinations_search.no_results_hint")}
                     </p>
                   </div>
@@ -1145,19 +1112,19 @@ export function ConnectionsView() {
                       <section
                         key={family}
                         aria-labelledby={`dest-family-${family}-title`}
-                        className="border border-gray-200 dark:border-slate-700 rounded-xl overflow-hidden"
+                        className="border border-border rounded-xl overflow-hidden"
                       >
-                        <header className="px-4 py-2.5 bg-gray-50 dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-700">
+                        <header className="px-4 py-2.5 bg-muted/50 border-b border-border">
                           <h3
                             id={`dest-family-${family}-title`}
-                            className="text-sm font-semibold text-gray-900 dark:text-gray-100"
+                            className="text-sm font-semibold text-foreground"
                           >
                             {t(`groups.family_${family}_title`)}{" "}
-                            <span className="text-gray-500 dark:text-gray-400 font-normal">
+                            <span className="text-muted-foreground font-normal">
                               ({rows.length})
                             </span>
                           </h3>
-                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                          <p className="text-xs text-muted-foreground mt-0.5">
                             {t(`groups.family_${family}_subtitle`)}
                           </p>
                         </header>
@@ -1187,9 +1154,9 @@ export function ConnectionsView() {
         <YbCardHeader>
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
-              <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex-shrink-0">
+              <div className="p-2 rounded-lg bg-success-muted flex-shrink-0">
                 <BarChart3
-                  className="w-5 h-5 text-emerald-600 dark:text-emerald-400"
+                  className="w-5 h-5 text-success"
                   aria-hidden="true"
                 />
               </div>
@@ -1197,7 +1164,7 @@ export function ConnectionsView() {
                 <YbCardTitle className="text-base sm:text-lg">
                   {t("cpa.title")}
                 </YbCardTitle>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {t("cpa.subtitle")}
                 </p>
               </div>
@@ -1220,10 +1187,10 @@ export function ConnectionsView() {
         </YbCardHeader>
         {deliveryQuery.isLoading && cpaRows.length === 0 ? (
           <div className="py-8 flex items-center justify-center">
-            <Loader2 className="w-8 h-8 text-primary-600 animate-spin" />
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
           </div>
         ) : cpaRows.length === 0 ? (
-          <div className="py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+          <div className="py-8 text-center text-sm text-muted-foreground">
             {t("cpa.empty")}
           </div>
         ) : (
@@ -1231,19 +1198,19 @@ export function ConnectionsView() {
             {cpaRows.map((row) => (
               <li
                 key={row.id}
-                className="flex items-center gap-3 p-3 rounded-xl border border-gray-200/70 dark:border-gray-700 bg-gray-50/40 dark:bg-gray-800/30"
+                className="flex items-center gap-3 p-3 rounded-xl border border-border/70 bg-muted/40"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+                    <p className="text-sm font-semibold text-foreground truncate">
                       {row.name}
                     </p>
-                    <span className="shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                    <span className="shrink-0 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-success-muted text-success border border-success/40">
                       CPA
                     </span>
                   </div>
                   {row.identifier && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 tabular-nums mt-0.5">
+                    <p className="text-xs text-muted-foreground tabular-nums mt-0.5">
                       {row.identifier}
                     </p>
                   )}
@@ -1259,7 +1226,7 @@ export function ConnectionsView() {
                   }
                   aria-label={tIntegrations("crm_accounts.edit")}
                   title={tIntegrations("crm_accounts.edit")}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-sky-500 text-sky-600 hover:bg-sky-50 dark:border-sky-400 dark:text-sky-400 dark:hover:bg-sky-900/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-sky-500 text-sky-600 hover:bg-sky-50 dark:border-sky-400 dark:text-sky-400 dark:hover:bg-sky-900/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40"
                 >
                   <Pencil className="w-4 h-4" aria-hidden="true" />
                 </button>
@@ -1268,7 +1235,7 @@ export function ConnectionsView() {
                   onClick={() => setDeleteTarget(row)}
                   aria-label={t("cpa.delete")}
                   title={t("cpa.delete")}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-rose-500 text-rose-600 hover:bg-rose-50 dark:border-rose-400 dark:text-rose-400 dark:hover:bg-rose-900/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/40"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg border border-destructive text-destructive hover:bg-destructive-muted dark:text-destructive transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500/40"
                 >
                   <Trash2 className="w-4 h-4" aria-hidden="true" />
                 </button>

@@ -66,13 +66,13 @@ export const Pagination = memo(function Pagination({
       "p-1.5 rounded-lg transition-all duration-200 min-w-[34px] min-h-[34px] flex items-center justify-center",
       disabled
         ? "opacity-30 cursor-not-allowed"
-        : "hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-95",
+        : "hover:bg-muted active:scale-95",
     );
 
   return (
     <div className={cn("space-y-3", className)}>
       {totalPages > 1 && (
-        <div className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
@@ -81,7 +81,7 @@ export const Pagination = memo(function Pagination({
       )}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-0.5">
+          <div className="flex items-center bg-muted rounded-lg p-0.5">
             {pageSizeOptions.map((size) => (
               <button
                 key={size}
@@ -90,8 +90,8 @@ export const Pagination = memo(function Pagination({
                 className={cn(
                   "px-2.5 py-1 text-xs font-medium rounded-md transition-all duration-200 min-h-[30px]",
                   size === pageSize
-                    ? "bg-white dark:bg-gray-700 text-primary-700 dark:text-primary-300 shadow-sm"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300",
+                    ? "bg-card text-primary shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
                 aria-pressed={size === pageSize}
               >
@@ -99,8 +99,8 @@ export const Pagination = memo(function Pagination({
               </button>
             ))}
           </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400 tabular-nums">
-            <span className="font-medium text-gray-700 dark:text-gray-300">
+          <span className="text-xs text-muted-foreground tabular-nums">
+            <span className="font-medium text-foreground/80">
               {from}–{to}
             </span>{" "}
             / {totalCount.toLocaleString()}
@@ -116,7 +116,7 @@ export const Pagination = memo(function Pagination({
               aria-label={t("goToPage", { page: 1 })}
             >
               <ChevronsLeft
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="w-4 h-4 text-muted-foreground"
                 aria-hidden="true"
               />
             </button>
@@ -128,7 +128,7 @@ export const Pagination = memo(function Pagination({
               aria-label={t("previous")}
             >
               <ChevronLeft
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="w-4 h-4 text-muted-foreground"
                 aria-hidden="true"
               />
             </button>
@@ -137,7 +137,7 @@ export const Pagination = memo(function Pagination({
                 item === "..." ? (
                   <span
                     key={`dots-${index}`}
-                    className="w-8 text-center text-gray-400 dark:text-gray-500 text-xs"
+                    className="w-8 text-center text-muted-foreground text-xs"
                   >
                     ···
                   </span>
@@ -149,8 +149,8 @@ export const Pagination = memo(function Pagination({
                     className={cn(
                       "min-w-[34px] min-h-[34px] rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center",
                       item === page
-                        ? "bg-primary-600 text-white shadow-sm shadow-primary-600/30 scale-105"
-                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-95",
+                        ? "bg-primary text-white shadow-sm shadow-primary-600/30 scale-105"
+                        : "text-muted-foreground hover:bg-muted active:scale-95",
                     )}
                     aria-label={t("goToPage", { page: item })}
                     aria-current={item === page ? "page" : undefined}
@@ -168,7 +168,7 @@ export const Pagination = memo(function Pagination({
               aria-label={t("next")}
             >
               <ChevronRight
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="w-4 h-4 text-muted-foreground"
                 aria-hidden="true"
               />
             </button>
@@ -180,7 +180,7 @@ export const Pagination = memo(function Pagination({
               aria-label={t("goToPage", { page: totalPages })}
             >
               <ChevronsRight
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                className="w-4 h-4 text-muted-foreground"
                 aria-hidden="true"
               />
             </button>

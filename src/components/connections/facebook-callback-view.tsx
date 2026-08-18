@@ -56,7 +56,10 @@ function ErrorView({ message }: { message: string | null }) {
           <div className="mt-2 flex flex-wrap justify-center gap-2">
             <Button variant="outline" asChild>
               <Link href="/dashboard/connections">
-                <HugeiconsIcon icon={ArrowLeft01Icon} data-icon="inline-start" />
+                <HugeiconsIcon
+                  icon={ArrowLeft01Icon}
+                  data-icon="inline-start"
+                />
                 {t("backToConnections")}
               </Link>
             </Button>

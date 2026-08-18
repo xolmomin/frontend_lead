@@ -39,7 +39,7 @@ export function FinanceSettingsModal({
       size="md"
     >
       <div className="space-y-5">
-        <div className="divide-y divide-gray-100 dark:divide-gray-800">
+        <div className="divide-y divide-border">
           <NumberRow
             label={t("settings.rate_label")}
             hint={t("settings.rate_hint")}
@@ -86,7 +86,7 @@ export function FinanceSettingsModal({
             onChange={setPnlDigest}
           />
         </div>
-        <div className="flex justify-end border-t border-gray-100 dark:border-gray-800 pt-4">
+        <div className="flex justify-end border-t border-border pt-4">
           {/* Save stays disabled until the settings API exists locally. */}
           <YbButton variant="primary" size="sm" disabled>
             {t("settings.save")}
@@ -120,12 +120,12 @@ function NumberRow({
       <div className="min-w-0 sm:flex-1">
         <label
           htmlFor={id}
-          className="block text-sm font-medium text-gray-800 dark:text-gray-100"
+          className="block text-sm font-medium text-foreground"
         >
           {label}
         </label>
         {hint ? (
-          <p className="mt-0.5 text-[11px] leading-snug text-gray-400 dark:text-gray-500">
+          <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
             {hint}
           </p>
         ) : null}
@@ -139,10 +139,10 @@ function NumberRow({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-2 pl-3 pr-11 text-sm tabular-nums text-gray-900 dark:text-gray-100 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/40"
+          className="w-full rounded-lg border border-border bg-card py-2 pl-3 pr-11 text-sm tabular-nums text-foreground focus:border-primary-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
         {suffix ? (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 dark:text-gray-500">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
             {suffix}
           </span>
         ) : null}
@@ -167,11 +167,11 @@ function ToggleRow({
   return (
     <div className="flex flex-col gap-2 py-3.5 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
       <div className="min-w-0 sm:flex-1">
-        <span className="block text-sm font-medium text-gray-800 dark:text-gray-100">
+        <span className="block text-sm font-medium text-foreground">
           {label}
         </span>
         {hint ? (
-          <p className="mt-0.5 text-[11px] leading-snug text-gray-400 dark:text-gray-500">
+          <p className="mt-0.5 text-[11px] leading-snug text-muted-foreground">
             {hint}
           </p>
         ) : null}

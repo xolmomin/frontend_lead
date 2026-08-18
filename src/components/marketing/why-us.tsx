@@ -22,10 +22,10 @@ export function WhyUs() {
     <section className="py-12 sm:py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
             {t("why.title")}
           </h2>
-          <p className="mt-3 text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="mt-3 text-base text-muted-foreground max-w-2xl mx-auto">
             {t("why.subtitle")}
           </p>
         </div>
@@ -40,10 +40,10 @@ export function WhyUs() {
                 <div className="w-11 h-11 rounded-xl gradient-primary flex items-center justify-center mx-auto mb-3">
                   <Icon className="w-5 h-5 text-white" aria-hidden="true" />
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-1">
+                <h3 className="font-semibold text-foreground text-sm mb-1">
                   {t(`why.items.${item.key}.title`)}
                 </h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {t(`why.items.${item.key}.description`)}
                 </p>
               </div>

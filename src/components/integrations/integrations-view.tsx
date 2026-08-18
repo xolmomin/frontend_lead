@@ -63,8 +63,7 @@ function plural(
 }
 
 type PauseTarget =
-  | { type: "single"; integration: Integration }
-  | { type: "bulk" };
+  { type: "single"; integration: Integration } | { type: "bulk" };
 
 export function IntegrationsView() {
   const t = useTranslations("integrations");
@@ -502,10 +501,10 @@ export function IntegrationsView() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h1 className="t-h2 text-foreground mb-2">
               {selectedFolderData ? selectedFolderData.name : t("title")}
             </h1>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
+            <p className="text-sm sm:text-base text-muted-foreground">
               {selectedFolderData
                 ? plural(t, "folders.scenarioCount", selectedFolderCount)
                 : t("subtitle")}
@@ -535,13 +534,13 @@ export function IntegrationsView() {
 
         {/* Bulk actions */}
         {integrations.length > 0 && totalNonTelegram > 0 && (
-          <div className="space-y-2 rounded-lg border border-gray-200 bg-gray-50 p-2 dark:border-gray-700 dark:bg-gray-800/50">
+          <div className="space-y-2 rounded-lg border border-border bg-muted p-2">
             <div className="flex items-center gap-2 px-1">
-              <span className="hidden whitespace-nowrap text-xs text-gray-500 sm:inline dark:text-gray-400">
+              <span className="hidden whitespace-nowrap text-xs text-muted-foreground sm:inline">
                 {t("bulkActions.label")}:
               </span>
               {totalPaused > 0 && (
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-sky-600 dark:text-sky-400">
+                <span className="inline-flex items-center gap-1 text-xs font-medium text-info">
                   <Pause className="h-3.5 w-3.5" aria-hidden="true" />
                   {plural(t, "bulkActions.pausedTotal", totalPaused)}
                 </span>
@@ -554,7 +553,7 @@ export function IntegrationsView() {
                   size="sm"
                   onClick={() => setPauseTarget({ type: "bulk" })}
                   disabled={bulkLoading !== null}
-                  className="w-full sm:w-auto h-9 text-xs sm:text-sm whitespace-nowrap border-orange-500 text-orange-600 hover:bg-orange-50 dark:border-orange-400 dark:text-orange-400 dark:hover:bg-orange-900/20"
+                  className="w-full sm:w-auto h-9 text-xs sm:text-sm whitespace-nowrap border-warning/60 text-warning hover:bg-warning-muted"
                   leftIcon={<Pause className="w-4 h-4" />}
                 >
                   {t("bulkActions.pause")}
@@ -564,21 +563,21 @@ export function IntegrationsView() {
                 "start",
                 "bulkActions.startAllTooltip",
                 "bulkActions.start",
-                "border-green-500 text-green-600 hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-900/20",
+                "border-success text-success hover:bg-success-muted dark:text-success",
                 <Play className="w-4 h-4" />,
               )}
               {bulkButton(
                 "send",
                 "bulkActions.sendAllTooltip",
                 "bulkActions.send",
-                "border-blue-500 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/20",
+                "border-info/60 text-info hover:bg-info-muted",
                 <Send className="w-4 h-4" />,
               )}
               {bulkButton(
                 "reset",
                 "bulkActions.resetTooltip",
                 "bulkActions.reset",
-                "border-red-500 text-red-600 hover:bg-red-50 dark:border-red-400 dark:text-red-400 dark:hover:bg-red-900/20",
+                "border-destructive text-destructive hover:bg-destructive-muted dark:text-destructive",
                 <Trash2 className="w-4 h-4" />,
               )}
             </div>
@@ -597,12 +596,10 @@ export function IntegrationsView() {
             ) : emptyState ? (
               <div className="py-16 text-center animate-in fade-in zoom-in-95 duration-300">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/20 dark:to-primary-800/20 flex items-center justify-center">
-                  <FolderIcon className="w-10 h-10 text-primary-600 dark:text-primary-400" />
+                  <FolderIcon className="w-10 h-10 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                  {t("emptyTitle")}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                <h3 className="t-h4 text-foreground mb-2">{t("emptyTitle")}</h3>
+                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                   {t("emptyDescription")}
                 </p>
                 <YbButton
@@ -618,7 +615,7 @@ export function IntegrationsView() {
               <>
                 <div className="flex gap-2 mb-4">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <input
                       type="text"
                       value={searchInput}
@@ -632,7 +629,7 @@ export function IntegrationsView() {
                       placeholder={t("searchPlaceholder")}
                       // Placeholder text is not an accessible name.
                       aria-label={t("searchPlaceholder")}
-                      className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:focus:border-primary-400 outline-none transition-colors"
+                      className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-border bg-card text-foreground placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-ring dark:focus:border-primary-400 outline-none transition-colors"
                     />
                   </div>
                   <YbButton
@@ -644,7 +641,7 @@ export function IntegrationsView() {
                   </YbButton>
                 </div>
                 {integrations.length === 0 ? (
-                  <p className="py-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                  <p className="py-8 text-center text-sm text-muted-foreground">
                     {t("emptyMessage")}
                   </p>
                 ) : (
@@ -675,7 +672,7 @@ export function IntegrationsView() {
                     if (next >= 1 && next <= totalPages) setPage(next);
                   }}
                   onPageSizeChange={setPageSize}
-                  className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700"
+                  className="mt-4 pt-3 border-t border-border"
                 />
               </>
             )}

@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-heading: var(--font-heading-family);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,6 +39,24 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-muted: var(--success-muted);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-muted: var(--warning-muted);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-muted: var(--info-muted);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-muted: var(--destructive-muted);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-elevated: var(--elevated);
+  --color-overlay: var(--overlay);
+  --shadow-e1: var(--elevation-1);
+  --shadow-e2: var(--elevation-2);
+  --shadow-e3: var(--elevation-3);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -121,10 +139,10 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(0.5 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(0.52 0.21 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.6 0.1 175);
@@ -142,14 +160,42 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.6 0.1 175);
+
+  /* --- Semantic status + surface roles. Single source of truth: components
+         use these instead of raw gray, emerald or amber utilities. --- */
+  --success: oklch(0.51 0.12 162);
+  --success-foreground: oklch(0.985 0 0);
+  --success-muted: oklch(0.955 0.04 162);
+  --warning: oklch(0.52 0.115 70);
+  --warning-foreground: oklch(0.985 0 0);
+  --warning-muted: oklch(0.96 0.05 85);
+  --info: oklch(0.51 0.13 250);
+  --info-foreground: oklch(0.985 0 0);
+  --info-muted: oklch(0.95 0.04 250);
+  --destructive-foreground: oklch(0.985 0 0);
+  --destructive-muted: oklch(0.95 0.035 25);
+
+  /* Page/section surfaces. `surface` is the app canvas, `surface-muted` the
+     alternating band on the landing page, `elevated` the raised card ground. */
+  --surface: oklch(0.985 0 0);
+  --surface-muted: oklch(0.968 0.006 175);
+  --elevated: oklch(1 0 0);
+  --overlay: oklch(0.145 0 0 / 50%);
+
+  /* Elevation scale, replacing the blanket `shadow-lg`. */
+  --elevation-1: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+  --elevation-2:
+    0 4px 12px -2px oklch(0 0 0 / 0.08), 0 2px 4px -2px oklch(0 0 0 / 0.06);
+  --elevation-3:
+    0 12px 32px -8px oklch(0 0 0 / 0.12), 0 4px 8px -4px oklch(0 0 0 / 0.08);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.165 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.213 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.213 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.72 0.13 175);
   --primary-foreground: oklch(0.16 0.03 185);
@@ -160,7 +206,7 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 14%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.6 0.11 175);
   --chart-1: oklch(0.72 0.13 175);
@@ -168,14 +214,37 @@
   --chart-3: oklch(0.8 0.12 155);
   --chart-4: oklch(0.5 0.1 185);
   --chart-5: oklch(0.88 0.07 165);
-  --sidebar: oklch(0.205 0 0);
+  --sidebar: oklch(0.19 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.72 0.13 175);
   --sidebar-primary-foreground: oklch(0.16 0.03 185);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-border: oklch(1 0 0 / 14%);
   --sidebar-ring: oklch(0.6 0.11 175);
+
+  --success: oklch(0.72 0.14 162);
+  --success-foreground: oklch(0.16 0.03 162);
+  --success-muted: oklch(0.26 0.045 162);
+  --warning: oklch(0.8 0.14 80);
+  --warning-foreground: oklch(0.18 0.04 80);
+  --warning-muted: oklch(0.26 0.045 80);
+  --info: oklch(0.7 0.12 250);
+  --info-foreground: oklch(0.16 0.03 250);
+  --info-muted: oklch(0.26 0.045 250);
+  --destructive-foreground: oklch(0.985 0 0);
+  --destructive-muted: oklch(0.27 0.055 25);
+
+  --surface: oklch(0.185 0 0);
+  --surface-muted: oklch(0.225 0.008 175);
+  --elevated: oklch(0.235 0 0);
+  --overlay: oklch(0 0 0 / 62%);
+
+  --elevation-1: 0 1px 2px 0 oklch(0 0 0 / 0.4);
+  --elevation-2:
+    0 4px 12px -2px oklch(0 0 0 / 0.5), 0 2px 4px -2px oklch(0 0 0 / 0.4);
+  --elevation-3:
+    0 12px 32px -8px oklch(0 0 0 / 0.6), 0 4px 8px -4px oklch(0 0 0 / 0.45);
 }
 
 @layer base {
@@ -193,6 +262,24 @@
     html {
       scroll-behavior: auto;
     }
+  }
+  /* Every interactive element gets the pointer cursor once, here, rather than
+     as a `cursor-pointer` class repeated across ~200 call sites. */
+  button:not(:disabled),
+  summary,
+  label[for],
+  a[href],
+  [role="button"]:not([aria-disabled="true"]),
+  [role="tab"]:not([aria-disabled="true"]),
+  [role="option"]:not([aria-disabled="true"]),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
   }
 }
 
@@ -512,6 +599,121 @@
   animation: mk-check-pulse 2.2s ease-in-out infinite;
 }
 
+
+/* --- Typography scale ---------------------------------------------------
+   Headings render in --font-heading (Manrope); body stays --font-sans (Inter).
+   These replace the `text-3xl sm:text-4xl lg:text-5xl font-extrabold` string
+   that was copy-pasted into every landing section header. --- */
+.t-display {
+  overflow-wrap: break-word;
+  font-family: var(--font-heading);
+  font-size: clamp(1.875rem, 1.05rem + 3.6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.t-h1 {
+  overflow-wrap: break-word;
+  font-family: var(--font-heading);
+  font-size: clamp(1.625rem, 1.15rem + 2.1vw, 3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+.t-h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.375rem, 1.13rem + 1.05vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.t-h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 1.03rem + 0.45vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+}
+.t-h4 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.008em;
+}
+/* Body copy caps at ~70ch per the line-length guideline. */
+.t-body {
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 70ch;
+}
+.t-body-sm {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.t-caption {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--muted-foreground);
+}
+/* Eyebrow label above a section title. */
+.t-overline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* Numeric readouts: aligned columns, no glyph jitter as values change. */
+.t-numeric {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* --- Surfaces + elevation ----------------------------------------------- */
+.surface-1 {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--elevation-1);
+}
+.surface-2 {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--elevation-2);
+}
+.surface-3 {
+  background-color: var(--elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--elevation-3);
+}
+
+/* Dashboard canvas: near-flat, with a barely-there brand wash at the top so it
+   reads as the same product as the landing page rather than a bare gray slab. */
+.app-canvas {
+  background-color: var(--background);
+  background-image: radial-gradient(
+    ellipse 120% 60% at 50% -10%,
+    color-mix(in oklab, var(--primary) 7%, transparent),
+    transparent 70%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Section band used to break up the landing page's uniform rhythm. Kept
+   translucent so the page-level gradient still reads through it. */
+.section-muted {
+  background-color: color-mix(in oklab, var(--surface-muted) 72%, transparent);
+}
+
+/* Staggered list entrance. Set --i on each row; the delay caps at 10 items so
+   long lists do not crawl in. */
+.stagger-item {
+  animation: mk-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(min(var(--i, 0), 10) * 45ms);
+}
+
 /* --- Marketing landing (mk-*) --- */
 
 /* Anchor sections clear the sticky navbar. */
@@ -560,6 +762,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .stagger-item,
   .mk-dash,
   .mk-rise,
   .mk-lead-x,

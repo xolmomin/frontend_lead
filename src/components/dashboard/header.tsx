@@ -1,83 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
-import { Bell, Menu, Monitor, Moon, Sun, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useMounted } from "@/lib/use-mounted";
+import { Bell, ChevronRight, Menu, X } from "lucide-react";
+import { initials } from "@/lib/utils";
 import { useUser } from "@/hooks/use-user";
 import { LanguageSwitcher } from "@/components/auth/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { navItems, type NavItem } from "./nav-items";
 import { SidebarContent } from "./sidebar";
-
-function initials(name: string): string {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-}
-
-function ThemeToggle() {
-  const t = useTranslations("common");
-  const { theme, setTheme } = useTheme();
-  const mounted = useMounted();
-  const current = mounted ? (theme ?? "system") : "system";
-
-  function cycle() {
-    setTheme(
-      current === "light" ? "dark" : current === "dark" ? "system" : "light",
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={cycle}
-      className="relative p-2 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-      aria-label={t(
-        current === "light"
-          ? "theme.switchToDark"
-          : current === "dark"
-            ? "theme.switchToSystem"
-            : "theme.switchToLight",
-      )}
-      title={t("theme.current", { name: t(`theme.${current}`) })}
-    >
-      <div className="relative w-6 h-6">
-        <Sun
-          className={cn(
-            "absolute inset-0 w-6 h-6 text-yellow-500 transition-all duration-300",
-            current === "light"
-              ? "rotate-0 scale-100 opacity-100"
-              : "rotate-90 scale-0 opacity-0",
-          )}
-          aria-hidden="true"
-        />
-        <Moon
-          className={cn(
-            "absolute inset-0 w-6 h-6 text-blue-500 transition-all duration-300",
-            current === "dark"
-              ? "rotate-0 scale-100 opacity-100"
-              : "-rotate-90 scale-0 opacity-0",
-          )}
-          aria-hidden="true"
-        />
-        <Monitor
-          className={cn(
-            "absolute inset-0 w-6 h-6 text-gray-600 dark:text-gray-300 transition-all duration-300",
-            current === "system"
-              ? "rotate-0 scale-100 opacity-100"
-              : "rotate-90 scale-0 opacity-0",
-          )}
-          aria-hidden="true"
-        />
-      </div>
-    </button>
-  );
-}
 
 function NotificationsBell() {
   const t = useTranslations("common");
@@ -87,7 +19,10 @@ function NotificationsBell() {
   useEffect(() => {
     if (!open) return;
     function onClick(event: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     }
@@ -104,23 +39,23 @@ function NotificationsBell() {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        className="relative p-2.5 rounded-lg hover:bg-muted transition-colors"
         aria-label={t("notifications")}
       >
-        <Bell className="w-6 h-6 text-gray-600 dark:text-gray-400" />
-        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
+        <Bell className="w-6 h-6 text-muted-foreground" />
+        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full" />
       </button>
       {open && (
         <div
           ref={panelRef}
-          className="fixed md:absolute top-[68px] md:top-auto right-2 md:right-0 left-2 md:left-auto md:mt-2 md:w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-2 duration-150"
+          className="fixed md:absolute top-[68px] md:top-auto right-2 md:right-0 left-2 md:left-auto md:mt-2 md:w-80 bg-card rounded-xl shadow-lg border border-border overflow-hidden z-50 animate-in fade-in slide-in-from-bottom-2 duration-150"
         >
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+          <div className="p-4 border-b border-border">
+            <h3 className="font-semibold text-foreground">
               {t("notifications")}
             </h3>
           </div>
-          <div className="p-4 text-center text-gray-500 dark:text-gray-400">
+          <div className="p-4 text-center text-muted-foreground">
             {t("noNotifications")}
           </div>
         </div>
@@ -143,13 +78,13 @@ function MobileSidebar({
         className="absolute inset-0 bg-black/50 animate-in fade-in duration-150"
         onClick={onClose}
       />
-      <aside className="absolute inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 shadow-xl animate-in slide-in-from-left duration-200 flex flex-col">
+      <aside className="absolute inset-y-0 left-0 w-72 bg-card shadow-xl animate-in slide-in-from-left duration-200 flex flex-col">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="absolute top-4 right-4 z-10 p-2 rounded-lg hover:bg-muted transition-colors"
           aria-label="Menyuni yopish"
         >
-          <X className="w-5 h-5 text-gray-500" />
+          <X className="w-5 h-5 text-muted-foreground" />
         </button>
         <SidebarContent onNavigate={onClose} />
       </aside>
@@ -157,8 +92,75 @@ function MobileSidebar({
   );
 }
 
+/**
+ * Longest matching nav path wins, so `/dashboard/finance/orders` resolves to
+ * the Orders child rather than the Finance parent. Returns the parent too, so
+ * nested pages can render a two-level trail.
+ */
+function trailFor(pathname: string): NavItem[] {
+  let best: NavItem[] = [];
+  for (const item of navItems) {
+    for (const candidate of [
+      [item],
+      ...(item.children ?? []).map((child) => [item, child]),
+    ]) {
+      const leaf = candidate[candidate.length - 1];
+      if (!leaf.path) continue;
+      const matches =
+        leaf.path === "/dashboard"
+          ? pathname === "/dashboard"
+          : pathname.startsWith(leaf.path);
+      if (matches && leaf.path.length >= (best.at(-1)?.path?.length ?? 0)) {
+        best = candidate;
+      }
+    }
+  }
+  return best;
+}
+
+function Breadcrumb() {
+  const t = useTranslations("navigation");
+  const pathname = usePathname();
+  const trail = trailFor(pathname);
+  if (trail.length === 0) return null;
+
+  return (
+    <nav
+      aria-label={t("breadcrumb")}
+      className="hidden min-w-0 flex-1 md:block"
+    >
+      <ol className="flex items-center gap-1.5 text-sm">
+        {trail.map((item, index) => {
+          const last = index === trail.length - 1;
+          return (
+            <li key={item.id} className="flex min-w-0 items-center gap-1.5">
+              {index > 0 && (
+                <ChevronRight
+                  className="h-4 w-4 flex-shrink-0 text-muted-foreground"
+                  aria-hidden="true"
+                />
+              )}
+              <span
+                className={
+                  last
+                    ? "truncate font-semibold text-foreground"
+                    : "truncate text-muted-foreground"
+                }
+                aria-current={last ? "page" : undefined}
+              >
+                {t(`menu.${item.id}`)}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
 export function DashboardHeader() {
   const t = useTranslations("common");
+  const tNav = useTranslations("navigation");
   const router = useRouter();
   const { data: user } = useUser();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -166,23 +168,24 @@ export function DashboardHeader() {
   const displayName = user?.full_name || user?.email || "";
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800">
+    <header className="sticky top-0 z-30 h-16 bg-card/80 backdrop-blur-lg border-b border-border">
       <div className="h-full px-4 md:px-6 flex items-center justify-between gap-4">
         <button
           onClick={() => setMobileOpen(true)}
-          className="md:hidden p-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors touch-manipulation"
-          aria-label="Menyuni ochish"
+          className="md:hidden flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg transition-colors hover:bg-muted touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          aria-label={tNav("openMenu")}
         >
-          <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+          <Menu className="w-6 h-6 text-foreground/80" />
         </button>
-        <div className="hidden md:block flex-1" />
+        <Breadcrumb />
         <div className="flex items-center gap-2">
           <a
             href="tg://resolve?domain=LidlarUz"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            title="Telegram kanal"
+            className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            title={tNav("telegramChannel")}
+            aria-label={tNav("telegramChannel")}
           >
             <svg
               viewBox="0 0 24 24"
@@ -197,7 +200,7 @@ export function DashboardHeader() {
           <LanguageSwitcher />
           <button
             onClick={() => router.push("/dashboard/settings")}
-            className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="flex cursor-pointer items-center gap-2 rounded-lg p-1.5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             title={t("settings")}
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center overflow-hidden">
@@ -205,7 +208,7 @@ export function DashboardHeader() {
                 {displayName ? initials(displayName) : "U"}
               </span>
             </div>
-            <span className="hidden md:inline text-sm font-medium text-gray-700 dark:text-gray-300">
+            <span className="hidden md:inline text-sm font-medium text-foreground/80">
               {displayName}
             </span>
           </button>

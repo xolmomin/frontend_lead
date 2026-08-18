@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { useRecentActivity } from "@/hooks/use-stats";
 import type { ActivityItem } from "@/lib/api/stats";
 import { YbCard, YbCardHeader, YbCardTitle } from "@/components/yb/card";
-import { YbSpinner } from "@/components/yb/spinner";
+import { YbSkeleton } from "@/components/yb/skeleton";
 
 type Translate = (
   key: string,
@@ -36,14 +36,14 @@ export function ActivityFeed() {
         <YbCardHeader>
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
-              <div className="p-2 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex-shrink-0">
-                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-violet-600 dark:text-violet-400" />
+              <div className="p-2 rounded-lg bg-primary/12 flex-shrink-0">
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               </div>
               <div className="min-w-0">
                 <YbCardTitle className="text-base sm:text-xl">
                   {t("activity.title")}
                 </YbCardTitle>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   {t("activity.subtitle")}
                 </p>
               </div>
@@ -52,7 +52,7 @@ export function ActivityFeed() {
               <button
                 type="button"
                 onClick={() => router.push("/dashboard/integrations")}
-                className="text-xs sm:text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline flex-shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded"
+                className="text-xs sm:text-sm font-medium text-primary hover:underline flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
               >
                 {t("activity.viewAll")}
               </button>
@@ -61,18 +61,31 @@ export function ActivityFeed() {
         </YbCardHeader>
         <div className="flex-1">
           {loading ? (
-            <div className="py-12 flex items-center justify-center">
-              <YbSpinner size="md" />
+            <div className="space-y-3 py-2" role="status" aria-busy="true">
+              {Array.from({ length: 5 }, (_, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <YbSkeleton className="h-8 w-8 shrink-0 rounded-lg" />
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <YbSkeleton className="h-3.5 w-3/5" />
+                    <YbSkeleton className="h-3 w-2/5" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : !items || items.length === 0 ? (
-            <div className="py-12 text-center text-gray-400 dark:text-gray-600">
+            <div className="py-12 text-center text-muted-foreground/70">
               <Activity className="w-10 h-10 mx-auto mb-3 opacity-50" />
               <p className="text-sm max-w-xs mx-auto">{t("activity.empty")}</p>
             </div>
           ) : (
-            <ul className="divide-y divide-gray-100 dark:divide-gray-800 -mt-2">
+            <ul className="divide-y divide-border -mt-2">
               {items.map((item) => (
-                <ActivityRow key={String(item.id)} item={item} lang={locale} t={t} />
+                <ActivityRow
+                  key={String(item.id)}
+                  item={item}
+                  lang={locale}
+                  t={t}
+                />
               ))}
             </ul>
           )}
@@ -103,34 +116,32 @@ function ActivityRow({
   > = {
     success: {
       Icon: CheckCircle2,
-      color: "text-emerald-500 dark:text-emerald-400",
-      bg: "bg-emerald-50 dark:bg-emerald-900/20",
+      color: "text-success dark:text-success",
+      bg: "bg-success-muted",
       label: t("activity.statusSuccess"),
     },
     errorHard: {
       Icon: XCircle,
-      color: "text-red-500 dark:text-red-400",
-      bg: "bg-red-50 dark:bg-red-900/20",
+      color: "text-destructive dark:text-destructive",
+      bg: "bg-destructive-muted",
       label: t("activity.statusErrorDelivery"),
     },
     errorTemporary: {
       Icon: RefreshCw,
-      color: "text-orange-500 dark:text-orange-400",
-      bg: "bg-orange-50 dark:bg-orange-900/20",
+      color: "text-warning",
+      bg: "bg-warning-muted",
       label: t("activity.statusErrorTemporary"),
     },
     paused: {
       Icon: PauseCircle,
-      color: "text-amber-500 dark:text-amber-400",
-      bg: "bg-amber-50 dark:bg-amber-900/20",
+      color: "text-warning dark:text-warning",
+      bg: "bg-warning-muted",
       label: t("activity.statusPaused"),
     },
   };
   const entry = config[statusKey];
   const Icon = entry.Icon;
-  const title = item.message
-    ? item.message
-    : t("activity.leadNoIntegration");
+  const title = item.message ? item.message : t("activity.leadNoIntegration");
   const timeText = relativeTime(new Date(item.created_at), lang, t);
 
   return (
@@ -138,7 +149,7 @@ function ActivityRow({
       <div
         className={cn(
           "w-full flex items-center gap-3 p-2 sm:p-3 rounded-lg transition-colors text-left",
-          "hover:bg-gray-50 dark:hover:bg-gray-800/50",
+          "hover:bg-muted",
         )}
       >
         <span
@@ -151,15 +162,15 @@ function ActivityRow({
           <Icon className={cn("w-4 h-4 sm:w-5 sm:h-5", entry.color)} />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+          <p className="text-sm font-medium text-foreground truncate">
             {title}
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+          <p className="text-xs text-muted-foreground truncate">
             {entry.label} · {timeText}
           </p>
         </div>
         <ChevronRight
-          className="w-4 h-4 text-gray-400 dark:text-gray-600 flex-shrink-0"
+          className="w-4 h-4 text-muted-foreground/70 flex-shrink-0"
           aria-hidden="true"
         />
       </div>

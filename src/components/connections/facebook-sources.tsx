@@ -52,7 +52,7 @@ export function FacebookConnectionStatusBadge({
       variant="outline"
       className={cn(
         status === "active"
-          ? "border-emerald-600/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+          ? "border-success/30 bg-success/10 text-success"
           : "border-destructive/30 bg-destructive/10 text-destructive",
       )}
     >

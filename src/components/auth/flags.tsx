@@ -13,7 +13,11 @@ export function UzFlag({ className = "w-6 h-6" }: { className?: string }) {
     );
   });
   return (
-    <svg viewBox="0 0 900 600" className={className} xmlns="http://www.w3.org/2000/svg">
+    <svg
+      viewBox="0 0 900 600"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect width="900" height="600" fill="#1EB53A" />
       <rect width="900" height="400" fill="#fff" />
       <rect width="900" height="200" fill="#0099B5" />
@@ -28,7 +32,11 @@ export function UzFlag({ className = "w-6 h-6" }: { className?: string }) {
 
 export function RuFlag({ className = "w-6 h-6" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 900 600" className={className} xmlns="http://www.w3.org/2000/svg">
+    <svg
+      viewBox="0 0 900 600"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <rect width="900" height="200" fill="#ffffff" />
       <rect y="200" width="900" height="200" fill="#0C47B7" />
       <rect y="400" width="900" height="200" fill="#E53B35" />

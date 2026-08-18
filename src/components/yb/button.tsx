@@ -5,32 +5,38 @@ import { cn } from "@/lib/utils";
 
 type Variant =
   | "primary"
+  | "gradient"
   | "secondary"
   | "outline"
   | "ghost"
   | "danger"
   | "warning";
-type Size = "sm" | "md" | "lg";
+type Size = "sm" | "md" | "lg" | "icon";
 
 const VARIANTS: Record<Variant, string> = {
+  // Flat brand fill is the default across the app. `gradient` keeps the
+  // marketing look for the hero/CTA buttons that still want it.
   primary:
-    "bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-md hover:shadow-lg focus:ring-primary-500 active:scale-[0.98]",
+    "bg-primary text-primary-foreground hover:bg-primary/90 shadow-e1 hover:shadow-e2 active:bg-primary/95",
+  gradient:
+    "bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white shadow-e2 hover:shadow-e3",
   secondary:
-    "bg-gradient-to-r from-secondary-600 to-secondary-700 hover:from-secondary-700 hover:to-secondary-800 text-white shadow-md hover:shadow-lg focus:ring-secondary-500 active:scale-[0.98]",
+    "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border",
   outline:
-    "border-2 border-primary-600 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-950 focus:ring-primary-500 active:scale-[0.98]",
-  ghost:
-    "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:ring-gray-500",
+    "border border-primary text-primary bg-transparent hover:bg-primary/10",
+  ghost: "text-foreground/80 hover:text-foreground hover:bg-muted",
   danger:
-    "bg-red-600 hover:bg-red-700 text-white shadow-md hover:shadow-lg focus:ring-red-500 active:scale-[0.98]",
+    "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-e1 hover:shadow-e2",
   warning:
-    "border-2 border-amber-400 bg-amber-50 text-amber-700 hover:bg-amber-100 hover:border-amber-500 dark:border-amber-500/50 dark:bg-amber-950/30 dark:text-amber-400 dark:hover:bg-amber-950/50 focus:ring-amber-400 active:scale-[0.98]",
+    "border border-warning/60 bg-warning-muted text-warning hover:bg-warning/20",
 };
 
 const SIZES: Record<Size, string> = {
-  sm: "px-3 py-1.5 text-sm rounded-lg gap-1.5",
-  md: "px-4 py-2.5 text-base rounded-lg gap-2",
-  lg: "px-6 py-3 text-lg rounded-xl gap-2.5",
+  sm: "px-3 py-1.5 text-sm rounded-lg gap-1.5 min-h-9",
+  md: "px-4 py-2.5 text-base rounded-lg gap-2 min-h-11",
+  lg: "px-6 py-3 text-lg rounded-xl gap-2.5 min-h-12",
+  // Icon-only buttons must still clear the 44px touch target.
+  icon: "w-11 h-11 rounded-lg shrink-0",
 };
 
 export interface YbButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -59,8 +65,11 @@ export const YbButton = forwardRef<HTMLButtonElement, YbButtonProps>(
     <button
       ref={ref}
       disabled={disabled || loading}
+      aria-busy={loading || undefined}
       className={cn(
-        "inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
+        "inline-flex cursor-pointer items-center justify-center font-medium transition-colors duration-200",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
         VARIANTS[variant],
         SIZES[size],
         className,
@@ -73,6 +82,7 @@ export const YbButton = forwardRef<HTMLButtonElement, YbButtonProps>(
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <circle
             className="opacity-25"
@@ -89,7 +99,9 @@ export const YbButton = forwardRef<HTMLButtonElement, YbButtonProps>(
           />
         </svg>
       )}
-      {!loading && leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
+      {!loading && leftIcon && (
+        <span className="flex-shrink-0">{leftIcon}</span>
+      )}
       <span className="inline-flex items-center gap-1.5">{children}</span>
       {!loading && rightIcon && (
         <span className="flex-shrink-0">{rightIcon}</span>

@@ -9,12 +9,10 @@ import { YbModal } from "@/components/yb/modal";
 type ModalType = "info" | "warning" | "danger" | "success";
 
 const ICON_BG: Record<ModalType, string> = {
-  info: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400",
-  warning:
-    "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400",
-  danger: "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400",
-  success:
-    "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400",
+  info: "bg-info-muted text-info",
+  warning: "bg-warning-muted text-warning",
+  danger: "bg-destructive-muted text-destructive",
+  success: "bg-success-muted text-success",
 };
 
 interface ConfirmModalProps {
@@ -72,21 +70,16 @@ export function ConfirmModal({
         >
           <Icon className="w-6 h-6" />
         </div>
-        <h3
-          id={titleId}
-          className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2"
-        >
+        <h3 id={titleId} className="t-h4 text-foreground mb-2">
           {title}
         </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-          {message}
-        </p>
+        <p className="text-sm text-muted-foreground mb-6">{message}</p>
         <div className="flex gap-3">
           <button
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="flex-1 px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2.5 rounded-lg border-2 border-input text-foreground/80 font-medium hover:bg-muted transition-colors disabled:opacity-50"
           >
             {cancelText ?? t("actions.cancel")}
           </button>
@@ -97,8 +90,8 @@ export function ConfirmModal({
             className={cn(
               "flex-1 px-4 py-2.5 rounded-lg font-medium text-white transition-colors disabled:opacity-50 inline-flex items-center justify-center gap-2",
               type === "danger"
-                ? "bg-red-600 hover:bg-red-700"
-                : "bg-primary-600 hover:bg-primary-700",
+                ? "bg-destructive hover:bg-destructive"
+                : "bg-primary hover:bg-primary/90",
             )}
           >
             {loading && <Loader2 className="w-4 h-4 animate-spin" />}

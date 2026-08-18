@@ -52,7 +52,8 @@ export function LoginView() {
     if (localStorage.getItem(REMEMBER_KEY) !== "1") return;
     setRemember(true);
     const saved = localStorage.getItem(REMEMBERED_ID_KEY);
-    if (saved) setIdentifier(looksLikePhone(saved) ? formatPhoneInput(saved) : saved);
+    if (saved)
+      setIdentifier(looksLikePhone(saved) ? formatPhoneInput(saved) : saved);
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
 
@@ -104,7 +105,7 @@ export function LoginView() {
 
   return (
     <div className="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-5 duration-500">
-      <YbCard variant="glass" className="p-8">
+      <YbCard variant="glass" padding="lg">
         <div className="absolute top-4 right-4">
           <LanguageSwitcher />
         </div>
@@ -119,12 +120,8 @@ export function LoginView() {
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            {t("login.title")}
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            {t("login.subtitle")}
-          </p>
+          <h1 className="t-h2 text-foreground mb-2">{t("login.title")}</h1>
+          <p className="text-muted-foreground">{t("login.subtitle")}</p>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-5" noValidate>
@@ -141,7 +138,9 @@ export function LoginView() {
             value={identifier}
             onChange={(e) => {
               const next = e.target.value;
-              setIdentifier(looksLikePhone(next) ? formatPhoneInput(next) : next);
+              setIdentifier(
+                looksLikePhone(next) ? formatPhoneInput(next) : next,
+              );
             }}
           />
           <YbInput
@@ -160,25 +159,25 @@ export function LoginView() {
               <input
                 type="checkbox"
                 name="remember"
-                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+                className="w-4 h-4 text-primary border-input rounded focus-visible:ring-2 focus-visible:ring-ring"
                 disabled={submitting}
                 checked={remember}
                 onChange={(e) => setRemember(e.target.checked)}
               />
-              <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+              <span className="ml-2 text-sm text-foreground/80">
                 {t("login.rememberMe")}
               </span>
             </label>
             <Link
               href="/forgot-password"
-              className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+              className="text-sm font-medium text-primary hover:text-primary"
             >
               {t("login.forgotPassword")}
             </Link>
           </div>
 
           {formError && (
-            <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+            <p role="alert" className="text-sm text-destructive">
               {formError}
             </p>
           )}
@@ -202,11 +201,11 @@ export function LoginView() {
         />
 
         <div className="text-center pt-6">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-muted-foreground">
             {t("login.noAccount")}{" "}
             <Link
               href="/register"
-              className="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+              className="font-medium text-primary hover:text-primary"
             >
               {t("login.signUp")}
             </Link>
@@ -215,9 +214,7 @@ export function LoginView() {
       </YbCard>
 
       <div className="text-center mt-8 animate-in fade-in duration-500 delay-500 fill-mode-both">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t("login.footer")}
-        </p>
+        <p className="text-sm text-muted-foreground">{t("login.footer")}</p>
       </div>
     </div>
   );

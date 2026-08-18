@@ -1,25 +1,62 @@
 import { forwardRef, type HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "default" | "glass" | "elevated";
+type Variant = "default" | "elevated" | "glass" | "interactive";
+type Padding = "none" | "sm" | "md" | "lg";
+type Accent = "brand" | "success" | "warning" | "danger" | "info";
 
 const VARIANTS: Record<Variant, string> = {
-  default:
-    "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm",
-  glass: "glass shadow-lg",
-  elevated:
-    "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300",
+  default: "bg-card text-card-foreground border border-border shadow-e1",
+  elevated: "bg-card text-card-foreground border border-border shadow-e2",
+  glass: "glass text-card-foreground shadow-e2",
+  // Hover changes colour and shadow only — never scale/translate, which would
+  // shift the neighbouring cards in a grid.
+  interactive:
+    "bg-card text-card-foreground border border-border shadow-e1 transition-[box-shadow,border-color] duration-200 hover:border-primary/40 hover:shadow-e2 cursor-pointer",
+};
+
+const PADDINGS: Record<Padding, string> = {
+  none: "",
+  sm: "p-3 sm:p-4",
+  md: "p-4 sm:p-6",
+  lg: "p-6 sm:p-8",
+};
+
+const ACCENTS: Record<Accent, string> = {
+  brand: "border-l-4 border-l-primary",
+  success: "border-l-4 border-l-success",
+  warning: "border-l-4 border-l-warning",
+  danger: "border-l-4 border-l-destructive",
+  info: "border-l-4 border-l-info",
 };
 
 export interface YbCardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: Variant;
+  padding?: Padding;
+  accent?: Accent;
 }
 
 export const YbCard = forwardRef<HTMLDivElement, YbCardProps>(
-  ({ variant = "default", children, className, ...props }, ref) => (
+  (
+    {
+      variant = "default",
+      padding = "md",
+      accent,
+      children,
+      className,
+      ...props
+    },
+    ref,
+  ) => (
     <div
       ref={ref}
-      className={cn("rounded-xl p-6", VARIANTS[variant], className)}
+      className={cn(
+        "rounded-xl",
+        VARIANTS[variant],
+        PADDINGS[padding],
+        accent && ACCENTS[accent],
+        className,
+      )}
       {...props}
     >
       {children}
@@ -42,14 +79,7 @@ export const YbCardTitle = forwardRef<
   HTMLHeadingElement,
   HTMLAttributes<HTMLHeadingElement>
 >(({ children, className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-xl font-semibold text-gray-900 dark:text-gray-100",
-      className,
-    )}
-    {...props}
-  >
+  <h3 ref={ref} className={cn("t-h3 text-foreground", className)} {...props}>
     {children}
   </h3>
 ));
@@ -61,7 +91,7 @@ export const YbCardDescription = forwardRef<
 >(({ children, className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-gray-600 dark:text-gray-400 mt-1", className)}
+    className={cn("t-body-sm text-muted-foreground mt-1", className)}
     {...props}
   >
     {children}
@@ -75,10 +105,7 @@ export const YbCardFooter = forwardRef<
 >(({ children, className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn(
-      "mt-6 pt-4 border-t border-gray-200 dark:border-gray-700",
-      className,
-    )}
+    className={cn("mt-6 pt-4 border-t border-border", className)}
     {...props}
   >
     {children}

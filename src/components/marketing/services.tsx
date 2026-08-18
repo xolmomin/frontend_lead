@@ -31,13 +31,11 @@ export function Services() {
   const items: FeatureItem[] = Array.isArray(raw) ? raw : [];
 
   return (
-    <section id="features" className="py-12 sm:py-16 lg:py-20">
+    <section id="features" className="section-muted py-14 sm:py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-            {t("features.title")}
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <h2 className="t-h1 text-foreground">{t("features.title")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             {t("features.subtitle")}
           </p>
         </div>
@@ -54,10 +52,10 @@ export function Services() {
                     <Icon className="w-6 h-6 text-white" aria-hidden="true" />
                   )}
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 break-words">
+                <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 break-words">
                   {item.title}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed break-words">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed break-words">
                   {item.description}
                 </p>
               </div>

@@ -11,8 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
-import { Button } from "./button";
-import { ThemeToggle } from "./theme-toggle";
+import { YbButton } from "@/components/yb/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/auth/language-switcher";
 
 const NAV_LINKS = [
@@ -81,7 +81,7 @@ export function MarketingNavbar() {
       <span data-nosnippet="true">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg"
         >
           {t("nav.skipToMain")}
         </a>
@@ -112,7 +112,7 @@ export function MarketingNavbar() {
                   key={link.key}
                   href={link.href}
                   onClick={(event) => scrollTo(event, link.href)}
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                  className="text-sm font-medium text-foreground/80 hover:text-primary/80 transition-colors"
                 >
                   {t(`nav.${link.key}`)}
                 </a>
@@ -122,31 +122,28 @@ export function MarketingNavbar() {
               <LanguageSwitcher />
               <ThemeToggle />
               <Link href="/login">
-                <Button variant="outline" size="sm">
+                <YbButton variant="outline" size="sm">
                   {t("nav.login")}
-                </Button>
+                </YbButton>
               </Link>
               <Link href="/register">
-                <Button variant="primary" size="sm">
+                <YbButton variant="gradient" size="sm">
                   {t("nav.register")}
-                </Button>
+                </YbButton>
               </Link>
             </div>
             <button
               ref={menuButtonRef}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={t(menuOpen ? "nav.closeMenu" : "nav.openMenu")}
               aria-expanded={menuOpen}
             >
               {menuOpen ? (
-                <X
-                  className="w-6 h-6 text-gray-700 dark:text-gray-300"
-                  aria-hidden="true"
-                />
+                <X className="w-6 h-6 text-foreground/80" aria-hidden="true" />
               ) : (
                 <Menu
-                  className="w-6 h-6 text-gray-700 dark:text-gray-300"
+                  className="w-6 h-6 text-foreground/80"
                   aria-hidden="true"
                 />
               )}
@@ -162,7 +159,7 @@ export function MarketingNavbar() {
             aria-hidden="true"
           />
           <div className="md:hidden fixed top-16 left-0 right-0 bottom-0 z-50 overflow-y-auto animate-in fade-in duration-300">
-            <div className="absolute inset-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl" />
+            <div className="absolute inset-0 bg-card/95 backdrop-blur-2xl" />
             <div className="absolute top-10 -left-20 w-64 h-64 bg-primary-400/15 dark:bg-primary-400/10 rounded-full blur-3xl" />
             <div className="absolute bottom-20 -right-20 w-72 h-72 bg-secondary-400/15 dark:bg-secondary-400/10 rounded-full blur-3xl" />
             <div className="relative flex flex-col items-center justify-center min-h-full px-6 py-8">
@@ -177,7 +174,7 @@ export function MarketingNavbar() {
                     ref={index === 0 ? firstLinkRef : undefined}
                     href={link.href}
                     onClick={(event) => scrollTo(event, link.href)}
-                    className="w-full text-center text-lg font-semibold text-gray-800 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition-all py-3.5 px-4 rounded-xl hover:bg-primary-50 dark:hover:bg-primary-900/20 min-h-[48px] flex items-center justify-center animate-in fade-in slide-in-from-left-5 duration-300 fill-mode-both"
+                    className="w-full text-center t-h4 text-foreground hover:text-primary/80 transition-all py-3.5 px-4 rounded-xl hover:bg-primary/10 min-h-[48px] flex items-center justify-center animate-in fade-in slide-in-from-left-5 duration-300 fill-mode-both"
                     style={{ animationDelay: `${index * 80}ms` }}
                   >
                     {t(`nav.${link.key}`)}
@@ -187,7 +184,7 @@ export function MarketingNavbar() {
               <div className="w-12 h-0.5 rounded-full bg-gradient-to-r from-primary-400 to-secondary-400 my-6 animate-in fade-in zoom-in-50 duration-300 fill-mode-both delay-200" />
               <div className="flex items-center gap-3 px-5 py-2.5 rounded-full glass animate-in fade-in slide-in-from-bottom-2 duration-300 fill-mode-both delay-300">
                 <LanguageSwitcher />
-                <div className="w-px h-5 bg-gray-300 dark:bg-gray-600" />
+                <div className="w-px h-5 bg-muted-foreground/30" />
                 <ThemeToggle />
               </div>
               <div
@@ -195,18 +192,18 @@ export function MarketingNavbar() {
                 style={{ animationDelay: "400ms" }}
               >
                 <Link href="/login" className="w-full" onClick={closeMenu}>
-                  <Button variant="outline" size="lg" className="w-full">
+                  <YbButton variant="outline" size="lg" className="w-full">
                     {t("nav.login")}
-                  </Button>
+                  </YbButton>
                 </Link>
                 <Link href="/register" className="w-full" onClick={closeMenu}>
-                  <Button
-                    variant="primary"
+                  <YbButton
+                    variant="gradient"
                     size="lg"
                     className="w-full shadow-glow-sm"
                   >
                     {t("nav.register")}
-                  </Button>
+                  </YbButton>
                 </Link>
               </div>
             </div>
